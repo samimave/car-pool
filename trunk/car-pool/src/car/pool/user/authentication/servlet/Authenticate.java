@@ -3,11 +3,13 @@ package car.pool.user.authentication.servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Enumeration;
-import java.util.Hashtable;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import car.pool.user.User;
+import car.pool.user.database.UserRecordFetcher;
 
 /**
  * Servlet implementation class for Servlet: Authenticate
@@ -21,7 +23,17 @@ import javax.servlet.http.HttpServletResponse;
 	 */
 	public Authenticate() {
 		super();
-	}   	
+		
+	}
+	
+	@Override
+	public void init() throws ServletException {
+		super.init();
+		System.out.println("Authenticate init");
+	}
+	
+//	@Override
+//	public void init()
 	
 	/* (non-Java-doc)
 	 * @see javax.servlet.http.HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -29,6 +41,13 @@ import javax.servlet.http.HttpServletResponse;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		processResponse(request, response);
 	}  	
+
+	/* (non-Java-doc)
+	 * @see javax.servlet.http.HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		processResponse(request, response);
+	}
 	
 	private void processResponse(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -38,17 +57,17 @@ import javax.servlet.http.HttpServletResponse;
 			out.print("<p>");
 			out.print(request.getMethod());
 			out.print("</p>");
+			
 			out.print("<p>");
-			for(Enumeration<?> e = request.getParameterNames(); e.hasMoreElements() ; ) {
-				String name = (String) e.nextElement();
-				out.print("<p>");
+			String name = request.getParameter("name");
+			String password = request.getParameter("password");
+			UserRecordFetcher fetcher = new UserRecordFetcher();
+			User record = fetcher.getUserRecord(name);
+			if(record.getName().equals(name) && record.getPassword().equals(password)) {
+				out.print("Welcome ");
 				out.print(name);
-				String[] values = request.getParameterValues(name);
-				for(String value : values ) {
-					out.print("&nbsp;");
-					out.print(value);
-				}
-				out.print("</p>");
+			} else {
+				out.print("Authentication failed");
 			}
 			out.print("</p>");
 			out.print("</body></html>");
@@ -57,11 +76,4 @@ import javax.servlet.http.HttpServletResponse;
 //			e.printStackTrace();
 		}
 	}
-
-	/* (non-Java-doc)
-	 * @see javax.servlet.http.HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		processResponse(request, response);
-	}   	  	    
 }
