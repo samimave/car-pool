@@ -2,5 +2,9 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/joid-1.0.3.jar" sourcepath="/joid-read-only/src"/>
+	<classpathentry kind="lib" path="lib/joid_db_config.jar"/>
+	<classpathentry kind="lib" path="lib/joid_store_hibernate.jar" sourcepath="/home/terrasea/Projects/Eclipse/Massey/SoftwareC/joid-read-only/stores/hibernate/src"/>
+	<classpathentry kind="lib" path="lib/servlet-api.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
