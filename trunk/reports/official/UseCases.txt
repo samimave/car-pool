@@ -1,0 +1,104 @@
+. The following use cases are 
+not in proper format but will serve us for now: 
+
+
+1. Registering for Car Pool 
+- The user clicks on the Register button 
+- The system takes the user to the Registration Form 
+- The user choose a user name and checks if this user name is 
+available 
+- The user choose a password and enters it 
+- The user adds other details asked for if they want to 
+- The user clicks on the Done button 
+- The system tells the user to check their email address and click on 
+the confirmation link 
+- The user goes and clicks on the confirmation link 
+- The system verifies the confirmation link and confirms the user's 
+account 
+- Alternatively: The user does not click the confirmation link within 
+the given time period so the system deletes the user's account 
+information 
+-  once account has been confirmed the user is free to modify their 
+account details 
+
+
+2. Add a Ride (Request & Offer) 
+-  The user clicks the Add A Ride button 
+- The system takes the user to the Create a Ride Form 
+- The user specifies if the ride is a one off or a regularly scheduled 
+one. Depending on what they have chosen they will either enter the 
+date and time of the ride or the days and times the ride is scheduled 
+for 
+- The user specifies the location FROM and TO and VIA. (The cities/ 
+towns can be chosen from a drop down box and the specific location of 
+pick up and drop off specified in a text field) 
+- The user specifies if the trip is a return trip or one way. If it is 
+a return trip the user specifies the time for the return trip 
+- The user specifies if they are Requesting a Ride or Offering a Ride. 
+- If the user is Requesting a Ride they specify the seats requested 
+and if the user is Offering a Ride they specify the seats available. 
+- The user can add any extraneous details through the comments section 
+- The user clicks on Confirm 
+- The system confirms the Ride has been added to the database 
+- The system adds the ride to the Driver's calendar. If the user is a 
+Rider (Requesting a Ride) nothing is added to calendar. 
+- The system adds the route to the Ride page's Google Map. 
+
+
+3. Accept Ride Offered 
+- The Rider can search for rides according to location (we are going 
+to have to decide how user can search for rides that may pass through 
+the locatioon they want to get even if it isn't a pick up or drop off 
+point) 
+- The Rider clicks on the ride they are interested in and the system 
+takes the Rider to the page with more details on the ride 
+- The Rider can talk to the Driver via the comments section and 
+negotiate things 
+- Once the Rider is satisfied they can click on Accept Ride and 
+specify the number of seats they will be taking up 
+- The system reduces the number of seats accordingly after ride has 
+been accepted. 
+- The system adds the Ride to the Rider's Calendar 
+(we need to decide if the Driver has the right to refuse a Rider....) 
+
+
+4. Accept Ride Requested 
+- The Driver searches for requested rides according to location. 
+- The Driver clicks on the ride they are interested in 
+- The Driver clicks on Accept Request or Counter-Offer (or clicks away 
+from the page...) 
+- If the Driver clicks on Accept Request the system sends Rider 
+notificaion email and enters info into Rider and Driver's calendars 
+- If the Driver clicks on Counter-Offer then the system takes Driver 
+to form that looks like Create A Ride form with the details the Rider 
+has entered filled in. The Driver can then modify these details 
+according to the counter offer they are creating and the system sends 
+the Rider a notification email with these details. The Rider can 
+accept the counter offer or reject it. 
+- If the Rider accepts Counter Offer then their Ride Request is 
+updated as Fulfilled. Their and the driver's calendar is updated 
+appropriately. 
+- Regardless of if the Rider accepts or rejects Counter Offer the 
+Driver can choose to make this Counter Offer public as a Ride Offer 
+
+
+(okay I know the last few points became horrible convoluted. Can 
+someone simplify it/think of an alternative way of doing things?) 
+
+
+5. Withdraw/Edit Request or Offer 
+- The user can do this by clicking on the Withdraw button (in their 
+Profile Page? On the Ride page?) or Editing the relevant details 
+- An Offer can only be edited or withdrawn 24 Hours before Departure 
+Time. A Request can be withdrawn at any time (??) 
+- If people have accepted rides and the offer is withdrawn they are 
+sent a notification email. 
+
+
+6. Rating Rider/Driver 
+(I can see this working kind of like the Trade Me thing) 
+- The user clicks on the Rate Rider/Driver button on their History 
+page. 
+- The user rates the driver and adds comments 
+- The other person's social score is updated as well as their history 
+page. 
