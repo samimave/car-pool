@@ -7,6 +7,7 @@ import java.util.Vector;
 
 import car.pool.persistance.CarPoolStore;
 import car.pool.persistance.CarPoolStoreImpl;
+import car.pool.persistance.exception.InvaildUserName;
 import car.pool.persistance.exception.InvaildUserNamePassword;
 import car.pool.persistance.exception.StoreException;
 import car.pool.persistance.util.Pair;
@@ -112,6 +113,25 @@ public class CarPoolStoreImplTest extends TestCase {
 		}
 	}
 	
+	public void testCheckUserExists(){
+		addLotsOfUsers();
+		
+		LinkedList<Pair<String,String>> temp = allUsedUsers();
+		
+		while(!temp.isEmpty()){
+			Pair<String, String> pair = temp.pollLast();
+			assertEquals("Username should have been accepted", true, cps.checkUserExists(pair.first));
+		}
+		
+		temp = allUsedUsers();
+		
+		while(!temp.isEmpty()){
+			Pair<String, String> pair = temp.pollLast();
+			boolean failed = false;
+			assertEquals("A wrong username was accepted", false, cps.checkUserExists("im not the username"));
+		}
+	}
+	
 	public void testCheckUser(){
 		
 		addLotsOfUsers();
@@ -154,6 +174,18 @@ public class CarPoolStoreImplTest extends TestCase {
 		}
 		temp = null;
 		
+	}
+	
+	public void testAddRide(){
+		//TODO
+	}
+	
+	public void testTakeRide(){
+		//TODO
+	}
+	
+	public void testRemoveUser(){
+		//TODO
 	}
 
 }
