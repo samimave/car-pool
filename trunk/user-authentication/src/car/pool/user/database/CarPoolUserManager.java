@@ -27,14 +27,14 @@ public class CarPoolUserManager implements UserManager {
 		addUser("Ben", "password");
 		addUser("Jordan", "password");
 		addUser("Parul", "password");
-		addUser("Sam/Yong", "password");
+		addUser("Sam", "password");
 	}
 	
 	protected void addUser(String name, String password) {
 		User record = new User();
 		record.setUsername(name);
 		record.setPassword(password);
-		users.put(name, record);
+		userManager().save(record);
 	}
 	
 	public void saveUser(User user) {
