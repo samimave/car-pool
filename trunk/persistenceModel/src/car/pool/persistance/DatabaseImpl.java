@@ -78,10 +78,6 @@ public class DatabaseImpl implements Database{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-
-				// Display URL and connection information
-				System.out.println("URL: " + url);
-				System.out.println("Connection: " + connection);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

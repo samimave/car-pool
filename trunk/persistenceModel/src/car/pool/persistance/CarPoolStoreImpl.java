@@ -8,6 +8,7 @@ import java.util.Vector;
 import java.util.zip.DataFormatException;
 
 import car.pool.persistance.exception.DuplicateUserNameException;
+import car.pool.persistance.exception.InvaildUserName;
 import car.pool.persistance.exception.InvaildUserNamePassword;
 import car.pool.persistance.exception.StoreException;
 import car.pool.persistance.exception.UserException;
@@ -21,27 +22,13 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		super();
 	}
 
-	@Override
-	public int addUser(String username, String passwordHash)
-			throws StoreException {
+	
+	public int addUser(String username, String passwordHash) throws DuplicateUserNameException, UserException {
 
 		int id = FAILED;
-		boolean duplicate = false;//true if username is duplicate
 		Statement statement;
 
-		try {
-
-			ResultSet rs = (statement = db.getStatement())
-					.executeQuery("SELECT idUser from User WHERE userName='"
-							+ username + "';");
-			duplicate = rs.next();
-			rs.close();
-			statement.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		if(duplicate){
+		if(checkUserExists(username)){
 			throw new DuplicateUserNameException("Username in use");
 		}
 
@@ -81,7 +68,35 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		}
 	}
 
-	@Override
+	/**
+	 * Check username exists
+	 * @param username
+	 * @return
+	 * @throws InvaildUserNamePassword 
+	 */
+	public boolean checkUserExists(String username){
+		boolean userExists = false;
+
+		Statement statement = db.getStatement();
+		String sql = "SELECT idUser from User " + "Where userName='" + username+"';";
+		try {
+			statement = db.getStatement();
+			ResultSet rs = statement.executeQuery(sql);
+			userExists = rs.next();
+			rs.close();
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.exit(0);
+		}
+
+		if (!userExists) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
 	public int checkUser(String username, String passwordHash) throws InvaildUserNamePassword {
 		int id = FAILED;
 
@@ -107,13 +122,11 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		}
 	}
 
-	@Override
 	public int takeRide(int user, int ride) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	@Override
 	public int addRide(int user, int availableSeats, long startDate,
 			long endDate, String startLocation, String endLocation) {
 		// TODO Auto-generated method stub
