@@ -14,7 +14,5 @@ public interface CarPoolStore {
 	int checkUser(String username, String passwordHash) throws InvaildUserNamePassword;
 	int addRide(int user, int availableSeats, long startDate,long endDate, String startLocation, String endLocation) throws RideException;
 	int takeRide(int user, int ride) throws RideException;
-	
-	String getErrorMessage();
 	boolean removeUser(String username, String passwordHash) throws StoreException;
 }
