@@ -1,5 +1,6 @@
 package car.pool.persistance.test;
 
+import java.sql.Date;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Random;
@@ -9,6 +10,7 @@ import car.pool.persistance.CarPoolStore;
 import car.pool.persistance.CarPoolStoreImpl;
 import car.pool.persistance.exception.InvaildUserName;
 import car.pool.persistance.exception.InvaildUserNamePassword;
+import car.pool.persistance.exception.RideException;
 import car.pool.persistance.exception.StoreException;
 import car.pool.persistance.util.Pair;
 import junit.framework.TestCase;
@@ -19,12 +21,14 @@ public class CarPoolStoreImplTest extends TestCase {
 	CarPoolStore cps = null;
 	
 	LinkedList<Pair<String, String>> usedUsers = null;
+	LinkedList<Integer> lodgedRides = null;
 	
 	protected void setUp() throws Exception {
 		super.setUp();
 		
 		cps = new CarPoolStoreImpl();
 		usedUsers = new LinkedList<Pair<String, String>>();
+		lodgedRides = new LinkedList<Integer>();
 	}
 	
 	/**
@@ -34,6 +38,14 @@ public class CarPoolStoreImplTest extends TestCase {
 	 */
 	private void trackUser(String username, String password){
 		usedUsers.add(new Pair(username, password));
+	}
+	
+	/**
+	 * remember a ride from removal later
+	 * @param idRide
+	 */
+	private void trackRide(int idRide){
+		lodgedRides.add(idRide);
 	}
 	
 	/**
@@ -178,6 +190,49 @@ public class CarPoolStoreImplTest extends TestCase {
 	
 	public void testAddRide(){
 		//TODO
+		
+		addLotsOfUsers();
+		
+		LinkedList<Pair<String,String>> temp = allUsedUsers();
+		
+		Pair<String, String> user = temp.pollLast();
+		
+		int id = 0;
+		try {
+			id = cps.checkUser(user.first, user.second);
+		} catch (InvaildUserNamePassword e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.exit(0);
+		}
+		
+		int ride = 0;
+		System.out.println(id);
+		try {
+			Date date = new Date(System.currentTimeMillis());
+			ride = cps.addRide(id, 4, date.toString(), "Massey", "Home");
+		} catch (RideException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		user = temp.pollLast();
+		
+		int u = 0;
+		try {
+			u = cps.checkUser(user.first, user.second);
+		} catch (InvaildUserNamePassword e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.exit(0);
+		}
+		
+		try {
+			cps.takeRide(u, ride);
+		} catch (RideException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void testTakeRide(){
