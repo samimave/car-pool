@@ -7,9 +7,12 @@ import java.sql.Statement;
 import java.util.Vector;
 import java.util.zip.DataFormatException;
 
+import com.sun.org.apache.xml.internal.utils.StopParseException;
+
 import car.pool.persistance.exception.DuplicateUserNameException;
 import car.pool.persistance.exception.InvaildUserName;
 import car.pool.persistance.exception.InvaildUserNamePassword;
+import car.pool.persistance.exception.RideException;
 import car.pool.persistance.exception.StoreException;
 import car.pool.persistance.exception.UserException;
 
@@ -122,15 +125,75 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		}
 	}
 
-	public int takeRide(int user, int ride) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int takeRide(int user, int ride) throws RideException {
+		Statement statement = db.getStatement();
+		int id = FAILED;
+		String sql = "INSERT INTO Matches "
+				+ "(idUser,idRide) "
+				+ "VALUES ('" + user + "','" + ride+"');";
+		
+		try {
+			statement.executeUpdate(sql);
+			statement.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			statement = db.getStatement();
+			sql = "SELECT LAST_INSERT_ID();";
+			ResultSet rs = statement.executeQuery(sql);
+			if (rs.next()) {
+				id = rs.getInt(1);
+			}
+			rs.close();
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		if(id==FAILED){
+			throw new RideException("add ride failed");
+		}else{
+			return id;
+		}
 	}
 
-	public int addRide(int user, int availableSeats, long startDate,
-			long endDate, String startLocation, String endLocation) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int addRide(int user, int availableSeats, String startDate, String startLocation, String endLocation) throws RideException {
+		
+		Statement statement = db.getStatement();
+		int id = FAILED;
+		String sql = "INSERT INTO Ride "
+				+ "(idUser,rideDate,rideStartLocation,rideStopLocation,availableSeats) "
+				+ "VALUES ('" + user + "','" + startDate+"','"+ startLocation + "','" + endLocation+"','"+ availableSeats+"');";
+		
+		try {
+			statement.executeUpdate(sql);
+			statement.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			statement = db.getStatement();
+			sql = "SELECT LAST_INSERT_ID();";
+			ResultSet rs = statement.executeQuery(sql);
+			if (rs.next()) {
+				id = rs.getInt(1);
+			}
+			rs.close();
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		if(id==FAILED){
+			throw new RideException("add ride failed");
+		}else{
+			return id;
+		}
 	}
 	
 	public boolean removeUser(String username, String passwordHash){
