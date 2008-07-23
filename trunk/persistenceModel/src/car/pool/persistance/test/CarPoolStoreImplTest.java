@@ -153,7 +153,6 @@ public class CarPoolStoreImplTest extends TestCase {
 			assertEquals("A unknown username was accepted", true, failed);
 		}
 		temp = null;
-		//TODO check unknown user returns negitive
 		
 	}
 

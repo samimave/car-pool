@@ -107,20 +107,6 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		}
 	}
 
-	private void logError(String e) {
-		errors.insert(0, "\n" + e);
-	}
-
-	/**
-	 * Retusn the last errors thrown by this Store. For developer use only.
-	 */
-	@Override
-	public String getErrorMessage() {
-		String e = errors.toString();
-		errors.delete(0, errors.length());
-		return e;
-	}
-
 	@Override
 	public int takeRide(int user, int ride) {
 		// TODO Auto-generated method stub
