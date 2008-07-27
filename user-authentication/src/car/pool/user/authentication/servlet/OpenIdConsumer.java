@@ -7,6 +7,8 @@ import java.util.Enumeration;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.verisign.joid.OpenIdException;
 import org.verisign.joid.consumer.OpenIdFilter;
 import org.verisign.joid.util.UrlUtils;
@@ -18,9 +20,7 @@ import org.verisign.joid.util.UrlUtils;
  */
  public class OpenIdConsumer extends javax.servlet.http.HttpServlet implements javax.servlet.Servlet {
    static final long serialVersionUID = 1L;
-private static final boolean String = false;
-   
-    /* (non-Java-doc)
+/* (non-Java-doc)
 	 * @see javax.servlet.http.HttpServlet#HttpServlet()
 	 */
 	public OpenIdConsumer() {
@@ -33,6 +33,12 @@ private static final boolean String = false;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(request.getParameter("signin") != null) {
 			try {
+				HttpSession session = request.getSession();
+				if(session.isNew() != true) {
+					session.invalidate();
+					HttpSession nsession = request.getSession(true);
+					
+				}
 				StringBuffer returnTo = new StringBuffer(UrlUtils.getBaseUrl(request));
 				returnTo.append(request.getServletPath());
 				
@@ -45,7 +51,7 @@ private static final boolean String = false;
 				response.sendRedirect(s);
 			} catch (OpenIdException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
 				printLoginPage(request, response, false);
 			}
 			
@@ -65,6 +71,12 @@ private static final boolean String = false;
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(request.getParameter("signin") != null) {
 			try {
+				HttpSession session = request.getSession();
+				if(session.isNew() != true) {
+					session.invalidate();
+					HttpSession nsession = request.getSession(true);
+					
+				}
 				StringBuffer returnTo = new StringBuffer(UrlUtils.getBaseUrl(request));
 				returnTo.append(request.getServletPath());
 				String id = request.getParameter("openid_url");
@@ -76,7 +88,7 @@ private static final boolean String = false;
 				response.sendRedirect(s);
 			} catch (OpenIdException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
 				printLoginPage(request, response, false);
 			}
 		} else {
@@ -114,10 +126,13 @@ private static final boolean String = false;
 			out.print(OpenIdFilter.getCurrentUser(request.getSession()));
 			out.print(HtmlUtils.generateSigninForm(buff.toString(), "post"));
 		}
-		Enumeration e = request.getSession().getAttributeNames();
+		Enumeration e = request.getParameterNames();
+		out.print("<p>Attributes</p>");
 		while( e.hasMoreElements() ) {
-			out.print("<p>");
-			out.print(e.nextElement());
+			out.print("<p> -");
+			Object elem = e.nextElement();
+			out.print(elem);
+			out.print(request.getParameter((String) elem));
 			out.print("</p>");
 		}
 		out.println("</p>");
