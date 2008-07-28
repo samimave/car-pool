@@ -35,12 +35,12 @@ import org.verisign.joid.util.UrlUtils;
 			try {
 				HttpSession session = request.getSession();
 				if(session.isNew() != true) {
-					session.invalidate();
-					HttpSession nsession = request.getSession(true);
+					//session.invalidate();
+					//HttpSession nsession = request.getSession(true);
 					
 				}
 				StringBuffer returnTo = new StringBuffer(UrlUtils.getBaseUrl(request));
-				returnTo.append(request.getServletPath());
+				//returnTo.append(request.getServletPath());
 				
 				String id = request.getParameter("openid_url");
 				if (!id.startsWith("http:")) {
@@ -57,6 +57,10 @@ import org.verisign.joid.util.UrlUtils;
 			
 		} else {
 			String loggedInAs = OpenIdFilter.getCurrentUser(request.getSession());
+			if( loggedInAs == null  && request.getParameter(OpenIdFilter.OPENID_ATTRIBUTE) != null) {
+				request.getSession(true).setAttribute(OpenIdFilter.OPENID_IDENTITY, request.getParameter(OpenIdFilter.OPENID_IDENTITY));
+				loggedInAs = OpenIdFilter.getCurrentUser(request.getSession());
+			}
 			if(loggedInAs != null) {
 				printLoginPage(request, response, true);
 			} else {
@@ -73,12 +77,12 @@ import org.verisign.joid.util.UrlUtils;
 			try {
 				HttpSession session = request.getSession();
 				if(session.isNew() != true) {
-					session.invalidate();
-					HttpSession nsession = request.getSession(true);
+					//session.invalidate();
+					//HttpSession nsession = request.getSession(true);
 					
 				}
 				StringBuffer returnTo = new StringBuffer(UrlUtils.getBaseUrl(request));
-				returnTo.append(request.getServletPath());
+				//returnTo.append(request.getServletPath());
 				String id = request.getParameter("openid_url");
 				if (!id.startsWith("http:")) {
 					id = "http://" + id;
@@ -93,7 +97,10 @@ import org.verisign.joid.util.UrlUtils;
 			}
 		} else {
 			String loggedInAs = OpenIdFilter.getCurrentUser(request.getSession());
-			
+			if( loggedInAs == null  && request.getParameter(OpenIdFilter.OPENID_ATTRIBUTE) != null) {
+				request.getSession(true).setAttribute(OpenIdFilter.OPENID_IDENTITY, request.getParameter(OpenIdFilter.OPENID_IDENTITY));
+				loggedInAs = OpenIdFilter.getCurrentUser(request.getSession());
+			}
 			if(loggedInAs != null) {
 				if(request.getParameter("signout") != null) {
 					OpenIdFilter.logout(request.getSession());
