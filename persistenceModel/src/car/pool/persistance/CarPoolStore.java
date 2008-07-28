@@ -17,4 +17,6 @@ public interface CarPoolStore {
 	int addRide(int user, int availableSeats, String startDate, String startLocation, String endLocation) throws RideException;
 	int takeRide(int user, int ride) throws RideException;
 	boolean removeUser(String username, String passwordHash) throws StoreException;
+	boolean removeRide(int user, int ride) throws StoreException;
+	boolean removeRide(int ride) throws StoreException;
 }

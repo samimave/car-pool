@@ -207,7 +207,6 @@ public class CarPoolStoreImplTest extends TestCase {
 		}
 		
 		int ride = 0;
-		System.out.println(id);
 		try {
 			Date date = new Date(System.currentTimeMillis());
 			ride = cps.addRide(id, 4, date.toString(), "Massey", "Home");
@@ -230,6 +229,18 @@ public class CarPoolStoreImplTest extends TestCase {
 		try {
 			cps.takeRide(u, ride);
 		} catch (RideException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			cps.removeRide(u, ride);
+		} catch (StoreException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			cps.removeRide(ride);
+		} catch (StoreException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

@@ -212,4 +212,39 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		return true;
 	}
 
+
+	@Override
+	public boolean removeRide(int user, int ride) throws StoreException {
+		Statement statement = null;
+		
+		try {
+			statement = db.getStatement();
+			statement.executeUpdate("DELETE FROM Matches WHERE idUser='"+user+"' " +
+													"AND idRide='"+ride+"';");
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//TODO check user,ride was removed
+		return true;
+	}
+
+
+	@Override
+	public boolean removeRide(int ride) throws StoreException {
+Statement statement = null;
+		
+		try {
+			statement = db.getStatement();
+			statement.executeUpdate("DELETE FROM Ride WHERE idRide='"+ride+"';");
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//TODO check user was removed
+		return true;
+	}
+
 }
