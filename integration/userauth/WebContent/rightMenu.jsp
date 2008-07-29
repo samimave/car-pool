@@ -1,6 +1,11 @@
 <%@page import="java.util.*, java.text.*" %>
+
+<%
+String user = (String)s.getAttribute("username");
+%>
+
 <div id="navBeta">
-	Hi &lt;username&gt;!
+	Hi &lt;<%= user %>&gt;!
 	Your current social score is: &lt;integer?&gt;.
 <%
 Date rnow = new Date();

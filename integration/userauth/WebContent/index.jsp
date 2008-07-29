@@ -1,6 +1,12 @@
-<%@page contentType="text/html; charset=ISO-8859-1" import="car_pool.user.*"%>
+<%@page contentType="text/html; charset=ISO-8859-1"%>
 
-<%@page import="car_pool.user.authentication.Authenticate"%><html>
+<%//@page import=""%>
+
+<%
+HttpSession s = request.getSession(true);
+%>
+
+<html>
 	<head>
 		<title> The Car Pool </title>
 		<style type="text/css" media="screen">@import "3ColumnLayout.css";</style>
@@ -19,7 +25,7 @@
 	</div>
 
 	<div id="navBeta">
-		<FORM NAME="login" method="post" action="">
+		<FORM NAME="login" method="post" action="welcome.jsp">
 			UserName:<br />
 			<INPUT TYPE="text" NAME="user" VALUE="" SIZE="15">
 			Password:<br />
@@ -31,3 +37,4 @@
 		
 	</body>
 </html>
+
