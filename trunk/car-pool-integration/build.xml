@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+
+<project name="car-pool" default="all">
+	<property name="includefiletypes" value="**/*.java,**/*.jsp,**/*.sql,**/*.jpg,**/*.bmp,**/*.js,**/*.html,**/*.css,**/*.gif,**/*.png,**/*.jar"/>
+	<property name="excludefiletypes" value="**/*.class"/>
+	<property name="base-directory" value=".."/>
+	<property name="googleAddOns" value="${base-directory}/googleAddOns"/>
+	<property name="persistenceModel" value="${base-directory}/persistenceModel"/>
+	<property name="user-authentication" value="${base-directory}/user-authentication"/>
+	<property name="webInterface" value="${base-directory}/webInterface"/>
+
+	<!-- ================================= 
+          target: all              
+         ================================= -->
+    <target name="all" depends="googleAddOns,persistenceModel,user-authentication,webInterface" description="--> description">
+        
+    </target>
+
+	<!-- ================================= 
+          target: googleAddOns              
+         ================================= -->
+    <target name="googleAddOns">
+	
+        <copy todir="back">
+        	<fileset dir="${googleAddOns}/" includes="${includefiletypes}" excludes="${excludefiletypes}"/>
+		<chainedmapper>
+  			<flattenmapper/>
+			<globmapper from="*.jsp" to="WebContent/*.jsp"/>
+			<!--<globmapper from="*.java" to="src/*.java"/>-->
+		</chainedmapper>
+		<!--<chainedmapper>
+			<flattenmapper/>
+			<globmapper from="*.java" to="src/*.java"/>
+		</chainedmapper>-->
+        </copy>
+	<copy todir="back">
+        	<fileset dir="${googleAddOns}/" includes="**/*.java" excludes="${excludefiletypes}"/>
+		<compositemapper>
+			<flattenmapper/>
+			<identitymapper/>
+			<packagemapper from="*.java" to="*.java"/>
+		</compositemapper>
+        </copy>
+	<move todir="back">
+        	<fileset dir="back" includes="**/*.java" excludes="${excludefiletypes}"/>
+		<compositemapper>
+			<unpackagemapper from="googleCal.*.java" to="*.java"/>
+			<unpackagemapper from="*.java" to="*.java"/>
+		</compositemapper>
+        </move>
+    </target>
+	
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: persistenceModel                      
+         - - - - - - - - - - - - - - - - - -->
+    <target name="persistenceModel">
+	<copy todir="back">
+		<fileset dir="${persistenceModel}/" includes="${includefiletypes}" excludes="${excludefiletypes}"/>
+		<chainedmapper>
+  			<flattenmapper/>
+			<globmapper from="*.jsp" to="WebContent/*.jsp"/>
+			<!--<globmapper from="*.java" to="src/*.java"/>-->
+		</chainedmapper>
+		<!--<chainedmapper>
+			<flattenmapper/>
+			<globmapper from="*.java" to="src/*.java"/>
+		</chainedmapper>-->
+        </copy>
+	<copy todir="back">
+        	<fileset dir="${persistenceModel}/" includes="${includefiletypes}" excludes="${excludefiletypes}"/>
+        </copy>
+    </target>
+	
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: user-authentication                      
+         - - - - - - - - - - - - - - - - - -->
+    <target name="user-authentication">
+            <copy todir="back">
+		<fileset dir="${user-authentication}/" includes="${includefiletypes}" excludes="${excludefiletypes}"/>
+		<chainedmapper>
+  			<flattenmapper/>
+			<globmapper from="*.jsp" to="WebContent/*.jsp"/>
+			<!--<globmapper from="*.java" to="src/*.java"/>-->
+		</chainedmapper>
+		<!--<chainedmapper>
+			<flattenmapper/>
+			<globmapper from="*.java" to="src/*.java"/>
+		</chainedmapper>-->
+        </copy>
+	<copy todir="back">
+        	<fileset dir="${user-authentication}/" includes="${includefiletypes}" excludes="${excludefiletypes}"/>
+        </copy>
+    </target>
+	
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: webInterface                      
+         - - - - - - - - - - - - - - - - - -->
+    <target name="webInterface">
+            <copy todir="back">
+		<fileset dir="${webInterface}/" includes="${includefiletypes}" excludes="${excludefiletypes}"/>
+		<chainedmapper>
+  			<flattenmapper/>
+			<globmapper from="*.jsp" to="WebContent/*.jsp"/>
+			<!--<globmapper from="*.java" to="src/*.java"/>-->
+		</chainedmapper>
+		<!--<chainedmapper>
+			<flattenmapper/>
+			<globmapper from="*.java" to="src/*.java"/>
+		</chainedmapper>-->
+        </copy>
+	<copy todir="back">
+        	<fileset dir="${webInterface}/" includes="${includefiletypes}" excludes="${excludefiletypes}"/>
+        </copy>
+    </target>
+
+</project>
