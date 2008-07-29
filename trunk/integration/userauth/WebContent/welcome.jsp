@@ -1,4 +1,11 @@
 <%@page contentType="text/html; charset=ISO-8859-1" %>
+
+<%
+HttpSession s = request.getSession(false);
+String uname = request.getParameter("user");
+s.setAttribute("username",uname);
+%>
+
 <html>
 	<head>
 		<title> Welcome to The Car Pool </title>
@@ -19,3 +26,4 @@
 
 	</body>
 </html>
+

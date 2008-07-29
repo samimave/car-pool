@@ -1,4 +1,9 @@
 <%@page contentType="text/html; charset=ISO-8859-1" %>
+
+<%
+HttpSession s = request.getSession(true);
+%>
+
 <html>
 	<head>
 		<title> Ride Successfully Added! </title>

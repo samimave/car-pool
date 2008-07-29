@@ -1,4 +1,9 @@
 <%@page contentType="text/html; charset=ISO-8859-1" import="java.util.*, java.text.*"%>
+
+<%
+HttpSession s = request.getSession(true);
+%>
+
 <html>
 	<head>
 		<title> Offer a Ride </title>
