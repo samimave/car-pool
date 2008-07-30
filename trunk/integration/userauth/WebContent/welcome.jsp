@@ -1,9 +1,9 @@
 <%@page contentType="text/html; charset=ISO-8859-1" %>
 
 <%
-HttpSession s = request.getSession(false);
+//HttpSession s = request.getSession(false);
 String uname = request.getParameter("user");
-s.setAttribute("username",uname);
+session.setAttribute("username",uname);
 %>
 
 <html>
