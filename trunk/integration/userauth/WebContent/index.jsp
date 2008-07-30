@@ -1,6 +1,5 @@
 <%@page contentType="text/html; charset=ISO-8859-1"%>
-
-<%//@page import=""%>
+<%@page import="org.verisign.joid.consumer.OpenIdFilter" %>
 
 <%
 HttpSession s = request.getSession(true);
@@ -21,18 +20,14 @@ HttpSession s = request.getSession(true);
 		</div>
 
 	<div id="navAlpha">
-		Please Log in.
+		<%if(OpenIdFilter.getCurrentUser(request.getSession()) == null) {
+			%>Please Log in<%
+		} else {
+		%> Logged in as <% out.println(OpenIdFilter.getCurrentUser(request.getSession()));  }%>
 	</div>
 
 	<div id="navBeta">
-		<FORM NAME="login" method="post" action="welcome.jsp">
-			UserName:<br />
-			<INPUT TYPE="text" NAME="user" VALUE="" SIZE="15">
-			Password:<br />
-			<INPUT TYPE="text" NAME="pword" VALUE="" SIZE="15"> 
-			<INPUT TYPE="submit" NAME="submit" VALUE="Login" SIZE="15" onclick=""> 
-		</FORM>
-		<a href="welcome.jsp">Sign Up</a>
+		<%@include file="openidlogin.html"%>
 	</div>
 		
 	</body>
