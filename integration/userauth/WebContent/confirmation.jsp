@@ -1,7 +1,7 @@
 <%@page contentType="text/html; charset=ISO-8859-1" %>
 
 <%
-HttpSession s = request.getSession(true);
+//HttpSession s = request.getSession(false);
 %>
 
 <html>
