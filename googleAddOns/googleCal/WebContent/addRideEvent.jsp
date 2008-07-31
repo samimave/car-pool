@@ -3,15 +3,21 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
     <title>My Google Data API Application</title>
-    <script src="http://www.google.com/jsapi?key=ABQIAAAA7rDxBnSa8ztdEea-bXHUqRTTZprX4YwS4GpqrFod4OfVHr1K6RQgRE9sL3F_96hh2QUZHuANtwF-KA" type="text/javascript"></script>
+    <script src="http://www.google.com/jsapi?key=<%=request.getParameter("key") %>" type="text/javascript"></script>
     <script type="text/javascript">
+    //ABQIAAAA7rDxBnSa8ztdEea-bXHUqRTTZprX4YwS4GpqrFod4OfVHr1K6RQgRE9sL3F_96hh2QUZHuANtwF-KA
     //<![CDATA[
 
     google.load("gdata", "1");
 
     function OnLoad() {
     	google.load("gdata", "1");
-    	  
+
+  	  	<% 
+  	  		String title = request.getParameter("title"); 
+  	  	 	String startDate = request.getParameter("start"); 
+  	  	 	String endDate = request.getParameter("end"); 
+		%>
 
           var scope = 'http://www.google.com/calendar/feeds/';
           if(!google.accounts.user.checkLogin(scope)){
@@ -19,6 +25,8 @@
           }else{
         	  /*
         	   * Create a single event
+         	  var startTime = google.gdata.DateTime.fromIso8601("2008-09-10T09:00:00.000");
+         	  var endTime = google.gdata.DateTime.fromIso8601("2008-09-10T10:00:00.000");
         	   */ 
 
         	  // Create the calendar service object
@@ -32,14 +40,14 @@
         	  var entry = new google.gdata.calendar.CalendarEventEntry();
 
         	  // Set the title of the event
-        	  entry.setTitle(google.gdata.Text.create('JS-Client: insert event'));
+        	  entry.setTitle(google.gdata.Text.create("<%=title %>"));
 
         	  // Create a When object that will be attached to the event
         	  var when = new google.gdata.When();
 
         	  // Set the start and end time of the When object
-        	  var startTime = google.gdata.DateTime.fromIso8601("2008-02-10T09:00:00.000-08:00");
-        	  var endTime = google.gdata.DateTime.fromIso8601("2008-02-10T10:00:00.000-08:00");
+        	  var startTime = google.gdata.DateTime.fromIso8601("<%=startDate %>");
+        	  var endTime = google.gdata.DateTime.fromIso8601("<%=endDate %>");
         	  when.setStartTime(startTime);
         	  when.setEndTime(endTime);
 
@@ -69,5 +77,7 @@
   </body>
 </html>
   
+
+
 
 
