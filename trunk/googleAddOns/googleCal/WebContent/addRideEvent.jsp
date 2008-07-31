@@ -23,12 +23,6 @@
           if(!google.accounts.user.checkLogin(scope)){
               google.accounts.user.login();
           }else{
-        	  /*
-        	   * Create a single event
-         	  var startTime = google.gdata.DateTime.fromIso8601("2008-09-10T09:00:00.000");
-         	  var endTime = google.gdata.DateTime.fromIso8601("2008-09-10T10:00:00.000");
-        	   */ 
-
         	  // Create the calendar service object
         	  var calendarService = new google.gdata.calendar.CalendarService('GoogleInc-jsguide-1.0');
 
@@ -56,10 +50,12 @@
 
         	  // The callback method that will be called after a successful insertion from insertEntry()
         	  var callback = function(result) {
+            	  window.location = "success.html"
         	  }
 
         	  // Error handler will be invoked if there is an error from insertEntry()
         	  var handleError = function(error) {
+        		  window.location = "fail.html"
         	  }
 
         	  // Submit the request using the calendar service object
