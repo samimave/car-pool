@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.verisign.joid.OpenIdException;
 import org.verisign.joid.consumer.OpenIdFilter;
 import org.verisign.joid.util.UrlUtils;
@@ -117,6 +119,8 @@ import org.verisign.joid.util.UrlUtils;
 	@SuppressWarnings("unchecked")
 	private void printLoginPage(HttpServletRequest request, HttpServletResponse response, boolean loggedin) 
 	throws ServletException, IOException {
+		Log log = LogFactory.getLog(OpenIdConsumer.class);
+		log.info("Printing login page");
 		PrintWriter out = response.getWriter();
 		StringBuffer buff = new StringBuffer();
 		buff.append(request.getContextPath());
