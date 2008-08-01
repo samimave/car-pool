@@ -1,86 +1,49 @@
 package car.pool.user.authentication;
 
-import javax.security.auth.login.LoginException;
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.verisign.joid.AuthenticationRequest;
-import org.verisign.joid.server.User;
-
-import car.pool.user.database.NoSuchUserException;
-import car.pool.user.database.CarPoolUserManager;
+import org.verisign.joid.OpenIdException;
+import org.verisign.joid.consumer.OpenIdFilter;
 
 public class Authenticate {
-
-	/**
-	 * The UserManager for the purposes of storing user names and passwords
-	 */
-	CarPoolUserManager userRecords = new CarPoolUserManager();
+	private String returnTo = null;
+	private String trustRoot = null;
 	
-	/**
-	 * The Authentication class for authenticating users and/or creating new users
-	 */
-	public Authenticate() {
-		
+	public Authenticate(String returnTo, String trustRoot) {
+		this.returnTo = returnTo;
+		this.trustRoot = trustRoot;
 	}
 	
-	/**
-	 * Authenticates a user.  If they are new then creates a new user. If not then fetches the record of the user and checks their password.
-	 * @param name - the name of the user
-	 * @param password - the users password
-	 * @param newUser - boolean variable, true if they are a new user, false if not new user
-	 * @throws LoginException - will be thrown if either the username is wrong in the case of newUser being false or if the password supplied is wrong
-	 */
-	public void authenticate(String name, String password, boolean newUser) throws LoginException {
-		User user = fetchUserRecord(name, password, newUser);
-		if(newUser != true) {
-			checkPassword(user, password);
-		}
+	private boolean userExists(String openid) {
+		return false;
 	}
 	
-	
-	public boolean canClaim(User user, String claimedId) {
-		return userRecords.canClaim(user.getUsername(), claimedId);
-	}
-	
-	/**
-	 * Fetches a user record creating one if one does not already exist
-	 * @param name - the name of the user
-	 * @param password - the users password
-	 * @param newUser -  boolean variable, true if they are a new user, false if not new user
-	 * @return a user record containing their name and password
-	 * @throws LoginException - will be thrown if the username is wrong in the case of newUser being false.
-	 */
-	User fetchUserRecord(String name, String password, boolean newUser) throws LoginException {
-		User user = null;
+	public void askProvider(String openid, HttpServletResponse response) throws IOException {
 		try {
-			user = userRecords.getUser(name);
-		} catch (NoSuchUserException e) {
-			if(newUser) {
-				user = new User(name, password);
-				userRecords.saveUser(user);
+			if(userExists(openid)) {
+				response.sendRedirect(OpenIdFilter.joid().getAuthUrl(openid, returnTo, trustRoot));
 			} else {
-				throw new LoginException();
+				// TODO deal with getting extra data to put in the DB
 			}
-		}
-		return user;
+		} catch (OpenIdException e) {
+			
+		}	
 	}
 	
-	/**
-	 * Checks if password is correct
-	 * @param user - the user record
-	 * @param password - the supplied password for checking
-	 * @throws LoginException - thrown if supplied password is wrong
-	 */
-	void checkPassword(User user, String password) throws LoginException {
-		if(user.getPassword().equals(password) != true) {
-			throw new LoginException();
+	public boolean checkResponse(HttpSession session) {
+		if(OpenIdFilter.getCurrentUser(session) != null ) {
+			return true;
 		}
-	}
-	
-	
-	public String getClaimID( HttpSession session ) {
-		String claimedID = (String)session.getAttribute(AuthenticationRequest.OPENID_CLAIMED_ID);
 		
-		return claimedID;
+		return false;
+	}
+	
+	public void logout(HttpSession session) {
+		OpenIdFilter.logout(session);
+	    session.removeAttribute("user");
+	    session.invalidate();
 	}
 }

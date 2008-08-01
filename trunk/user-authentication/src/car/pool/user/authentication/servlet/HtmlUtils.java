@@ -8,7 +8,7 @@ public class HtmlUtils {
 		buff.append(localAddr);
 		buff.append("\" method=\"");
 		buff.append(method);
-		buff.append("\"><p><input type=\"hidden\" name=\"signin\" value=\"true\"/>Your OpenId<input type=\"text\" name=\"openid_url\" id=\"openid_url\" size=30/><input type=\"submit\" value=\"Login\"/></p></form>");
+		buff.append("\"><p><input type=\"hidden\" name=\"signin\" value=\"true\"/>Your OpenId<input type=\"text\" name=\"openid_url\" id=\"openid_url\" size=\"30\"/><input type=\"submit\" value=\"Login\"/></p></form>");
 		
 		return buff.toString();
 	}
