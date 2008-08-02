@@ -232,7 +232,7 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		try {
 			statement = db.getStatement();
 			statement.executeUpdate("DELETE FROM User WHERE userName='"+username+"' " +
-													"AND userPasswordHash='"+passwordHash+"';");
+									"AND userPasswordHash='"+passwordHash+"';");
 			statement.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -334,9 +334,10 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		
 		try {
 			statement = db.getStatement();
-			statement.executeUpdate("INSERT INTO user_openids (openid_url, idUser) VALUES ('"
-									+openid_url+"', " +
-									+idUser+"');");
+			String sql = "INSERT INTO user_openids (openid_url, idUser) VALUES ('"
+				+openid_url+"', '" +
+				+idUser+"');";
+			statement.executeUpdate(sql);
 			statement.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -354,7 +355,7 @@ public class CarPoolStoreImpl implements CarPoolStore {
 			statement = db.getStatement();
 			statement.executeUpdate("DELETE FROM user_openids WHERE " +
 									"openid_url='"+openid_url+"' AND " +
-									"idUser='"+idUser+"');");
+									"idUser='"+idUser+"';");
 			statement.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -371,7 +372,7 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		try {
 			statement = db.getStatement();
 			statement.executeUpdate("DELETE FROM user_openids WHERE " +
-									"idUser='"+idUser+"');");
+									"idUser='"+idUser+"';");
 			statement.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -379,5 +380,25 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		
 		//TODO check openID was Attached
 		return true;
+	}
+	
+	public void removeAll(String password){
+		if(password != "donotusethis"){
+			return;
+		}
+		
+Statement statement = null;
+		
+		try {
+			statement = db.getStatement();
+			statement.executeUpdate("DELETE FROM user_openids;");
+			statement.executeUpdate("DELETE FROM matches;");
+			statement.executeUpdate("DELETE FROM ride;");
+			statement.executeUpdate("DELETE FROM user;");
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 	}
 }
