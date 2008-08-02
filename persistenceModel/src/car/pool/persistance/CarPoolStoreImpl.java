@@ -33,7 +33,6 @@ public class CarPoolStoreImpl implements CarPoolStore {
 
 		int id = FAILED;
 		Statement statement;
-
 		if(checkUserExists(username)){
 			throw new DuplicateUserNameException("Username in use");
 		}
@@ -44,8 +43,9 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		String sql = "INSERT INTO User "
 				+ "(userName,userPasswordHash,email,mobile_number,signUpDate) "
 				+ "VALUES ('" + username + "','" + passwordHash + "','"
-				+ date.toString() + "','0','0');";
-		
+				+ email + "','"
+				+ mobile + "','"
+				+ date.toString() + "');";
 		try {
 			statement.executeUpdate(sql);
 			statement.close();
@@ -128,12 +128,39 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		}
 	}
 
-	public int takeRide(int user, int ride) throws RideException {
+	public int getMaxSeats(int ride){
+		return 4;
+	}
+	
+	public int takeRide(int user, int ride) throws RideException{
+		boolean success = false;
+		int maxSeat = getMaxSeats(ride);
+		int seatNum = 0;
+		int idTrip = -1;
+		while(!success && seatNum<=maxSeat){
+			success = true;
+			
+			try {
+				idTrip = takeRide(user, ride, seatNum);
+			} catch (RideException e) {
+				success = false;
+			}
+			seatNum++;
+		}
+		
+		if(!success){
+			throw new RideException("add ride failed");
+		}else{
+			return idTrip;
+		}
+	}
+	
+	public int takeRide(int user, int ride, int seatNum) throws RideException {
 		Statement statement = db.getStatement();
 		int id = FAILED;
 		String sql = "INSERT INTO Matches "
-				+ "(idUser,idRide) "
-				+ "VALUES ('" + user + "','" + ride+"');";
+				+ "(idUser,idRide, seatNum) "
+				+ "VALUES ('" + user + "','" + ride + "','" + seatNum + "');";
 		
 		try {
 			statement.executeUpdate(sql);
