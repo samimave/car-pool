@@ -8,17 +8,19 @@ import java.util.Vector;
 
 import car.pool.persistance.CarPoolStore;
 import car.pool.persistance.CarPoolStoreImpl;
+import car.pool.persistance.exception.DuplicateUserNameException;
 import car.pool.persistance.exception.InvaildUserName;
 import car.pool.persistance.exception.InvaildUserNamePassword;
 import car.pool.persistance.exception.RideException;
 import car.pool.persistance.exception.StoreException;
+import car.pool.persistance.exception.UserException;
 import car.pool.persistance.util.Pair;
 import junit.framework.TestCase;
 
 public class CarPoolStoreImplTest extends TestCase {
 
 	
-	CarPoolStore cps = null;
+	CarPoolStoreImpl cps = null;
 	
 	LinkedList<Pair<String, String>> usedUsers = null;
 	LinkedList<Integer> lodgedRides = null;
@@ -27,6 +29,7 @@ public class CarPoolStoreImplTest extends TestCase {
 		super.setUp();
 		
 		cps = new CarPoolStoreImpl();
+		cps.removeAll("donotusethis");
 		usedUsers = new LinkedList<Pair<String, String>>();
 		lodgedRides = new LinkedList<Integer>();
 	}
@@ -38,6 +41,16 @@ public class CarPoolStoreImplTest extends TestCase {
 	 */
 	private void trackUser(String username, String password){
 		usedUsers.add(new Pair<String, String>(username, password));
+	}
+	
+	private int getAUserID(){
+		try {
+			return cps.checkUser(usedUsers.get(0).first, usedUsers.get(0).second);
+		} catch (InvaildUserNamePassword e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return -1;
 	}
 	
 	/**
@@ -75,10 +88,8 @@ public class CarPoolStoreImplTest extends TestCase {
 	protected void tearDown() throws Exception {
 		super.tearDown();
 		
-		while(hasMoreUsedUsers()){
-			Pair<String, String> user = recallUser();
-			cps.removeUser(user.first, user.second);
-		}
+		cps.removeAll("donotusethis");
+		
 	}
 
 	/**
@@ -254,21 +265,64 @@ public class CarPoolStoreImplTest extends TestCase {
 	}
 	
 	public void testAttachOpenID(){
-		//TODO
+		addLotsOfUsers();
+		cps.attachOpenID("www.google.com", getAUserID());
 	}
 	
 	public void testDetachOpenID(){
-		//TODO
+		addLotsOfUsers();
+		cps.attachOpenID("www.google.com", getAUserID());
+		
+		cps.detachOpenID("www.google.com", getAUserID());
 	}
 	
 	public void testDetachOpenIDbyUser(){
-		//TODO
+		addLotsOfUsers();
+		cps.attachOpenID("www.google.com", getAUserID());
+		
+		cps.detachOpenIDsByUser(getAUserID());
 	}
 	public void testGetOpenIDbyUser(){
-		//TODO
+		addLotsOfUsers();
+		cps.attachOpenID("www.google.com", getAUserID());
+		
+		try {
+			if("www.google.com".equals(cps.getOpenIdsByUser(getAUserID()).firstElement())){
+				fail("did not return correct openid from userid");
+			}
+		} catch (InvaildUserNamePassword e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			fail("valid getopenid operation failed");
+		}
 	}
 	public void testGetOpenIDbyURL(){
-		//TODO
+		addLotsOfUsers();
+		cps.attachOpenID("www.google.com", getAUserID());
+		
+		try {
+			if(getAUserID() != cps.getUserIdByURL("www.google.com")){
+				fail("getUserIDbyURL returned wrong ID");
+			}
+		} catch (InvaildUserNamePassword e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			fail("getUserIDbyURL failed with valid operation");
+		}
+	}
+	
+	public void testAll(){
+		Date date = new Date(System.currentTimeMillis());
+		try {
+			int idUser = cps.addUser("jordan", "jordan.d.carter@gmail.com", "0274681876", "thisismypassword");
+			int idRide = cps.addRide(idUser, 4, date.toString(), "start Massey Wellington", "start Massey Palmy");
+			cps.attachOpenID("www.google.com", idUser);
+			cps.takeRide(idUser, idRide);
+		
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

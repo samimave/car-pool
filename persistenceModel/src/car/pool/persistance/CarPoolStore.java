@@ -1,5 +1,7 @@
 package car.pool.persistance;
 
+import java.util.Vector;
+
 import car.pool.persistance.exception.InvaildUserName;
 import car.pool.persistance.exception.InvaildUserNamePassword;
 import car.pool.persistance.exception.RideException;
@@ -19,4 +21,10 @@ public interface CarPoolStore {
 	boolean removeUser(String username, String passwordHash) throws StoreException;
 	boolean removeRide(int user, int ride) throws StoreException;
 	boolean removeRide(int ride) throws StoreException;
+	
+	public int getUserIdByURL(String openidurl) throws InvaildUserNamePassword;
+	public Vector<String> getOpenIdsByUser(int idUser) throws InvaildUserNamePassword;
+	public boolean attachOpenID(String openid_url,int idUser);
+	public boolean detachOpenID(String openid_url,int idUser);
+	public boolean detachOpenIDsByUser(int idUser);
 }
