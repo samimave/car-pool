@@ -37,7 +37,7 @@ public class CarPoolStoreImplTest extends TestCase {
 	 * @param password
 	 */
 	private void trackUser(String username, String password){
-		usedUsers.add(new Pair(username, password));
+		usedUsers.add(new Pair<String, String>(username, password));
 	}
 	
 	/**
@@ -52,8 +52,8 @@ public class CarPoolStoreImplTest extends TestCase {
 	 * Return a user and remove from memory
 	 * @return
 	 */
-	private Pair recallUser(){
-		Pair pair = usedUsers.pollLast();	
+	private Pair<String,String> recallUser(){
+		Pair<String, String> pair = usedUsers.pollLast();	
 		return pair;
 	}
 	
@@ -247,10 +247,27 @@ public class CarPoolStoreImplTest extends TestCase {
 	}
 	
 	public void testTakeRide(){
-		//TODO
 	}
 	
 	public void testRemoveUser(){
+		//TODO
+	}
+	
+	public void testAttachOpenID(){
+		//TODO
+	}
+	
+	public void testDetachOpenID(){
+		//TODO
+	}
+	
+	public void testDetachOpenIDbyUser(){
+		//TODO
+	}
+	public void testGetOpenIDbyUser(){
+		//TODO
+	}
+	public void testGetOpenIDbyURL(){
 		//TODO
 	}
 
