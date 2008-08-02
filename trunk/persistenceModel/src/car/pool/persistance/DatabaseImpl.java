@@ -92,12 +92,10 @@ public class DatabaseImpl implements Database{
 		try {
 			// Get a Statement object
 			stmt = connection.createStatement();
-
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally{// end catch
-			return stmt;
 		}
+		return stmt;
 	}
 
 }

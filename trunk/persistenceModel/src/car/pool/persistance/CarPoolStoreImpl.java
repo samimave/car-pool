@@ -25,8 +25,11 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		super();
 	}
 
+	public int addUser(String username, String passwordHash) throws DuplicateUserNameException, UserException{
+		return addUser(username,"n/a", "n/a", passwordHash);
+	}
 	
-	public int addUser(String username, String passwordHash) throws DuplicateUserNameException, UserException {
+	public int addUser(String username, String email, String mobile, String passwordHash) throws DuplicateUserNameException, UserException {
 
 		int id = FAILED;
 		Statement statement;
@@ -39,7 +42,7 @@ public class CarPoolStoreImpl implements CarPoolStore {
 
 		statement = db.getStatement();
 		String sql = "INSERT INTO User "
-				+ "(userName,userPasswordHash,signUpDate,ridesGiven,ridesTaken) "
+				+ "(userName,userPasswordHash,email,mobile_number,signUpDate) "
 				+ "VALUES ('" + username + "','" + passwordHash + "','"
 				+ date.toString() + "','0','0');";
 		
@@ -233,7 +236,7 @@ public class CarPoolStoreImpl implements CarPoolStore {
 
 	@Override
 	public boolean removeRide(int ride) throws StoreException {
-Statement statement = null;
+		Statement statement = null;
 		
 		try {
 			statement = db.getStatement();
@@ -246,5 +249,108 @@ Statement statement = null;
 		//TODO check user was removed
 		return true;
 	}
+	
+	public int getUserIdByURL(String openidurl) throws InvaildUserNamePassword{
+		//select user_id from user_openids where openid_url = openid_url
+		int id = FAILED;
 
+		Statement statement = db.getStatement();
+		String sql = "SELECT idUser from user_openids " +
+					"Where openid_url='" + openidurl + "';";
+		try {
+			statement = db.getStatement();
+			ResultSet rs = statement.executeQuery(sql);
+			if (rs.next()) {
+				id = rs.getInt(1);
+			}
+			rs.close();
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		if (id == FAILED) {
+			throw new InvaildUserNamePassword("OpenID failed");
+		} else {
+			return id;
+		}
+	}
+	
+	public Vector<String> getOpenIdsByUser(int idUser) throws InvaildUserNamePassword{
+		//select openid_url from user_openids where user_id = user_id
+		Vector<String> openID = new Vector<String>();
+		Statement statement = db.getStatement();
+		String sql = "SELECT idUser from user_openids " +
+					"Where idUser='" + idUser + "';";
+		try {
+			statement = db.getStatement();
+			ResultSet rs = statement.executeQuery(sql);
+			if (rs.next()) {
+				openID.add(rs.getString(1));
+			}
+			rs.close();
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		if (openID.isEmpty()){
+			throw new InvaildUserNamePassword("OpenID failed");
+		} else {
+			return openID;
+		}
+	}
+	
+	public boolean attachOpenID(String openid_url,int idUser){
+	    //insert into user_openids values (openid_url, user_id)
+		Statement statement = null;
+		
+		try {
+			statement = db.getStatement();
+			statement.executeUpdate("INSERT INTO user_openids (openid_url, idUser) VALUES ('"
+									+openid_url+"', " +
+									+idUser+"');");
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//TODO check openID was Attached
+		return true;
+	}
+	public boolean detachOpenID(String openid_url,int idUser){
+		//delete from user_openids where openid_url = openid_url and
+		//user_id = user_id
+		Statement statement = null;
+		
+		try {
+			statement = db.getStatement();
+			statement.executeUpdate("DELETE FROM user_openids WHERE " +
+									"openid_url='"+openid_url+"' AND " +
+									"idUser='"+idUser+"');");
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//TODO check openID was Detached
+		return true;
+	}
+	
+	public boolean detachOpenIDsByUser(int idUser){
+		// delete from user_openids where user_id = user_id
+		Statement statement = null;
+		
+		try {
+			statement = db.getStatement();
+			statement.executeUpdate("DELETE FROM user_openids WHERE " +
+									"idUser='"+idUser+"');");
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//TODO check openID was Attached
+		return true;
+	}
 }
