@@ -2,6 +2,9 @@
 <%@page import="org.verisign.joid.consumer.OpenIdFilter" %>
 
 <%
+if (request.getAttribute("logout") == "yes") {
+	session.invalidate();
+}
 HttpSession s = request.getSession(true);
 %>
 
@@ -20,10 +23,10 @@ HttpSession s = request.getSession(true);
 		</div>
 
 	<div id="navAlpha">
-		<%if(OpenIdFilter.getCurrentUser(request.getSession()) == null) {
+		<%if(OpenIdFilter.getCurrentUser(s) == null) {
 			%>Please Log in<%
 		} else {
-		%> Logged in as <% out.println(OpenIdFilter.getCurrentUser(request.getSession()));  }%>
+		%> Logged in as <% out.println(OpenIdFilter.getCurrentUser(s));  }%>
 	</div>
 
 	<div id="navBeta">
