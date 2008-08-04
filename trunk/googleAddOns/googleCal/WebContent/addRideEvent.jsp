@@ -14,9 +14,14 @@
     	google.load("gdata", "1");
 
   	  	<% 
-  	  		String title = request.getParameter("title"); 
-  	  	 	String startDate = request.getParameter("start"); 
-  	  	 	String endDate = request.getParameter("end"); 
+  	  		String title = "Ride from " + request.getParameter("from") + " to " + request.getParameter("to"); 
+  	  	
+  	  	 	String time = request.getParameter("time1"); 
+  	  	 	String date = request.getParameter("date1");
+  	  	 	  	  	 	
+  	  	 	date.replaceAll("/","-");
+  	  	 	
+  	  	 	String gdate = date + "T" + time + ":00.000";
 		%>
 
           var scope = 'http://www.google.com/calendar/feeds/';
@@ -40,8 +45,8 @@
         	  var when = new google.gdata.When();
 
         	  // Set the start and end time of the When object
-        	  var startTime = google.gdata.DateTime.fromIso8601("<%=startDate %>");
-        	  var endTime = google.gdata.DateTime.fromIso8601("<%=endDate %>");
+        	  var startTime = google.gdata.DateTime.fromIso8601("<%=gdate %>");
+        	  var endTime = google.gdata.DateTime.fromIso8601("<%=gdate %>");
         	  when.setStartTime(startTime);
         	  when.setEndTime(endTime);
 
