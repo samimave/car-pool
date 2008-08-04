@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
     <title>My Google Data API Application</title>
-    <script src="http://www.google.com/jsapi?key=<%=request.getParameter("key") %>" type="text/javascript"></script>
+    <script src="http://www.google.com/jsapi?key=ABQIAAAA7rDxBnSa8ztdEea-bXHUqRRKOMZEnoyerBNNN7XbrW5T80f1pxRxpg7l2VcFxiQk2L5RouYsGk3NqQ" type="text/javascript"></script>
     <script type="text/javascript">
     //ABQIAAAA7rDxBnSa8ztdEea-bXHUqRTTZprX4YwS4GpqrFod4OfVHr1K6RQgRE9sL3F_96hh2QUZHuANtwF-KA
     //<![CDATA[
@@ -55,12 +55,11 @@
 
         	  // The callback method that will be called after a successful insertion from insertEntry()
         	  var callback = function(result) {
-            	  window.location = "success.html"
+            	  window.location = "welcome.jsp"
         	  }
 
         	  // Error handler will be invoked if there is an error from insertEntry()
         	  var handleError = function(error) {
-        		  window.location = "fail.html"
         	  }
 
         	  // Submit the request using the calendar service object
