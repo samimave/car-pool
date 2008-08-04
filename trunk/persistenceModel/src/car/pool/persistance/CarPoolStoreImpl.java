@@ -312,7 +312,7 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		try {
 			statement = db.getStatement();
 			ResultSet rs = statement.executeQuery(sql);
-			if (rs.next()) {
+			while (rs.next()) {
 				openID.add(rs.getString(1));
 			}
 			rs.close();
@@ -387,7 +387,7 @@ public class CarPoolStoreImpl implements CarPoolStore {
 			return;
 		}
 		
-Statement statement = null;
+		Statement statement = null;
 		
 		try {
 			statement = db.getStatement();
