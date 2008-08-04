@@ -12,7 +12,6 @@ public interface CarPoolStore {
 
 	public static final int FAILED = -1;
 	
-	
 	int addUser(String username, String passwordHash) throws StoreException;
 	int checkUser(String username, String passwordHash) throws InvaildUserNamePassword;
 	boolean checkUserExists(String username);
