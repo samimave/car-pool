@@ -18,10 +18,19 @@
   	  	
   	  	 	String time = request.getParameter("time1"); 
   	  	 	String date = request.getParameter("date1");
-  	  	 	  	  	 	
-  	  	 	date.replaceAll("/","-");
+  	  	 	 	  	 	
+  	  	 	String[] mdy = date.split("/");
+  	  	 	String ymd = mdy[2] + "-" + mdy[1] + "-" + mdy[0];
   	  	 	
-  	  	 	String gdate = date + "T" + time + ":00.000";
+  	  	 	String[] hm = time.split(":");
+  	  	 	int hour = Integer.parseInt(hm[0]) + 1;
+  	  	 	if(hour>12)
+  	  	 	{
+  	  	 		hour -= 12;
+  	  	 	}
+  	  	 	  	  	 	
+  	  	 	String gdate = date + "T09:00:00.000";
+  	  	 	String g2date = date + "T08:00:00.000";
 		%>
 
           var scope = 'http://www.google.com/calendar/feeds/';
@@ -55,13 +64,13 @@
 
         	  // The callback method that will be called after a successful insertion from insertEntry()
         	  var callback = function(result) {
-            	  window.location = "success.html"
+            	  window.location = "welcome.jsp"
         	  }
 
         	  // Error handler will be invoked if there is an error from insertEntry()
         	  var handleError = function(error) {
-        		  window.location = "fail.html"
-        	  }
+            	  document.write(handleError.text);
+            }
 
         	  // Submit the request using the calendar service object
         	  calendarService.insertEntry(feedUri, entry, callback, 
@@ -74,7 +83,7 @@
   </head>
   <body onload="OnLoad()">
     <div id="panel"/>
-	<img src="google.jpg">
+	<img src="calendar_icon.jpg">
   </body>
 </html>
   
