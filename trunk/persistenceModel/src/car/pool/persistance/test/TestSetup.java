@@ -11,7 +11,7 @@ public class TestSetup {
 	private static CarPoolStore cps = null;
 	
 	public TestSetup(){
-		cps = new CarPoolStoreImpl();
+		cps = (CarPoolStoreImpl)CarPoolStoreImpl.getStore();//new CarPoolStoreImpl();new CarPoolStoreImpl();
 		try {
 			int a = cps.addUser("a", "a");
 			int b = cps.addUser("b", "b");

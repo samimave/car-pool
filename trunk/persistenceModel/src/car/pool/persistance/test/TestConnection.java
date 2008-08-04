@@ -11,7 +11,7 @@ public class TestConnection {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		CarPoolStore cps = new CarPoolStoreImpl();
+		CarPoolStore cps = (CarPoolStoreImpl)CarPoolStoreImpl.getStore();//new CarPoolStoreImpl();new CarPoolStoreImpl();
 		try {
 			
 		int i = cps.addUser("john", "blah");
