@@ -24,12 +24,12 @@ public class RideListingImpl implements RideListing {
 		try {
 			rs = statement.executeQuery(sql);
 		} catch (SQLException e) {
-			throw new
+			//throw new
 		}
 	}
 	
 	public String getNextLine() {
-		
+		return null;
 	}
 	
 	public boolean hasNext(){
