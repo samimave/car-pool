@@ -20,9 +20,18 @@ public class CarPoolStoreImpl implements CarPoolStore {
 
 	Database db = new DatabaseImpl();
 	StringBuffer errors = new StringBuffer();
+	
+	private static CarPoolStore cps;
 
-	public CarPoolStoreImpl() {
+	private CarPoolStoreImpl() {
 		super();
+	}
+	
+	public static CarPoolStore getStore(){
+		if(cps == null){
+			cps = new CarPoolStoreImpl();
+		}
+		return cps;
 	}
 
 	public int addUser(String username, String passwordHash) throws DuplicateUserNameException, UserException{
@@ -166,8 +175,7 @@ public class CarPoolStoreImpl implements CarPoolStore {
 			statement.executeUpdate(sql);
 			statement.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new RideException("add ride failed");
 		}
 		
 		try {
@@ -401,4 +409,10 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		}
 		
 	}
+	
+	public RideListing getRideListing(){		
+		return new RideListingImpl(db.getStatement());
+	}
+	
+	
 }

@@ -59,7 +59,7 @@ public class DatabaseImpl implements Database{
 		this.password = password;
 	}
 	
-	public void connect() {
+	public synchronized void connect() {
 
 		try {
 			if (connection == null || connection.isClosed()) {
@@ -85,7 +85,7 @@ public class DatabaseImpl implements Database{
 		}
 	}
 
-	public Statement getStatement() {
+	public synchronized Statement getStatement() {
 
 		connect();
 		Statement stmt = null;
