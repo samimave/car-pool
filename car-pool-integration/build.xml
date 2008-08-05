@@ -17,9 +17,9 @@
 	<property name="web.dir" value="${dest.dir}/WebContent"/>
 	<property name="web.xml" value="${web.dir}/WEB-INF/web.xml"/>
 	<property name="src.dir" value="${dest.dir}/src"/>
-	<property name="jar.dir" value="${dest.dir}/jar"/>
-	<property name="war.dir" value="${dest.dir}/war"/>
-	<property name="zip.dir" value="${dest.dir}/zip"/>
+	<property name="jar.dir" value="${base-directory}jar"/>
+	<property name="war.dir" value="${base-directory}war"/>
+	<property name="zip.dir" value="${base-directory}zip"/>
 	<path id="build.classpath">
 		<fileset dir="${lib.dir}">
 			<include name="**/*.jar"/>
@@ -99,14 +99,14 @@
 
 	<target name="adddirsvn">
 		<taskdef resource="svntask.properties" classpathref="classpath"/>
-		<svn username="$svn.user}" password="${svn.password}">
+		<svn username="${svn.user}" password="${svn.password}">
 			<add dir="${param}" recurse="false"/>
 		</svn>
 	</target>
 
 	<target name="addtosvn">
 		<taskdef resource="svntask.properties" classpathref="classpath"/>
-		<svn username="$svn.user}" password="${svn.password}">
+		<svn username="${svn.user}" password="${svn.password}">
 			<add file="${param}"/>
 		</svn>
 	</target>
@@ -117,10 +117,6 @@
 		<antcall target="adddirsvn">
 			<param name="param" value="${dest.dir}"/>
 		</antcall>
-		<taskdef resource="svntask.properties" classpathref="classpath"/>
-		<svn javahl="false">
-			<createRepository path="repository"/>
-		</svn>
 		<antcall target="adddirsvn">
 			<param name="param" value="${war.dir}"/>
 		</antcall>
