@@ -3,11 +3,12 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
     <title>My Google Data API Application</title>
-    <script src="http://www.google.com/jsapi?key=ABQIAAAA7rDxBnSa8ztdEea-bXHUqRRKOMZEnoyerBNNN7XbrW5T80f1pxRxpg7l2VcFxiQk2L5RouYsGk3NqQ" type="text/javascript"></script>
+	<style type="text/css" media="screen">@import "3ColumnLayout.css";</style>
+    <script src="http://www.google.com/jsapi?key=ABQIAAAA25n2LirGgUauwcTzm80V-RT2yXp_ZAY8_ufC3CFXhHIE1NvwkxS6WEYVuO3pdgxYPfQ30eV4B7q0zw" type="text/javascript"></script>
     <script type="text/javascript">
-    //ABQIAAAA7rDxBnSa8ztdEea-bXHUqRTTZprX4YwS4GpqrFod4OfVHr1K6RQgRE9sL3F_96hh2QUZHuANtwF-KA
     //<![CDATA[
-
+	//local-host ABQIAAAA25n2LirGgUauwcTzm80V-RT2yXp_ZAY8_ufC3CFXhHIE1NvwkxS6WEYVuO3pdgxYPfQ30eV4B7q0zw
+	//ABQIAAAA7rDxBnSa8ztdEea-bXHUqRRKOMZEnoyerBNNN7XbrW5T80f1pxRxpg7l2VcFxiQk2L5RouYsGk3NqQ
     google.load("gdata", "1");
 
     function OnLoad() {
@@ -16,21 +17,16 @@
   	  	<% 
   	  		String title = "Ride from " + request.getParameter("from") + " to " + request.getParameter("to"); 
   	  	
-  	  	 	String time = request.getParameter("time1"); 
-  	  	 	String date = request.getParameter("date1");
+  	  	 	String times[] = new String[2];
+  	  	 	times[0] = request.getParameter("stime");
+			times[1] = request.getParameter("etime");
+  	  	 	String date = request.getParameter("date");
   	  	 	 	  	 	
-  	  	 	String[] mdy = date.split("/");
-  	  	 	String ymd = mdy[2] + "-" + mdy[1] + "-" + mdy[0];
-  	  	 	
-  	  	 	String[] hm = time.split(":");
-  	  	 	int hour = Integer.parseInt(hm[0]) + 1;
-  	  	 	if(hour>12)
-  	  	 	{
-  	  	 		hour -= 12;
-  	  	 	}
-  	  	 	  	  	 	
-  	  	 	String gdate = date + "T09:00:00.000";
-  	  	 	String g2date = date + "T08:00:00.000";
+  	  	 	String[] dmy = date.split("/");
+  	  	 	date = dmy[2] + "-" + dmy[1] + "-" + dmy[0];
+ 	  	 	  	  	 	
+  	  	 	String gSdate = date + "T" + times[0] + ":00.000";
+  	  	 	String gEdate = date + "T" + times[1] + ":00.000";
 		%>
 
           var scope = 'http://www.google.com/calendar/feeds/';
@@ -54,8 +50,8 @@
         	  var when = new google.gdata.When();
 
         	  // Set the start and end time of the When object
-        	  var startTime = google.gdata.DateTime.fromIso8601("<%=gdate %>");
-        	  var endTime = google.gdata.DateTime.fromIso8601("<%=gdate %>");
+        	  var startTime = google.gdata.DateTime.fromIso8601("<%=gSdate %>");
+        	  var endTime = google.gdata.DateTime.fromIso8601("<%=gEdate %>");
         	  when.setStartTime(startTime);
         	  when.setEndTime(endTime);
 
@@ -64,12 +60,12 @@
 
         	  // The callback method that will be called after a successful insertion from insertEntry()
         	  var callback = function(result) {
-            	  window.location = "welcome.jsp"
+        		  location.href="welcome.jsp";
         	  }
 
         	  // Error handler will be invoked if there is an error from insertEntry()
         	  var handleError = function(error) {
-            	  document.write(handleError.text);
+            	  document.write("Error: " + handleError.text);
             }
 
         	  // Submit the request using the calendar service object
@@ -82,8 +78,18 @@
     </script>
   </head>
   <body onload="OnLoad()">
-    <div id="panel"/>
-	<img src="calendar_icon.jpg">
+
+	<%@ include file="heading.html" %>
+
+    <div class="content">
+		Please wait, adding event data....
+		<img src="carpool.png">
+	</div>
+
+	<%@ include file="leftMenu.html" %>
+
+	<%@ include file="rightMenu.jsp" %>
+
   </body>
 </html>
   
