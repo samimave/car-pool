@@ -1,20 +1,25 @@
 <?xml version="1.0"?>
 <project name="car-pool" default="all">
-	<property name="includefiletypes" value="**/*.xml,**/*.java,**/*.jsp,**/*.sql,**/*.jpg,**/*.bmp,**/*.js,**/*.html,**/*.css,**/*.gif,**/*.png,**/*.jar"/>
+	<property name="includefiletypes" value="**/*.xml,**/*.java,**/*.jsp,**/*.sql,**/*.jpg,**/*.bmp,**/*.js,**/*.html,**/*.css,**/*.gif,**/*.png,**/*.jar,**/*.properties"/>
 	<property name="excludefiletypes" value="**/*.class"/>
 	<property name="base-directory" value="./"/>
 	<property name="googleAddOns" value="${base-directory}googleAddOns"/>
 	<property name="persistenceModel" value="${base-directory}persistenceModel"/>
 	<property name="user-management" value="${base-directory}user-management"/>
-	<property name="webInterface" value="${base-directory}webInterface"/>
+	<property name="webInterface" value="${base-directory}integration"/>
 	<property name="classes.dir" value="classes"/>
-	<property name="dest.dir" value="back"/>
+	<property name="tests.dir" value="classes"/>
+	<property name="dest.dir" value="${ant.project.name}"/>
 	<property name="lib.dir" value="${dest.dir}/lib"/>
 	<property name="build.dir" value="${dest.dir}/build"/>
 	<property name="build.classes" value="${build.dir}/${classes.dir}"/>
+	<property name="build.tests" value="${build.dir}/${tests.dir}"/>
 	<property name="web.dir" value="${dest.dir}/WebContent"/>
 	<property name="web.xml" value="${web.dir}/WEB-INF/web.xml"/>
 	<property name="src.dir" value="${dest.dir}/src"/>
+	<property name="jar.dir" value="${dest.dir}/jar"/>
+	<property name="war.dir" value="${dest.dir}/war"/>
+	<property name="zip.dir" value="${dest.dir}/zip"/>
 	<path id="build.classpath">
 		<fileset dir="${lib.dir}">
 			<include name="**/*.jar"/>
@@ -41,15 +46,20 @@
 		<mkdir dir="${lib.dir}"/>
 		<mkdir dir="${build.dir}"/>
 		<mkdir dir="${build.classes}"/>
+		<mkdir dir="${build.tests}"/>
 		<mkdir dir="${web.dir}"/>
+		<mkdir dir="${jar.dir}"/>
+		<mkdir dir="${war.dir}"/>
+		<mkdir dir="${zip.dir}"/>
 	</target>
 
 	<target name="compile">
-		<javac excludes="**/*/test/**" classpathref="build.classpath" destdir="${build.classes}" srcdir="${src.dir}"/>
+		<echo>compiling</echo>
+		<javac classpathref="build.classpath" destdir="${build.classes}" srcdir="${src.dir}"/>
 	</target>
 
 	<target name="archive">
-		<war destfile="car-pool.war" webxml="${web.xml}">
+		<war destfile="${war.dir}/${ant.project.name}.war" webxml="${web.xml}">
 			<fileset dir="${web.dir}"/>
 			<fileset dir="${src.dir}" includes="**/*.sql"/>
 			<lib dir="${lib.dir}">
@@ -57,6 +67,18 @@
 			</lib>
 			<classes dir="${build.classes}"/>
 		</war>
+		<jar destfile="${jar.dir}/${ant.project.name}-src.jar">
+			<fileset dir="${src.dir}"/>
+		</jar>
+		<jar destfile="${jar.dir}/${ant.project.name}-classes.jar">
+			<fileset dir="${build.classes}" excludes="**/test/*.class"/>
+		</jar>
+		<jar destfile="${jar.dir}/${ant.project.name}-tests.jar">
+			<fileset dir="${build.tests}" includes="**/test/*.class"/>
+		</jar>
+		<zip destfile="${zip.dir}/${ant.project.name}-3rdparty-libraries.zip">
+			<fileset dir="${lib.dir}"/>
+		</zip>
 	</target>
 
 	<target name="mvlibraries">
@@ -75,13 +97,66 @@
 		<antcall target="${action}"/>
 	</target>
 
-	<target name="svncommit" depends="archive">
+	<target name="adddirsvn">
 		<taskdef resource="svntask.properties" classpathref="classpath"/>
+		<svn username="$svn.user}" password="${svn.password}">
+			<add dir="${param}" recurse="false"/>
+		</svn>
+	</target>
+
+	<target name="addtosvn">
+		<taskdef resource="svntask.properties" classpathref="classpath"/>
+		<svn username="$svn.user}" password="${svn.password}">
+			<add file="${param}"/>
+		</svn>
+	</target>
+
+	<target name="svnaddarchive">
 		<input message="Please enter your username" addproperty="svn.user"/>
 		<input message="Please enter your password" addproperty="svn.password"/>
+		<antcall target="adddirsvn">
+			<param name="param" value="${dest.dir}"/>
+		</antcall>
+		<taskdef resource="svntask.properties" classpathref="classpath"/>
+		<svn javahl="false">
+			<createRepository path="repository"/>
+		</svn>
+		<antcall target="adddirsvn">
+			<param name="param" value="${war.dir}"/>
+		</antcall>
+		<antcall target="adddirsvn">
+			<param name="param" value="${zip.dir}"/>
+		</antcall>
+		<antcall target="adddirsvn">
+			<param name="param" value="${jar.dir}"/>
+		</antcall>
+		<antcall target="addtosvn">
+			<param name="param" value="${war.dir}/${ant.project.name}.war"/>
+		</antcall>
+		<antcall target="addtosvn">
+			<param name="param" value="${zip.dir}/${ant.project.name}-3rdparty-libraries.zip"/>
+		</antcall>
+		<antcall target="addtosvn">
+			<param name="param" value="${jar.dir}/${ant.project.name}-src.jar"/>
+		</antcall>
+		<antcall target="addtosvn">
+			<param name="param" value="${jar.dir}/${ant.project.name}-classes.jar"/>
+		</antcall>
+		<antcall target="addtosvn">
+			<param name="param" value="${jar.dir}/${ant.project.name}-tests.jar"/>
+		</antcall>
+	</target>
+
+	<target name="svncommit" depends="archive,svnaddarchive">
+		<taskdef resource="svntask.properties" classpathref="classpath"/>
+		
 		<svn username="${svn.user}" password="${svn.password}">
 			<!--<add file="car-pool.war"/>-->
-			<commit message="An updated war file generated by the ant build file 'build.xml'" file="car-pool.war"/>
+			<commit message="An updated war file generated by the ant build file 'build.xml'" file="${war.dir}/${ant.project.name}.war"/>
+			<commit message="The zipped up 3rd party libraries that are used in this project" file="${zip.dir}/${ant.project.name}-3rdparty-libraries.zip"/>
+			<commit message="The java source files that are used in this project" file="${jar.dir}/${ant.project.name}-src.jar"/>
+			<commit message="The compiled class files that are used in this project" file="${jar.dir}/${ant.project.name}-classes.jar"/>
+			<commit message="The test class files that are used in this project" file="${jar.dir}/${ant.project.name}-tests.jar"/>
 		</svn>
 	</target>
 	
@@ -92,32 +167,32 @@
 		<!---->
 		<input message="Please enter your username" addproperty="svn.user"/>
 		<input message="Please enter your password" addproperty="svn.password"/>
-		<condition property="addons" value="update" else="checkout">
+		<condition property="addons1" value="update" else="checkout">
 			<available file="${googleAddOns}"/>
 		</condition>
-		<echo>${addons}</echo>
-		<antcall target="${addons}">
+		<echo>${addons1}</echo>
+		<antcall target="${addons1}">
 			<param name="param1" value="${googleAddOns}"/>
 		</antcall>
-		<condition property="addons" value="update" else="checkout">
+		<condition property="addons2" value="update" else="checkout">
 			<available file="${persistenceModel}"/>
 		</condition>
-		<echo>${addons}</echo>
-		<antcall target="${addons}">
+		<echo>${addons2}</echo>
+		<antcall target="${addons2}">
 			<param name="param1" value="${persistenceModel}"/>
 		</antcall>
-		<condition property="addons" value="update" else="checkout">
+		<condition property="addons3" value="update" else="checkout">
 			<available file="${user-management}"/>
 		</condition>
-		<echo>${addons}</echo>
-		<antcall target="${addons}">
+		<echo>${addons3}</echo>
+		<antcall target="${addons3}">
 			<param name="param1" value="${user-management}"/>
 		</antcall>
-		<condition property="addons" value="update" else="checkout">
+		<condition property="addons4" value="update" else="checkout">
 			<available file="${webInterface}"/>
 		</condition>
-		<echo>${addons}</echo>
-		<antcall target="${addons}">
+		<echo>${addons4}</echo>
+		<antcall target="${addons4}">
 			<param name="param1" value="${webInterface}"/>
 		</antcall>
 	</target>
@@ -191,6 +266,13 @@
 		</copy>
 		<copy todir="${dest.dir}">
 			<fileset dir="${persistenceModel}" includes="${includefiletypes}" excludes="${excludefiletypes}"/>
+			<chainedmapper>
+				<flattenmapper/>
+				<globmapper from="*.properties" to="WebContent/*.properties"/>
+			</chainedmapper>
+		</copy>
+		<copy todir="${dest.dir}">
+			<fileset dir="${persistenceModel}" includes="${includefiletypes}" excludes="${excludefiletypes}"/>
 		</copy>
 	</target>
 
@@ -220,7 +302,7 @@
          - - - - - - - - - - - - - - - - - -->
 	<target name="webInterface">
 		<copy todir="${dest.dir}">
-			<fileset dir="${webInterface}" includes="${includefiletypes}" excludes="${excludefiletypes}"/>
+			<fileset dir="${webInterface}/userauth/" includes="${includefiletypes}" excludes="${excludefiletypes}"/>
 			<chainedmapper>
 				<flattenmapper/>
 				<globmapper from="*.jsp" to="WebContent/*.jsp"/>
@@ -232,7 +314,46 @@
 		</chainedmapper>-->
 		</copy>
 		<copy todir="${dest.dir}">
-			<fileset dir="${webInterface}" includes="${includefiletypes}" excludes="${excludefiletypes}"/>
+			<fileset dir="${webInterface}/userauth/" includes="${includefiletypes}" excludes="${excludefiletypes}"/>
+			<chainedmapper>
+				<flattenmapper/>
+				<globmapper from="*.bmp" to="WebContent/*.bmp"/>
+			</chainedmapper>
+		</copy>
+		<copy todir="${dest.dir}">
+			<fileset dir="${webInterface}/userauth/" includes="${includefiletypes}" excludes="${excludefiletypes}"/>
+			<chainedmapper>
+				<flattenmapper/>
+				<globmapper from="*.png" to="WebContent/*.png"/>
+			</chainedmapper>
+		</copy>
+		<copy todir="${dest.dir}">
+			<fileset dir="${webInterface}/userauth/" includes="${includefiletypes}" excludes="${excludefiletypes}"/>
+			<chainedmapper>
+				<flattenmapper/>
+				<globmapper from="*.jpg" to="WebContent/*.jpg"/>
+			</chainedmapper>
+		</copy>
+		<copy todir="${dest.dir}">
+			<fileset dir="${webInterface}/userauth/" includes="${includefiletypes}" excludes="${excludefiletypes}"/>
+			<chainedmapper>
+				<flattenmapper/>
+				<globmapper from="*.js" to="WebContent/*.js"/>
+			</chainedmapper>
+		</copy>
+		<copy todir="${dest.dir}">
+			<fileset dir="${webInterface}/userauth/" includes="${includefiletypes}" excludes="${excludefiletypes}"/>
+			<chainedmapper>
+				<flattenmapper/>
+				<globmapper from="*.css" to="WebContent/*.css"/>
+			</chainedmapper>
+		</copy>
+		<copy todir="${dest.dir}">
+			<fileset dir="${webInterface}/userauth/" includes="${includefiletypes}" excludes="${excludefiletypes}"/>
+			<chainedmapper>
+				<flattenmapper/>
+				<globmapper from="*.html" to="WebContent/*.html"/>
+			</chainedmapper>
 		</copy>
 	</target>
 </project>
