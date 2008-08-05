@@ -47,8 +47,10 @@ String date = DateFormat.getDateInstance().format(now);
 				<p>Date:<p> 
 				<INPUT TYPE="text" NAME="date1" VALUE="<%= date %>" SIZE="25">
 				<A HREF="#" onClick="cal.select(document.forms['offerFrm'].date1,'anchor1','dd/MM/yyyy'); return false;" NAME="anchor1" ID="anchor1"><img border="0" src="calendar_icon.jpg" width="27" height="23"></A>
-				<p>Time:<p>
+				<p>Departure Time:<p>
 				<INPUT TYPE="text" NAME="time1" VALUE="<%= time %>" SIZE="25"> 
+				<p>Arrival Time:<p>
+				<INPUT TYPE="text" NAME="time2" VALUE="<%= time %>" SIZE="25"> 
 				<p>Additional details (e.g. place of departure):<p>
 				<INPUT TYPE="text" NAME="place1" SIZE="25"> 
 				<p>Seats Available:<p>
