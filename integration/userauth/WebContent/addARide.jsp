@@ -35,13 +35,11 @@ String date = DateFormat.getDateInstance().format(now);
 				<INPUT TYPE="text" NAME="to1" VALUE="" SIZE="25"> <br /> <br />
 
 				<p>Type of ride:</p>
-				<form name="inputType1" action="">
 				<input type="radio" name="RideType" id="one-off" />
 				<label for="one-off">One-off</label>
 				<br />
 				<input type="radio" name="RideType" id="regular" />
 				<label for="regular">Regular</label>
-				</form>
 
 				<h5>The details:</h5>
 				<p>Date:<p> 
