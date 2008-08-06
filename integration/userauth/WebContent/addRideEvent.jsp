@@ -83,7 +83,7 @@
 
     <div class="content">
 		Please wait, adding event data....
-		<img src="carpool.png">
+		<img src="carpool.png" />
 	</div>
 
 	<%@ include file="leftMenu.html" %>
