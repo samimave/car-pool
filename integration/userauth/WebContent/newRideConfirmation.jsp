@@ -1,7 +1,11 @@
 <%@page contentType="text/html; charset=ISO-8859-1" %>
+<%@page import="org.verisign.joid.consumer.OpenIdFilter" %>
 
 <%
-//HttpSession s = request.getSession(false);
+//force the user to login to view the page
+if (OpenIdFilter.getCurrentUser(session) == null) {
+	response.sendRedirect("/index.jsp");
+}
 %>
 
 <HTML>

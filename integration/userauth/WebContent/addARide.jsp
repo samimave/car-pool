@@ -1,7 +1,11 @@
 <%@page contentType="text/html; charset=ISO-8859-1" import="java.util.*, java.text.*, org.verisign.joid.consumer.OpenIdFilter"%>
+<%@page import="org.verisign.joid.consumer.OpenIdFilter" %>
 
 <%
-//HttpSession s = request.getSession(false);
+//force the user to login to view the page
+if (OpenIdFilter.getCurrentUser(session) == null) {
+	response.sendRedirect("/index.jsp");
+}
 %>
 
 <HTML>
@@ -24,7 +28,7 @@ String date = DateFormat.getDateInstance().format(now);
 
 		<DIV class="content">
 			<p>Please enter the relevant details and click confirm.</p>
-			<FORM NAME="offerFrm" method="post" action="confirmation.jsp">
+			<FORM NAME="offerFrm" method="post" action="newRideConfirmation.jsp">
 				<h5>Location:</h5>
 				<p> From: 
 				<INPUT TYPE="text" NAME="from1" VALUE="" SIZE="25"> </p>
@@ -37,8 +41,8 @@ String date = DateFormat.getDateInstance().format(now);
 				<A HREF="#" onClick="cal.select(document.forms['offerFrm'].date1,'anchor1','dd/MM/yyyy'); return false;" NAME="anchor1" ID="anchor1"><img border="0" src="calendar_icon.jpg" width="27" height="23"></A>
 				<p>Departure Time: (hh:mm)<p>
 				<INPUT TYPE="text" NAME="time1" VALUE="<%= time %>" SIZE="25"> 
-				<p>Approximate Trip Time: (hh:mm)<p>
-				<INPUT TYPE="text" NAME="time2" VALUE="00:15" SIZE="25"> 
+				<p>Approximate Trip Length: (minutes)<p>
+				<INPUT TYPE="text" NAME="time2" VALUE="" SIZE="25"> 
 
 				<h5>Additional Details:</h5>
 				<p>Type of ride:</p>
