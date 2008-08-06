@@ -47,7 +47,7 @@
 		<div class="content">
 			<h5 align="center">Welcome to The Car Pool <%=OpenIdFilter.getCurrentUser(request.getSession())%></h5>
 			<p>Eventually the person's upcoming rides will be displayed here.</p>
-			<a href="index.jsp?logout=yes">Logout</a>
+			<a href="logout.jsp">Logout</a>
 		</div>		
 			<%} else {
 				StringBuffer buff = new StringBuffer();
