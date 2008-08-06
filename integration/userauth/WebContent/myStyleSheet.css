@@ -1,0 +1,32 @@
+h1,h2,h3
+{
+font-family: verdana, arial, 'sans serif';
+color:black; 
+}
+
+p,table
+{
+font-family: verdana, arial, 'sans serif'; 
+margin-left: 10pt;
+}
+
+table
+{
+width: 60%;
+border: medium none rgb(0,0,128);
+}
+
+p,th
+{
+font-size: 75%;
+}
+
+body
+{
+background-color: rgb(255,255,255);
+}
+
+a:link    {color:black}
+a:visited {color:black}
+a:active  {color:mediumblue}
+a:hover   {color:mediumblue}
