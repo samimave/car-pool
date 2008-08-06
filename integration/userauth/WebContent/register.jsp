@@ -1,7 +1,8 @@
-<%@page contentType="text/html; charset=ISO-8859-1" import="java.util.*, java.text.*"%>
+<%@page contentType="text/html; charset=ISO-8859-1" import="car.pool.persistance.*"%>
 
 <%
 //HttpSession s = request.getSession(false);
+car.pool.persistance.CarPoolStore cps = new CarPoolStoreImpl();
 %>
 
 <html>
@@ -33,7 +34,7 @@
 				<p>Phone Number:<p> 
 				<INPUT TYPE="text" NAME="phone" SIZE="25"><br /> <br />
 
-				<INPUT TYPE="submit" NAME="confirmReg" VALUE="Confirm Registration" SIZE="25"> <br /> <br />
+				<INPUT TYPE="submit" NAME="confirmReg" VALUE="Confirm Registration" SIZE="25" onclick="<% cps.addUser("aUser","theirPassword"); %>"> <br /> <br />
 			</FORM>
 		</div>
 
