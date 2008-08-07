@@ -2,6 +2,7 @@ package car.pool.persistance;
 
 import java.util.Vector;
 
+import car.pool.persistance.exception.DuplicateUserNameException;
 import car.pool.persistance.exception.InvaildUserName;
 import car.pool.persistance.exception.InvaildUserNamePassword;
 import car.pool.persistance.exception.RideException;
@@ -13,6 +14,7 @@ public interface CarPoolStore {
 	public static final int FAILED = -1;
 	
 	int addUser(String username, String passwordHash) throws StoreException;
+	int addUser(String openID,String userName,String  email,String  phone) throws DuplicateUserNameException, UserException;
 	int checkUser(String username, String passwordHash) throws InvaildUserNamePassword;
 	boolean checkUserExists(String username);
 	int addRide(int user, int availableSeats, String startDate, String startLocation, String endLocation) throws RideException;

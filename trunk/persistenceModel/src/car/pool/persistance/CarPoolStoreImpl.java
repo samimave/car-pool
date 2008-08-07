@@ -29,16 +29,23 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		db = new DatabaseImpl();
 	}
 
-	public int addUser(String username, String passwordHash) throws DuplicateUserNameException, UserException{
-		return addUser(username,"n/a", "n/a", passwordHash);
+	public int addUser(String openID,String userName,String  email,String  phone) throws DuplicateUserNameException, UserException{
+		int i = addUserWithPassword(userName, email, phone, "n/a");
+		
+		attachOpenID(openID, i);
+		
+		return i;
 	}
 	
-	public int addUser(String username, String email, String mobile, String passwordHash) throws DuplicateUserNameException, UserException {
-
+	public int addUser(String username, String passwordHash) throws DuplicateUserNameException, UserException{
+		return addUserWithPassword(username,"n/a", "n/a", passwordHash);
+	}
+	
+	public int addUserWithPassword(String username, String email, String mobile, String passwordHash) throws DuplicateUserNameException, UserException {
 		int id = FAILED;
 		Statement statement;
 		if(checkUserExists(username)){
-			throw new DuplicateUserNameException("Username in use");
+			throw new DuplicateUserNameException("Username in use "+username);
 		}
 
 		Date date = new Date(System.currentTimeMillis());
