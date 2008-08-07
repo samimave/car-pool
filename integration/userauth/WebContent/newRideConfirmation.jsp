@@ -4,8 +4,11 @@
 <%
 //force the user to login to view the page
 if (OpenIdFilter.getCurrentUser(session) == null) {
-	response.sendRedirect("/index.jsp");
+	response.sendRedirect(request.getContextPath()+"/index.jsp");
 }
+
+//add ride information to database
+
 %>
 
 <HTML>
