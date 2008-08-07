@@ -212,7 +212,7 @@ public class UserFactory {
 		return user;
 	}
 	
-	public static User getInstance(String openid) throws InvaildUserNamePassword {
+	public static User getInstance(String openid) throws InvaildUserNamePassword, IOException {
 		User user = new UserFactory().create(openid);
 		
 		return user;
