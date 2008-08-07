@@ -1,5 +1,6 @@
 package car.pool.persistance.test;
 
+import java.io.IOException;
 import java.sql.Date;
 
 import car.pool.persistance.CarPoolStore;
@@ -11,7 +12,12 @@ public class TestSetup {
 	private static CarPoolStore cps = null;
 	
 	public TestSetup(){
-		cps = (CarPoolStoreImpl)CarPoolStoreImpl.getStore();//new CarPoolStoreImpl();new CarPoolStoreImpl();
+		try {
+			cps = new CarPoolStoreImpl();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		try {
 			int a = cps.addUser("a", "a");
 			int b = cps.addUser("b", "b");

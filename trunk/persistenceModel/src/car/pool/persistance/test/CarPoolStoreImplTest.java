@@ -28,7 +28,7 @@ public class CarPoolStoreImplTest extends TestCase {
 	protected void setUp() throws Exception {
 		super.setUp();
 		
-		cps = (CarPoolStoreImpl)CarPoolStoreImpl.getStore();//new CarPoolStoreImpl();
+		cps = new CarPoolStoreImpl();
 		cps.removeAll("donotusethis");
 		usedUsers = new LinkedList<Pair<String, String>>();
 		lodgedRides = new LinkedList<Integer>();

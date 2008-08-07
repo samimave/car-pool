@@ -1,5 +1,6 @@
 package car.pool.persistance;
 
+import java.io.IOException;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,20 +19,14 @@ import car.pool.persistance.exception.UserException;
 
 public class CarPoolStoreImpl implements CarPoolStore {
 
-	Database db = new DatabaseImpl();
+	Database db = null;
 	StringBuffer errors = new StringBuffer();
 	
 	private static CarPoolStore cps;
 
-	private CarPoolStoreImpl() {
+	public CarPoolStoreImpl() throws IOException {
 		super();
-	}
-	
-	public static CarPoolStore getStore(){
-		if(cps == null){
-			cps = new CarPoolStoreImpl();
-		}
-		return cps;
+		db = new DatabaseImpl();
 	}
 
 	public int addUser(String username, String passwordHash) throws DuplicateUserNameException, UserException{
