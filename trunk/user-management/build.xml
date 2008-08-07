@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+
+<project name="user-management" default="all">
+	<property name="src.dir" value="src"/>
+	<property name="build.classes" value="build/classes"/>
+	<property name="lib.dir" value="lib"/>
+	<property name="jar.dir" value="jar"/>
+
+	<path id="build.classpath">
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar"/>
+		</fileset>
+	</path>
+
+	<target name="all" depends="clean,prepare,compile,archive"/>
+
+	<target name="clean">
+		<delete dir="${build.classes}"/>
+		<delete dir="${jar.dir}"/>
+	</target>
+
+	<target name="prepare">
+		<mkdir dir="${build.classes}"/>
+		<mkdir dir="${jar.dir}"/>
+	</target>
+
+	<target name="compile">
+		<javac excludes="**/*/test/**" classpathref="build.classpath" destdir="${build.classes}" srcdir="${src.dir}"/>
+	</target>
+
+	<target name="archive">
+		<jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${build.classes}" excludes="**/test/*.class"/>
+	</target>
+</project>
