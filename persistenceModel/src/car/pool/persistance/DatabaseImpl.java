@@ -31,6 +31,7 @@ public class DatabaseImpl implements Database{
 		setURL((String)prop.get("url"));
 		setUser((String)prop.get("user"));
 		setPassword((String)prop.get("password"));
+		registerDriver();
 	}
 	
 	public DatabaseImpl(String url, String user, String password) {
@@ -39,6 +40,10 @@ public class DatabaseImpl implements Database{
 		this.user = user;
 		this.password = password;
 		
+		registerDriver();
+	}
+
+	private void registerDriver(){
 		// Register the JDBC driver for MySQL.
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -46,9 +51,8 @@ public class DatabaseImpl implements Database{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
-
+	
 	private void setURL(String url){
 		this.url = url;
 	}
