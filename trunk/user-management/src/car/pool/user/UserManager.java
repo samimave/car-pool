@@ -7,13 +7,15 @@ import car.pool.persistance.exception.DuplicateUserNameException;
 import car.pool.persistance.exception.InvaildUserNamePassword;
 import car.pool.persistance.exception.UserException;
 
+import java.io.IOException;
+
 public class UserManager {
 
-	public User login(String openid) throws InvaildUserNamePassword {
+	public User login(String openid) throws InvaildUserNamePassword, IOException {
 		return UserFactory.getInstance(openid);
 	}
 	
-	public User registerUser(User user) throws DuplicateUserNameException, UserException {
+	public User registerUser(User user) throws DuplicateUserNameException, UserException, IOException {
 		CarPoolStoreImpl store = new CarPoolStoreImpl();
 		
 		int id = store.addUser(user.getUserName(), user.getEmail(), user.getPhoneNumber(),"");
@@ -26,8 +28,8 @@ public class UserManager {
 		return user;
 	}
 	
-	public User attachOpenId(String openid, User user) {
-		CarPoolStore store = CarPoolStoreImpl.getStore();
+	public User attachOpenId(String openid, User user) throws IOException {
+		CarPoolStore store = new CarPoolStoreImpl();
 		store.attachOpenID(openid, user.getUserId());
 		user.addOpenId(openid);
 		

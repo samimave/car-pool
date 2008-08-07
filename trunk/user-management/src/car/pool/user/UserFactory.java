@@ -9,6 +9,8 @@ import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import java.io.IOException;
+
 import car.pool.persistance.CarPoolStore;
 import car.pool.persistance.CarPoolStoreImpl;
 import car.pool.persistance.Database;
@@ -188,7 +190,7 @@ public class UserFactory {
 	}
 	
 	
-	private User create(String openid) throws InvaildUserNamePassword {
+	private User create(String openid) throws InvaildUserNamePassword, IOException {
 		UserImpl user = new UserImpl();
 		CarPoolStore store = new CarPoolStoreImpl();
 		try {
