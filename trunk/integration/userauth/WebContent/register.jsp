@@ -1,7 +1,8 @@
-<%@page contentType="text/html; charset=ISO-8859-1"%>
+<%@page contentType="text/html; charset=ISO-8859-1" import="car.pool.persistance.*"%>
 
 <%
 //CarPoolStore cps = new CarPoolStoreImpl();
+//cps.addUser("test User","shsfdgh");
 %>
 
 <HTML>
@@ -18,7 +19,7 @@
 			<FORM NAME="offerFrm" method="post" action="registrationConfirmation.jsp">
 				<h5>User Account:</h5>
 				<p>Open ID Account:<p> 
-				<INPUT TYPE="text" NAME="openId" SIZE="25">
+				<INPUT TYPE="text" NAME="openID" SIZE="25">
 				
 				<p>User Name for this site:<p>
 				<INPUT TYPE="text" NAME="userName" SIZE="25"> 

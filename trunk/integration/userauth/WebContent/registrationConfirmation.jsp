@@ -3,7 +3,7 @@
 
 <%
 CarPoolStore cps = new CarPoolStoreImpl();
-cps.addUser(request.getAttribute("openID"),request.getAttribute("userName"),request.getAttribute("email"),request.getAttribute("phone"));
+cps.addUser((String)request.getParameter("openID"),(String)request.getParameter("userName"),(String)request.getParameter("email"),(String)request.getParameter("phone"));
 %>
 
 <HTML>
