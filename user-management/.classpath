@@ -35,5 +35,6 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="/car-pool-integration/jar/car-pool-classes.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
