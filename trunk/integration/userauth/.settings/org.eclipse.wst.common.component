@@ -3,6 +3,9 @@
     <wb-module deploy-name="Car Pool Project">
         <wb-resource deploy-path="/" source-path="/WebContent"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/persistanceModule/persistanceModule">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="context-root" value="Car_Pool_Project"/>
         <property name="java-output-path"/>
     </wb-module>
