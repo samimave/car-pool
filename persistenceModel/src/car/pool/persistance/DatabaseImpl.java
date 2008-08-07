@@ -9,6 +9,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
+import java.util.ResourceBundle;
 
 public class DatabaseImpl implements Database{
 
@@ -17,16 +18,15 @@ public class DatabaseImpl implements Database{
 	String user;
 	String password;
 	
-	public DatabaseImpl(){
+	public DatabaseImpl() throws IOException{
 		Properties prop = new Properties();
-		//TODO InputStream inStream = this.getClass().getClassLoader().getResourceAsStream("persistenceModel/data.properties");
-		
-		try {
-			prop.load(new FileInputStream(new File("persistenceModel/data.properties"))); 
-			} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
+			InputStream inStream = this.getClass().getClassLoader().getResourceAsStream("data.properties");
+			if(inStream == null){
+				prop.load(new FileInputStream("data.properties"));
+			}else{
+				prop.load(inStream);
+			}
 		
 		setURL((String)prop.get("url"));
 		setUser((String)prop.get("user"));
