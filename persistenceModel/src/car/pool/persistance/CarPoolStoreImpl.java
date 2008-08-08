@@ -139,6 +139,10 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		}
 	}
 
+	public int checkUser(String username) throws InvaildUserNamePassword {
+		return checkUser(username, "n/a");
+	}
+	
 	public int getMaxSeats(int ride){
 		return 4;
 	}
@@ -413,8 +417,9 @@ public class CarPoolStoreImpl implements CarPoolStore {
 	}
 	
 	public RideListing getRideListing(){		
-		return new RideListingImpl(db.getStatement());
+		return RideListingFactory.getRideListing(db.getStatement());
 	}
+
 	
 	
 }

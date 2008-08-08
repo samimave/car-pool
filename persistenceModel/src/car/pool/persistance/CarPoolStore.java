@@ -15,10 +15,15 @@ public interface CarPoolStore {
 	
 	int addUser(String username, String passwordHash) throws StoreException;
 	int addUser(String openID,String userName,String  email,String  phone) throws DuplicateUserNameException, UserException;
+	
 	int checkUser(String username, String passwordHash) throws InvaildUserNamePassword;
+	int checkUser(String username) throws InvaildUserNamePassword;
+	
 	boolean checkUserExists(String username);
+	
 	int addRide(int user, int availableSeats, String startDate, String startLocation, String endLocation) throws RideException;
 	int takeRide(int user, int ride) throws RideException;
+	
 	boolean removeUser(String username, String passwordHash) throws StoreException;
 	boolean removeRide(int user, int ride) throws StoreException;
 	boolean removeRide(int ride) throws StoreException;
