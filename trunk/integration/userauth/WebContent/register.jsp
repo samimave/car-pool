@@ -1,8 +1,7 @@
 <%@page contentType="text/html; charset=ISO-8859-1" import="car.pool.persistance.*"%>
 
 <%
-//CarPoolStore cps = new CarPoolStoreImpl();
-//cps.addUser("test User","shsfdgh");
+
 %>
 
 <HTML>
@@ -16,16 +15,17 @@
 
 		<DIV class="content">
 			<p>Please enter the relevant details and click confirm.</p>
-			<FORM NAME="offerFrm" method="post" action="registrationConfirmation.jsp">
-				<h5>User Account:</h5>
+			<FORM NAME="offerFrm" method="post" action="welcome.jsp">
+				<INPUT type="hidden" name="newUser" value="yes">
+				<h2>User Account:</h2>
 				<p>Open ID Account:<p> 
-				<INPUT TYPE="text" NAME="openID" SIZE="25">
+				<INPUT TYPE="text" NAME="openid_url" SIZE="25">
 				
 				<p>User Name for this site:<p>
 				<INPUT TYPE="text" NAME="userName" SIZE="25"> 
 				<a href="#">Check Availability</a> <br /> <br />
 
-				<h5>Additional Details:</h5>
+				<h2>Additional Details:</h2>
 				<p>Email address:<p> 
 				<INPUT TYPE="text" NAME="email" SIZE="25">
 

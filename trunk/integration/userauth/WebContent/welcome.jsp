@@ -1,7 +1,17 @@
 <%@page contentType="text/html; charset=ISO-8859-1" %>
-<%@page import="org.verisign.joid.consumer.OpenIdFilter, org.verisign.joid.util.UrlUtils, org.verisign.joid.OpenIdException" %>
+<%@page import="org.verisign.joid.consumer.OpenIdFilter, org.verisign.joid.util.UrlUtils, org.verisign.joid.OpenIdException, car.pool.persistance.*" %>
 
 <%
+String message = "";
+
+//code to add user to the db
+if (request.getParameter("newUser") != null) {
+	CarPoolStore cps = new CarPoolStoreImpl();
+	cps.addUser((String)request.getParameter("openid_url"),(String)request.getParameter("userName"),(String)request.getParameter("email"),(String)request.getParameter("phone"));
+	message = "<p> Thanks for signing up! </p>";
+}
+
+//code to validate user's openID
 	if (request.getParameter("signin") != null) {
 		try {
 			StringBuffer returnTo = new StringBuffer(UrlUtils
@@ -52,7 +62,8 @@
 	<%@ include file="heading.html" %>
 
 	<DIV class="content">
-		<h5 align="center">Welcome to The Car Pool <%=OpenIdFilter.getCurrentUser(request.getSession())%></h5>
+		<h2 align="center">Welcome to The Car Pool <%=OpenIdFilter.getCurrentUser(request.getSession())%></h2>
+		<%=message %>
 		<p>Eventually the person's upcoming rides will be displayed here.</p>
 	</DIV>		
 
