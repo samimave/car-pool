@@ -33,4 +33,6 @@ public interface CarPoolStore {
 	public boolean attachOpenID(String openid_url,int idUser);
 	public boolean detachOpenID(String openid_url,int idUser);
 	public boolean detachOpenIDsByUser(int idUser);
+	
+	public RideListing getRideListing();
 }
