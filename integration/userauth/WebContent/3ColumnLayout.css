@@ -18,6 +18,10 @@ h2 {
 	margin:0px 0px 5px 0px;
 	padding:0px;
 	}
+table.rideDetails {
+	border:"0";
+	font:11px verdana, arial, helvetica, sans-serif;
+	}
 p {
 	font:11px/20px verdana, arial, helvetica, sans-serif;
 	margin:0px 0px 16px 0px;

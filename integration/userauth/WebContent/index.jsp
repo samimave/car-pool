@@ -1,12 +1,20 @@
 <%@page contentType="text/html; charset=ISO-8859-1"%>
-<%@page import="org.verisign.joid.consumer.OpenIdFilter" %>
+<%@page import="org.verisign.joid.consumer.OpenIdFilter,car.pool.persistance.*" %>
 
 <%
 HttpSession s = request.getSession(true);
+
+//to show who is logged in
 String message = "Please log in.";
 if (OpenIdFilter.getCurrentUser(s) != null) {
 	message = "Logged in as "+OpenIdFilter.getCurrentUser(s);
 }
+
+//TODO: method to clear database 
+/*if (request.getParameter("del") == "yes") {
+	CarPoolStoreImpl cps = new CarPoolStoreImpl();
+	cps.removeAll("donotusethis");
+}*/
 %>
 
 <HTML>
@@ -18,13 +26,14 @@ if (OpenIdFilter.getCurrentUser(s) != null) {
 
 	<%@ include file="heading.html" %>
 
-		<DIV class="content">
-			<h5 align="center">Welcome to The Car Pool</h5>
-			<p>Please log in.</p>
-		</DIV>
+	<DIV class="content">
+		<h2 align="center">Welcome to The Car Pool</h2>
+		<p>Please log in.</p>
+	</DIV>
 
 	<DIV id="navAlpha">
-		<%=message %>
+		<%=message %> <br />
+		<a href="index.jsp?del=yes">delete database (testing purposes only)</a>
 	</DIV>
 
 	<DIV id="navBeta">

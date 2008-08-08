@@ -1,5 +1,5 @@
 <%@page contentType="text/html; charset=ISO-8859-1" %>
-<%@page import="org.verisign.joid.consumer.OpenIdFilter" %>
+<%@page import="org.verisign.joid.consumer.OpenIdFilter, car.pool.persistance.*" %>
 
 <%
 //force the user to login to view the page
@@ -8,7 +8,9 @@ if (OpenIdFilter.getCurrentUser(session) == null) {
 }
 
 //add ride information to database
-
+CarPoolStore cps = new CarPoolStoreImpl();
+int dbID = cps.getUserIdByURL(request.getParameter("user"));
+cps.addRide(dbID,Integer.parseInt(request.getParameter("numSeats")),request.getParameter("depDate"),request.getParameter("from"),request.getParameter("to"));
 %>
 
 <HTML>
@@ -21,15 +23,15 @@ if (OpenIdFilter.getCurrentUser(session) == null) {
 	<%@ include file="heading.html" %>
 
 		<DIV class="content">
-			<p>Thank you for adding a ride from <%= request.getParameter("from1") %>, to <%= request.getParameter("to1") %>;  
-			scheduled for <%= request.getParameter("time1") %> <%= request.getParameter("date1") %>. </p>
+			<p>Thank you for adding a ride from <%= request.getParameter("from") %>, to <%= request.getParameter("to") %>;  
+			scheduled for <%= request.getParameter("depTime") %> <%= request.getParameter("depDate") %>. </p>
 			<FORM action="addRideEvent.jsp" method="post">
-            <INPUT type="hidden" name="from" value="<%=request.getParameter("from1") %>">
-			<INPUT type="hidden" name="to" value="<%=request.getParameter("to1") %>">
-			<INPUT type="hidden" name="stime" value="<%=request.getParameter("time1") %>">
-			<INPUT type="hidden" name="etime" value="<%=request.getParameter("time2") %>">
-			<INPUT type="hidden" name="date" value="<%=request.getParameter("date1") %>">
-			<INPUT type="submit" value="Add to Google Calendar" />
+            	<INPUT type="hidden" name="from" value="<%=request.getParameter("from") %>">
+				<INPUT type="hidden" name="to" value="<%=request.getParameter("to") %>">
+				<INPUT type="hidden" name="stime" value="<%=request.getParameter("depTime") %>">
+				<INPUT type="hidden" name="etime" value="<%=request.getParameter("tripLength") %>">
+				<INPUT type="hidden" name="date" value="<%=request.getParameter("depDate") %>">
+				<INPUT type="submit" value="Add to Google Calendar" />
 			</FORM>
 		</DIV>
 

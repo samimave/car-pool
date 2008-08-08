@@ -9,7 +9,7 @@ String rdate = DateFormat.getDateInstance().format(rnow);
 %>
 
 <DIV id="navBeta">
-	Hi &lt;<%= user %>&gt;!
+	Hi <%= user %>
 	Your current social score is: &lt;integer?&gt;.
 	<p> <%= rtime %> <%= rdate %></p>
 		
