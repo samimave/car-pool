@@ -1,10 +1,11 @@
 package car.pool.persistance;
 
 import java.sql.Date;
+import java.sql.SQLException;
 
 public interface RideListing {
 	
-	public boolean hasNextLine();
+	public boolean next()throws SQLException;
 	public int getRideID();
 	public int getUserID();
 	public String getUsername();

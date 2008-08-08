@@ -35,8 +35,8 @@ public class RideListingImpl implements RideListing {
 		}
 	}
 	
-	public boolean hasNext(){
-		return false;
+	public boolean next() throws SQLException{
+		return rs.next();
 	}
 
 	@Override
@@ -79,12 +79,6 @@ public class RideListingImpl implements RideListing {
 	public String getUsername() {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	@Override
-	public boolean hasNextLine() {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 }
