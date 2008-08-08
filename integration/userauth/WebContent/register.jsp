@@ -17,6 +17,7 @@
 			<p>Please enter the relevant details and click confirm.</p>
 			<FORM NAME="offerFrm" method="post" action="welcome.jsp">
 				<INPUT type="hidden" name="newUser" value="yes">
+				<INPUT type="hidden" name="signin" value="yes">
 				<h2>User Account:</h2>
 				<p>Open ID Account:<p> 
 				<INPUT TYPE="text" NAME="openid_url" SIZE="25">
