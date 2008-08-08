@@ -10,17 +10,27 @@ if (OpenIdFilter.getCurrentUser(s) != null) {
 	message = "Logged in as "+OpenIdFilter.getCurrentUser(s);
 }
 
-//TODO: method to clear database 
-/*if (request.getParameter("del") == "yes") {
+if (request.getParameter("del") != null) {
 	CarPoolStoreImpl cps = new CarPoolStoreImpl();
 	cps.removeAll("donotusethis");
-}*/
+}
 %>
 
 <HTML>
 	<HEAD>
 		<TITLE> The Car Pool </TITLE>
 		<STYLE type="text/css" media="screen">@import "3ColumnLayout.css";</STYLE>
+		<script type="text/javascript">
+		function confirmation() {
+			var answer = confirm("DO NOT delete the database!!!")
+			if (answer){
+				window.location = "/Car_Pool_Project/index.jsp?del=yes";
+			}
+			else{
+				alert("phew, good choice.")
+			}
+		}
+		</script>
 	</HEAD>
 	<BODY>
 
@@ -33,7 +43,7 @@ if (OpenIdFilter.getCurrentUser(s) != null) {
 
 	<DIV id="navAlpha">
 		<%=message %> <br />
-		<a href="index.jsp?del=yes">delete database (testing purposes only)</a>
+		<a onclick="confirmation()">DANGEROUS!<br />DO NOT CLICK!</a>
 	</DIV>
 
 	<DIV id="navBeta">

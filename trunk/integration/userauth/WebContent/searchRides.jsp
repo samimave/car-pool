@@ -1,11 +1,16 @@
 <%@page contentType="text/html; charset=ISO-8859-1" %>
-<%@page import="org.verisign.joid.consumer.OpenIdFilter" %>
+<%@page import="org.verisign.joid.consumer.OpenIdFilter, car.pool.persistance.*" %>
 
 <%
 //force the user to login to view the page
 if (OpenIdFilter.getCurrentUser(session) == null) {
 	response.sendRedirect(request.getContextPath()+"/index.jsp");
 }
+
+//TODO: display all the rides in the database hopefully selectable
+String rideTable = "";
+//RideListing rl = new RideListingImpl();
+
 %>
 
 <HTML>
@@ -19,6 +24,7 @@ if (OpenIdFilter.getCurrentUser(session) == null) {
 
 		<DIV class="content">
 			<p> Rides found will be displayed here. </p> 
+			<%=rideTable %>
 		</DIV>
 
 	<%@ include file="leftMenu.html" %>

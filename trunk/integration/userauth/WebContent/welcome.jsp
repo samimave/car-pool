@@ -2,13 +2,16 @@
 <%@page import="org.verisign.joid.consumer.OpenIdFilter, org.verisign.joid.util.UrlUtils, org.verisign.joid.OpenIdException, car.pool.persistance.*" %>
 
 <%
+//being nice to our users
 String message = "";
-
+if (request.getParameter("sThx") != null) {
+	message = "<p> Thanks for signing up! </p>";
+}
+	
 //code to add user to the db
 if (request.getParameter("newUser") != null) {
 	CarPoolStore cps = new CarPoolStoreImpl();
 	cps.addUser((String)request.getParameter("openid_url"),(String)request.getParameter("userName"),(String)request.getParameter("email"),(String)request.getParameter("phone"));
-	message = "<p> Thanks for signing up! </p>";
 }
 
 //code to validate user's openID
@@ -29,7 +32,7 @@ if (request.getParameter("newUser") != null) {
 		} catch (OpenIdException e) {
 			StringBuffer buff = new StringBuffer();
 			buff.append(request.getContextPath());
-			buff.append("/index.jsp");
+			buff.append("/index.jsp?sThx=yes");
 
 			response.sendRedirect(buff.toString());
 		}
