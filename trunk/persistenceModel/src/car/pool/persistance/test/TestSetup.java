@@ -3,6 +3,8 @@ package car.pool.persistance.test;
 import java.io.IOException;
 import java.sql.Date;
 
+import javax.swing.JOptionPane;
+
 import car.pool.persistance.CarPoolStore;
 import car.pool.persistance.CarPoolStoreImpl;
 import car.pool.persistance.exception.StoreException;
@@ -80,6 +82,7 @@ public class TestSetup {
 	public static void main(String[] args) {
 		setup();
 		System.out.println(("setup"));
+		JOptionPane.showConfirmDialog(null, "Click to remove all from DB");
 		tearDown();
 		System.out.println("done.");
 	}

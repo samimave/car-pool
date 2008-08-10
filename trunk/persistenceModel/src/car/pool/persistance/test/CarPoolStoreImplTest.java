@@ -1,6 +1,7 @@
 package car.pool.persistance.test;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Random;
@@ -8,6 +9,7 @@ import java.util.Vector;
 
 import car.pool.persistance.CarPoolStore;
 import car.pool.persistance.CarPoolStoreImpl;
+import car.pool.persistance.RideListing;
 import car.pool.persistance.exception.DuplicateUserNameException;
 import car.pool.persistance.exception.InvaildUserName;
 import car.pool.persistance.exception.InvaildUserNamePassword;
@@ -320,6 +322,19 @@ public class CarPoolStoreImplTest extends TestCase {
 			cps.takeRide(idUser, idRide);
 		
 		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void testRideListing(){
+		new TestSetup();
+		RideListing rl = cps.getRideListing();
+		try {
+			while(rl.next()){
+				System.out.println(rl.getRideID()+", "+rl.getUserID()+", "+rl.getUsername()+", "+rl.getAvailableSeats()+", "+rl.getRideDate().toString()+", "+rl.getStartLocation()+", "+rl.getEndLocation());
+			}
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
