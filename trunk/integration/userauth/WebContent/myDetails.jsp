@@ -26,7 +26,7 @@ String requestTable = "<p>No rides found.</p>";
 
 	<%@ include file="heading.html" %>
 
-<DIV class="content">
+	<DIV class="content">
 		<h2 align="center">Welcome to your Account Page</h2></br></br>
 		<p><b>Your user details appear below<b></p>
 		<INPUT TYPE="submit" NAME="edit" VALUE="Edit" SIZE="25"></br></br>
