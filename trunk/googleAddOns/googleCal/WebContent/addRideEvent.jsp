@@ -2,10 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-    <title>My Google Data API Application</title>
+    <title>Add Car-Pool Ride Event</title>
     <script src="http://www.google.com/jsapi?key=ABQIAAAA7rDxBnSa8ztdEea-bXHUqRRKOMZEnoyerBNNN7XbrW5T80f1pxRxpg7l2VcFxiQk2L5RouYsGk3NqQ" type="text/javascript"></script>
     <script type="text/javascript">
-    //<![CDATA[
+    //localhost key - ABQIAAAA7rDxBnSa8ztdEea-bXHUqRRKOMZEnoyerBNNN7XbrW5T80f1pxRxpg7l2VcFxiQk2L5RouYsGk3NqQ
+    //massey key - ABQIAAAA7rDxBnSa8ztdEea-bXHUqRRlE5ut_msTCy_drvRxhL-5WV5Z9RRgsjp91RhaFgOcfLwhiUE-yftYsA
+  //<![CDATA[
 
     //load google api libraries
     google.load("gdata", "1");
@@ -43,8 +45,8 @@
    			var when = new google.gdata.When();
 
    			// Set the start and end time of the When object
-   			var startTime = google.gdata.DateTime.fromIso8601(getISODate(true));
-   			var endTime = google.gdata.DateTime.fromIso8601(getISODate(false));
+   			var startTime = google.gdata.DateTime.fromIso8601(getISODate(false));
+   			var endTime = google.gdata.DateTime.fromIso8601(getISODate(true));
    			when.setStartTime(startTime);
    			when.setEndTime(endTime);
 
@@ -56,7 +58,7 @@
    			// The callback method that will be called after a successful insertion from insertEntry()
    			var callback = function(result) 
    			{
-   				window.location="success.htm";
+  				window.location="success.htm";
    			}
 
    			// Error handler will be invoked if there is an error from insertEntry()
@@ -73,9 +75,9 @@
     }
 
     //get the date and time parameters from the POST data and correctly format them into a string accepted by google API
-    function getISODate(start)
+    function getISODate(end)
     {
-    	var time = null;
+    	var time = "T<%=request.getParameter("time") %>:00.000";
     	var date = "<%=request.getParameter("date") %>";
     	
     	//split date string so it can be re-ordered and re-delmited correctly
@@ -91,23 +93,66 @@
     	date = arrDate[2] + "-" + arrDate[1] + "-" + arrDate[0];
     	
     	//if this is for the start time/date then get the correct POST time
-		if(start)
-		{
-			time = "T<%=request.getParameter("stime") %>:00.000"	
-		}
-		else
-		{
-			time = "T<%=request.getParameter("etime") %>:00.000"
+		if(end)
+		{	
+			time = getEndTime();
 		}
 
 		return date + time;			
+    }
+
+    //add the length of the trip to the start time to get an end time
+    function getEndTime()
+    {
+        var sTime = "<%=request.getParameter("time") %>";
+        var length = "<%=request.getParameter("length") %>";
+
+        var hhmm = sTime.split(":");
+
+        var hh = parseInt(hhmm[0]);
+        var mm = parseInt(hhmm[1]);
+
+        mm += parseInt(length);
+
+		//if minutes is larger than 59, add an hour.  If this will tick over to another day, then lock the time at 11:59pm
+        if(mm>59)
+        {
+            mm -= 60;
+            hh += 1;
+            if(hh<23)
+            {
+                hh = "23";
+                mm = "59";
+            }
+        }
+
+        //add leading zeroes to hours or minutes if necessary
+        if(mm<10)
+        {
+            mm = "0" + mm;
+        }
+        if(hh<10)
+        {
+            hh = "0" + mm;
+        }
+
+        return "T" + hh + ":" + mm +":00.000";
     }
 
 	//]]>
     </script>
   </head>
   <body>
-    <div id="panel"/>
-	<img src="google.jpg">
+
+    <div class="content">
+		Please wait, adding event data....
+		<img src="carpool.png">
+	</div>
+
   </body>
 </html>
+  
+
+
+
+
