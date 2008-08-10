@@ -8,9 +8,30 @@ if (OpenIdFilter.getCurrentUser(session) == null) {
 }
 
 //TODO: display all the rides in the database hopefully selectable
-String rideTable = "";
-//RideListing rl = new RideListingImpl();
-
+boolean ridesExist = false;
+String rideTable = "<p>No rides found.</p>";
+CarPoolStore cps = new CarPoolStoreImpl();
+RideListing rl = cps.getRideListing();
+if (rl.next()) {
+	ridesExist = true;
+	rideTable = "<table> <tr> <th> From </th> <th> To </th> <th> Date </th> <th> Time </th> <th> Available Seats </th> </tr>";
+	rideTable += "<tr> <td>"+ rl.getStartLocation() +"</td> ";
+	rideTable += "<td>"+ rl.getEndLocation() +"</td> ";
+	rideTable += "<td>"+ rl.getRideDate() +"</td> ";
+	rideTable += "<td> ride time </td> ";
+	rideTable += "<td>"+ rl.getAvailableSeats() +"</td> </tr>";
+}
+while (rl.next()) {
+	rideTable += "<tr> <td>"+ rl.getStartLocation() +"</td> ";
+	rideTable += "<td>"+ rl.getEndLocation() +"</td> ";
+	rideTable += "<td>"+ rl.getRideDate() +"</td> ";
+	rideTable += "<td> ride time </td> ";
+	rideTable += "<td>"+ rl.getAvailableSeats() +"</td> </tr>";
+}
+if (ridesExist) {
+	rideTable += "</table>";
+}
+//int dbID = cps.getUserIdByURL(request.getParameter("user"));
 %>
 
 <HTML>
@@ -23,7 +44,6 @@ String rideTable = "";
 	<%@ include file="heading.html" %>
 
 		<DIV class="content">
-			<p> Rides found will be displayed here. </p> 
 			<%=rideTable %>
 		</DIV>
 
