@@ -67,6 +67,9 @@
     		{
 				document.write("Error ");
     			document.write(error);
+    			document.write(getISODate(false));
+    			document.write(getISODate(true));
+    			
     		}
 
    			// Submit the request using the calendar service object
