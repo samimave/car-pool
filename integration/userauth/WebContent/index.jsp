@@ -14,6 +14,7 @@ if (request.getParameter("del") != null) {
 	CarPoolStoreImpl cps = new CarPoolStoreImpl();
 	cps.removeAll("donotusethis");
 }
+
 %>
 
 <HTML>

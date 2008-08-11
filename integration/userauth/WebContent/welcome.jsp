@@ -2,18 +2,6 @@
 <%@page import="org.verisign.joid.consumer.OpenIdFilter, org.verisign.joid.util.UrlUtils, org.verisign.joid.OpenIdException, car.pool.persistance.*" %>
 
 <%
-//being nice to our users
-String message = "";
-if (request.getParameter("sThx") != null) {
-	message = "<p> Thanks for signing up! </p>";
-}
-	
-//code to add user to the db
-if (request.getParameter("newUser") != null) {
-	CarPoolStore cps = new CarPoolStoreImpl();
-	cps.addUser((String)request.getParameter("openid_url"),(String)request.getParameter("userName"),(String)request.getParameter("email"),(String)request.getParameter("phone"));
-}
-
 //code to validate user's openID
 	if (request.getParameter("signin") != null) {
 		try {
@@ -32,12 +20,12 @@ if (request.getParameter("newUser") != null) {
 		} catch (OpenIdException e) {
 			StringBuffer buff = new StringBuffer();
 			buff.append(request.getContextPath());
-			buff.append("/index.jsp?sThx=yes");
+			buff.append("/index.jsp");
 
 			response.sendRedirect(buff.toString());
 		}
 	} else {
-		String loggedInAs = OpenIdFilter.getCurrentUser(session);
+		String loggedInAs = OpenIdFilter.getCurrentUser(request.getSession());
 		if (loggedInAs == null
 				&& request.getParameter(OpenIdFilter.OPENID_ATTRIBUTE) != null) {
 			session.setAttribute(OpenIdFilter.OPENID_IDENTITY, request
@@ -53,6 +41,33 @@ if (request.getParameter("newUser") != null) {
 			response.sendRedirect(buff.toString());
 		}
 	}
+
+//being nice to our users
+String message = "";
+if (request.getParameter("sThx") != null) {
+	message += "<p> Thanks for signing up! </p>";
+}
+
+//code to allow interaction with db
+CarPoolStore cps = new CarPoolStoreImpl();
+RideListing rl = cps.getRideListing();
+int currentUser = cps.getUserIdByURL(OpenIdFilter.getCurrentUser(request.getSession()));
+
+//code to add user to the db
+if (request.getParameter("newUser") != null) {
+	cps.addUser((String)request.getParameter("openid_url"),(String)request.getParameter("userName"),(String)request.getParameter("email"),(String)request.getParameter("phone"));
+}
+
+//code to add a ride to the user's selected rides
+if (request.getParameter("rideselect") != null) {
+	int rideID = Integer.parseInt(request.getParameter("rideselect"));
+	while (rl.next()) {
+		if (rideID == rl.getRideID()) {
+			cps.takeRide(currentUser,rideID);
+			message += "<p>You have booked a ride from: "+rl.getStartLocation()+", to: "+rl.getEndLocation()+", on "+rl.getRideDate()+".</p>";
+		}
+	}
+}
 %>
 
 <HTML>
