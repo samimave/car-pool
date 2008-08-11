@@ -68,7 +68,7 @@ public class CarPoolStoreImplTest extends TestCase {
 	 * @return
 	 */
 	private Pair<String,String> recallUser(){
-		Pair<String, String> pair = usedUsers.pollLast();	
+		Pair<String, String> pair = usedUsers.getLast();	
 		return pair;
 	}
 	
@@ -144,14 +144,14 @@ public class CarPoolStoreImplTest extends TestCase {
 		LinkedList<Pair<String,String>> temp = allUsedUsers();
 		
 		while(!temp.isEmpty()){
-			Pair<String, String> pair = temp.pollLast();
+			Pair<String, String> pair = temp.getLast();
 			assertEquals("Username should have been accepted", true, cps.checkUserExists(pair.first));
 		}
 		
 		temp = allUsedUsers();
 		
 		while(!temp.isEmpty()){
-			Pair<String, String> pair = temp.pollLast();
+			Pair<String, String> pair = temp.getLast();
 			boolean failed = false;
 			assertEquals("A wrong username was accepted", false, cps.checkUserExists("im not the username"));
 		}
@@ -164,7 +164,7 @@ public class CarPoolStoreImplTest extends TestCase {
 		LinkedList<Pair<String,String>> temp = allUsedUsers();
 		
 		while(!temp.isEmpty()){
-			Pair<String, String> pair = temp.pollLast();
+			Pair<String, String> pair = temp.getLast();
 			try {
 				cps.checkUser(pair.first, pair.second);
 			} catch (InvaildUserNamePassword e) {
@@ -175,7 +175,7 @@ public class CarPoolStoreImplTest extends TestCase {
 		temp = allUsedUsers();
 		
 		while(!temp.isEmpty()){
-			Pair<String, String> pair = temp.pollLast();
+			Pair<String, String> pair = temp.getLast();
 			boolean failed = false;
 			try {
 				cps.checkUser(pair.first, "im not the password");
@@ -188,7 +188,7 @@ public class CarPoolStoreImplTest extends TestCase {
 		temp = allUsedUsers();
 		
 		while(!temp.isEmpty()){
-			Pair<String, String> pair = temp.pollLast();
+			Pair<String, String> pair = temp.getLast();
 			boolean failed = false;
 			try {
 				cps.checkUser("im not the username", pair.second);
@@ -208,7 +208,7 @@ public class CarPoolStoreImplTest extends TestCase {
 		
 		LinkedList<Pair<String,String>> temp = allUsedUsers();
 		
-		Pair<String, String> user = temp.pollLast();
+		Pair<String, String> user = temp.getLast();
 		
 		int id = 0;
 		try {
@@ -228,7 +228,7 @@ public class CarPoolStoreImplTest extends TestCase {
 			e.printStackTrace();
 		}
 		
-		user = temp.pollLast();
+		user = temp.getLast();
 		
 		int u = 0;
 		try {
