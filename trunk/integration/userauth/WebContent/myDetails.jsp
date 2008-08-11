@@ -3,7 +3,7 @@
 
 <%
 //force the user to login to view the page
-if (OpenIdFilter.getCurrentUser(session) == null) {
+if (OpenIdFilter.getCurrentUser(request.getSession()) == null) {
 	response.sendRedirect(request.getContextPath()+"/index.jsp");
 }
 
@@ -27,15 +27,15 @@ String requestTable = "<p>No rides found.</p>";
 	<%@ include file="heading.html" %>
 
 	<DIV class="content">
-		<h2 align="center">Welcome to your Account Page</h2></br></br>
-		<p><b>Your user details appear below<b></p>
-		<INPUT TYPE="submit" NAME="edit" VALUE="Edit" SIZE="25"></br></br>
-		<p><b>Your ride details appear below<b></p>
-		<p><em><u>Your offers</u></em></p>
+		<h2 align="center">Welcome to your Account Page</h2><br /><br />
+		<p>Your user details appear below</p>
+		<INPUT TYPE="submit" NAME="edit" VALUE="Edit" SIZE="25"><br /><br />
+		<p>Your ride details appear below</p>
+		<p>our offers</p>
 		<%=offerTable %>
-		<p><em><u>Accepted Rides</u></em></p>
+		<p>Accepted Rides</p>
 		<%=acceptedTable %>
-		<p><em><u>Your requests</u></em></p>
+		<p>Your requests</p>
 		<%=requestTable %>
 
 	</DIV>

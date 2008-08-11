@@ -3,7 +3,7 @@
 
 <%
 //force the user to login to view the page
-if (OpenIdFilter.getCurrentUser(session) == null) {
+if (OpenIdFilter.getCurrentUser(request.getSession()) == null) {
 	response.sendRedirect(request.getContextPath()+"/index.jsp");
 }
 
