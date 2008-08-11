@@ -208,6 +208,9 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		
 		Statement statement = db.getStatement();
 		int id = FAILED;
+		
+		availableSeats += 1;
+		
 		String sql = "INSERT INTO Ride "
 				+ "(idUser,rideDate,rideStartLocation,rideStopLocation,availableSeats) "
 				+ "VALUES ('" + user + "','" + startDate+"','"+ startLocation + "','" + endLocation+"','"+ availableSeats+"');";
@@ -231,6 +234,17 @@ public class CarPoolStoreImpl implements CarPoolStore {
 			statement.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}
+		
+		if(id!= FAILED){
+			takeRide(user,id);
+		}else{
+			try {
+				removeRide(id);
+			} catch (StoreException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		if(id==FAILED){

@@ -48,6 +48,7 @@ public class TestSetup {
 			int ride2 = cps.addRide(b, 4, date.toString(), "Wellington", "XMas");
 			int ride3 = cps.addRide(c, 4, date.toString(), "Wilton", "Island");
 			int ride4 = cps.addRide(d, 4, date.toString(), "Home", "Not home");
+			int ride5 = cps.addRide(e, 4, date.toString(), "asgadfg", "adfgadfgafd home");
 			
 			cps.takeRide(e, ride1);
 			cps.takeRide(f, ride1);
