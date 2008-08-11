@@ -12,6 +12,7 @@
       <param-name>ignorePaths</param-name>
       <param-value>/login,/server,/echo</param-value>
     </init-param>
+
   </filter>
   <filter>
 		<filter-name>UserUrlFilter</filter-name>
