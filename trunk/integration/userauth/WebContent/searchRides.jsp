@@ -15,7 +15,7 @@ if (rl.next()) {
 	ridesExist = true;
 	rideTable = "<table class='rideDetails'> <tr> <th> Offered By </th> <th> From </th> <th> To </th> <th> Date </th> <th> Time </th> <th> Available Seats </th> </tr>";
 	rideTable += "<tr> <td>"+ rl.getUsername() +"</td> ";
-	rideTable += "<td> <a href='"+ request.getContextPath() +"/welcome.jsp?rideselect="+ rl.getRideID() +"'>"+ rl.getStartLocation() +"</a> </td> ";
+	rideTable += "<td> <a href='"+ request.getContextPath() +"/temp.jsp?rideselect="+ rl.getRideID() +"'>"+ rl.getStartLocation() +"</a> </td> ";
 	rideTable += "<td>"+ rl.getEndLocation() +"</td> ";
 	rideTable += "<td>"+ rl.getRideDate() +"</td> ";
 	rideTable += "<td> null </td> ";
@@ -23,7 +23,7 @@ if (rl.next()) {
 }
 while (rl.next()) {
 	rideTable += "<tr> <td>"+ rl.getUsername() +"</td> ";	
-	rideTable += "<td> <a href='"+ request.getContextPath() +"/welcome.jsp?rideselect="+ rl.getRideID() +"'>"+ rl.getStartLocation() +"</a> </td> ";
+	rideTable += "<td> <a href='"+ request.getContextPath() +"/temp.jsp?rideselect="+ rl.getRideID() +"'>"+ rl.getStartLocation() +"</a> </td> ";
 	rideTable += "<td>"+ rl.getEndLocation() +"</td> ";
 	rideTable += "<td>"+ rl.getRideDate() +"</td> ";
 	rideTable += "<td> null </td> ";
