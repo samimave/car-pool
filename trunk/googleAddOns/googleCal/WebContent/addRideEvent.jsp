@@ -58,14 +58,17 @@
    			// The callback method that will be called after a successful insertion from insertEntry()
    			var callback = function(result) 
    			{
+   		        google.accounts.user.logout();
   				window.location="success.htm";
    			}
 
    			// Error handler will be invoked if there is an error from insertEntry()
     		var handleError = function(error) 
     		{
-				document.write("Error ");
+				document.write("Error - ");
     			document.write(error);
+    			document.write(getISODate(false));
+    			document.write(getISODate(true));
     		}
 
    			// Submit the request using the calendar service object
@@ -118,8 +121,8 @@
         if(mm>59)
         {
             mm -= 60;
-            hh += 1;
-            if(hh<23)
+            hh++;
+            if(hh>23)
             {
                 hh = "23";
                 mm = "59";
@@ -131,9 +134,9 @@
         {
             mm = "0" + mm;
         }
-        if(hh<10)
+        if(parseInt(hh)<10)
         {
-            hh = "0" + mm;
+            hh = "0" + hh;
         }
 
         return "T" + hh + ":" + mm +":00.000";
@@ -146,7 +149,7 @@
 
     <div class="content">
 		Please wait, adding event data....
-		<img src="carpool.png">
+		<img src="google.jpg">
 	</div>
 
   </body>
