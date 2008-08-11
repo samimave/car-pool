@@ -1,4 +1,5 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
+
 <project name="car-pool" default="all">
 	<property name="includefiletypes" value="**/*.xml,**/*.java,**/*.jsp,**/*.sql,**/*.jpg,**/*.bmp,**/*.js,**/*.html,**/*.css,**/*.gif,**/*.png,**/*.jar,**/*.properties"/>
 	<property name="excludefiletypes" value="**/*.class"/>
@@ -11,15 +12,20 @@
 	<property name="tests.dir" value="classes"/>
 	<property name="dest.dir" value="${ant.project.name}"/>
 	<property name="lib.dir" value="${dest.dir}/lib"/>
-	<property name="build.dir" value="${dest.dir}/build"/>
-	<property name="build.classes" value="${build.dir}/${classes.dir}"/>
+	<property name="static.lib.dir" value="lib"/>
+	<property name="build.dir" value="build"/>
+	<property name="build.classes" value="${dest.dir}/${build.dir}/${classes.dir}"/>
 	<property name="build.tests" value="${build.dir}/${tests.dir}"/>
 	<property name="web.dir" value="${dest.dir}/WebContent"/>
 	<property name="web.xml" value="${web.dir}/WEB-INF/web.xml"/>
 	<property name="src.dir" value="${dest.dir}/src"/>
-	<property name="jar.dir" value="${base-directory}jar"/>
-	<property name="war.dir" value="${base-directory}war"/>
-	<property name="zip.dir" value="${base-directory}zip"/>
+	<property name="jar.dir" value="jar"/>
+	<property name="war.dir" value="war"/>
+	<property name="zip.dir" value="zip"/>
+	<property name="doc.dir" value="doc"/>
+	<property name="result.tests" value="test_results"/>
+	<property name="jdepend.docs" value="${doc.dir}/jdepend"/>
+	<property name="config.dir" value="config"/>
 	<path id="build.classpath">
 		<fileset dir="${lib.dir}">
 			<include name="**/*.jar"/>
@@ -33,7 +39,11 @@
 	<!-- ================================= 
           target: all              
          ================================= -->
-	<target name="all" depends="delete,prepare,svnupdate,googleAddOns,persistenceModel,user-management,webInterface,checklibs,compile,archive,svncommit" description="--&gt; description"/>
+	<target name="all" depends="delete,prepare,googleAddOns,persistenceModel,user-management,webInterface,checklibs,compile,archive,runtests" description="--&gt; description"/>
+
+	<target name="download" depends="svnupdate"/>
+
+	<target name="upload" depends="svncommit,committestresults"/>
 
 	<target name="delete">
 		<echo>Deleting ${dest.dir}</echo>
@@ -51,6 +61,9 @@
 		<mkdir dir="${jar.dir}"/>
 		<mkdir dir="${war.dir}"/>
 		<mkdir dir="${zip.dir}"/>
+		<mkdir dir="${doc.dir}"/>
+		<mkdir dir="${jdepend.docs}"/>
+		<mkdir dir="${result.tests}"/>
 	</target>
 
 	<target name="compile">
@@ -97,6 +110,48 @@
 		<antcall target="${action}"/>
 	</target>
 
+	<target name="runtests">
+		<junit>
+			<sysproperty key="basedir" value="${web.dir}"/>
+			<classpath>
+				<pathelement location="${build.classes}"/>
+				<pathelement location="${lib.dir}/mysql-connector-java-5.1.6-bin.jar"/>
+				<pathelement path="${java.class.path}"/>
+			</classpath>
+			<batchtest fork="yes" todir="${result.tests}">
+				<formatter type="xml"/>
+				<fileset dir="${src.dir}">
+					<include name="**/test/*.java"/>
+					<exclude name="**/AllTests.java"/>
+				</fileset>
+			</batchtest>
+		</junit>
+		<junitreport todir="${result.tests}">
+			<fileset dir="${result.tests}">
+				<include name="TEST-*.xml"/>
+			</fileset>
+			<report format="frames" todir="${result.tests}/html"/>
+		</junitreport>
+	</target>
+
+	<target name="jdepend">
+		<jdepend classpathref="build.classpath" outputfile="${jdepend.docs}/jdepend-report.xml" fork="no" format="xml">
+			<classespath>
+				<pathelement location="${build.classes}"/>
+			</classespath>
+			<classpath>
+				<pathelement location="${static.lib.dir}/jdepend.jar"/>
+			</classpath>
+			<exclude name="**.test.*"/>
+			<exclude name="java.*"/>
+			<exclude name="javax.*"/>
+			<exclude name="junit.*"/>
+			<exclude name="org.junit.*"/>
+			<exclude name="test.*"/>
+		</jdepend>
+		<xslt basedir="${jdepend.docs}" destdir="${jdepend.docs}" includes="jdepend-report.xml" style="${config.dir}/jdepend.xsl" />
+	</target>
+
 	<target name="adddirsvn">
 		<taskdef resource="svntask.properties" classpathref="classpath"/>
 		<svn username="${svn.user}" password="${svn.password}">
@@ -141,6 +196,39 @@
 		<antcall target="addtosvn">
 			<param name="param" value="${jar.dir}/${ant.project.name}-tests.jar"/>
 		</antcall>
+	</target>
+
+	<target name="committestresults">
+		<input message="Please enter your username" addproperty="svn.user"/>
+		<input message="Please enter your password" addproperty="svn.password"/>
+		<taskdef resource="svntask.properties" classpathref="classpath"/>
+		<antcall target="adddirsvn">
+			<param name="param" value="${result.tests}"/>
+		</antcall>
+		<antcall target="addtosvn">
+			<param name="param" value="${result.tests}/*"/>
+		</antcall>
+		<antcall target="adddirsvn">
+			<param name="param" value="${result.tests}/html"/>
+		</antcall>
+		<antcall target="addtosvn">
+			<param name="param" value="${result.tests}/html/*"/>
+		</antcall>
+		<antcall target="adddirsvn">
+			<param name="param" value="${doc.dir}"/>
+		</antcall>
+		<antcall target="adddirsvn">
+			<param name="param" value="${jdepend.docs}"/>
+		</antcall>
+		<antcall target="addtosvn">
+			<param name="param" value="${jdepend.docs}/*"/>
+		</antcall>
+		<svn username="${svn.user}" password="${svn.password}">
+			<commit message="The docs added as generated by the ant build file 'build.xml'" dir="${doc.dir}"/>
+			<commit message="JDepend docs generated by the ant build file 'build.xml'" dir="${jdepend.docs}"/>
+			<commit message="JUnit test result xml docs generated by the ant build file 'build.xml'" dir="${result.tests}"/>
+			<commit message="JUnit html docs generated by the ant build file 'build.xml'" dir="${result.tests}/html"/>
+		</svn>
 	</target>
 
 	<target name="svncommit" depends="archive,svnaddarchive">
@@ -267,7 +355,7 @@
 			<fileset dir="${persistenceModel}" includes="${includefiletypes}" excludes="${excludefiletypes}"/>
 			<chainedmapper>
 				<flattenmapper/>
-				<globmapper from="*.properties" to="WebContent/*.properties"/>
+				<globmapper from="*.properties" to="${build.dir}/${classes.dir}/*.properties"/>
 			</chainedmapper>
 		</copy>
 		<copy todir="${dest.dir}">
