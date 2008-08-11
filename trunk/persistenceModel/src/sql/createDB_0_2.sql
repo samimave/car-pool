@@ -1,6 +1,6 @@
 drop database carpool;
 
-CREATE SCHEMA IF NOT EXISTS `carpool` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
+CREATE DATABASE carpool;
 USE `carpool`;
 
 -- -----------------------------------------------------
