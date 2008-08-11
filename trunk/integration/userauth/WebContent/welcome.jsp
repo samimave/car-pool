@@ -3,17 +3,22 @@
 
 <%
 //code to validate user's openID
+	//phase one of authenticating a OpenId URL
 	if (request.getParameter("signin") != null) {
 		try {
+			//The url that is going to be returned to after the OpenId has been verified or not
 			StringBuffer returnTo = new StringBuffer(UrlUtils
 					.getBaseUrl(request));
 			returnTo.append(request.getServletPath());
+			//The actual OpenId the user supplied in the previous pages login form
 			String id = request.getParameter("openid_url");
+			//part of the normalisation of the OpenId making sure it starts with http
 			if (!id.startsWith("http:")) {
 				id = "http://" + id;
 			}
+			//The web site url that you want the OpenId provider to trust
 			String trustRoot = UrlUtils.getBaseUrl(request);
-
+			//The url plus query string is created here for redirection purposes
 			String str = OpenIdFilter.joid().getAuthUrl(id,
 					returnTo.toString(), trustRoot);
 			response.sendRedirect(str);
@@ -24,7 +29,16 @@
 
 			response.sendRedirect(buff.toString());
 		}
-	} else {
+	} else { /* 
+		  * Phase 2 of authenticating a OpenId URL when the OpenId provider
+		  * redirects back to this page after confirming or denying a authentication
+		  * request
+		  */
+		/*
+		 * try to get a OpenId URL, if the request was refused then a session
+		 * attribute will not be set so will return null otherwise it will return
+		 * the OpenId URL indicating that it was authenticated
+		 */
 		String loggedInAs = OpenIdFilter.getCurrentUser(request.getSession());
 		if (loggedInAs == null
 				&& request.getParameter(OpenIdFilter.OPENID_ATTRIBUTE) != null) {
@@ -34,7 +48,9 @@
 					.getSession());
 		}
 		if (loggedInAs != null) {
+			// The OpenId provider authenticated this user
 		} else {
+			// the provider didn't authenticate so redirect to index.jsp
 			StringBuffer buff = new StringBuffer();
 			buff.append(request.getContextPath());
 			buff.append("/index.jsp");
