@@ -143,9 +143,64 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		return checkUser(username, "n/a");
 	}
 	
-	public int getMaxSeats(int ride){
-		return 4;
+	public int getMaxSeats(int ride) throws RideException{
+		int seats = FAILED;
+
+		Statement statement = db.getStatement();
+		String sql = "SELECT r.availableSeats "+
+					"FROM ride as r "+
+					"WHERE r.idRide = "+ride+";";
+		try {
+			statement = db.getStatement();
+			ResultSet rs = statement.executeQuery(sql);
+			if (rs.next()) {
+				seats = rs.getInt(1);
+			}
+			rs.close();
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		if (seats == FAILED) {
+			throw new RideException("RideID was not in DB");
+		} else {
+			return seats - 1;
+		}
 	}
+	
+	public int getAvailableSeats(int ride) throws RideException{
+		int seats = FAILED;
+
+		Statement statement = db.getStatement();
+		String sql = "SELECT ra.availableSeats "+
+		"FROM (Select r.idRide, (r.availableSeats - Count(*)) as availableSeats "+
+		"FROM "+
+		"(SELECT r.idRide, u.userName, r.availableSeats "+
+		"FROM User as u, Ride as r, Matches as m "+
+		"WHERE u.idUser = m.idUser "+
+		"AND m.idRide = r.idRide) as r "+
+		"GROUP BY r.idRide) as ra "+
+		"WHERE ra.idRide="+ride+";";
+		try {
+			statement = db.getStatement();
+			ResultSet rs = statement.executeQuery(sql);
+			if (rs.next()) {
+				seats = rs.getInt(1);
+			}
+			rs.close();
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		if (seats == FAILED) {
+			throw new RideException("RideID was not in DB:"+ride);
+		} else {
+			return seats;
+		}
+	}
+	
 	
 	public int takeRide(int user, int ride) throws RideException{
 		boolean success = false;
@@ -295,7 +350,8 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		
 		try {
 			statement = db.getStatement();
-			statement.executeUpdate("DELETE FROM Ride WHERE idRide='"+ride+"';");
+			statement.executeUpdate("DELETE FROM matches WHERE idRide='"+ride+"';");
+			statement.executeUpdate("DELETE FROM ride WHERE idRide='"+ride+"';");
 			statement.close();
 		} catch (SQLException e) {
 			e.printStackTrace();

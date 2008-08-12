@@ -68,7 +68,7 @@ public class CarPoolStoreImplTest extends TestCase {
 	 * @return
 	 */
 	private Pair<String,String> recallUser(){
-		Pair<String, String> pair = usedUsers.getLast();	
+		Pair<String, String> pair = usedUsers.removeLast();	
 		return pair;
 	}
 	
@@ -144,14 +144,14 @@ public class CarPoolStoreImplTest extends TestCase {
 		LinkedList<Pair<String,String>> temp = allUsedUsers();
 		
 		while(!temp.isEmpty()){
-			Pair<String, String> pair = temp.getLast();
+			Pair<String, String> pair = temp.removeLast();
 			assertEquals("Username should have been accepted", true, cps.checkUserExists(pair.first));
 		}
 		
 		temp = allUsedUsers();
 		
 		while(!temp.isEmpty()){
-			Pair<String, String> pair = temp.getLast();
+			Pair<String, String> pair = temp.removeLast();
 			boolean failed = false;
 			assertEquals("A wrong username was accepted", false, cps.checkUserExists("im not the username"));
 		}
@@ -164,7 +164,7 @@ public class CarPoolStoreImplTest extends TestCase {
 		LinkedList<Pair<String,String>> temp = allUsedUsers();
 		
 		while(!temp.isEmpty()){
-			Pair<String, String> pair = temp.getLast();
+			Pair<String, String> pair = temp.removeLast();
 			try {
 				cps.checkUser(pair.first, pair.second);
 			} catch (InvaildUserNamePassword e) {
@@ -175,7 +175,7 @@ public class CarPoolStoreImplTest extends TestCase {
 		temp = allUsedUsers();
 		
 		while(!temp.isEmpty()){
-			Pair<String, String> pair = temp.getLast();
+			Pair<String, String> pair = temp.removeLast();
 			boolean failed = false;
 			try {
 				cps.checkUser(pair.first, "im not the password");
@@ -188,7 +188,7 @@ public class CarPoolStoreImplTest extends TestCase {
 		temp = allUsedUsers();
 		
 		while(!temp.isEmpty()){
-			Pair<String, String> pair = temp.getLast();
+			Pair<String, String> pair = temp.removeLast();
 			boolean failed = false;
 			try {
 				cps.checkUser("im not the username", pair.second);
@@ -208,7 +208,7 @@ public class CarPoolStoreImplTest extends TestCase {
 		
 		LinkedList<Pair<String,String>> temp = allUsedUsers();
 		
-		Pair<String, String> user = temp.getLast();
+		Pair<String, String> user = temp.removeLast();
 		
 		int id = 0;
 		try {
@@ -228,7 +228,7 @@ public class CarPoolStoreImplTest extends TestCase {
 			e.printStackTrace();
 		}
 		
-		user = temp.getLast();
+		user = temp.removeLast();
 		
 		int u = 0;
 		try {
@@ -335,6 +335,26 @@ public class CarPoolStoreImplTest extends TestCase {
 				System.out.println(rl.getRideID()+", "+rl.getUserID()+", "+rl.getUsername()+", "+rl.getAvailableSeats()+", "+rl.getRideDate().toString()+", "+rl.getStartLocation()+", "+rl.getEndLocation());
 			}
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void testGetMax(){
+		Date date = new Date(System.currentTimeMillis());
+		try {
+			int idUser = cps.addUser("jordan", "jordan.d.carter@gmail.com", "0274681876", "thisismypassword");
+			int idUser2 = cps.addUser("jordanda", "jordan.d.caasdfrter@gmail.com", "027468187adsfasdf6", "thisismypassword");
+			int idRide = cps.addRide(idUser, 4, date.toString(), "start Massey Wellington", "start Massey Palmy");
+			cps.attachOpenID("www.google.com", idUser);
+			assertEquals(4, cps.getAvailableSeats(idRide));
+			assertEquals(4, cps.getMaxSeats(idRide));
+			cps.takeRide(idUser2, idRide);
+			assertEquals(3, cps.getAvailableSeats(idRide));
+			assertEquals(4, cps.getMaxSeats(idRide));
+			
+		
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
