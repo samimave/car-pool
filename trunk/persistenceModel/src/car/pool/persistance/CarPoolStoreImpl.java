@@ -311,10 +311,11 @@ public class CarPoolStoreImpl implements CarPoolStore {
 	
 	public boolean removeUser(String username, String passwordHash){
 		Statement statement = null;
-		
+		int count = 0;
+
 		try {
 			statement = db.getStatement();
-			statement.executeUpdate("DELETE FROM User WHERE userName='"+username+"' " +
+			count = statement.executeUpdate("DELETE FROM User WHERE userName='"+username+"' " +
 									"AND userPasswordHash='"+passwordHash+"';");
 			statement.close();
 		} catch (SQLException e) {
@@ -322,17 +323,18 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		}
 		
 		//TODO check user was removed
-		return true;
+		return count > 0;
 	}
 
 
 	@Override
 	public boolean removeRide(int user, int ride) throws StoreException {
 		Statement statement = null;
-		
+		int count = 0;
+
 		try {
 			statement = db.getStatement();
-			statement.executeUpdate("DELETE FROM Matches WHERE idUser='"+user+"' " +
+			count = statement.executeUpdate("DELETE FROM Matches WHERE idUser='"+user+"' " +
 													"AND idRide='"+ride+"';");
 			statement.close();
 		} catch (SQLException e) {
@@ -340,18 +342,20 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		}
 		
 		//TODO check user,ride was removed
-		return true;
+		return count > 0;
 	}
 
 
 	@Override
 	public boolean removeRide(int ride) throws StoreException {
 		Statement statement = null;
-		
+		int countm = 0;
+		int countr = 0;
+
 		try {
 			statement = db.getStatement();
-			statement.executeUpdate("DELETE FROM matches WHERE idRide='"+ride+"';");
-			statement.executeUpdate("DELETE FROM ride WHERE idRide='"+ride+"';");
+			countm = statement.executeUpdate("DELETE FROM matches WHERE idRide='"+ride+"';");
+			countr = statement.executeUpdate("DELETE FROM ride WHERE idRide='"+ride+"';");
 			statement.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -434,10 +438,11 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		//delete from user_openids where openid_url = openid_url and
 		//user_id = user_id
 		Statement statement = null;
-		
+		int count = 0;
+
 		try {
 			statement = db.getStatement();
-			statement.executeUpdate("DELETE FROM user_openids WHERE " +
+			count = statement.executeUpdate("DELETE FROM user_openids WHERE " +
 									"openid_url='"+openid_url+"' AND " +
 									"idUser='"+idUser+"';");
 			statement.close();
@@ -446,16 +451,17 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		}
 		
 		//TODO check openID was Detached
-		return true;
+		return count > 0;
 	}
 	
 	public boolean detachOpenIDsByUser(int idUser){
 		// delete from user_openids where user_id = user_id
 		Statement statement = null;
-		
+		int count = 0;
+
 		try {
 			statement = db.getStatement();
-			statement.executeUpdate("DELETE FROM user_openids WHERE " +
+			count = statement.executeUpdate("DELETE FROM user_openids WHERE " +
 									"idUser='"+idUser+"';");
 			statement.close();
 		} catch (SQLException e) {
@@ -463,7 +469,7 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		}
 		
 		//TODO check openID was Attached
-		return true;
+		return count > 0;
 	}
 	
 	public void removeAll(String password){
