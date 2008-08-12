@@ -7,12 +7,21 @@ if (OpenIdFilter.getCurrentUser(request.getSession()) == null) {
 	response.sendRedirect(request.getContextPath()+"/index.jsp");
 }
 
-
+//temp placeholder variables
 String offerTable = "<p>No rides found.</p>";
 String acceptedTable = "<p>No rides found.</p>";
 String requestTable = "<p>No rides found.</p>";
 
-//int dbID = cps.getUserIdByURL(request.getParameter("user"));
+//code to interact with db
+CarPoolStore cps = new CarPoolStoreImpl();
+String openID = OpenIdFilter.getCurrentUser(request.getSession());
+int currentUser = cps.getUserIdByURL(openID);
+//cps.
+
+//code to update details if requested
+if (request.getParameter("updateDetails") != null) {
+	cps.addUser((String)request.getParameter("openid_url"),(String)request.getParameter("userName"),(String)request.getParameter("email"),(String)request.getParameter("phone"));
+}
 %>
 
 
@@ -28,9 +37,18 @@ String requestTable = "<p>No rides found.</p>";
 
 	<DIV class="content">
 		<h2 align="center">Welcome to your Account Page</h2><br /><br />
-		<p>Your user details appear below</p>
-		<INPUT TYPE="submit" NAME="edit" VALUE="Edit" SIZE="25"><br /><br />
-		<p>Your ride details appear below</p>
+		<h2>Your user details appear below:</h2>
+		<FORM name="updateDetails" action="myDetails.jsp" method="post">
+			<INPUT type="hidden" name="updateDetails" value="yes">
+			<TABLE class='rideDetails'>
+				<tr> <td>Open ID:</td> <td><INPUT TYPE="text" NAME="openid_url" SIZE="25" value="<%=openID%>"></td> </tr>
+				<tr> <td>Username:</td> <td><INPUT TYPE="text" NAME="userName" SIZE="25"></td> </tr> 
+				<tr> <td>Email Address:</td><INPUT TYPE="text" NAME="email" SIZE="25"><td> </td> </tr> 
+				<tr> <td>Phone Number:</td><INPUT TYPE="text" NAME="phone" SIZE="25"><td> </td> </tr>  
+			</TABLE>
+			<INPUT TYPE="submit" NAME="confirmUpdate" VALUE="Update Details" SIZE="25">
+		</FORM>
+		<h2>Your ride details appear below:</h2>
 		<p>our offers</p>
 		<%=offerTable %>
 		<p>Accepted Rides</p>
