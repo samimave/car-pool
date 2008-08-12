@@ -28,8 +28,8 @@ cps.addRide(dbID,Integer.parseInt(request.getParameter("numSeats")),request.getP
 			<FORM action="addRideEvent.jsp" method="post">
             	<INPUT type="hidden" name="from" value="<%=request.getParameter("from") %>">
 				<INPUT type="hidden" name="to" value="<%=request.getParameter("to") %>">
-				<INPUT type="hidden" name="stime" value="<%=request.getParameter("depTime") %>">
-				<INPUT type="hidden" name="etime" value="<%=request.getParameter("tripLength") %>">
+				<INPUT type="hidden" name="time" value="<%=request.getParameter("depTime") %>">
+				<INPUT type="hidden" name="length" value="<%=request.getParameter("tripLength") %>">
 				<INPUT type="hidden" name="date" value="<%=request.getParameter("depDate") %>">
 				<INPUT type="submit" value="Add to Google Calendar" />
 			</FORM>
