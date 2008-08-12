@@ -4,7 +4,7 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
     <title>Add Car-Pool Ride Event</title>
 	<style type="text/css" media="screen">@import "3ColumnLayout.css";</style>
-    <script src="http://www.google.com/jsapi?key=ABQIAAAA7rDxBnSa8ztdEea-bXHUqRRlE5ut_msTCy_drvRxhL-5WV5Z9RRgsjp91RhaFgOcfLwhiUE-yftYsA" type="text/javascript"></script>
+    <script src="http://www.google.com/jsapi?key=ABQIAAAA7rDxBnSa8ztdEea-bXHUqRRKOMZEnoyerBNNN7XbrW5T80f1pxRxpg7l2VcFxiQk2L5RouYsGk3NqQ" type="text/javascript"></script>
     <script type="text/javascript">
     //localhost key - ABQIAAAA7rDxBnSa8ztdEea-bXHUqRRKOMZEnoyerBNNN7XbrW5T80f1pxRxpg7l2VcFxiQk2L5RouYsGk3NqQ
     //massey key - ABQIAAAA7rDxBnSa8ztdEea-bXHUqRRlE5ut_msTCy_drvRxhL-5WV5Z9RRgsjp91RhaFgOcfLwhiUE-yftYsA
@@ -59,14 +59,12 @@
    			// The callback method that will be called after a successful insertion from insertEntry()
    			var callback = function(result) 
    			{
-   		        google.accounts.user.logout();
   				window.location="welcome.jsp";
    			}
 
    			// Error handler will be invoked if there is an error from insertEntry()
     		var handleError = function(error) 
     		{
-    			google.accounts.user.logout()
 				document.write("Error - ");
     			document.write(error);
     			document.write(getISODate(false));
