@@ -17,7 +17,16 @@ public class TestUser {
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		user = UserFactory.getInstance("http://terrasea.pip.verisignlabs.com/");
+		UserManager manager = new UserManager();
+		user = UserFactory.newInstance();
+		user.setEmail("terrasea@gmail.com");
+		user.setName("James");
+		user.setPhoneNumber("3530079");
+		user.setUserName("terrasea");
+		user.addOpenId("http://terrasea.pip.verisignlabs.com");
+		manager.registerUser(user);
+		
+		user = UserFactory.newInstance("http://terrasea.pip.verisignlabs.com/");
 	}
 
 	@AfterClass
