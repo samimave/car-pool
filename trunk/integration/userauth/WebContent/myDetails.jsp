@@ -42,9 +42,9 @@ if (request.getParameter("updateDetails") != null) {
 			<INPUT type="hidden" name="updateDetails" value="yes">
 			<TABLE class='rideDetails'>
 				<tr> <td>Open ID:</td> <td><INPUT TYPE="text" NAME="openid_url" SIZE="25" value="<%=openID%>"></td> </tr>
-				<tr> <td>Username:</td> <td><INPUT TYPE="text" NAME="userName" SIZE="25"></td> </tr> 
-				<tr> <td>Email Address:</td><INPUT TYPE="text" NAME="email" SIZE="25"><td> </td> </tr> 
-				<tr> <td>Phone Number:</td><INPUT TYPE="text" NAME="phone" SIZE="25"><td> </td> </tr>  
+				<tr> <td>Username:</td> <td><INPUT TYPE="text" NAME="userName" SIZE="25" value="null"></td> </tr> 
+				<tr> <td>Email Address:</td> <td><INPUT TYPE="text" NAME="email" SIZE="25" value="null"></td> </tr> 
+				<tr> <td>Phone Number:</td> <td><INPUT TYPE="text" NAME="phone" SIZE="25" value="null"></td> </tr>  
 			</TABLE>
 			<INPUT TYPE="submit" NAME="confirmUpdate" VALUE="Update Details" SIZE="25">
 		</FORM>
