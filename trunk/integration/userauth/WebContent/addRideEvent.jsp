@@ -93,7 +93,7 @@
     	}
 
     	//re-order and re-delimit (using '-') date string
-    	date = arrDate[2] + "-" + arrDate[1] + "-" + arrDate[0];
+    	//date = arrDate[2] + "-" + arrDate[1] + "-" + arrDate[0];
     	
     	//if this is for the start time/date then get the correct POST time
 		if(end)
