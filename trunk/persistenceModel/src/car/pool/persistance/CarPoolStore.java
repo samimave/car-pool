@@ -2,6 +2,8 @@ package car.pool.persistance;
 
 import java.util.Vector;
 
+import java.sql.SQLException;
+
 import car.pool.persistance.exception.DuplicateUserNameException;
 import car.pool.persistance.exception.InvaildUserName;
 import car.pool.persistance.exception.InvaildUserNamePassword;
@@ -30,7 +32,7 @@ public interface CarPoolStore {
 	
 	public int getUserIdByURL(String openidurl) throws InvaildUserNamePassword;
 	public Vector<String> getOpenIdsByUser(int idUser) throws InvaildUserNamePassword;
-	public boolean attachOpenID(String openid_url,int idUser);
+	public boolean attachOpenID(String openid_url,int idUser) throws SQLException;
 	public boolean detachOpenID(String openid_url,int idUser);
 	public boolean detachOpenIDsByUser(int idUser);
 	

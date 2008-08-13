@@ -266,30 +266,30 @@ public class CarPoolStoreImplTest extends TestCase {
 		//TODO
 	}
 	
-	public void testAttachOpenID(){
+	public void testAttachOpenID() throws SQLException{
 		addLotsOfUsers();
 		cps.attachOpenID("www.google.com", getAUserID());
 	}
 	
-	public void testDetachOpenID(){
+	public void testDetachOpenID() throws SQLException{
 		addLotsOfUsers();
 		cps.attachOpenID("www.google.com", getAUserID());
 		
 		cps.detachOpenID("www.google.com", getAUserID());
 	}
 	
-	public void testDetachOpenIDbyUser(){
+	public void testDetachOpenIDbyUser() throws SQLException{
 		addLotsOfUsers();
 		cps.attachOpenID("www.google.com", getAUserID());
 		
 		cps.detachOpenIDsByUser(getAUserID());
 	}
-	public void testGetOpenIDbyUser(){
+	public void testGetOpenIDbyUser() throws SQLException{
 		addLotsOfUsers();
 		cps.attachOpenID("www.google.com", getAUserID());
 		
 		try {
-			if("www.google.com".equals(cps.getOpenIdsByUser(getAUserID()).firstElement())){
+			if(!"www.google.com".equals(cps.getOpenIdsByUser(getAUserID()).firstElement())){
 				fail("did not return correct openid from userid");
 			}
 		} catch (InvaildUserNamePassword e) {
@@ -298,7 +298,7 @@ public class CarPoolStoreImplTest extends TestCase {
 			fail("valid getopenid operation failed");
 		}
 	}
-	public void testGetOpenIDbyURL(){
+	public void testGetOpenIDbyURL() throws SQLException{
 		addLotsOfUsers();
 		cps.attachOpenID("www.google.com", getAUserID());
 		
@@ -313,7 +313,7 @@ public class CarPoolStoreImplTest extends TestCase {
 		}
 	}
 	
-	public void testAll(){
+	public void testAll() {
 		Date date = new Date(System.currentTimeMillis());
 		try {
 			int idUser = cps.addUser("jordan", "jordan.d.carter@gmail.com", "0274681876", "thisismypassword");
