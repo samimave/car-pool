@@ -124,6 +124,11 @@ public class UserFactory {
 		}
 
 		@Override
+		public void delOpenId(String openid) {
+			openids.remove(openid);
+		}
+
+		@Override
 		public String getPassword() {
 			// TODO Auto-generated method stub
 			return "n/a";
@@ -197,6 +202,7 @@ public class UserFactory {
 			user.userId = store.getUserIdByURL(openid);
 			System.out.println("User Id: " + user.userId);
 			Database db = new DatabaseImpl();
+			//db.connect();
 			String sql = "select userName, email, mobile_number, signUpDate from User where idUser = " + user.userId + ";";
 			System.out.println(sql);
 			Statement statement = db.getStatement();
