@@ -12,6 +12,7 @@ public interface User {
 
 	Set<String> getOpenIds();
 	void addOpenId(String openid);
+	void delOpenId(String openid);
 
 	String getName();
 	void setName(String name);
