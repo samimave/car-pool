@@ -32,7 +32,9 @@ public class CarPoolStoreImpl implements CarPoolStore {
 	public int addUser(String openID,String userName,String  email,String  phone) throws DuplicateUserNameException, UserException{
 		int i = addUserWithPassword(userName, email, phone, "n/a");
 		
-		attachOpenID(openID, i);
+		try {
+			attachOpenID(openID, i);
+		} catch( SQLException e ) { }
 		
 		return i;
 	}
@@ -395,7 +397,7 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		//select openid_url from user_openids where user_id = user_id
 		Vector<String> openID = new Vector<String>();
 		Statement statement = db.getStatement();
-		String sql = "SELECT idUser from user_openids " +
+		String sql = "SELECT openid_url from user_openids " +
 					"Where idUser='" + idUser + "';";
 		try {
 			statement = db.getStatement();
@@ -416,24 +418,25 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		}
 	}
 	
-	public boolean attachOpenID(String openid_url,int idUser){
+	public boolean attachOpenID(String openid_url,int idUser) throws SQLException {
 	    //insert into user_openids values (openid_url, user_id)
 		Statement statement = null;
 		
-		try {
+		//try {
 			statement = db.getStatement();
 			String sql = "INSERT INTO user_openids (openid_url, idUser) VALUES ('"
 				+openid_url+"', '" +
 				+idUser+"');";
 			statement.executeUpdate(sql);
 			statement.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		//} catch (SQLException e) {
+		//	e.printStackTrace();
+		//}
 		
 		//TODO check openID was Attached
 		return true;
 	}
+
 	public boolean detachOpenID(String openid_url,int idUser){
 		//delete from user_openids where openid_url = openid_url and
 		//user_id = user_id
@@ -482,9 +485,9 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		try {
 			statement = db.getStatement();
 			statement.executeUpdate("DELETE FROM user_openids;");
-			statement.executeUpdate("DELETE FROM matches;");
-			statement.executeUpdate("DELETE FROM ride;");
-			statement.executeUpdate("DELETE FROM user;");
+			statement.executeUpdate("DELETE FROM Matches;");
+			statement.executeUpdate("DELETE FROM Ride;");
+			statement.executeUpdate("DELETE FROM User;");
 			statement.close();
 		} catch (SQLException e) {
 			e.printStackTrace();

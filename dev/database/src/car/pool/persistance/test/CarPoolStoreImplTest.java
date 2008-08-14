@@ -3,21 +3,15 @@ package car.pool.persistance.test;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.LinkedList;
-import java.util.Map;
 import java.util.Random;
-import java.util.Vector;
 
-import car.pool.persistance.CarPoolStore;
+import junit.framework.TestCase;
 import car.pool.persistance.CarPoolStoreImpl;
 import car.pool.persistance.RideListing;
-import car.pool.persistance.exception.DuplicateUserNameException;
-import car.pool.persistance.exception.InvaildUserName;
 import car.pool.persistance.exception.InvaildUserNamePassword;
 import car.pool.persistance.exception.RideException;
 import car.pool.persistance.exception.StoreException;
-import car.pool.persistance.exception.UserException;
 import car.pool.persistance.util.Pair;
-import junit.framework.TestCase;
 
 public class CarPoolStoreImplTest extends TestCase {
 
@@ -59,19 +53,19 @@ public class CarPoolStoreImplTest extends TestCase {
 	 * remember a ride from removal later
 	 * @param idRide
 	 */
-	private void trackRide(int idRide){
+/*	private void trackRide(int idRide){
 		lodgedRides.add(idRide);
 	}
-	
+*/	
 	/**
 	 * Return a user and remove from memory
 	 * @return
 	 */
-	private Pair<String,String> recallUser(){
+/*	private Pair<String,String> recallUser(){
 		Pair<String, String> pair = usedUsers.removeLast();	
 		return pair;
 	}
-	
+*/	
 	@SuppressWarnings("unchecked")
 	private LinkedList<Pair<String, String>> allUsedUsers(){
 		return (LinkedList<Pair<String, String>>) usedUsers.clone();
@@ -80,10 +74,10 @@ public class CarPoolStoreImplTest extends TestCase {
 	/**
 	 * @return true if a user hasn't been recalled
 	 */
-	private boolean hasMoreUsedUsers(){
+/*	private boolean hasMoreUsedUsers(){
 		return !usedUsers.isEmpty();
 	}
-	
+*/	
 	/**
 	 * remove all test users from DB
 	 */
@@ -151,8 +145,8 @@ public class CarPoolStoreImplTest extends TestCase {
 		temp = allUsedUsers();
 		
 		while(!temp.isEmpty()){
-			Pair<String, String> pair = temp.removeLast();
-			boolean failed = false;
+			//Pair<String, String> pair = temp.removeLast();
+			//boolean failed = false;
 			assertEquals("A wrong username was accepted", false, cps.checkUserExists("im not the username"));
 		}
 	}
@@ -266,25 +260,25 @@ public class CarPoolStoreImplTest extends TestCase {
 		//TODO
 	}
 	
-	public void testAttachOpenID(){
+	public void testAttachOpenID() throws SQLException{
 		addLotsOfUsers();
 		cps.attachOpenID("www.google.com", getAUserID());
 	}
 	
-	public void testDetachOpenID(){
+	public void testDetachOpenID() throws SQLException{
 		addLotsOfUsers();
 		cps.attachOpenID("www.google.com", getAUserID());
 		
 		cps.detachOpenID("www.google.com", getAUserID());
 	}
 	
-	public void testDetachOpenIDbyUser(){
+	public void testDetachOpenIDbyUser() throws SQLException{
 		addLotsOfUsers();
 		cps.attachOpenID("www.google.com", getAUserID());
 		
 		cps.detachOpenIDsByUser(getAUserID());
 	}
-	public void testGetOpenIDbyUser(){
+	public void testGetOpenIDbyUser() throws SQLException{
 		addLotsOfUsers();
 		cps.attachOpenID("www.google.com", getAUserID());
 		
@@ -298,7 +292,7 @@ public class CarPoolStoreImplTest extends TestCase {
 			fail("valid getopenid operation failed");
 		}
 	}
-	public void testGetOpenIDbyURL(){
+	public void testGetOpenIDbyURL() throws SQLException{
 		addLotsOfUsers();
 		cps.attachOpenID("www.google.com", getAUserID());
 		
