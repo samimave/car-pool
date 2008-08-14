@@ -4,9 +4,11 @@ import static org.junit.Assert.*;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.Assert;
 
+import car.pool.persistance.CarPoolStoreImpl;
 import car.pool.user.UserManager;
 import car.pool.user.User;
 import car.pool.user.UserFactory;
@@ -15,6 +17,12 @@ public class UserManagerTest {
 
 	UserManager manager = null;
 
+	@BeforeClass
+	public static void cleanDatabase() throws Exception{
+		CarPoolStoreImpl store = new CarPoolStoreImpl();
+		store.removeAll("donotusethis");
+	}
+	
 	@Before
 	public void setUp() throws Exception {
 		manager = new UserManager();
@@ -32,7 +40,7 @@ public class UserManagerTest {
 		user.setName("James");
 		user.setPhoneNumber("3530079");
 		user.setUserName("james");
-		user.addOpenId("http://terrasea.pip.verisignlabs.com");
+		user.addOpenId("http://terrasea.myopenid.com/");
 
 		try {
 			user = manager.registerUser( user );
@@ -43,10 +51,10 @@ public class UserManagerTest {
 		}
 	}
 
-	/*@Test
+	@Test
 	public void testLogin() {
 		try {
-			User user = manager.login("http://terrasea.pip.verisignlabs.com");
+			User user = manager.getUserByOpenId("http://terrasea.myopenid.com/");
 			System.out.println(user.getUserId());
 			Assert.assertNotNull(user.getUserId());
 		} catch(Exception e ) {
@@ -56,14 +64,34 @@ public class UserManagerTest {
 
 	@Test
 	public void testAttachOpenId() {
-		fail("Not yet implemented");
-	}*/
+		try {
+			User user = manager.getUserByOpenId("http://terrasea.myopenid.com/");
+			if(user.getUserId() != null ) {
+				Assert.assertEquals(manager.attachOpenId("http://terra.pip.verisignlabs.com", user).getOpenIds().size(), 2);
+			}
+		} catch( Exception e ) {
+			fail("testAttachOpenId: " + e );
+		}
+	}
 	
+	@Test
+	public void testDetachOpenId() {
+		try {
+			User user = manager.getUserByOpenId("http://terrasea.myopenid.com/");
+			if(user.getUserId() != null ) {
+				Assert.assertEquals(manager.detachOpenId("http://terra.pip.verisignlabs.com", user).getOpenIds().size(), 1);
+			}
+		} catch(Exception e) {
+			fail("testDetachOpenId: " + e );
+		}
+	}
+
 	@Test
 	public void testRemoveUser() {
 		try {
-			User user = manager.login("http://terrasea.pip.verisignlabs.com");
+			User user = manager.getUserByOpenId("http://terrasea.myopenid.com/");
 			if(user.getUserId() != null ) {
+				System.out.println("User: id: " + user.getUserId() + " userName: " + user.getUserName() + " email: " + user.getEmail() + " phone: " + user.getPhoneNumber());
 				Assert.assertTrue(manager.removeUser(user));
 			}
 		} catch( Exception e ) {

@@ -14,6 +14,7 @@ import car.pool.user.UserManager;
 public class TestUser {
 
 	static User user = null;
+	static Integer id = null;
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -22,15 +23,18 @@ public class TestUser {
 		user.setEmail("terrasea@gmail.com");
 		user.setName("James");
 		user.setPhoneNumber("3530079");
-		user.setUserName("terrasea");
-		user.addOpenId("http://terrasea.pip.verisignlabs.com");
-		manager.registerUser(user);
+		user.setUserName("david");
+		user.addOpenId("http://sea.pip.verisignlabs.com");
+		user = manager.registerUser(user);
 		
-		user = UserFactory.newInstance("http://terrasea.pip.verisignlabs.com/");
+		user = UserFactory.newInstance("http://sea.pip.verisignlabs.com");
+		id = user.getUserId();
 	}
 
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
+		UserManager manager = new UserManager();
+		manager.removeUser(user);
 		user = null;
 	}
 
@@ -58,7 +62,7 @@ public class TestUser {
 
 	@Test
 	public void testGetName() {
-		fail("Not yet implemented");
+		Assert.assertEquals(user.getName(), "James" );
 	}
 
 	@Test
@@ -68,12 +72,13 @@ public class TestUser {
 
 	@Test
 	public void testGetOpenIds() {
-		fail("Not yet implemented");
+		Assert.assertEquals(user.getOpenIds().size(), 1);
+		Assert.assertEquals((String)user.getOpenIds().toArray()[0], "http://sea.pip.verisignlabs.com");
 	}
 
 	@Test
 	public void testGetPhoneNumber() {
-		fail("Not yet implemented");
+		Assert.assertEquals( user.getPhoneNumber(), "3530079" );
 	}
 
 	@Test
@@ -88,12 +93,13 @@ public class TestUser {
 
 	@Test
 	public void testGetUserId() {
-		fail("Not yet implemented");
+		Assert.assertNotNull(user.getUserId());
+		Assert.assertEquals(user.getUserId(), id);
 	}
 
 	@Test
 	public void testGetUserName() {
-		fail("Not yet implemented");
+		Assert.assertEquals(user.getUserName(), "david");
 	}
 
 	@Test
