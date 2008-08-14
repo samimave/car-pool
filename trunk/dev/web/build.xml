@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<project name="user-management" default="all">
+
+<project name="car-pool-web-v2" default="all" basedir=".">
 	<property name="src.dir" value="src"/>
 	<property name="build.classes" value="build/classes"/>
 	<property name="lib.dir" value="lib"/>
@@ -18,13 +19,12 @@
 		<fileset dir="${static.lib.dir}">
 			<include name="**/*.jar"/>
 		</fileset>
-		<fileset file="../car-pool-integration/jar/car-pool-classes.jar"/>
 	</path>
 
 	<target name="all" depends="clean,prepare,compile,archive,jdepend,runtests"/>
 
 	<target name="clean">
-		<delete dir="${build.classes}/car"/>
+		<!--<delete dir="${build.classes}/car"/>-->
 		<delete dir="${jar.dir}"/>
 	</target>
 
