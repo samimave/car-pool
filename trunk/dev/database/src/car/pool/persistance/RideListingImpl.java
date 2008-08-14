@@ -1,12 +1,9 @@
 package car.pool.persistance;
 
-import java.io.IOException;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
-import car.pool.persistance.exception.ConnectionException;
 
 public class RideListingImpl implements RideListing {
 	

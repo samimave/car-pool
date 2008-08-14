@@ -1,6 +1,5 @@
 package car.pool.persistance;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,7 +8,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
-import java.util.ResourceBundle;
 
 public class DatabaseImpl implements Database{
 

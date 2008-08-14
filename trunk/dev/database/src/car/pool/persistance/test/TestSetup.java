@@ -33,7 +33,7 @@ public class TestSetup {
 			int j = cps.addUser("j", "b");
 			int k = cps.addUser("k", "c");
 			int l = cps.addUser("l", "d");
-			int m = cps.addUser("m", "a");
+/*			int m = cps.addUser("m", "a");
 			int n = cps.addUser("n", "b");
 			int o = cps.addUser("o", "c");
 			int p = cps.addUser("p", "d");
@@ -41,14 +41,14 @@ public class TestSetup {
 			int r = cps.addUser("r", "b");
 			int s = cps.addUser("s", "c");
 			int t = cps.addUser("t", "d");
-			
+*/			
 			Date date = new Date(System.currentTimeMillis());
 			
 			int ride1 = cps.addRide(a, 4, date.toString(), "Massey", "Auckland");
 			int ride2 = cps.addRide(b, 4, date.toString(), "Wellington", "XMas");
 			int ride3 = cps.addRide(c, 4, date.toString(), "Wilton", "Island");
 			int ride4 = cps.addRide(d, 4, date.toString(), "Home", "Not home");
-			int ride5 = cps.addRide(e, 4, date.toString(), "asgadfg", "adfgadfgafd home");
+//			int ride5 = cps.addRide(e, 4, date.toString(), "asgadfg", "adfgadfgafd home");
 			
 			cps.takeRide(e, ride1);
 			cps.takeRide(f, ride1);
@@ -72,7 +72,7 @@ public class TestSetup {
 	}
 	
 	public static void setup(){
-		TestSetup ts = new TestSetup();
+//		TestSetup ts = new TestSetup();
 	}
 	
 	public static void tearDown(){

@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import car.pool.persistance.CarPoolStore;
 import car.pool.persistance.CarPoolStoreImpl;
-import car.pool.persistance.DatabaseImpl;
 import car.pool.persistance.exception.StoreException;
 
 public class TestConnection {
