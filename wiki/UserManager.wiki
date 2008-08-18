@@ -1,4 +1,4 @@
-#summary How To use the !User, !UserManager and !UserFactory classes
+#summary How To use the User, UserManager and UserFactory classes
 
 = Introduction =
 
