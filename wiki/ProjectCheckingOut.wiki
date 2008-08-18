@@ -1,0 +1,34 @@
+#summary How to check out the projects
+#labels Phase-Implementation
+
+Check out "trunk/dev/web/" as a dynamic website named "Car Pool Project"
+
+Check out "trunk/dev/database" as a Java project
+
+Check out "trunk/dev/google" as **PLEASE PROVIDE INFO HERE**
+
+==Car Pool Project==
+
+Right click on "Car Pool Project" -> build path -> configure build path..
+
+Under "Projects" Tab added "database" project
+Under "Source" Tab make sure "Car Pool Project/src" is in the list.  Add if not.
+
+Under Libraries Tab click add Library -> Junit -> JUnit 4 -> Finish
+
+Click on "Java EE Module Dependencies" on the left menu,
+Tick "database".
+
+==Database Project==
+
+Right click on "Car Pool Project" -> build path -> configure build path..
+Under Libraries Tab click add Library -> Junit -> JUnit 3 -> Finish
+
+Under "Source" Tab make sure "database/src" is in the list.  Add if not.
+
+Right click on "lib/mysql-connector-java-5.1.6.jar" -> build path -> add to build path.  Note you have to be in Java Persective to do this.
+
+==Finally==
+Menu Bar -> Project -> Clean.. -> OK (clean all projects).
+
+That should get ride of all the errors that are currently showing.
