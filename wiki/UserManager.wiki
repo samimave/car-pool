@@ -1,0 +1,40 @@
+#summary One-sentence summary of this page.
+
+= Introduction =
+
+How To use the User, UserManager and UserFactory classes
+
+
+= Details =
+{{{
+// To get a current users details from the database:
+UserManager manager = new UserManager();
+String openid = "http://user.someprovider.com/";
+User user = null;
+
+try {    
+    user = manager.getUserByOpenId(openid);
+}catch( InvaildUserNamePassword iunpe ) {
+    // there is probably no openid of that id in the database
+} catch( IOException ioe ) {
+    // a communication problem I think
+} catch( SQLException sqle ) {
+    // there is some problem with the sql statement whether
+    // that be a database end problem or the sql was badly
+    // written will be in the message string if you wish to print it.
+}
+
+// To get the username
+String username = user.getUserName();
+
+// email
+String email = user.getEmail();
+// phone number
+String phone = user.getPhoneNumber();
+// memeber since ie sighnup date
+Calendar memberSince = user.getMemberSince();
+// A set of the openids associated with this user
+Set<String> openidSet = user.getOpenIds();
+}}}
+
+There are other methods, in User as well, but these are the only ones that actually return any useful data at the moment.
