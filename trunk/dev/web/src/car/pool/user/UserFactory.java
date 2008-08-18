@@ -195,41 +195,37 @@ public class UserFactory {
 	}
 	
 	
-	private User create(String openid) throws InvaildUserNamePassword, IOException {
+	private User create(String openid) throws InvaildUserNamePassword, IOException, SQLException {
 		UserImpl user = new UserImpl();
 		CarPoolStore store = new CarPoolStoreImpl();
-		try {
-			user.userId = store.getUserIdByURL(openid);
-			System.out.println("User Id: " + user.userId);
-			Database db = new DatabaseImpl();
-			//db.connect();
-			String sql = "select userName, email, mobile_number, signUpDate from User where idUser = " + user.userId + ";";
-			System.out.println(sql);
-			Statement statement = db.getStatement();
-			System.out.println("after statement");
-			ResultSet rs = statement.executeQuery(sql);
-			System.out.println("after execute query");
-			System.out.println(rs);
-			if(rs.first()) {
-				user.userName = rs.getString(1);
-				System.out.println("after get userName");
-				user.email = rs.getString(2);
-				user.phoneNumber = rs.getString(3);
-				java.sql.Date date = rs.getDate(4);
-				user.memberSince = Calendar.getInstance();
-				user.memberSince.setTime(date);
-			}
-			for(String openids :store.getOpenIdsByUser(user.getUserId())) {
-				System.out.println("OpenId: " + openids);
-				user.addOpenId(openids);
-			}
-
-			rs.close();
-			statement.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		user.userId = store.getUserIdByURL(openid);
+		System.out.println("User Id: " + user.userId);
+		Database db = new DatabaseImpl();
+		//db.connect();
+		String sql = "select userName, email, mobile_number, signUpDate from User where idUser = " + user.userId + ";";
+		System.out.println(sql);
+		Statement statement = db.getStatement();
+		System.out.println("after statement");
+		ResultSet rs = statement.executeQuery(sql);
+		System.out.println("after execute query");
+		System.out.println(rs);
+		if(rs.first()) {
+			user.userName = rs.getString(1);
+			System.out.println("after get userName");
+			user.email = rs.getString(2);
+			user.phoneNumber = rs.getString(3);
+			java.sql.Date date = rs.getDate(4);
+			user.memberSince = Calendar.getInstance();
+			user.memberSince.setTime(date);
 		}
+		for(String openids :store.getOpenIdsByUser(user.getUserId())) {
+			System.out.println("OpenId: " + openids);
+			user.addOpenId(openids);
+		}
+
+		rs.close();
+		statement.close();
+
 		return user;
 	}
 	
@@ -237,7 +233,7 @@ public class UserFactory {
 		return new UserImpl();
 	}
 	
-	public static User newInstance(String openid) throws InvaildUserNamePassword, IOException {
+	public static User newInstance(String openid) throws InvaildUserNamePassword, IOException, SQLException {
 		User user = new UserFactory().create(openid);
 		
 		return user;
