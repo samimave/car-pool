@@ -1,8 +1,8 @@
-#summary One-sentence summary of this page.
+#summary How To use the !User, !UserManager and !UserFactory classes
 
 = Introduction =
 
-How To use the User, UserManager and UserFactory classes
+I will attempt to explain how to use the code I have created.  It's a work in progress and more detail will follow on the other methods in !UserManager
 
 
 = Details =
@@ -37,4 +37,4 @@ Calendar memberSince = user.getMemberSince();
 Set<String> openidSet = user.getOpenIds();
 }}}
 
-There are other methods, in User as well, but these are the only ones that actually return any useful data at the moment.
+There are other methods, in !User as well, but these are the only ones that actually return any useful data at the moment.
