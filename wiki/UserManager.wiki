@@ -37,4 +37,4 @@ Calendar memberSince = user.getMemberSince();
 Set<String> openidSet = user.getOpenIds();
 }}}
 
-There are other methods, in !User as well, but these are the only ones that actually return any useful data at the moment.
+There are other methods, in User as well, but these are the only ones that actually return any useful data at the moment.
