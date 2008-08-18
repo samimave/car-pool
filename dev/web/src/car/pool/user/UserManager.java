@@ -15,7 +15,7 @@ import java.sql.Statement;
 
 public class UserManager {
 
-	public User getUserByOpenId(String openid) throws InvaildUserNamePassword, IOException {
+	public User getUserByOpenId(String openid) throws InvaildUserNamePassword, IOException, SQLException {
 		return UserFactory.newInstance(openid);
 	}
 	
@@ -61,7 +61,7 @@ public class UserManager {
 		sql.append("delete from User where idUser = ");
 		sql.append(user.getUserId());
 		sql.append(";");
-		int count = 1;
+		int count = 0;
 		Database db = new DatabaseImpl();
 		Statement statement = db.getStatement();
 		count = statement.executeUpdate(sql.toString());
