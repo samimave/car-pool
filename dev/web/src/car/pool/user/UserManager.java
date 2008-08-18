@@ -10,8 +10,10 @@ import car.pool.persistance.exception.StoreException;
 import car.pool.persistance.exception.UserException;
 
 import java.io.IOException;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Calendar;
 
 public class UserManager {
 
@@ -20,6 +22,30 @@ public class UserManager {
 	}
 	
 
+	public User getUserByUsername(String username, String password) throws IOException, InvaildUserNamePassword, SQLException {
+		User user = UserFactory.newInstance();
+		CarPoolStore store = new CarPoolStoreImpl();
+		int id = store.checkUser(username, password);
+		user.setUserId(id);
+		String sql = "select userName, userPasswordHash, email, mobile_number, signUpDate from User where idUser = " + id + ";";
+		Database db = new DatabaseImpl();
+		Statement statement = db.getStatement();
+		ResultSet rs = statement.executeQuery(sql);
+		
+		if(rs.first()) {
+			user.setUserName(rs.getString(1));
+			user.setPassword(rs.getString(2));
+			user.setEmail(rs.getString(3));
+			user.setPhoneNumber(rs.getString(4));
+			java.sql.Date date = rs.getDate(5);
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(date);
+			user.setMemberSince(cal);
+		}
+		
+		return user;
+	}
+	
 	public User registerUser(User user) throws DuplicateUserNameException, UserException, IOException, SQLException {
 		CarPoolStoreImpl store = new CarPoolStoreImpl();
 		Integer id = new Integer(store.addUserWithPassword(user.getUserName(), user.getEmail(), user.getPhoneNumber(), "n/a"));
