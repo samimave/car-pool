@@ -1,7 +1,12 @@
 <%@page contentType="text/html; charset=ISO-8859-1" %>
-<%@page import="org.verisign.joid.consumer.OpenIdFilter, org.verisign.joid.util.UrlUtils, org.verisign.joid.OpenIdException, car.pool.persistance.*" %>
+<%@page import="org.verisign.joid.consumer.OpenIdFilter, org.verisign.joid.util.UrlUtils, org.verisign.joid.OpenIdException, car.pool.persistance.*, car.pool.user.User, car.pool.user.UserManager, car.pool.user.UserFactory, car.pool.persistance.exception.InvaildUserNamePassword" %>
 
 <%
+// a container for the users information
+User user = null;
+if(session.getAttribute("signedin") != null ) {
+	user = (User)session.getAttribute("user");
+}
 //code to validate user's openID
 	//phase one of authenticating a OpenId URL
 	if (request.getParameter("signin") != null) {
@@ -29,7 +34,27 @@
 
 			response.sendRedirect(buff.toString());
 		}
-	} else { /* 
+	} else if( request.getParameter("normal_signin") != null ) {
+		String username = request.getParameter("username");
+		String userpass = request.getParameter("userpass");
+		UserManager manager = new UserManager();
+		//User user = null;
+		try {
+			user = manager.getUserByUsername(username,userpass);
+			session.setAttribute("user", user);
+			//session.setAttribute("iduser", user.getUserId());
+			//session.setAttribute("email", user.getEmail());
+			//session.setAttribute("phone_number", user.getPhoneNumber());
+			//session.setAttribute("membersince", user.getMemberSince());
+			session.setAttribute("signedin", true);
+		} catch(InvaildUserNamePassword iunpe ) {
+			StringBuffer buff = new StringBuffer();
+			buff.append(request.getContextPath());
+			buff.append("/index.jsp");
+			response.sendRedirect(buff.toString());
+		}
+	} else if( session.getAttribute("signedin") == null ) {
+		 /* 
 		  * Phase 2 of authenticating a OpenId URL when the OpenId provider
 		  * redirects back to this page after confirming or denying a authentication
 		  * request
@@ -49,6 +74,22 @@
 		}
 		if (loggedInAs != null) {
 			// The OpenId provider authenticated this user
+			UserManager manager = new UserManager();
+		
+			try {
+				user = manager.getUserByOpenId(loggedInAs);
+				session.setAttribute("user", user);
+				//session.setAttribute("iduser", user.getUserId());
+				//session.setAttribute("email", user.getEmail());
+				//session.setAttribute("phone_number", user.getPhoneNumber());
+				//session.setAttribute("membersince", user.getMemberSince());
+				session.setAttribute("signedin", true);
+			} catch(InvaildUserNamePassword iunpe ) {
+				StringBuffer buff = new StringBuffer();
+				buff.append(request.getContextPath());
+				buff.append("/register.jsp");
+				response.sendRedirect(buff.toString());
+			}
 		} else {
 			// the provider didn't authenticate so redirect to index.jsp
 			StringBuffer buff = new StringBuffer();
@@ -83,7 +124,7 @@ if (request.getParameter("newUser") != null) {
 	<%@ include file="heading.html" %>
 
 	<DIV class="content">
-		<h2 align="center">Welcome to The Car Pool <%=OpenIdFilter.getCurrentUser(request.getSession())%></h2>
+		<h2 align="center">Welcome to The Car Pool <%=user.getUserName()%><%//OpenIdFilter.getCurrentUser(request.getSession())%></h2>
 		<%=message %>
 		<p>Eventually the person's upcoming rides will be displayed here.</p>
 	</DIV>		

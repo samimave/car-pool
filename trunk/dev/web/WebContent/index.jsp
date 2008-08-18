@@ -43,7 +43,17 @@ if (request.getParameter("del") != null) {
 	</DIV>
 
 	<DIV id="navAlpha">
-		<%=message %> <br />
+		<%if (OpenIdFilter.getCurrentUser(s) != null) { %>
+			<%=message %> <br />
+		<%} else { %>
+			<%=message %>
+			<form name="passwordlogin" action="welcome.jsp" action="post">
+				<input type="hidden" name="normal_signin" value="true">
+				<input type="text" name="username"/><br/>
+				<input type="password"name="userpass"/><br/>
+				<input type="submit" value="Login"/>
+			</form>
+		<%} %>
 		<a onclick="confirmation()">DANGEROUS!<br />DO NOT CLICK!</a>
 	</DIV>
 
