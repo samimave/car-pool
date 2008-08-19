@@ -27,7 +27,7 @@ public class TestUser {
 		user.addOpenId("http://sea.pip.verisignlabs.com");
 		user = manager.registerUser(user);
 		
-		user = UserFactory.newInstance("http://sea.pip.verisignlabs.com");
+		user = manager.getUserByOpenId("http://sea.pip.verisignlabs.com");
 		id = user.getUserId();
 	}
 

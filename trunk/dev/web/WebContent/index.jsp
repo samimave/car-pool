@@ -1,13 +1,15 @@
 <%@page contentType="text/html; charset=ISO-8859-1"%>
-<%@page import="org.verisign.joid.consumer.OpenIdFilter,car.pool.persistance.*" %>
+<%@page import="org.verisign.joid.consumer.OpenIdFilter,car.pool.persistance.*, car.pool.user.*" %>
 
 <%
 HttpSession s = request.getSession(true);
 
 //to show who is logged in
 String message = "Please log in.";
-if (OpenIdFilter.getCurrentUser(s) != null) {
+/*if (OpenIdFilter.getCurrentUser(s) != null ) {
 	message = "Logged in as "+OpenIdFilter.getCurrentUser(s);
+} else*/ if(  session.getAttribute("signedin") != null ) {
+	message = "Logged in as " + ((User)session.getAttribute("user")).getUserName();
 }
 
 if (request.getParameter("del") != null) {
@@ -43,8 +45,10 @@ if (request.getParameter("del") != null) {
 	</DIV>
 
 	<DIV id="navAlpha">
-		<%if (OpenIdFilter.getCurrentUser(s) != null) { %>
-			<%=message %> <br />
+		<%//if (OpenIdFilter.getCurrentUser(s) != null) { %>
+			<%//message %> <br />
+		<%/*} else*/ if(  session.getAttribute("signedin") != null ) { %>
+			<%=message %>
 		<%} else { %>
 			<%=message %>
 			<form name="passwordlogin" action="welcome.jsp" action="post">

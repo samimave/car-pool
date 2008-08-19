@@ -195,7 +195,7 @@ public class UserFactory {
 	}
 	
 	
-	private User create(String openid) throws InvaildUserNamePassword, IOException, SQLException {
+	User create(String openid) throws InvaildUserNamePassword, IOException, SQLException {
 		UserImpl user = new UserImpl();
 		CarPoolStore store = new CarPoolStoreImpl();
 		user.userId = store.getUserIdByURL(openid);
@@ -231,12 +231,6 @@ public class UserFactory {
 	
 	private User create() {
 		return new UserImpl();
-	}
-	
-	public static User newInstance(String openid) throws InvaildUserNamePassword, IOException, SQLException {
-		User user = new UserFactory().create(openid);
-		
-		return user;
 	}
 	
 	public static User newInstance() {
