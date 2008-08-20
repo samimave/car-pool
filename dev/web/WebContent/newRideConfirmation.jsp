@@ -3,14 +3,20 @@
 
 <%
 //force the user to login to view the page
-if (OpenIdFilter.getCurrentUser(request.getSession()) == null) {
+if (OpenIdFilter.getCurrentUser(request.getSession()) == null && session.getAttribute("signedin") == null) {
 	response.sendRedirect(request.getContextPath()+"/index.jsp");
 }
 
 //add ride information to database
 CarPoolStore cps = new CarPoolStoreImpl();
-int dbID = cps.getUserIdByURL(request.getParameter("user"));
-cps.addRide(dbID,Integer.parseInt(request.getParameter("numSeats")),request.getParameter("depDate"),request.getParameter("from"),request.getParameter("to"));
+User user = (User)session.getAttribute("user");
+int dbID = user.getUserId();//cps.getUserIdByURL(request.getParameter("user"));
+DateFormat format = DateFormat.getDateInstance();
+Date date = format.parse(request.getParameter("depDate"));
+String locale = format.format(date);
+//SimpleDateFormat format = new SimpleDateFormat(request.getParameter("depDate"));
+
+cps.addRide(dbID,Integer.parseInt(request.getParameter("numSeats")),/*request.getParameter("depDate")*/locale,request.getParameter("from"),request.getParameter("to"));
 %>
 
 <HTML>

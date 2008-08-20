@@ -12,27 +12,23 @@
       <param-name>ignorePaths</param-name>
       <param-value>/login,/server,/echo</param-value>
     </init-param>
-
   </filter>
   <filter>
-		<filter-name>UserUrlFilter</filter-name>
-        <!-- <description>This filter (for Server side) takes url's of the form: http://hostname/user/username
-        to provide an id page for each user.</description>-->
-        <filter-class>examples.server.UserUrlFilter</filter-class>
-        <init-param>
-			<param-name>idJsp</param-name>
-			<param-value>/me.jsp</param-value>
-			<!-- <description>Required. The jsp page used as the identity page.</description>-->
-		</init-param>
-    </filter>
+    <filter-name>UserUrlFilter</filter-name>
+    <filter-class>examples.server.UserUrlFilter</filter-class>
+    <init-param>
+      <param-name>idJsp</param-name>
+      <param-value>/me.jsp</param-value>
+    </init-param>
+  </filter>
   <filter-mapping>
     <filter-name>OpenIdFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
-<filter-mapping>
-		<filter-name>UserUrlFilter</filter-name>
-		<url-pattern>/user/*</url-pattern>
-	</filter-mapping>
+  <filter-mapping>
+    <filter-name>UserUrlFilter</filter-name>
+    <url-pattern>/user/*</url-pattern>
+  </filter-mapping>
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
     <welcome-file>index.htm</welcome-file>
@@ -49,6 +45,26 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>OpenIdConsumer</servlet-name>
+    <url-pattern>/openidlogin</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description>Processes a log in via username and password</description>
+    <display-name>NonOpenIdConsumer</display-name>
+    <servlet-name>NonOpenIdConsumer</servlet-name>
+    <servlet-class>car.pool.user.authentication.servlet.NonOpenIdConsumer</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>NonOpenIdConsumer</servlet-name>
     <url-pattern>/login</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description>Process form data and then egisters the user in the database with this data</description>
+    <display-name>RegistrationProcessing</display-name>
+    <servlet-name>RegistrationProcessing</servlet-name>
+    <servlet-class>car.pool.user.registration.servlet.RegistrationProcessing</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RegistrationProcessing</servlet-name>
+    <url-pattern>/adduser</url-pattern>
   </servlet-mapping>
 </web-app>
