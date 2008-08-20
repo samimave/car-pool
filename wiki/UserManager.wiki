@@ -37,4 +37,69 @@ Calendar memberSince = user.getMemberSince();
 Set<String> openidSet = user.getOpenIds();
 }}}
 
+Now for getting users data using their username and password you do the following
+{{{
+UserManager manager = new UserManager();
+String username = "testname";
+String password = "password";
+
+User user = null;
+
+try {    
+    user = manager.getUserByUsername(username, password);
+}catch( InvaildUserNamePassword iunpe ) {
+    // there is probably no openid of that id in the database
+} catch( IOException ioe ) {
+    // a communication problem I think
+} catch( SQLException sqle ) {
+    // there is some problem with the sql statement whether
+    // that be a database end problem or the sql was badly
+    // written will be in the message string if you wish to print it.
+}
+
+// To get the username
+String username = user.getUserName();
+
+// email
+String email = user.getEmail();
+// phone number
+String phone = user.getPhoneNumber();
+// memeber since ie sighnup date
+Calendar memberSince = user.getMemberSince();
+// A set of the openids associated with this user
+Set<String> openidSet = user.getOpenIds();
+}}}
+
+To attach a openid to a user do the following
+
+{{{
+UserManager manager = new UserManager();
+String openid = "http://user.someprovider.com/";
+
+try {
+    // where user is the previously got via one of either getUserByUsername
+    // or getUserByOpenId. This also updates the database.
+    userwithattachedopenid = manager.attachOpenId(openid, user);
+} catch( IOException ioe ) {
+    // a communication problem I think
+} catch( SQLException sqle ) {
+    // there is some problem with the sql statement whether
+    // that be a database end problem or the sql was badly
+    // written will be in the message string if you wish to print it.
+}
+
+// To get the username
+String username = user.getUserName();
+
+// email
+String email = user.getEmail();
+// phone number
+String phone = user.getPhoneNumber();
+// memeber since ie sighnup date
+Calendar memberSince = user.getMemberSince();
+// A set of the openids associated with this user
+Set<String> openidSet = user.getOpenIds();
+}}}
+
+
 There are other methods, in User as well, but these are the only ones that actually return any useful data at the moment.
