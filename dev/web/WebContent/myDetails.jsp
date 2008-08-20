@@ -16,6 +16,7 @@ String requestTable = "<p>No rides found.</p>";
 CarPoolStore cps = new CarPoolStoreImpl();
 //String openID = OpenIdFilter.getCurrentUser(request.getSession());
 int currentUser = user.getUserId();//cps.getUserIdByURL(openID);
+
 //cps.
 
 //code to update details if requested
@@ -42,9 +43,9 @@ if (request.getParameter("updateDetails") != null) {
 			<INPUT type="hidden" name="updateDetails" value="yes">
 			<TABLE class='rideDetails'>
 				<tr> <td>Open ID:</td> <td><INPUT TYPE="text" NAME="openid_url" SIZE="25" value="<%=user.getOpenIds().size() > 0 ? user.getOpenIds().toArray()[0] : null%>"></td> </tr>
-				<tr> <td>Username:</td> <td><INPUT TYPE="text" NAME="userName" SIZE="25" value="null"></td> </tr> 
-				<tr> <td>Email Address:</td> <td><INPUT TYPE="text" NAME="email" SIZE="25" value="null"></td> </tr> 
-				<tr> <td>Phone Number:</td> <td><INPUT TYPE="text" NAME="phone" SIZE="25" value="null"></td> </tr>  
+				<tr> <td>Username:</td> <td><INPUT TYPE="text" NAME="userName" SIZE="25" value="<%=user.getUserName()%>"></td> </tr> 
+				<tr> <td>Email Address:</td> <td><INPUT TYPE="text" NAME="email" SIZE="25" value="<%=user.getEmail()%>"></td> </tr> 
+				<tr> <td>Phone Number:</td> <td><INPUT TYPE="text" NAME="phone" SIZE="25" value="<%=user.getPhoneNumber()%>"></td> </tr>  
 			</TABLE>
 			<INPUT TYPE="submit" NAME="confirmUpdate" VALUE="Update Details" SIZE="25">
 		</FORM>
