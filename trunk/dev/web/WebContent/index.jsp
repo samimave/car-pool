@@ -1,6 +1,6 @@
 <%@page contentType="text/html; charset=ISO-8859-1"%>
 <%@page import="org.verisign.joid.consumer.OpenIdFilter,car.pool.persistance.*, car.pool.user.*" %>
-
+<%@page import="java.io.ObjectOutputStream"%>
 <%
 HttpSession s = request.getSession(true);
 
@@ -9,15 +9,17 @@ String message = "Please log in.";
 /*if (OpenIdFilter.getCurrentUser(s) != null ) {
 	message = "Logged in as "+OpenIdFilter.getCurrentUser(s);
 } else*/ if(  session.getAttribute("signedin") != null ) {
-	message = "Logged in as " + ((User)session.getAttribute("user")).getUserName();
+	User user = ((User)session.getAttribute("user"));
+	message = "Logged in as " + user.getUserName();
+	message += " " + user.getUserId();
 }
 
 if (request.getParameter("del") != null) {
 	CarPoolStoreImpl cps = new CarPoolStoreImpl();
 	cps.removeAll("donotusethis");
 }
-
 %>
+
 
 <HTML>
 	<HEAD>
@@ -45,31 +47,34 @@ if (request.getParameter("del") != null) {
 	</DIV>
 
 	<DIV id="navAlpha">
-		<%//if (OpenIdFilter.getCurrentUser(s) != null) { %>
-			<%//message %> <br />
-		<%/*} else*/ if(  session.getAttribute("signedin") != null ) { %>
-			<%=message %>
+		<%if (OpenIdFilter.getCurrentUser(s) != null || session.getAttribute("signedin") != null) { %>
+			<%=message %> <br />
 		<%} else { %>
 			<%=message %>
-			<form name="passwordlogin" action="welcome.jsp" action="post">
-				<input type="hidden" name="normal_signin" value="true">
-				<input type="text" name="username"/><br/>
-				<input type="password"name="userpass"/><br/>
-				<input type="submit" value="Login"/>
-			</form>
+			
 		<%} %>
 		<a onclick="confirmation()">DANGEROUS!<br />DO NOT CLICK!</a>
 	</DIV>
 
 	<DIV id="navBeta">
-		<FORM class="login" name="openid_identifier" action="welcome.jsp" method="post">
-			<p><INPUT type="hidden" name="signin" value="true"/>Your OpenId: <br />
-			   <INPUT type="text" name="openid_url" id="openid_url" size="18"/>
-			   <INPUT type="submit" value="Login"/></p>
-			<a href="register.jsp">Sign up</a>
+		Log in via OpenId:
+		<FORM class="login" name="openid_identifier" action="openidlogin" method="post">
+			<INPUT type="hidden" name="openid_signin" value="true"/>
+				<table border="0">
+			   		<tr><td>OpenId:</td><td><INPUT type="text" name="openid_url" id="openid_url" size="18"/></td></tr>
+			   		<tr><td></td><td align="left"><INPUT type="submit" value="Login"/></td></tr>
+				</table>
 		</FORM>
-	</DIV>
-		
+		Or Log in via your username and password
+		<form name="passwordlogin" action="login" method="post">
+			<input type="hidden" name="normal_signin" value="true">
+			<table>
+				<tr><td>Username</td><td><input type="text" name="username" size="18"/></td></tr>
+				<tr><td>Password</td><td><input type="password"name="userpass" size="18"/></td></tr>
+				<tr><td></td><td><input type="submit" value="Login"/></td></tr>
+			</table>
+		</form>
+	</div>		
 	</BODY>
 </HTML>
 

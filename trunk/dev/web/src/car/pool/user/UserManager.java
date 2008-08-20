@@ -66,9 +66,12 @@ public class UserManager {
 	public User getUserByUsername(String username, String password) throws IOException, InvaildUserNamePassword, SQLException {
 		User user = UserFactory.newInstance();
 		CarPoolStore store = new CarPoolStoreImpl();
+		
 		int id = store.checkUser(username, password);
+		
 		user.setUserId(id);
-		String sql = "select userName, userPasswordHash, email, mobile_number, signUpDate from User where idUser = " + id + ";";
+		String sql = String.format("select userName, userPasswordHash, email, mobile_number, signUpDate from User where idUser = %d;", id);
+		//Database db = new DatabaseImpl("jdbc:mysql://localhost:3306/carpool", "root", "thisistheroot");
 		Database db = new DatabaseImpl();
 		Statement statement = db.getStatement();
 		ResultSet rs = statement.executeQuery(sql);
@@ -82,6 +85,8 @@ public class UserManager {
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(date);
 			user.setMemberSince(cal);
+		} else {
+			throw new InvaildUserNamePassword("Invalid username or password");
 		}
 		
 		return user;
