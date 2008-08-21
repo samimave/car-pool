@@ -26,7 +26,7 @@ The purpose of this Wiki is to inform the developers of what form field names ar
   * a hidden field with the name of "normal_signin"
   * a text input field with the name of "username"
   * a password input field with the name of "userpass"
-  Again everything else is optional, and only those fields above will be used for processing the log in.  The "normal_signin" maybe dipensed with in the future, as it seems unnecessary for the funtionality of the NonOpenIdConsumer, but it's still necessary for it to work.
+ Again everything else is optional, and only those fields above will be used for processing the log in.  The "normal_signin" maybe dipensed with in the future, as it seems unnecessary for the funtionality of the NonOpenIdConsumer, but it's still necessary for it to work.
 
 {{{
 <form action="login" method="post">
