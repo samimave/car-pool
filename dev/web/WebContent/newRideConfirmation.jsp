@@ -1,5 +1,5 @@
 <%@page contentType="text/html; charset=ISO-8859-1" %>
-<%@page import="org.verisign.joid.consumer.OpenIdFilter, car.pool.persistance.*" %>
+<%@page import="org.verisign.joid.consumer.OpenIdFilter, car.pool.persistance.*, java.text.SimpleDateFormat" %>
 
 <%
 //force the user to login to view the page
@@ -11,12 +11,14 @@ if (OpenIdFilter.getCurrentUser(request.getSession()) == null && session.getAttr
 CarPoolStore cps = new CarPoolStoreImpl();
 User user = (User)session.getAttribute("user");
 int dbID = user.getUserId();//cps.getUserIdByURL(request.getParameter("user"));
-DateFormat format = DateFormat.getDateInstance();
-Date date = format.parse(request.getParameter("depDate"));
-String locale = format.format(date);
-//SimpleDateFormat format = new SimpleDateFormat(request.getParameter("depDate"));
 
-cps.addRide(dbID,Integer.parseInt(request.getParameter("numSeats")),/*request.getParameter("depDate")*/locale,request.getParameter("from"),request.getParameter("to"));
+//date formatting for use by db 
+//dd/MM/yyyy -> yyyy-MM-dd
+String strTmp = request.getParameter("depDate");
+Date dtTmp = new SimpleDateFormat("dd/MM/yyyy").parse(strTmp);
+String strOutDt = new SimpleDateFormat("yyyy-MM-dd").format(dtTmp);
+
+cps.addRide(dbID,Integer.parseInt(request.getParameter("numSeats")),strOutDt,request.getParameter("from"),request.getParameter("to"));
 %>
 
 <HTML>
