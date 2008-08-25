@@ -4,14 +4,14 @@
 
         <Package name="car.pool.persistance">
             <Stats>
-                <TotalClasses>5</TotalClasses>
-                <ConcreteClasses>2</ConcreteClasses>
+                <TotalClasses>7</TotalClasses>
+                <ConcreteClasses>4</ConcreteClasses>
                 <AbstractClasses>3</AbstractClasses>
                 <Ca>3</Ca>
                 <Ce>1</Ce>
-                <A>0.6</A>
+                <A>0.43</A>
                 <I>0.25</I>
-                <D>0.15</D>
+                <D>0.32</D>
                 <V>1</V>
             </Stats>
 
@@ -28,6 +28,12 @@
             </AbstractClasses>
 
             <ConcreteClasses>
+                <Class sourceFile="CarPoolStoreImpl.java">
+                    car.pool.persistance.CarPoolStoreImpl
+                </Class>
+                <Class sourceFile="DatabaseImpl.java">
+                    car.pool.persistance.DatabaseImpl
+                </Class>
                 <Class sourceFile="RideListingFactory.java">
                     car.pool.persistance.RideListingFactory
                 </Class>
@@ -180,19 +186,19 @@
             </Stats>
 
             <AbstractClasses>
-                <Class sourceFile="User.java">
+                <Class sourceFile="Unknown">
                     car.pool.user.User
                 </Class>
             </AbstractClasses>
 
             <ConcreteClasses>
-                <Class sourceFile="UserFactory.java">
+                <Class sourceFile="Unknown">
                     car.pool.user.UserFactory
                 </Class>
-                <Class sourceFile="UserFactory.java">
+                <Class sourceFile="Unknown">
                     car.pool.user.UserFactory$UserImpl
                 </Class>
-                <Class sourceFile="UserManager.java">
+                <Class sourceFile="Unknown">
                     car.pool.user.UserManager
                 </Class>
             </ConcreteClasses>
@@ -225,13 +231,13 @@
             </AbstractClasses>
 
             <ConcreteClasses>
-                <Class sourceFile="HtmlUtils.java">
+                <Class sourceFile="Unknown">
                     car.pool.user.authentication.servlet.HtmlUtils
                 </Class>
-                <Class sourceFile="NonOpenIdConsumer.java">
+                <Class sourceFile="Unknown">
                     car.pool.user.authentication.servlet.NonOpenIdConsumer
                 </Class>
-                <Class sourceFile="OpenIdConsumer.java">
+                <Class sourceFile="Unknown">
                     car.pool.user.authentication.servlet.OpenIdConsumer
                 </Class>
             </ConcreteClasses>
@@ -265,7 +271,7 @@
             </AbstractClasses>
 
             <ConcreteClasses>
-                <Class sourceFile="RegistrationProcessing.java">
+                <Class sourceFile="Unknown">
                     car.pool.user.registration.servlet.RegistrationProcessing
                 </Class>
             </ConcreteClasses>
@@ -295,10 +301,10 @@
             </AbstractClasses>
 
             <ConcreteClasses>
-                <Class sourceFile="TestUser.java">
+                <Class sourceFile="Unknown">
                     car.pool.user.test.TestUser
                 </Class>
-                <Class sourceFile="UserManagerTest.java">
+                <Class sourceFile="Unknown">
                     car.pool.user.test.UserManagerTest
                 </Class>
             </ConcreteClasses>

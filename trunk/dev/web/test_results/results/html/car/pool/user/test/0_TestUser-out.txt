@@ -1,9 +1,2 @@
-User ID: 507
-User Id: 507
-select userName, email, mobile_number, signUpDate from User where idUser = 507;
-after statement
-after execute query
-com.mysql.jdbc.ResultSet@6f878144
-after get userName
-OpenId: http://sea.pip.verisignlabs.com
+User ID: 513
 

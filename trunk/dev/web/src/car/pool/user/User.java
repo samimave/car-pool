@@ -44,4 +44,19 @@ public interface User {
 	boolean checkPassword();
 	Integer calcSocialScore();
 	
+	/**
+	 * For convenience instead of every time having to check all fileds for equality just doing it once with this method
+	 * @param obj - the object to compare with
+	 * @return true if both obj and the called on instance of User contain the same data, false otherwise
+	 */
+	@Override
+	boolean equals(Object obj);
+	
+	
+	/**
+	 * If you override equals(obj) then you should override hashCode() as any object that equals another should return the same hasCode
+	 * @return a integer representing the hash code of this object
+	 */
+	@Override
+	int hashCode();
 }
