@@ -14,6 +14,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class UserManager {
 
@@ -109,9 +112,7 @@ public class UserManager {
 			break;
 		}
 		
-		user.setUserId(id);
-
-		System.out.println("User ID: " + user.getUserId());		
+		user.setUserId(id);		
 
 		return user;
 	}
@@ -161,10 +162,91 @@ public class UserManager {
 	}
 	
 	
-/*	
- 	public User updateUserDetails( User user ) {
-		String sql = "update User set email='%s', mobile_number='%s', ";
+	protected User getUserByUserId(Integer id) throws IOException, SQLException, InvaildUserNamePassword {
+		User user = UserFactory.newInstance();
+		user.setUserId(id);
+		
+		String selectSql = String.format("select userName, userPasswordHash, email, mobile_number, signUpDate from User where idUser = %d;", id);
+		Database db = new DatabaseImpl();
+		Statement statement = db.getStatement();
+		ResultSet rs = statement.executeQuery(selectSql);
+		
+		if(rs.first()) {
+			user.setUserName(rs.getString(1));
+			user.setPassword(rs.getString(2));
+			user.setEmail(rs.getString(3));
+			user.setPhoneNumber(rs.getString(4));
+			java.sql.Date date = rs.getDate(5);
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(date);
+			user.setMemberSince(cal);
+		} else {
+			throw new InvaildUserNamePassword("Id of User doesn't exist");
+		}
+		
+		selectSql = String.format("select openid_url from user_openids where idUser = %d", user.getUserId());
+		rs = statement.executeQuery(selectSql);
+		
+		while(rs.next()) {
+			user.addOpenId(rs.getString(1));
+		}
+		
 		return user;
 	}
-*/
+	
+	/**
+	 * Updates the user in the database with the new values contained in the user parameter passed to this method.
+	 * Currently the username will not be touched.
+	 * @param user - the user with their updated details containes within
+	 * @return the updated user.
+	 * @throws InvaildUserNamePassword - if the user passed to this method is not in the database
+	 * @throws IOException - communication problems with the database
+	 * @throws SQLException - a error occured processing one of the sql statements used to update the user
+	 */
+ 	public User updateUserDetails( User user ) throws InvaildUserNamePassword, IOException, SQLException {
+ 		User oldUser = getUserByUserId(user.getUserId());
+ 		String password = !oldUser.getPassword().equals(user.getPassword()) ? String.format("userPasswordHash = '%s'",user.getPassword() ) : "";
+ 		String email = !oldUser.getEmail().equals(user.getEmail()) && password.length() > 0 ? String.format(", email = '%s'", user.getEmail()) : !oldUser.getEmail().equals(user.getEmail()) ? String.format("email = '%s'", user.getEmail()) : "";
+ 		String phone = !oldUser.getPhoneNumber().equals(user.getPhoneNumber()) && (password.length() > 0 || email.length() > 0) ? String.format(", mobile_number = '%s'", user.getPhoneNumber()) : !oldUser.getPhoneNumber().equals(user.getPhoneNumber()) ? String.format("mobile_number = '%s'", user.getPhoneNumber()): "";
+ 		
+ 		if(password.length() > 0 || email.length() > 0 || phone.length() > 0 ) {
+ 			String updateSql = String.format("update User set %s%s%s where idUser = %d;",password, email, phone, user.getUserId());
+ 			Database db = new DatabaseImpl();
+ 			Statement statement = db.getStatement();
+ 			//shouldn't need to check if it affected more than one row as the user should exist and if they don't it shouldn't have got this far
+ 			statement.executeUpdate(updateSql);
+ 		}
+		
+		// now to update any openids
+		if(!user.getOpenIds().equals(oldUser.getOpenIds())) {
+			Set<String> newSet = Collections.synchronizedSet(new LinkedHashSet<String>());
+			newSet.addAll(user.getOpenIds());
+			Set<String> oldSet = Collections.synchronizedSet(new LinkedHashSet<String>());
+			oldSet.addAll(oldUser.getOpenIds());
+			if(newSet.size() > oldSet.size()) {
+				newSet.removeAll(oldSet);
+				for(String openid : newSet) {
+					user = attachOpenId(openid, oldUser);
+				}
+			} else if(newSet.size() < oldSet.size()) {
+				oldSet.removeAll(newSet);
+				for(String openid : oldSet) {
+					user = detachOpenId(openid, oldUser);
+				}
+			} else {
+				for(String openid : newSet) {
+					user = attachOpenId(openid, oldUser);
+				}
+				
+				for(String openid : oldSet) {
+					if(!newSet.contains(openid)) {
+						user = detachOpenId(openid, oldUser);
+					}
+				}
+			}
+		}
+		
+		return user;
+	}
+
 }

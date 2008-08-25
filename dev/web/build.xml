@@ -24,7 +24,7 @@
 	<target name="all" depends="clean,prepare,compile,archive,jdepend,runtests"/>
 
 	<target name="clean">
-		<!--<delete dir="${build.classes}/car"/>-->
+		<delete dir="${build.classes}/car/pool/user"/>
 		<delete dir="${jar.dir}"/>
 	</target>
 
@@ -37,7 +37,7 @@
 	</target>
 
 	<target name="compile">
-		<javac classpathref="build.classpath" destdir="${build.classes}" srcdir="${src.dir}"/>
+		<javac source="5" target="5" classpathref="build.classpath" destdir="${build.classes}" srcdir="${src.dir}"/>
 	</target>
 
 	<target name="archive">

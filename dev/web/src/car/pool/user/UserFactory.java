@@ -191,7 +191,26 @@ public class UserFactory {
 		public void setUserName(String name) {
 			// TODO Auto-generated method stub
 			this.userName = name;
-		}		
+		}
+		
+		@Override
+		public boolean equals(Object obj) {
+			return hashCode() == obj.hashCode();
+		}
+		
+		@Override
+		public int hashCode() {
+			int hash = 0 + email.hashCode() + this.name.hashCode() + this.ocupation.hashCode() + this.phoneNumber.hashCode() + this.suburb.hashCode() + this.userName.hashCode();
+			hash += this.memberSince.getTimeInMillis();
+			for(String openid : this.openids) {
+				hash += openid.hashCode();
+			}
+			hash += this.socialScore.hashCode();
+			hash += this.suburb.hashCode();
+			hash += this.userId.hashCode();
+			
+			return hash;
+		}
 	}
 	
 	

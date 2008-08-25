@@ -1,33 +1,4 @@
-User ID: 508
-User Id: 508
-select userName, email, mobile_number, signUpDate from User where idUser = 508;
-after statement
-after execute query
-com.mysql.jdbc.ResultSet@76a9b9c
-after get userName
-OpenId: http://terrasea.myopenid.com/
-508
-User Id: 508
-select userName, email, mobile_number, signUpDate from User where idUser = 508;
-after statement
-after execute query
-com.mysql.jdbc.ResultSet@71f1235b
-after get userName
-OpenId: http://terrasea.myopenid.com/
-User Id: 508
-select userName, email, mobile_number, signUpDate from User where idUser = 508;
-after statement
-after execute query
-com.mysql.jdbc.ResultSet@45b34126
-after get userName
-OpenId: http://terra.pip.verisignlabs.com
-OpenId: http://terrasea.myopenid.com/
-User Id: 508
-select userName, email, mobile_number, signUpDate from User where idUser = 508;
-after statement
-after execute query
-com.mysql.jdbc.ResultSet@7dc5ddc9
-after get userName
-OpenId: http://terrasea.myopenid.com/
-User: id: 508 userName: james email: terrasea@gmail.com phone: 3530079
+User ID: 514
+514
+User: id: 514 userName: james email: terrasea@gmail.com phone: 3530079
 
