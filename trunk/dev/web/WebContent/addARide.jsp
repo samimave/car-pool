@@ -30,28 +30,58 @@ String date = DateFormat.getDateInstance().format(now);
 			<FORM NAME="offerFrm" method="post" action="newRideConfirmation.jsp">
 				<INPUT TYPE="hidden" NAME="user" VALUE="<%=OpenIdFilter.getCurrentUser(request.getSession())%>" SIZE="25">
 				<TABLE class="rideDetails">
+				<tr> <td>Offer or Request?:</td> <td>
+						<INPUT type="radio" name="OffOrReq" id="offer" />
+						<label for="offer">Ride Offer</label> <br />
+						<INPUT type="radio" name="offOrReq" id="request" />
+						<label for="request">Ride Request</label></td> </tr> 	
 					<tr> <th> <h2>Location:</h2> </th> <th>&nbsp;</th> </tr>
-					<tr> <td>From:</td> <td><INPUT TYPE="text" NAME="from" VALUE="" SIZE="25"></td> </tr> 
-					<tr> <td>To:</td> <td><INPUT TYPE="text" NAME="to" VALUE="" SIZE="25"></td> </tr>
-
+					<tr> <td>FROM -</td> <td>
+					<tr> <td>Region:</td> <td>
+					<SELECT name="regionFrom">
+						<option>Palmerston North</option>
+						</SELECT></td> </tr>
+					<tr> <td>Street:</td> <td>
+					<SELECT name="streetFrom">
+						<option>select region first</option>
+						</SELECT></td> </tr>
+					<tr> <td>VIA -</td> <td>
+					<tr> <td>Region:</td> <td>
+					<SELECT name="regionVia">
+						<option>Palmerston North</option>
+						</SELECT></td> </tr>
+					<tr> <td>Street:</td> <td>
+					<SELECT name="streetVia">
+						<option>select region first</option>
+						</SELECT></td> </tr>
+					<tr> <td>TO -</td> <td>
+					<tr> <td>Region:</td> <td>
+					<SELECT name="regionTo">
+						<option>Palmerston North</option>
+						</SELECT></td> </tr>
+					<tr> <td>Street:</td> <td>
+					<SELECT name="streetTo">
+						<option>select region first</option>
+						</SELECT></td> </tr>
 					<tr> <th> <h2>Timing:</h2> </th> <th>&nbsp;</th> </tr>
+						<tr> <td>Reccurence:</td> <td>
+						<INPUT type="radio" name="RideType" id="one-off" />
+						<label for="one-off">One-off</label> <br />
+						<INPUT type="radio" name="RideType" id="regular" />
+						<label for="regular">Regular</label></td> </tr> 
 					<tr> <td>Date (dd/MM/yyyy):</td> <td><INPUT TYPE="text" NAME="depDate" VALUE="<%= date %>" SIZE="25"> <A HREF="#" onClick="cal.select(document.forms['offerFrm'].depDate,'anchor1','dd/MM/yyyy'); return false;" NAME="anchor1" ID="anchor1"><img border="0" src="calendar_icon.jpg" width="27" height="23"></A> </td> </tr> 
 					<tr> <td>Departure Time (hh:mm):</td> <td><INPUT TYPE="text" NAME="depTime" VALUE="<%= time %>" SIZE="25"></td> </tr>
 					<tr> <td>Approximate Trip Length (minutes):</td> <td><INPUT TYPE="text" NAME="tripLength" VALUE="15" SIZE="25"></td> </tr>
 
 					<tr> <th> <h2>Additional Details:</h2> </th> <th>&nbsp;</th> </tr>
-					<tr> <td>Reccurence:</td> <td>
-						<INPUT type="radio" name="RideType" id="one-off" />
-						<label for="one-off">One-off</label> <br />
-						<INPUT type="radio" name="RideType" id="regular" />
-						<label for="regular">Regular</label></td> </tr> 
+					
 					<tr> <td>Number of passenger seats available:</td> <td><INPUT TYPE="text" NAME="numSeats" SIZE="25"></td> </tr>
-					<tr> <td>Extra info (e.g. place of departure):</td> <td><INPUT TYPE="text" NAME="xtraInfo" SIZE="25"></td> </tr>
-			 		<tr> <td>Return Trip:</td> <td>	
+					<tr> <td>Return Trip:</td> <td>	
 						<SELECT name="return">
 						<option value="Yes">Yes</option>
 						<option value="No">No</option>
 						</SELECT></td> </tr>
+					<tr> <td>Other Comments (e.g. place of departure):</td> <td><INPUT TYPE="text" NAME="xtraInfo" SIZE="25"></td> </tr>
 					<tr> <td><INPUT TYPE="submit" NAME="submit" VALUE="Confirm" SIZE="25"></td> <td>&nbsp;</td> </tr>
 				</TABLE>
 			</FORM>
