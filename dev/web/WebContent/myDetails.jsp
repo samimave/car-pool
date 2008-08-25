@@ -7,10 +7,6 @@ if (OpenIdFilter.getCurrentUser(request.getSession()) == null && session.getAttr
 	response.sendRedirect(request.getContextPath()+"/index.jsp");
 }
 User user = (User)session.getAttribute("user");
-//temp placeholder variables
-String offerTable = "<p>No rides found.</p>";
-String acceptedTable = "<p>No rides found.</p>";
-String requestTable = "<p>No rides found.</p>";
 
 //code to interact with db
 CarPoolStore cps = new CarPoolStoreImpl();
@@ -22,6 +18,35 @@ int currentUser = user.getUserId();//cps.getUserIdByURL(openID);
 //code to update details if requested
 if (request.getParameter("updateDetails") != null) {
 	cps.addUser((String)request.getParameter("openid_url"),(String)request.getParameter("userName"),(String)request.getParameter("email"),(String)request.getParameter("phone"));
+}
+
+// code to get ride details
+//temp placeholder variables
+String offerTable = "<p>No rides found.</p>";
+String acceptedTable = "<p>No rides found.</p>";
+String requestTable = "<p>No rides found.</p>";
+boolean ridesExist = false;
+RideListing rl = cps.getRideListing();
+if ((rl.next()) && (rl.getUserID() == currentUser)) {
+	ridesExist = true;
+	offerTable = "<table class='rideDetails'> <tr> <th> Offered By </th> <th> From </th> <th> To </th> <th> Date </th> <th> Time </th> <th> Available Seats </th> </tr>";
+	offerTable += "<tr> <td>"+ rl.getUsername() +"</td> ";
+	offerTable += "<td> <a href='"+ request.getContextPath() +"/temp.jsp?rideselect="+ rl.getRideID() +"'>"+ rl.getStartLocation() +"</a> </td> ";
+	offerTable += "<td>"+ rl.getEndLocation() +"</td> ";
+	offerTable += "<td>"+ rl.getRideDate() +"</td> ";
+	offerTable += "<td> null </td> ";
+	offerTable += "<td>"+ rl.getAvailableSeats() +"</td> </tr>";
+}
+while (rl.next()) {
+	offerTable += "<tr> <td>"+ rl.getUsername() +"</td> ";	
+	offerTable += "<td> <a href='"+ request.getContextPath() +"/temp.jsp?rideselect="+ rl.getRideID() +"'>"+ rl.getStartLocation() +"</a> </td> ";
+	offerTable += "<td>"+ rl.getEndLocation() +"</td> ";
+	offerTable += "<td>"+ rl.getRideDate() +"</td> ";
+	offerTable += "<td> null </td> ";
+	offerTable += "<td>"+ rl.getAvailableSeats() +"</td> </tr>";
+}
+if (ridesExist) {
+	offerTable += "</table>";
 }
 %>
 
@@ -49,9 +74,9 @@ if (request.getParameter("updateDetails") != null) {
 			</TABLE>
 			<INPUT TYPE="submit" NAME="confirmUpdate" VALUE="Update Details" SIZE="25">
 		</FORM>
-		<h2>Your ride details appear below:</h2>
-		<p>our offers</p>
-		<%=offerTable %>
+		<h2>Your ride details appear below:</h2><br>
+		<p>Your offers</p>
+		<%=offerTable %><br>
 		<p>Accepted Rides</p>
 		<%=acceptedTable %>
 		<p>Your requests</p>
