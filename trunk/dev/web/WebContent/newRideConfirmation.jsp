@@ -18,7 +18,7 @@ String strTmp = request.getParameter("depDate");
 Date dtTmp = new SimpleDateFormat("dd/MM/yyyy").parse(strTmp);
 String strOutDt = new SimpleDateFormat("yyyy-MM-dd").format(dtTmp);
 
-cps.addRide(dbID,Integer.parseInt(request.getParameter("numSeats")),strOutDt,request.getParameter("from"),request.getParameter("to"));
+cps.addRide(dbID,Integer.parseInt(request.getParameter("numSeats")),strOutDt,request.getParameter("regionFrom"),request.getParameter("regionTo"));
 %>
 
 <HTML>
