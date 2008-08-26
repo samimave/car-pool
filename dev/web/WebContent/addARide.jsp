@@ -19,6 +19,32 @@ String date = DateFormat.getDateInstance().format(now);
 		<SCRIPT type="text/javascript" src="CalendarPopup.js"></SCRIPT>
 		<SCRIPT type="text/javascript">
 			var cal = new CalendarPopup();
+			function activate(field) {
+				field.disabled=false;
+				if(document.styleSheets)field.style.display  = 'inline';
+				  	field.focus(); 
+			}
+			function process_choice(selection,textfield, selectfield) {
+				if (selection.value == 'sel'){
+					textfield.style.display = 'none';
+					selectfield.style.display = 'none';
+				}
+				if(selection.value == 'oneoff') {
+				    activate(textfield); 
+				    selectfield.style.display = 'none';
+				    selectfield.disabled = true; 
+				    if(document.styleSheets)selectfield.style.display  = 'none';
+				    	selectfield.value = ''; 
+				 }
+				if(selection.value == 'regular') {
+					activate(selectfield)
+					textfield.style.display = 'none';
+				    textfield.disabled = true; 
+				    if(document.styleSheets)textfield.style.display  = 'none';
+				    	textfield.value = ''; 
+				 }
+			}
+
 		</SCRIPT>
 	</HEAD>
 	<BODY>
@@ -35,7 +61,7 @@ String date = DateFormat.getDateInstance().format(now);
 					 //If Ride is a request then numSeats label should be no. of seats requested
 					 //else it should be no. of seats available.%>
 					<tr> <td>Ride Type:</td> <td>	
-					<SELECT name="rideType" onchange="">
+					<SELECT name="rideType">
 						<option value="sel">Select an Option</option>
 						<option value="Ride Offer">Ride Offer</option>
 						<option value="Ride Request">Ride Request</option>
@@ -81,12 +107,22 @@ String date = DateFormat.getDateInstance().format(now);
 					regular is chosen user can choose startDate, days of ride and endDate*/%>
 					<tr> <th> <h2>Timing:</h2> </th> <th>&nbsp;</th> </tr>
 					<tr> <td>Reccurence:</td> <td>
-					<SELECT name="reccurence">
+					<SELECT name="reccurence"  onchange="process_choice(this,document.offerFrm.depDate, document.offerFrm.depDays)">
 						<option value="sel">Select an Option</option>
 						<option value="oneoff">One-Off</option>
 						<option value="regular">Regular</option>
 					</SELECT></td> </tr>
-					<tr> <td>Date (dd/MM/yyyy):</td> <td><INPUT TYPE="text" NAME="depDate" VALUE="<%= date %>" SIZE="25"> <A HREF="#" onClick="cal.select(document.forms['offerFrm'].depDate,'anchor1','dd/MM/yyyy'); return false;" NAME="anchor1" ID="anchor1"><img border="0" src="calendar_icon.jpg" width="27" height="23"></A> </td> </tr> 
+					<tr> <td>Date (dd/MM/yyyy):</td> <td><INPUT TYPE="text" NAME="depDate" style="display: none" VALUE="<%= date %>" SIZE="25"> <A HREF="#" onClick="cal.select(document.forms['offerFrm'].depDate,'anchor1','dd/MM/yyyy'); return false;" NAME="anchor1" ID="anchor1"><img border="0" src="calendar_icon.jpg" width="27" height="23"></A> </td> </tr> 
+					<tr> <td>Days:</td> <td>
+					<SELECT name="depDays" multiple="true" style="display: none">
+						<option>Monday</option>
+						<option>Tuesday</option>
+						<option>Wednesday</option>
+						<option>Thursday</option>
+						<option>Friday</option>
+						<option>Saturday</option>
+						<option>Sunday</option>
+					</SELECT></td> </tr>
 					<tr> <td>Departure Time (hh:mm):</td> <td><INPUT TYPE="text" NAME="depTime" VALUE="<%= time %>" SIZE="25"></td> </tr>
 					<tr> <td>Approximate Trip Length (minutes):</td> <td><INPUT TYPE="text" NAME="tripLength" VALUE="15" SIZE="25"></td> </tr>
 
