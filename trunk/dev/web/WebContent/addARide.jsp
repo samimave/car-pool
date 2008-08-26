@@ -29,58 +29,75 @@ String date = DateFormat.getDateInstance().format(now);
 			<p>Please enter the relevant details and click confirm.</p>
 			<FORM NAME="offerFrm" method="post" action="newRideConfirmation.jsp">
 				<INPUT TYPE="hidden" NAME="user" VALUE="<%=OpenIdFilter.getCurrentUser(request.getSession())%>" SIZE="25">
-				<TABLE class="rideDetails">
-				<tr> <td>Offer or Request?:</td> <td>
-						<INPUT type="radio" name="OffOrReq" id="offer" />
-						<label for="offer">Ride Offer</label> <br />
-						<INPUT type="radio" name="offOrReq" id="request" />
-						<label for="request">Ride Request</label></td> </tr> 	
+					<TABLE class="rideDetails">
+
+					<%// Information on if ride is an offer or request. 
+					 //If Ride is a request then numSeats label should be no. of seats requested
+					 //else it should be no. of seats available.%>
+					<tr> <td>Ride Type:</td> <td>	
+					<SELECT name="rideType" onchange="">
+						<option value="sel">Select an Option</option>
+						<option value="Ride Offer">Ride Offer</option>
+						<option value="Ride Request">Ride Request</option>
+					</SELECT></td> </tr>	
+
+					<% /* Location FROM, TO & VIA. 
+						Streets is a combo box so user can type or use drop down to select
+						streetVia should be able to take multiple seletions
+						All streets boxes are populated through the database table streets*/%>
 					<tr> <th> <h2>Location:</h2> </th> <th>&nbsp;</th> </tr>
+					
 					<tr> <td>FROM -</td> <td>
 					<tr> <td>Region:</td> <td>
 					<SELECT name="regionFrom">
 						<option>Palmerston North</option>
-						</SELECT></td> </tr>
+					</SELECT></td> </tr>
 					<tr> <td>Street:</td> <td>
 					<SELECT name="streetFrom">
-						<option>select region first</option>
-						</SELECT></td> </tr>
+						<option>Select a Street</option>
+					</SELECT></td> </tr>
+					
 					<tr> <td>VIA -</td> <td>
 					<tr> <td>Region:</td> <td>
 					<SELECT name="regionVia">
 						<option>Palmerston North</option>
-						</SELECT></td> </tr>
+					</SELECT></td> </tr>
 					<tr> <td>Street:</td> <td>
 					<SELECT name="streetVia">
-						<option>select region first</option>
-						</SELECT></td> </tr>
+						<option>Select a Street</option>
+					</SELECT></td> </tr>
+
 					<tr> <td>TO -</td> <td>
 					<tr> <td>Region:</td> <td>
 					<SELECT name="regionTo">
 						<option>Palmerston North</option>
-						</SELECT></td> </tr>
+					</SELECT></td> </tr>
 					<tr> <td>Street:</td> <td>
 					<SELECT name="streetTo">
-						<option>select region first</option>
-						</SELECT></td> </tr>
+						<option>Select a Street</option>
+					</SELECT></td> </tr>
+
+					<%/* If one off option is chosen then user can choose date(s) of ride and if
+					regular is chosen user can choose startDate, days of ride and endDate*/%>
 					<tr> <th> <h2>Timing:</h2> </th> <th>&nbsp;</th> </tr>
-						<tr> <td>Reccurence:</td> <td>
-						<INPUT type="radio" name="RideType" id="one-off" />
-						<label for="one-off">One-off</label> <br />
-						<INPUT type="radio" name="RideType" id="regular" />
-						<label for="regular">Regular</label></td> </tr> 
+					<tr> <td>Reccurence:</td> <td>
+					<SELECT name="reccurence">
+						<option value="sel">Select an Option</option>
+						<option value="oneoff">One-Off</option>
+						<option value="regular">Regular</option>
+					</SELECT></td> </tr>
 					<tr> <td>Date (dd/MM/yyyy):</td> <td><INPUT TYPE="text" NAME="depDate" VALUE="<%= date %>" SIZE="25"> <A HREF="#" onClick="cal.select(document.forms['offerFrm'].depDate,'anchor1','dd/MM/yyyy'); return false;" NAME="anchor1" ID="anchor1"><img border="0" src="calendar_icon.jpg" width="27" height="23"></A> </td> </tr> 
 					<tr> <td>Departure Time (hh:mm):</td> <td><INPUT TYPE="text" NAME="depTime" VALUE="<%= time %>" SIZE="25"></td> </tr>
 					<tr> <td>Approximate Trip Length (minutes):</td> <td><INPUT TYPE="text" NAME="tripLength" VALUE="15" SIZE="25"></td> </tr>
 
-					<tr> <th> <h2>Additional Details:</h2> </th> <th>&nbsp;</th> </tr>
-					
-					<tr> <td>Number of passenger seats available:</td> <td><INPUT TYPE="text" NAME="numSeats" SIZE="25"></td> </tr>
+					<tr> <th> <h2>Additional Details:</h2> </th> <th>&nbsp;</th> </tr>	
+					<tr> <td>Number of passenger seats:</td> <td><INPUT TYPE="text" NAME="numSeats" SIZE="25"></td> </tr>
 					<tr> <td>Return Trip:</td> <td>	
-						<SELECT name="return">
+					<SELECT name="return">
+						<option value="sel">Select an Option</option>
 						<option value="Yes">Yes</option>
 						<option value="No">No</option>
-						</SELECT></td> </tr>
+					</SELECT></td> </tr>
 					<tr> <td>Other Comments (e.g. place of departure):</td> <td><INPUT TYPE="text" NAME="xtraInfo" SIZE="25"></td> </tr>
 					<tr> <td><INPUT TYPE="submit" NAME="submit" VALUE="Confirm" SIZE="25"></td> <td>&nbsp;</td> </tr>
 				</TABLE>
