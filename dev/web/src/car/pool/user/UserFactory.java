@@ -30,6 +30,7 @@ public class UserFactory {
 		private String suburb = null;
 		private Integer userId = null;
 		private Calendar memberSince = null;
+		private String password = "n/a";
 		
 		protected UserImpl() {}
 		
@@ -131,7 +132,7 @@ public class UserFactory {
 		@Override
 		public String getPassword() {
 			// TODO Auto-generated method stub
-			return "n/a";
+			return password;
 		}
 
 		@Override
@@ -161,6 +162,7 @@ public class UserFactory {
 		@Override
 		public void setPassword(String password) {
 			// TODO Auto-generated method stub
+			this.password = password;
 		}
 
 		@Override
@@ -200,16 +202,16 @@ public class UserFactory {
 		
 		@Override
 		public int hashCode() {
-			int hash = 0 + email.hashCode() + this.name.hashCode() + this.ocupation.hashCode() + this.phoneNumber.hashCode() + this.suburb.hashCode() + this.userName.hashCode();
-			hash += this.memberSince.getTimeInMillis();
-			for(String openid : this.openids) {
-				hash += openid.hashCode();
-			}
-			hash += this.socialScore.hashCode();
-			hash += this.suburb.hashCode();
-			hash += this.userId.hashCode();
+			//int hash = 0 + email.hashCode() + this.name.hashCode() + this.ocupation.hashCode() + this.phoneNumber.hashCode() + this.suburb.hashCode() + this.userName.hashCode();
+			//hash += this.memberSince.getTimeInMillis();
+			//for(String openid : this.openids) {
+			//	hash += openid.hashCode();
+			//}
+			//hash += this.socialScore.hashCode();
+			//hash += this.suburb.hashCode();
+			//hash += this.userId.hashCode();
 			
-			return hash;
+			return super.hashCode();
 		}
 	}
 	

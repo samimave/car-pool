@@ -106,7 +106,7 @@ public class UserManager {
 	 */
 	public User registerUser(User user) throws DuplicateUserNameException, UserException, IOException, SQLException {
 		CarPoolStoreImpl store = new CarPoolStoreImpl();
-		Integer id = new Integer(store.addUserWithPassword(user.getUserName(), user.getEmail(), user.getPhoneNumber(), "n/a"));
+		Integer id = new Integer(store.addUserWithPassword(user.getUserName(), user.getEmail(), user.getPhoneNumber(), user.getPassword() != null ? user.getPassword() : "n/a"));
 		for(String openid : user.getOpenIds()) {
 			store.attachOpenID(openid, id);
 			break;

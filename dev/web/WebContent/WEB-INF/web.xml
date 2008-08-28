@@ -58,7 +58,7 @@
     <url-pattern>/login</url-pattern>
   </servlet-mapping>
   <servlet>
-    <description>Process form data and then egisters the user in the database with this data</description>
+    <description>Process form data and then registers the user in the database with this data</description>
     <display-name>RegistrationProcessing</display-name>
     <servlet-name>RegistrationProcessing</servlet-name>
     <servlet-class>car.pool.user.registration.servlet.RegistrationProcessing</servlet-class>
