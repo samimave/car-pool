@@ -11,7 +11,8 @@ String message = "";
 
 CarPoolStore cps = new CarPoolStoreImpl();
 RideListing rl = cps.getRideListing();
-int currentUser = cps.getUserIdByURL(OpenIdFilter.getCurrentUser(request.getSession()));
+User user = (User)session.getAttribute("user");
+int dbID = user.getUserId();//cps.getUserIdByURL(request.getParameter("user"));
 int rideID = Integer.parseInt(request.getParameter("rideselect"));
 
 String detailsTable = "<p>No info found.</p>";
