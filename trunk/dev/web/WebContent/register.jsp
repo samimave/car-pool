@@ -15,7 +15,7 @@
 
 		<DIV class="content">
 			<p>Please enter the relevant details and click confirm.</p>
-			<FORM NAME="offerFrm" method="post" action="test.jsp">
+			<FORM NAME="offerFrm" method="post" action="adduser">
 				<INPUT type="hidden" name="newUser" value="yes"/>
 				<INPUT type="hidden" name="signin" value="yes"/>
 				<h2>User Account:</h2>

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.Enumeration;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -44,11 +45,23 @@ import car.pool.user.UserManager;
 	/* (non-Java-doc)
 	 * @see javax.servlet.http.HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
+	//@SuppressWarnings("unchecked")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//phase one of authenticating a OpenId URL
-		if(request.getParameter("openid_signin") != null) {
+		HttpSession session = request.getSession();
+		if(session.getAttribute("registration") != null) {
+			if(OpenIdFilter.getCurrentUser(request.getSession()) != null) {
+				response.sendRedirect(String.format("%s/adduser",request.getContextPath()));
+				return;
+			}
+			request.setAttribute("openid_signin", Boolean.TRUE);
+			String openid_url = (String)session.getAttribute("openid_url");
+			request.setAttribute("openid_url", openid_url);
+		}
+		
+		if(request.getParameter("openid_signin") != null || (session.getAttribute("registration") != null && OpenIdFilter.getCurrentUser(request.getSession()) == null)) {
 			try {
-				HttpSession session = request.getSession();
+				//HttpSession session = request.getSession();
 				if(session.isNew() != true) {
 					//session.invalidate();
 					//HttpSession nsession = request.getSession(true);
@@ -59,7 +72,7 @@ import car.pool.user.UserManager;
 				returnTo.append("/");
 				returnTo.append(request.getServletPath());
 				//The actual OpenId the user supplied in the previous pages login form
-				String id = request.getParameter("openid_url");
+				String id = request.getParameter("openid_url") != null ? request.getParameter("openid_url") : (String)session.getAttribute("openid_url");
 				//part of the normalisation of the OpenId making sure it starts with http
 				if (!id.startsWith("http:")) {
 					id = "http://" + id;
@@ -69,14 +82,16 @@ import car.pool.user.UserManager;
 				//The url plus query string is created here for redirection purposes
 				String s = OpenIdFilter.joid().getAuthUrl(id, returnTo.toString(), trustRoot);
 				response.sendRedirect(s);
+				return;
 			} catch (OpenIdException e) {
 				// Something bad happened, don't know what it is but will redirect to index
-				HttpSession session = request.getSession();
+				//HttpSession session = request.getSession();
 				session.setAttribute("OpenIdException", e.toString());
 				StringBuffer buff = new StringBuffer();
 				buff.append(request.getContextPath());
 				buff.append("/openidfailed.jsp");
 				response.sendRedirect(buff.toString());
+				return;
 			}
 		} else {
 			/* 
@@ -94,14 +109,14 @@ import car.pool.user.UserManager;
 				request.getSession(true).setAttribute(OpenIdFilter.OPENID_IDENTITY, request.getParameter(OpenIdFilter.OPENID_IDENTITY));
 				loggedInAs = OpenIdFilter.getCurrentUser(request.getSession());
 			}
-			if(loggedInAs != null) {
+			if(loggedInAs != null && session.getAttribute("registration") == null) {
 				// The OpenId provider authenticated this user
 				// create a instance of UserManager
 				UserManager manager = new UserManager();
 				try {
 					// get users info from the database and put it into the session attributes along with signedin
 					User user = manager.getUserByOpenId(loggedInAs);
-					HttpSession session = request.getSession();
+					//HttpSession session = request.getSession();
 					session.setAttribute("user", user);
 					session.setAttribute("signedin", Boolean.TRUE);
 					// now redirect to welcome.jsp
@@ -109,25 +124,32 @@ import car.pool.user.UserManager;
 					buff.append(request.getContextPath());
 					buff.append("/welcome.jsp");
 					response.sendRedirect(buff.toString());
+					return;
 				} catch (InvaildUserNamePassword e) {
 					// OpenId not in database so redirect to register
-					HttpSession session = request.getSession();
+					//HttpSession session = request.getSession();
 					session.setAttribute("InvalidUserNamePassword", e.toString());
 					StringBuffer buff = new StringBuffer();
 					buff.append(request.getContextPath());
 					buff.append("/register.jsp");
 					response.sendRedirect(buff.toString());
+					return;
 				} catch (SQLException e) {
 					// TODO redirect to error page
 				}
+			} else if(loggedInAs != null && session.getAttribute("registration") != null) {
+				response.sendRedirect(String.format("%s/adduser",request.getContextPath()));
+				return;
 			} else {
+				// TODO what happens when a user fails to authenticate themselves during registration phase
 				// Log in failed go back to index
-				HttpSession session = request.getSession();
+				//HttpSession session = request.getSession();
 				session.setAttribute("Not Authenticated", "Not gonna happen");
 				StringBuffer buff = new StringBuffer();
 				buff.append(request.getContextPath());
 				buff.append("/openidfailed.jsp");
 				response.sendRedirect(buff.toString());
+				return;
 			}
 		}
 	}
