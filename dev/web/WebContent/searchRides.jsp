@@ -22,7 +22,7 @@ if (rl.next()) {
 	rideTable += "<td>"+ rl.getRideDate() +"</td> ";
 	rideTable += "<td> null </td> ";
 	rideTable += "<td>"+ rl.getAvailableSeats() +"</td>";
-	rideTable += "<td> Link to ride page </td></tr> ";
+	rideTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ rl.getRideID() +"'>"+ "Link to ride page" +"</a> </td> ";
 }
 while (rl.next()) {
 	rideTable += "<tr> <td>"+ rl.getUsername() +"</td> ";	
@@ -31,7 +31,7 @@ while (rl.next()) {
 	rideTable += "<td>"+ rl.getRideDate() +"</td> ";
 	rideTable += "<td> null </td> ";
 	rideTable += "<td>"+ rl.getAvailableSeats() +"</td> ";
-	rideTable += "<td> Link to ride page </td></tr> ";
+	rideTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ rl.getRideID() +"'>"+ "Link to ride page" +"</a> </td> ";
 }
 if (ridesExist) {
 	rideTable += "</table>";

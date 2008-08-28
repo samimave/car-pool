@@ -31,15 +31,15 @@ if ((rl.next()) && (rl.getUserID() == currentUser)) {
 	ridesExist = true;
 	offerTable = "<table class='rideDetails'> <tr> <th> Offered By </th> <th> From </th> <th> To </th> <th> Date </th> <th> Time </th> <th> Available Seats </th> </tr>";
 	offerTable += "<tr> <td>"+ rl.getUsername() +"</td> ";
-	offerTable += "<td> <a href='"+ request.getContextPath() +"/temp.jsp?rideselect="+ rl.getRideID() +"'>"+ rl.getStartLocation() +"</a> </td> ";
+	offerTable += "<td>"+ rl.getStartLocation() + "</td> ";
 	offerTable += "<td>"+ rl.getEndLocation() +"</td> ";
 	offerTable += "<td>"+ rl.getRideDate() +"</td> ";
 	offerTable += "<td> null </td> ";
 	offerTable += "<td>"+ rl.getAvailableSeats() +"</td> </tr>";
 }
-while (rl.next()) {
+while ((rl.next())&& (rl.getUserID() == currentUser))  {
 	offerTable += "<tr> <td>"+ rl.getUsername() +"</td> ";	
-	offerTable += "<td> <a href='"+ request.getContextPath() +"/temp.jsp?rideselect="+ rl.getRideID() +"'>"+ rl.getStartLocation() +"</a> </td> ";
+	offerTable += "<td>"+ rl.getStartLocation() + "</td> ";
 	offerTable += "<td>"+ rl.getEndLocation() +"</td> ";
 	offerTable += "<td>"+ rl.getRideDate() +"</td> ";
 	offerTable += "<td> null </td> ";
@@ -66,7 +66,7 @@ if (ridesExist) {
 		<h2>Your user details appear below:</h2>
 		<FORM name="updateDetails" action="myDetails.jsp" method="post">
 			<INPUT type="hidden" name="updateDetails" value="yes">
-			<TABLE class='rideDetails'>
+			<TABLE class='userDetails'>
 				<tr> <td>Open ID:</td> <td><INPUT TYPE="text" NAME="openid_url" SIZE="25" value="<%=user.getOpenIds().size() > 0 ? user.getOpenIds().toArray()[0] : null%>"></td> </tr>
 				<tr> <td>Username:</td> <td><INPUT TYPE="text" NAME="userName" SIZE="25" value="<%=user.getUserName()%>"></td> </tr> 
 				<tr> <td>Email Address:</td> <td><INPUT TYPE="text" NAME="email" SIZE="25" value="<%=user.getEmail()%>"></td> </tr> 

@@ -14,7 +14,7 @@ String date = DateFormat.getDateInstance().format(now);
 
 <HTML>
 	<HEAD>
-		<TITLE> Offer a Ride </TITLE>
+		<TITLE> Offer or Request a Ride </TITLE>
 		<STYLE type="text/css" media="screen">@import "3ColumnLayout.css";</STYLE>
 		<SCRIPT type="text/javascript" src="CalendarPopup.js"></SCRIPT>
 		<SCRIPT type="text/javascript">
