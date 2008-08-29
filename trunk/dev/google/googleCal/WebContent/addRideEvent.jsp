@@ -1,13 +1,8 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
     <title>Add Car-Pool Ride Event</title>
-    <script src="http://www.google.com/jsapi?key=ABQIAAAA7rDxBnSa8ztdEea-bXHUqRRKOMZEnoyerBNNN7XbrW5T80f1pxRxpg7l2VcFxiQk2L5RouYsGk3NqQ" type="text/javascript"></script>
     <script type="text/javascript">
-    //localhost key - ABQIAAAA7rDxBnSa8ztdEea-bXHUqRRKOMZEnoyerBNNN7XbrW5T80f1pxRxpg7l2VcFxiQk2L5RouYsGk3NqQ
-    //massey key - ABQIAAAA7rDxBnSa8ztdEea-bXHUqRRlE5ut_msTCy_drvRxhL-5WV5Z9RRgsjp91RhaFgOcfLwhiUE-yftYsA
-  //<![CDATA[
+
 
 	function main()
 	{
@@ -47,7 +42,7 @@
     	//re-order and re-delimit (using '-') date string
     	date = arrDate[2] + arrDate[1] + arrDate[0];
     	
-    	//if this is for the start time/date then get the correct POST time
+    	//if this is for the start time/date then get the correct POST time, otherwise remove the ':' so google will accept the time
 		if(end)
 		{	
 			time = getEndTime();
@@ -98,13 +93,13 @@
         return "T" + hh + mm +"00";
     }
 
-	//]]>
+
     </script>
   </head>
   <body onload="main()">
 
     <div class="content">
-		Please wait, adding event data....
+		Please wait while we transfer you to the Google Calendar site..
 		<img src="google.jpg">
 	</div>
 
