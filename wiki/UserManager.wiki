@@ -100,7 +100,7 @@ try {
 
 }}}
 
-To update a user with UserManager.
+To update a user with !UserManager.
 
 This does not support the changing of userName, and may never allow this. The same with userId.
 
