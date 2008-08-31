@@ -133,6 +133,14 @@ public class UserManager {
 		return user;
 	}
 
+	/**
+	 * Removes the openid associated with this user
+	 * @param openid - a string representing the openid that is to be removed.
+	 * @param user - the user who is associated with the openid
+	 * @return - the updated user
+	 * @throws IOException
+	 * @throws SQLException
+	 */
 	public User detachOpenId(String openid, User user) throws IOException, SQLException {
 		CarPoolStore store = new CarPoolStoreImpl();
 		store.detachOpenID(openid, user.getUserId());
@@ -141,6 +149,14 @@ public class UserManager {
 		return user;
 	}
 
+	/**
+	 * Removes the user from the database
+	 * @param user - the users details with which to id them with
+	 * @return true on success false if something went wrong with the removal
+	 * @throws IOException
+	 * @throws StoreException
+	 * @throws SQLException
+	 */
 	public boolean removeUser( User user ) throws IOException, StoreException, SQLException {
 		CarPoolStore store = new CarPoolStoreImpl();
 		boolean result = true;
@@ -161,7 +177,14 @@ public class UserManager {
 		return count > 0 && result;
 	}
 	
-	
+	/**
+	 * A conveniance method to allow for the retrieval of a user based on their userId
+	 * @param id - the users id
+	 * @return - the user associated with this id
+	 * @throws IOException
+	 * @throws SQLException
+	 * @throws InvaildUserNamePassword
+	 */
 	protected User getUserByUserId(Integer id) throws IOException, SQLException, InvaildUserNamePassword {
 		User user = UserFactory.newInstance();
 		user.setUserId(id);

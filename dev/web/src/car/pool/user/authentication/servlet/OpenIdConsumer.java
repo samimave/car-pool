@@ -49,24 +49,9 @@ import car.pool.user.UserManager;
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//phase one of authenticating a OpenId URL
 		HttpSession session = request.getSession();
-		if(session.getAttribute("registration") != null) {
-			if(OpenIdFilter.getCurrentUser(request.getSession()) != null) {
-				response.sendRedirect(String.format("%s/adduser",request.getContextPath()));
-				return;
-			}
-			request.setAttribute("openid_signin", Boolean.TRUE);
-			String openid_url = (String)session.getAttribute("openid_url");
-			request.setAttribute("openid_url", openid_url);
-		}
 		
-		if(request.getParameter("openid_signin") != null || (session.getAttribute("registration") != null && OpenIdFilter.getCurrentUser(request.getSession()) == null)) {
+		if(OpenIdFilter.getCurrentUser(session) == null) {
 			try {
-				//HttpSession session = request.getSession();
-				if(session.isNew() != true) {
-					//session.invalidate();
-					//HttpSession nsession = request.getSession(true);
-					
-				}
 				//The url that is going to be returned to after the OpenId has been verified or not
 				StringBuffer returnTo = new StringBuffer(UrlUtils.getBaseUrl(request));
 				returnTo.append("/");
@@ -109,7 +94,7 @@ import car.pool.user.UserManager;
 				request.getSession(true).setAttribute(OpenIdFilter.OPENID_IDENTITY, request.getParameter(OpenIdFilter.OPENID_IDENTITY));
 				loggedInAs = OpenIdFilter.getCurrentUser(request.getSession());
 			}
-			if(loggedInAs != null && session.getAttribute("registration") == null) {
+			if(loggedInAs != null) {
 				// The OpenId provider authenticated this user
 				// create a instance of UserManager
 				UserManager manager = new UserManager();
@@ -131,17 +116,13 @@ import car.pool.user.UserManager;
 					session.setAttribute("InvalidUserNamePassword", e.toString());
 					StringBuffer buff = new StringBuffer();
 					buff.append(request.getContextPath());
-					buff.append("/register.jsp");
+					buff.append("/oregistration.jsp");
 					response.sendRedirect(buff.toString());
 					return;
 				} catch (SQLException e) {
 					// TODO redirect to error page
 				}
-			} else if(loggedInAs != null && session.getAttribute("registration") != null) {
-				response.sendRedirect(String.format("%s/adduser",request.getContextPath()));
-				return;
 			} else {
-				// TODO what happens when a user fails to authenticate themselves during registration phase
 				// Log in failed go back to index
 				//HttpSession session = request.getSession();
 				session.setAttribute("Not Authenticated", "Not gonna happen");
