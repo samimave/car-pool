@@ -67,4 +67,13 @@
     <servlet-name>RegistrationProcessing</servlet-name>
     <url-pattern>/adduser</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <display-name>OpenIdRegistrationProcessor</display-name>
+    <servlet-name>OpenIdRegistrationProcessor</servlet-name>
+    <servlet-class>car.pool.user.registration.servlet.OpenIdRegistrationProcessor</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>OpenIdRegistrationProcessor</servlet-name>
+  	<url-pattern>/oadduser</url-pattern>
+  </servlet-mapping>
 </web-app>

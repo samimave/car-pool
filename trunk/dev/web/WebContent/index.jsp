@@ -74,6 +74,7 @@ if (request.getParameter("del") != null) {
 				<tr><td></td><td><input type="submit" value="Login"/></td></tr>
 			</table>
 		</form>
+		Not registered and don't want to use OpenId, then <a href="register.jsp">register here</a>.
 	</div>		
 	</BODY>
 </HTML>
