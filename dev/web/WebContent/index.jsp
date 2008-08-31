@@ -65,6 +65,8 @@ if (request.getParameter("del") != null) {
 			   		<tr><td></td><td align="left"><INPUT type="submit" value="Login"/></td></tr>
 				</table>
 		</FORM>
+		Enter your OpenID and if you have not registered with our site previously you will eventually be redirected to Registration page. <br><br>
+ 
 		Or Log in via your username and password
 		<form name="passwordlogin" action="login" method="post">
 			<input type="hidden" name="normal_signin" value="true">
