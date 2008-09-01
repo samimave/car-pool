@@ -50,14 +50,18 @@ import car.pool.user.UserManager;
 		//phase one of authenticating a OpenId URL
 		HttpSession session = request.getSession();
 		
-		if(OpenIdFilter.getCurrentUser(session) == null) {
+		if(OpenIdFilter.getCurrentUser(session) == null && request.getParameter("openid_url") != null) {
 			try {
 				//The url that is going to be returned to after the OpenId has been verified or not
 				StringBuffer returnTo = new StringBuffer(UrlUtils.getBaseUrl(request));
 				returnTo.append("/");
 				returnTo.append(request.getServletPath());
 				//The actual OpenId the user supplied in the previous pages login form
-				String id = request.getParameter("openid_url") != null ? request.getParameter("openid_url") : (String)session.getAttribute("openid_url");
+				String id = request.getParameter("openid_url");
+				/*if(id == null) {
+					response.sendRedirect(String.format("%s/openidfailed.jsp", request.getContextPath()));
+					return;
+				}*/
 				//part of the normalisation of the OpenId making sure it starts with http
 				if (!id.startsWith("http:")) {
 					id = "http://" + id;
