@@ -62,15 +62,13 @@ String date = DateFormat.getDateInstance().format(now);
 					 //else it should be no. of seats available.%>
 					<tr> <td>Ride Type:</td> <td>	
 					<SELECT name="rideType">
-						<option value="sel">Select an Option</option>
 						<option value="Ride Offer">Ride Offer</option>
-						<option value="Ride Request">Ride Request</option>
 					</SELECT></td> </tr>	
 
 					<% /* Location FROM, TO & VIA. 
 						Streets is a combo box so user can type or use drop down to select
-						streetVia should be able to take multiple seletions
-						All streets boxes are populated through the database table streets*/%>
+						a street. All streets boxes will need to be populated 
+						from the database table streets*/%>
 					<tr> <th> <h2>Location:</h2> </th> <th>&nbsp;</th> </tr>
 					
 					<tr> <td>FROM -</td> <td>
@@ -83,16 +81,6 @@ String date = DateFormat.getDateInstance().format(now);
 						<option>Select a Street</option>
 					</SELECT></td> </tr>
 					
-					<tr> <td>VIA -</td> <td>
-					<tr> <td>Region:</td> <td>
-					<SELECT name="regionVia">
-						<option>Palmerston North</option>
-					</SELECT></td> </tr>
-					<tr> <td>Street:</td> <td>
-					<SELECT name="streetVia">
-						<option>Select a Street</option>
-					</SELECT></td> </tr>
-
 					<tr> <td>TO -</td> <td>
 					<tr> <td>Region:</td> <td>
 					<SELECT name="regionTo">
@@ -128,12 +116,7 @@ String date = DateFormat.getDateInstance().format(now);
 
 					<tr> <th> <h2>Additional Details:</h2> </th> <th>&nbsp;</th> </tr>	
 					<tr> <td>Number of passenger seats:</td> <td><INPUT TYPE="text" NAME="numSeats" SIZE="25"></td> </tr>
-					<tr> <td>Return Trip:</td> <td>	
-					<SELECT name="return">
-						<option value="sel">Select an Option</option>
-						<option value="Yes">Yes</option>
-						<option value="No">No</option>
-					</SELECT></td> </tr>
+
 					<tr> <td>Other Comments (e.g. place of departure):</td> <td><INPUT TYPE="text" NAME="xtraInfo" SIZE="25"></td> </tr>
 					<tr> <td><INPUT TYPE="submit" NAME="submit" VALUE="Confirm" SIZE="25"></td> <td>&nbsp;</td> </tr>
 				</TABLE>
