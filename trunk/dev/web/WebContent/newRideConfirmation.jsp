@@ -1,8 +1,8 @@
 <%@page contentType="text/html; charset=ISO-8859-1" %>
-<%@page import="org.verisign.joid.consumer.OpenIdFilter, car.pool.persistance.*, java.text.SimpleDateFormat" %>
+<%@page import="org.verisign.joid.consumer.OpenIdFilter, java.text.SimpleDateFormat" %>
 
 <%
-//force the user to login to view the page
+force the user to login to view the page
 if (OpenIdFilter.getCurrentUser(request.getSession()) == null && session.getAttribute("signedin") == null) {
 	response.sendRedirect(request.getContextPath()+"/index.jsp");
 }
@@ -33,7 +33,7 @@ cps.addRide(dbID,Integer.parseInt(request.getParameter("numSeats")),strOutDt,req
 		<DIV class="content">
 			<p>Thank you for adding a <%=request.getParameter("rideType") %> from <%= request.getParameter("streetFrom") %> (<%=request.getParameter("regionFrom") %>), to <%= request.getParameter("streetTo") %>  (<%=request.getParameter("regionFrom") %>);  
 			scheduled for <%= request.getParameter("depTime") %> <%= request.getParameter("depDate") %>. </p>
-			<FORM action="addRideEvent.jsp" method="post">
+			<FORM action="addRideEvent.jsp" method="post" target="_blank">
             	<INPUT type="hidden" name="from" value="<%=request.getParameter("regionFrom") %>">
 				<INPUT type="hidden" name="to" value="<%=request.getParameter("regionTo") %>">
 				<INPUT type="hidden" name="time" value="<%=request.getParameter("depTime") %>">
