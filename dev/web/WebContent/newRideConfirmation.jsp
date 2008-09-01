@@ -33,7 +33,7 @@ cps.addRide(dbID,Integer.parseInt(request.getParameter("numSeats")),strOutDt,req
 		<DIV class="content">
 			<p>Thank you for adding a <%=request.getParameter("rideType") %> from <%= request.getParameter("streetFrom") %> (<%=request.getParameter("regionFrom") %>), to <%= request.getParameter("streetTo") %>  (<%=request.getParameter("regionFrom") %>);  
 			scheduled for <%= request.getParameter("depTime") %> <%= request.getParameter("depDate") %>. </p>
-			<FORM action="addRideEvent.jsp" method="post" target="_blank">
+			<FORM action="addRideEvent.jsp" method="post">
             	<INPUT type="hidden" name="from" value="<%=request.getParameter("regionFrom") %>">
 				<INPUT type="hidden" name="to" value="<%=request.getParameter("regionTo") %>">
 				<INPUT type="hidden" name="time" value="<%=request.getParameter("depTime") %>">
