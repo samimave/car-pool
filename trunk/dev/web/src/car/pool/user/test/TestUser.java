@@ -2,11 +2,15 @@ package car.pool.user.test;
 
 import static org.junit.Assert.*;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import car.pool.persistance.exception.InvaildUserNamePassword;
 import car.pool.user.User;
 import car.pool.user.UserFactory;
 import car.pool.user.UserManager;
@@ -149,27 +153,73 @@ public class TestUser {
 
 	@Test
 	public void testSetPhoneNumber() {
-		fail("Not yet implemented");
+		String oldph = user.getPhoneNumber();
+		user.setPhoneNumber("1234567");
+		String newph = user.getPhoneNumber();
+		user.setPhoneNumber(oldph);
+		Assert.assertNotSame(oldph, newph);
+		Assert.assertEquals(oldph, user.getPhoneNumber());
 	}
 
 	@Test
 	public void testSetSocialScore() {
-		fail("Not yet implemented");
+		Integer oldsoc = user.getSocialScore();
+		user.setSocialScore(1);
+		Integer nsoc = user.getSocialScore();
+		user.setSocialScore(oldsoc);
+		Assert.assertNotSame(oldsoc, nsoc);
+		Assert.assertEquals(oldsoc, user.getSocialScore());
 	}
 
 	@Test
 	public void testSetSuburb() {
-		fail("Not yet implemented");
+		String oldsub = user.getSuburb();
+		user.setSuburb("suburb");
+		String nsub = user.getSuburb();
+		user.setSuburb(oldsub);
+		Assert.assertNotSame(oldsub,nsub);
+		Assert.assertEquals(oldsub, user.getSuburb());
 	}
 
 	@Test
 	public void testSetUserId() {
-		fail("Not yet implemented");
+		Integer oldid = user.getUserId();
+		user.setUserId(oldid.intValue() + 1);
+		Integer newid = user.getUserId();
+		user.setUserId(oldid);
+		Assert.assertNotSame(oldid, newid);
+		Assert.assertEquals(oldid, user.getUserId());
 	}
 
 	@Test
 	public void testSetUserName() {
-		fail("Not yet implemented");
+		String oldName = user.getUserName();
+		user.setUserName("john");
+		Assert.assertNotSame(oldName, user.getUserName());
 	}
 
+	@Test
+	public void testEquals() {
+		UserManager manager = new UserManager();
+		try {
+			User nuser = manager.getUserByOpenId("http://sea.pip.verisignlabs.com");
+			boolean result = user.equals(nuser);
+			Assert.assertTrue(result);
+		} catch (Exception e) {
+			fail("testEquals: " + e);
+		}
+	}
+	
+	@Test
+	public void testHasCode() {
+		UserManager manager = new UserManager();
+		try {
+			User nuser = manager.getUserByOpenId("http://sea.pip.verisignlabs.com");
+			int hash1 = nuser.hashCode();
+			int hash2 = user.hashCode();
+			Assert.assertEquals(hash1, hash2);
+		} catch (Exception e) {
+			fail("testEquals: " + e);
+		}
+	}
 }

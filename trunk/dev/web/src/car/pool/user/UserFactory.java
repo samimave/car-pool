@@ -36,7 +36,6 @@ public class UserFactory {
 		
 		@Override
 		public Integer calcSocialScore() {
-			// TODO Auto-generated method stub
 			return new Integer(0);
 		}
 
@@ -60,49 +59,41 @@ public class UserFactory {
 
 		@Override
 		public String getName() {
-			// TODO Auto-generated method stub
 			return name;
 		}
 
 		@Override
 		public String getOcupation() {
-			// TODO Auto-generated method stub
 			return ocupation;
 		}
 
 		@Override
 		public Set<String> getOpenIds() {
-			// TODO Auto-generated method stub
 			return openids;
 		}
 
 		@Override
 		public String getPhoneNumber() {
-			// TODO Auto-generated method stub
 			return phoneNumber;
 		}
 
 		@Override
 		public Integer getSocialScore() {
-			// TODO Auto-generated method stub
 			return socialScore;
 		}
 
 		@Override
 		public String getSuburb() {
-			// TODO Auto-generated method stub
 			return suburb;
 		}
 
 		@Override
 		public Integer getUserId() {
-			// TODO Auto-generated method stub
 			return userId;
 		}
 
 		@Override
 		public String getUserName() {
-			// TODO Auto-generated method stub
 			return userName;
 		}
 
@@ -114,13 +105,11 @@ public class UserFactory {
 
 		@Override
 		public Calendar getMemberSince() {
-			// TODO Auto-generated method stub
 			return memberSince;
 		}
 
 		@Override
 		public void addOpenId(String openid) {
-			// TODO Auto-generated method stub
 			openids.add(openid);
 		}
 
@@ -131,67 +120,56 @@ public class UserFactory {
 
 		@Override
 		public String getPassword() {
-			// TODO Auto-generated method stub
 			return password;
 		}
 
 		@Override
 		public void setEmail(String email) {
-			// TODO Auto-generated method stub
 			this.email = email;
 		}
 
 		@Override
 		public void setMemberSince(Calendar date) {
-			// TODO Auto-generated method stub
 			this.memberSince = date;
 		}
 
 		@Override
 		public void setName(String name) {
-			// TODO Auto-generated method stub
 			this.name = name;
 		}
 
 		@Override
 		public void setOcupation(String ocupation) {
-			// TODO Auto-generated method stub
 			this.ocupation = ocupation;
 		}
 
 		@Override
 		public void setPassword(String password) {
-			// TODO Auto-generated method stub
 			this.password = password;
 		}
 
 		@Override
 		public void setPhoneNumber(String phone) {
-			// TODO Auto-generated method stub
 			this.phoneNumber = phone;
 		}
 
 		@Override
 		public void setSocialScore(Integer score) {
-			// TODO Auto-generated method stub
 			this.socialScore = score;
 		}
 
 		@Override
 		public void setSuburb(String suburb) {
-			// TODO Auto-generated method stub
 			this.suburb = suburb;
 		}
 
 		@Override
 		public void setUserId(Integer id) {
-			// TODO Auto-generated method stub
 			this.userId = id;
 		}
 
 		@Override
 		public void setUserName(String name) {
-			// TODO Auto-generated method stub
 			this.userName = name;
 		}
 		
@@ -200,18 +178,27 @@ public class UserFactory {
 			return hashCode() == obj.hashCode();
 		}
 		
+		
+		private int getHash(Object obj) {
+			if(obj != null) {
+				return obj.hashCode();
+			}
+			
+			return 0;
+		}
+		
 		@Override
 		public int hashCode() {
-			//int hash = 0 + email.hashCode() + this.name.hashCode() + this.ocupation.hashCode() + this.phoneNumber.hashCode() + this.suburb.hashCode() + this.userName.hashCode();
-			//hash += this.memberSince.getTimeInMillis();
-			//for(String openid : this.openids) {
-			//	hash += openid.hashCode();
-			//}
-			//hash += this.socialScore.hashCode();
-			//hash += this.suburb.hashCode();
-			//hash += this.userId.hashCode();
+			int hash = 0 + getHash(email) + getHash(name) + getHash(ocupation) + getHash(phoneNumber) + getHash(suburb) + getHash(userName);
+			hash += getHash(memberSince);
+			for(String openid : this.openids) {
+				hash += getHash(openid);
+			}
+			hash += getHash(socialScore);
+			hash += getHash(suburb);
+			hash += getHash(userId);
 			
-			return super.hashCode();
+			return hash;
 		}
 	}
 	
