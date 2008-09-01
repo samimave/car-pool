@@ -27,7 +27,7 @@
     //get the date and time parameters from the POST data and correctly format them into a string accepted by google API
     function getISODate(end)
     {
-    	var time = "T<%=request.getParameter("time") %>00";
+    	var time = "";
     	var date = "<%=request.getParameter("date") %>";
 
     	//remove the '-' delimiting yr-mnth-day
@@ -36,18 +36,18 @@
     	//if this is for the start time/date then get the correct POST time, otherwise remove the ':' so google will accept the time
 		if(end)
 		{	
-			time = getEndTime();
+			time = getTime(true);
 		}
 		else
 		{
-			time = time.replace(":", "");
+			time = getTime(false);
 		}
 
 		return date + time;			
     }
 
     //add the length of the trip to the start time to get an end time
-    function getEndTime()
+    function getTime(endTime)
     {
         var sTime = "<%=request.getParameter("time") %>";
         var length = "<%=request.getParameter("length") %>";
@@ -57,10 +57,28 @@
         var hh = parseInt(hhmm[0]);
         var mm = parseInt(hhmm[1]);
 
+		//deal with invalid string inputs
+        if(isNaN(mm)){mm = 0;}
+        if(isNaN(hh)){hh = 0;}
+
+        //if the minutes section of the date string contains 'pm' (NOT case sensitive) then turn into 24hr time
+        if(hhmm[1].search(/pm/i) != -1)
+        {
+            hh += 12
+            if(hh > 23){hh = 0;}
+        }
+
+        if(!endTime)
+        {
+            if(hh < 10){hh = "0" + hh;}
+            if(mm < 10){mm = "0" + mm;}
+            return "T" + hh + mm + "00"
+        }
+      
         mm += parseInt(length);
 
 		//if minutes is larger than 59, add an hour.  If this will tick over to another day, then lock the time at 11:59pm
-        if(mm>59)
+        while(mm>59)
         {
             mm -= 60;
             hh++;
