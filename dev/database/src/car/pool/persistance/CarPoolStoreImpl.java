@@ -553,5 +553,11 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		//TODO check region was added
 		return id;
 	}
+
+	@Override
+	public LocationList findLocation(String name) {
+		LocationList locList = new LocationList(name, db.getStatement());
+		return locList;
+	}
 	
 }
