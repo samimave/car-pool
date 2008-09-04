@@ -92,17 +92,17 @@ CREATE  TABLE IF NOT EXISTS `carpool`.`Matches` (
   INDEX idRide (`idRide` ASC) ,
   INDEX idUser (`idUser` ASC) ,
   INDEX idLocation (`idLocation` ASC) ,
-  CONSTRAINT `idRide`
+  CONSTRAINT `idRidefk`
     FOREIGN KEY (`idRide` )
     REFERENCES `carpool`.`Ride` (`idRide` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `idUser`
+  CONSTRAINT `idUserfk`
     FOREIGN KEY (`idUser` )
     REFERENCES `carpool`.`User` (`idUser` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `idLocation`
+  CONSTRAINT `idLocationfk`
     FOREIGN KEY (`idLocation` )
     REFERENCES `carpool`.`locations` (`idLocations` )
     ON DELETE NO ACTION
@@ -119,9 +119,8 @@ CREATE  TABLE IF NOT EXISTS `carpool`.`user_openids` (
   `openid_url` VARCHAR(255) NOT NULL ,
   `idUser` INT NOT NULL ,
   PRIMARY KEY (`openid_url`) ,
-  INDEX idUser () ,
   INDEX idUser (`idUser` ASC) ,
-  CONSTRAINT `idUser`
+  CONSTRAINT `idUserfkfk`
     FOREIGN KEY (`idUser` )
     REFERENCES `carpool`.`User` (`idUser` )
     ON DELETE NO ACTION
@@ -141,7 +140,7 @@ CREATE  TABLE IF NOT EXISTS `carpool`.`RideComment` (
   `rating` INT NOT NULL ,
   PRIMARY KEY (`idRideComment`) ,
   INDEX idTrip (`idTrip` ASC) ,
-  CONSTRAINT `idTrip`
+  CONSTRAINT `idTripfk`
     FOREIGN KEY (`idTrip` )
     REFERENCES `carpool`.`Matches` (`idTrip` )
     ON DELETE NO ACTION
