@@ -21,10 +21,13 @@ public interface CarPoolStore {
 	int checkUser(String username, String passwordHash) throws InvaildUserNamePassword;
 	int checkUser(String username) throws InvaildUserNamePassword;
 	
+	int addRegion(String name) throws SQLException;
+	int addLocation(int region, String name) throws SQLException;
+	
 	boolean checkUserExists(String username);
 	
-	int addRide(int user, int availableSeats, String startDate, String startLocation, String endLocation) throws RideException;
-	int takeRide(int user, int ride) throws RideException;
+	int addRide(int user, int availableSeats, String startDate, int startLocation, int endLocation, int streetNumber) throws RideException;
+	int takeRide(int user, int ride, int idLocation, int streetNumber) throws RideException;
 	
 	boolean removeUser(String username, String passwordHash) throws StoreException;
 	boolean removeRide(int user, int ride) throws StoreException;

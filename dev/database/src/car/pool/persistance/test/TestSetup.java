@@ -2,6 +2,7 @@ package car.pool.persistance.test;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
@@ -19,6 +20,15 @@ public class TestSetup {
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+		}
+		int region = 0;
+		int idLocation = 0;
+		try {
+			region = cps.addRegion("Palmy");
+			idLocation = cps.addLocation(region,"Blair St");
+		}
+		catch (SQLException e) {
+			// TODO: handle exception
 		}
 		try {
 			int a = cps.addUser("a", "a");
@@ -44,25 +54,25 @@ public class TestSetup {
 */			
 			Date date = new Date(System.currentTimeMillis());
 			
-			int ride1 = cps.addRide(a, 4, date.toString(), "Massey", "Auckland");
-			int ride2 = cps.addRide(b, 4, date.toString(), "Wellington", "XMas");
-			int ride3 = cps.addRide(c, 4, date.toString(), "Wilton", "Island");
-			int ride4 = cps.addRide(d, 4, date.toString(), "Home", "Not home");
+			int ride1 = cps.addRide(a, 4, date.toString(), idLocation, idLocation,0);
+			int ride2 = cps.addRide(b, 4, date.toString(), idLocation, idLocation,1);
+			int ride3 = cps.addRide(c, 4, date.toString(), idLocation, idLocation,2);
+			int ride4 = cps.addRide(d, 4, date.toString(), idLocation, idLocation,3);
 //			int ride5 = cps.addRide(e, 4, date.toString(), "asgadfg", "adfgadfgafd home");
 			
-			cps.takeRide(e, ride1);
-			cps.takeRide(f, ride1);
-			cps.takeRide(g, ride1);
-			cps.takeRide(h, ride1);
+			cps.takeRide(e, ride1, idLocation,0);
+			cps.takeRide(f, ride1, idLocation,0);
+			cps.takeRide(g, ride1, idLocation,0);
+			cps.takeRide(h, ride1, idLocation,0);
 			
-			cps.takeRide(i, ride2);
-			cps.takeRide(j, ride2);
+			cps.takeRide(i, ride2, idLocation,0);
+			cps.takeRide(j, ride2, idLocation,0);
 			
-			cps.takeRide(g, ride3);
-			cps.takeRide(h, ride3);
+			cps.takeRide(g, ride3, idLocation,0);
+			cps.takeRide(h, ride3, idLocation,0);
 			
-			cps.takeRide(k, ride3);
-			cps.takeRide(l, ride4);
+			cps.takeRide(k, ride3, idLocation,0);
+			cps.takeRide(l, ride4, idLocation,0);
 			
 		} catch (StoreException e) {
 			// TODO Auto-generated catch block
