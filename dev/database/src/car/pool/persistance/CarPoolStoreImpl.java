@@ -556,8 +556,13 @@ public class CarPoolStoreImpl implements CarPoolStore {
 
 	@Override
 	public LocationList findLocation(String name) {
-		LocationList locList = new LocationList(name, db.getStatement());
+		LocationList locList = new LocationList(name, db.getStatement(), false);
 		return locList;
 	}
 	
+	@Override
+	public LocationList getLocations() {
+		LocationList locList = new LocationList("", db.getStatement(), true);
+		return locList;
+	}
 }

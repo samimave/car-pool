@@ -32,17 +32,23 @@ public class LocationList {
 	static private JScrollPane jScrollPane1;
 	static private JTextArea jTextArea1;
 
-	public LocationList(String name, Statement statement){
-		String searchable = "%" + name.replace(' ', '%') + "%";
-		String sql = "Select idLocations, street "+
-						"FROM locations "+
-						"WHERE street LIKE '"+searchable+"';";
-		
+	public LocationList(String name, Statement statement, boolean all){
+		String sql = null;
+		if(all){
+			sql = "Select idLocations, street "+
+			"FROM locations;";
+		}else{
+			String searchable = "%" + name.replace(' ', '%') + "%";
+			sql = "Select idLocations, street "+
+							"FROM locations "+
+							"WHERE street LIKE '"+searchable+"';";
+		}
 		try {
 			rs = statement.executeQuery(sql);
 		} catch (SQLException e) {
 			//throw new
 		}
+		
 	}
 	
 	public boolean next() throws SQLException{
@@ -94,7 +100,7 @@ public class LocationList {
 						StringBuffer sb = new StringBuffer();
 						System.out.println(jTextField1.getText()+Character.toString(e.getKeyChar()).trim());
 						if(!jTextField1.getText().trim().equals("")){
-							LocationList ll = cps.findLocation(jTextField1.getText()+Character.toString(e.getKeyChar()).trim());
+							LocationList ll = cps.getLocations();//cps.findLocation(jTextField1.getText()+Character.toString(e.getKeyChar()).trim());
 							try {
 								while(ll.next()){
 									sb.append(ll.getID() + "\t" + ll.getStreetName() + "\n");
