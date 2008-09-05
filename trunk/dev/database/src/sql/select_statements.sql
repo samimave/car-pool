@@ -40,3 +40,10 @@ FROM
 	WHERE u.idUser = r.idUser
 GROUP BY r.idRide) as t
 WHERE t.availableSeats > 0;
+
+
+--search locations--
+
+Select idLocations, street
+FROM locations
+WHERE street LIKE "smi%";

@@ -25,6 +25,7 @@ public interface CarPoolStore {
 	int addLocation(int region, String name) throws SQLException;
 	
 	LocationList findLocation(String name);
+	LocationList getLocations();
 	
 	boolean checkUserExists(String username);
 	
