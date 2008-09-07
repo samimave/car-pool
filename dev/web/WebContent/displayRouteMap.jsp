@@ -34,23 +34,31 @@
       // Display the map, with some controls and set the initial location 
       var map = new GMap2(document.getElementById("map"));
       var geocoder = new GClientGeocoder();
+
+      //route mapping code
+	  var directionsPanel = document.getElementById("my_textual_div");
+	  var directions = new GDirections(map, directionsPanel);
+	  ///
+	  
       map.addControl(new GLargeMapControl());
       map.addControl(new GMapTypeControl());
 	  map.setCenter(new GLatLng(-40.35814342293522, 175.6267547607422),13);
-      var addressArray = ["marne street palmerston north new zealand",
-                          "cook street palmerston north new zealand",
-                          "churh street palmerston north new zealand",
-                          "albert street palmerston north new zealand",
+      var addressArray = [
+                          "milson line palmerston north new zealand",
                           "main street palmerston north new zealand",
+                          "albert street palmerston north new zealand",
+                          "church street palmerston north new zealand",
+                          "cook street palmerston north new zealand",
                           "college street palmerston north new zealand",
-                          "milson line palmerston north new zealand"
+                          "marne street palmerston north new zealand",
+                          "campus road palmerston north new zealand"
                           ];
+     
       // ===== Start with an empty GLatLngBounds object =====     
       var bounds = new GLatLngBounds();
       //iconStart=new GIcon(G_DEFAULT_ICON, "http://maps.google.com/mapfiles/dd-start.png");
       //iconDest=new GIcon(G_DEFAULT_ICON, "http://maps.google.com/mapfiles/dd-end.png");
-
-      
+                     
       // addAddressToMap() is called when the geocoder returns an
       // answer.  It adds a marker to the map with an open info window
       // showing the nicely formatted version of the address        	
@@ -59,37 +67,20 @@
           if (!response || response.Status.code != 200) {
             alert("Sorry, we were unable to geocode that address");
           } else {
-        	// Retrieve the object           
             place = response.Placemark[0];
-         	// Retrieve the latitude and longitude          
             point = new GLatLng(place.Point.coordinates[1],
-                                place.Point.coordinates[0]);                        
-         	// Create a marker
+                                place.Point.coordinates[0]);
             var marker = new GMarker(point);
             // ==== Each time a point is found, extent the bounds ato include it =====
             bounds.extend(point);
-            var lngCenter = (bounds.getNorthEast().lng() + bounds.getSouthWest().lng()) / 2;
-            var latCenter = (bounds.getNorthEast().lat() + bounds.getSouthWest().lat()) / 2;
-            var center = new GLatLng(latCenter,lngCenter);
-            map.setCenter(center, map.getBoundsZoomLevel(bounds));                        
             var html = place.address;
-
-			//line = new Array();
-			//line.push(point);
-			var polyline = new GPolyline(point, "#ff0000",5);
-			map.addOverlay(polyline);
-            
-            //when click on the marker,address information will display
             GEvent.addListener(marker, "click", function() {
-            	// Add address information to marker
                 marker.openInfoWindowHtml(html);
               });
-         	// Add the marker to map
-            map.addOverlay(marker);
-            return polyline; 
+            map.addOverlay(marker); 
             return marker;          
           }
-        }
+        }     
                 
       // It geocodes the address in the database associate with the ride
       // and adds a marker to the map at that location.
@@ -97,8 +88,21 @@
         		for (var i=0; i< addressArray.length; i++){
         		geocoder.getLocations(addressArray[i], addAddressToMap); 
         		}
+        		drawRoute();
       }
-    }
+
+      //draw route on map
+      function drawRoute(){
+    	  directions.loadFromWaypoints(addressArray);
+      }
+
+		  
+          
+      }
+      
+
+      
+
     
     // display a warning if the browser was not compatible
     else {
@@ -108,8 +112,8 @@
     //]]>
     </script>
 
-  </body>
 
+  </body>
 </html>
 
 
@@ -117,7 +121,6 @@
 
 
   
-
 
 
 
