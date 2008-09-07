@@ -45,12 +45,12 @@
                           "college street palmerston north new zealand",
                           "milson line palmerston north new zealand"
                           ];
-     
       // ===== Start with an empty GLatLngBounds object =====     
       var bounds = new GLatLngBounds();
       //iconStart=new GIcon(G_DEFAULT_ICON, "http://maps.google.com/mapfiles/dd-start.png");
       //iconDest=new GIcon(G_DEFAULT_ICON, "http://maps.google.com/mapfiles/dd-end.png");
-                     
+
+      
       // addAddressToMap() is called when the geocoder returns an
       // answer.  It adds a marker to the map with an open info window
       // showing the nicely formatted version of the address        	
@@ -59,20 +59,37 @@
           if (!response || response.Status.code != 200) {
             alert("Sorry, we were unable to geocode that address");
           } else {
+        	// Retrieve the object           
             place = response.Placemark[0];
+         	// Retrieve the latitude and longitude          
             point = new GLatLng(place.Point.coordinates[1],
-                                place.Point.coordinates[0]);
+                                place.Point.coordinates[0]);                        
+         	// Create a marker
             var marker = new GMarker(point);
             // ==== Each time a point is found, extent the bounds ato include it =====
             bounds.extend(point);
+            var lngCenter = (bounds.getNorthEast().lng() + bounds.getSouthWest().lng()) / 2;
+            var latCenter = (bounds.getNorthEast().lat() + bounds.getSouthWest().lat()) / 2;
+            var center = new GLatLng(latCenter,lngCenter);
+            map.setCenter(center, map.getBoundsZoomLevel(bounds));                        
             var html = place.address;
+
+			//line = new Array();
+			//line.push(point);
+			var polyline = new GPolyline(point, "#ff0000",5);
+			map.addOverlay(polyline);
+            
+            //when click on the marker,address information will display
             GEvent.addListener(marker, "click", function() {
+            	// Add address information to marker
                 marker.openInfoWindowHtml(html);
               });
-            map.addOverlay(marker); 
+         	// Add the marker to map
+            map.addOverlay(marker);
+            return polyline; 
             return marker;          
           }
-        }     
+        }
                 
       // It geocodes the address in the database associate with the ride
       // and adds a marker to the map at that location.
@@ -100,6 +117,7 @@
 
 
   
+
 
 
 
