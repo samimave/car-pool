@@ -25,7 +25,7 @@
     //<![CDATA[
     
 	window.onload = function() {
-    showLocation(); 
+    	showLocation(); 
     }
 	window.unload = GUnload();
 
@@ -34,12 +34,10 @@
       // Display the map, with some controls and set the initial location 
       var map = new GMap2(document.getElementById("map"));
       var geocoder = new GClientGeocoder();
-
       //route mapping code
 	  var directionsPanel = document.getElementById("my_textual_div");
 	  var directions = new GDirections(map, directionsPanel);
-	  ///
-	  
+	  ///	  
       map.addControl(new GLargeMapControl());
       map.addControl(new GMapTypeControl());
 	  map.setCenter(new GLatLng(-40.35814342293522, 175.6267547607422),13);
@@ -56,8 +54,6 @@
      
       // ===== Start with an empty GLatLngBounds object =====     
       var bounds = new GLatLngBounds();
-      //iconStart=new GIcon(G_DEFAULT_ICON, "http://maps.google.com/mapfiles/dd-start.png");
-      //iconDest=new GIcon(G_DEFAULT_ICON, "http://maps.google.com/mapfiles/dd-end.png");
                      
       // addAddressToMap() is called when the geocoder returns an
       // answer.  It adds a marker to the map with an open info window
@@ -95,15 +91,9 @@
       function drawRoute(){
     	  directions.loadFromWaypoints(addressArray);
       }
+     
+    }
 
-		  
-          
-      }
-      
-
-      
-
-    
     // display a warning if the browser was not compatible
     else {
       alert("Sorry, displaying route map is not compatible with this browser");
@@ -111,8 +101,6 @@
     
     //]]>
     </script>
-
-
   </body>
 </html>
 
