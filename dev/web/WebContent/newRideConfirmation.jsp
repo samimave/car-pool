@@ -1,8 +1,8 @@
 <%@page contentType="text/html; charset=ISO-8859-1" %>
-<%@page import="org.verisign.joid.consumer.OpenIdFilter, java.text.SimpleDateFormat" %>
+<%@page import="org.verisign.joid.consumer.OpenIdFilter, java.text.SimpleDateFormat, car.pool.persistance.*" %>
 
 <%
-force the user to login to view the page
+//force the user to login to view the page
 if (OpenIdFilter.getCurrentUser(request.getSession()) == null && session.getAttribute("signedin") == null) {
 	response.sendRedirect(request.getContextPath()+"/index.jsp");
 }
