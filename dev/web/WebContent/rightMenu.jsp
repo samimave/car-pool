@@ -17,5 +17,4 @@ String rdate = DateFormat.getDateInstance().format(rnow);
 	Hi <%=name  %><br />
 	Your current social score is: &lt;integer?&gt;.<br />
 	<p> <%= rtime %> <%= rdate %></p>
-		
 </DIV>
