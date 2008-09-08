@@ -18,7 +18,7 @@
 				<tr> <td>UserName:</td> <td><INPUT type="text" name="userName"/></td> <td><a href="#">Check Availability</a></td>
 				<tr> <td>Email:</td> <td><INPUT type="text" name="email"/></td> </tr>
 				<tr> <td>Phone:</td> <td><INPUT type="text" name="phone"/></td> </tr>
-				<tr> <td><INPUT type="submit" value="Register"/></td> </tr>
+				<tr> <td>&nbsp;</td> <td><INPUT type="submit" value="Register"/></td> </tr>
 			</TABLE>
 		</FORM>
 	<%} else { %>

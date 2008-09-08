@@ -4,36 +4,27 @@
 
 %>
 
-<html>
-	<head>
-		<title>Sign Up for The Car Pool!</title>
+<HTML>
+	<HEAD>
+		<TITLE>Sign Up for The Car Pool!</TITLE>
 		<style type="text/css" media="screen">@import "3ColumnLayout.css";</style>
-	</head>
-	<body>
+	</HEAD>
+	<BODY>
 
 	<%@ include file="heading.html" %>	
 
 		<div class="content">
-			<p>Please enter the relevant details and click confirm.</p>
-			<form method="post" action="adduser">
-				<h2>User Account:</h2>
-				<p>User Name for this site:<p>
-				<input type="text" name="userName" size="25"/> 
-				<a href="#">Check Availability</a> <br /> <br />
-				<p>Password</p>
-				<p>The password you wish to use<p>
-				<input type="password" name="password1"/>
-				<p>Retype your password to confirm<p>
-				<input type="password" name="password2"/>
-				<h2>Additional Details:</h2>
-				<p>Email address:<p> 
-				<input type="text" name="email" size="25"/>
-
-				<p>Phone Number:<p> 
-				<input type="text" name="phone" size="25"/><br /> <br />
-
-				<input type="submit" value="Confirm" SIZE="25"/> <br /> <br />
-			</form>
+			<p>Register yourself by filling in your details below</p>
+			<FORM method="post" action="adduser">
+				<TABLE class="register">
+					<tr> <td>User name:</td> <td><INPUT type="text" name="userName" size="25"/></td> <td><a href="#">Check Availability</a></td> </tr>
+					<tr> <td>Password:</td> <td><INPUT type="password" name="password1" size="25"/></td> </tr>
+					<tr> <td>Confirm password:</td> <td><INPUT type="password" name="password2" size="25"/></td> </tr>
+					<tr> <td>Email address:</td> <td><INPUT type="text" name="email" size="25"/></td> </tr>			
+					<tr> <td>Phone Number:</td> <td><INPUT type="text" name="phone" size="25"/></td> </tr>
+					<tr> <td>&nbsp; </td> <td><INPUT type="submit" value="Register" SIZE="25"/></td> </tr>
+				</TABLE>
+			</FORM>
 		</div>
 
 	<div id="navAlpha">
@@ -44,5 +35,5 @@
 		
 	</div>
 
-	</body>
-</html>
+	</BODY>
+</HTML>
