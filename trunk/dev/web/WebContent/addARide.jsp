@@ -114,7 +114,7 @@ CarPoolStore cps = new CarPoolStoreImpl();
 						<option value="regular">Regular</option>
 					</SELECT></td> </tr>
 					
-					<tr class="dontdisplay"> <td>Date (dd/MM/yyyy):</td> <td><INPUT TYPE="text" NAME="depDate" style="display: none" VALUE="<%= date %>" SIZE="25"> <A HREF="#" onClick="cal.select(document.forms['offerFrm'].depDate,'anchor1','dd/MM/yyyy'); return false;" NAME="anchor1" ID="anchor1"><img style="display: none" border="0" src="calendar_icon.jpg" width="27" height="23"></A> </td> </tr> 
+					<tr> <td>Date (dd/MM/yyyy):</td> <td><INPUT TYPE="text" NAME="depDate" style="display: none" VALUE="<%= date %>" SIZE="25"> <A HREF="#" onClick="cal.select(document.forms['offerFrm'].depDate,'anchor1','dd/MM/yyyy'); return false;" NAME="anchor1" ID="anchor1"><img border="0" src="calendar_icon.jpg" width="27" height="23"></A> </td> </tr> 
 					<tr> <td>Days:</td> <td>
 					<SELECT name="depDays" multiple="true" style="display: none">
 						<option value=1>Monday</option>
