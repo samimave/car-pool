@@ -14,7 +14,8 @@ String message = "Please log in.";
 	message += " " + user.getUserId();
 }
 
-if (request.getParameter("del") != null) {
+//will delete the current database
+if (request.getParameter("delete") != null) {
 	CarPoolStoreImpl cps = new CarPoolStoreImpl();
 	cps.removeAll("donotusethis");
 }
@@ -29,7 +30,7 @@ if (request.getParameter("del") != null) {
 		function confirmation() {
 			var answer = confirm("DO NOT delete the database!!!")
 			if (answer){
-				window.location = "/Car_Pool_Project/index.jsp?del=yes";
+				window.location = "/Car_Pool_Project/index.jsp?delete=yes";
 			}
 			else{
 				alert("phew, good choice.")
