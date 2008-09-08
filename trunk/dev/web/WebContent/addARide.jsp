@@ -104,7 +104,13 @@ CarPoolStore cps = new CarPoolStoreImpl();
 	                 <option value=<%=locations2.getID()%>><%=locations2.getStreetName()%></option>
 	        		  <%   } %>
        				 </SELECT></td> </tr>
+
+					<tr> <td><h2>Route Map:  </h2> </td> </tr>
+					<tr> <th><%@ include file="displayRouteMap.jsp" %></th> </tr>
+					
+
 					<tr> <td>Region: Palmerston North</td> </tr>
+
 					<%/* If one off option is chosen then user can choose date(s) of ride and if
 					regular is chosen user can choose startDate, days of ride and endDate*/%>
 					<tr> <th> <h2>Timing:</h2> </th> <th>&nbsp;</th> </tr>
@@ -142,6 +148,7 @@ CarPoolStore cps = new CarPoolStoreImpl();
 	<%@ include file="leftMenu.html" %>
 
 	<%@ include file="rightMenu.jsp" %>
+	
 
 	</BODY>
 </HTML>
