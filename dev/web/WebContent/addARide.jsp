@@ -89,7 +89,7 @@ CarPoolStore cps = new CarPoolStoreImpl();
 	                 <option value=<%=locations.getID()%>><%=locations.getStreetName()%></option>
 	        		  <%   } %>
        				 </SELECT></td> </tr>
-					<tr> <td>Near house number:</td> <td><INPUT TYPE="text" NAME="houseFrom" SIZE="25"></td> </tr>
+					<tr> <td>Departure place near house number:</td> <td><INPUT TYPE="text" NAME="houseFrom" SIZE="25"></td> </tr>
         			</SELECT>
 					<tr> <td>TO -</td> <td>
 					<tr> <td>Region: Palmerston North</td> <td>
