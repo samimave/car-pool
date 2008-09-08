@@ -33,9 +33,9 @@ if (request.getParameter("newUser") != null) {
 	<%@ include file="heading.html" %>
 
 	<DIV class="content">
-		<h2 align="center">Welcome to The Car Pool
+		<h2 align="center">Welcome to The Car Pool,
 		<%if(session.getAttribute("signedin") != null ) {%>
-			<%=user.getUserName()%><%//OpenIdFilter.getCurrentUser(request.getSession())%></h2>
+			<%=" "+user.getUserName()%><%//OpenIdFilter.getCurrentUser(request.getSession())%></h2>
 		<%} %>
 		<%=message %>
 		<p>Eventually the person's upcoming rides will be displayed here.</p>
