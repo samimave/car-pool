@@ -20,7 +20,7 @@ if (request.getParameter("rideselect") != null) {
 	int rideID = Integer.parseInt(request.getParameter("rideselect"));
 	while (rl.next()) {
 		if (rideID == rl.getRideID()) {
-			cps.takeRide(currentUser,rideID);
+			cps.takeRide(currentUser,rideID,Integer.parseInt(rl.getStartLocation()), Integer.parseInt(rl.getEndLocation()));
 			message += "<p>You have successfully booked a ride from: "+rl.getStartLocation()+", to: "+rl.getEndLocation()+", on "+rl.getRideDate()+".</p>";
 		}
 	}
