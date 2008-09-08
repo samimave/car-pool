@@ -61,7 +61,7 @@ if (request.getParameter("delete") != null) {
 		Log in via OpenId:
 		<FORM class="login" name="openid_identifier" action="openidlogin" method="post">
 			<INPUT type="hidden" name="openid_signin" value="true"/>
-				<table border="0">
+				<table class="login" border="0">
 			   		<tr><td>OpenId:</td><td><INPUT type="text" name="openid_url" id="openid_url" size="18"/></td></tr>
 			   		<tr><td></td><td align="left"><INPUT type="submit" value="Login"/></td></tr>
 				</table>
@@ -71,7 +71,7 @@ if (request.getParameter("delete") != null) {
 		Or Log in via your username and password
 		<form name="passwordlogin" action="login" method="post">
 			<input type="hidden" name="normal_signin" value="true">
-			<table>
+			<table class="login">
 				<tr><td>Username</td><td><input type="text" name="username" size="18"/></td></tr>
 				<tr><td>Password</td><td><input type="password"name="userpass" size="18"/></td></tr>
 				<tr><td></td><td><input type="submit" value="Login"/></td></tr>

@@ -70,9 +70,9 @@ if (ridesExist) {
 				<tr> <td>Open ID:</td> <td><INPUT TYPE="text" NAME="openid_url" SIZE="25" value="<%=user.getOpenIds().size() > 0 ? user.getOpenIds().toArray()[0] : null%>"></td> </tr>
 				<tr> <td>Username:</td> <td><INPUT TYPE="text" NAME="userName" SIZE="25" value="<%=user.getUserName()%>"></td> </tr> 
 				<tr> <td>Email Address:</td> <td><INPUT TYPE="text" NAME="email" SIZE="25" value="<%=user.getEmail()%>"></td> </tr> 
-				<tr> <td>Phone Number:</td> <td><INPUT TYPE="text" NAME="phone" SIZE="25" value="<%=user.getPhoneNumber()%>"></td> </tr>  
+				<tr> <td>Phone Number:</td> <td><INPUT TYPE="text" NAME="phone" SIZE="25" value="<%=user.getPhoneNumber()%>"></td> </tr>
+  				<tr> <td>&nbsp;</td> <td><INPUT TYPE="submit" NAME="confirmUpdate" VALUE="Update Details" SIZE="25"></td> </tr>
 			</TABLE>
-			<INPUT TYPE="submit" NAME="confirmUpdate" VALUE="Update Details" SIZE="25">
 		</FORM>
 		<h2>Your ride details appear below:</h2><br>
 		<p>Your offers</p>

@@ -6,7 +6,7 @@
 String openid = OpenIdFilter.getCurrentUser(session);
 String name = "unknown";
 if(session.getAttribute("signedin") != null ) {
-	name = ((User)session.getAttribute("user")).getUserName();
+	name = ((User)session.getAttribute("user")).getUserName()+"!";
 }
 Date rnow = new Date();
 String rtime = DateFormat.getTimeInstance(DateFormat.SHORT).format(rnow);
@@ -14,8 +14,8 @@ String rdate = DateFormat.getDateInstance().format(rnow);
 %>
 
 <DIV id="navBeta">
-	Hi <%=name  %>
-	Your current social score is: &lt;integer?&gt;.
+	Hi <%=name  %><br />
+	Your current social score is: &lt;integer?&gt;.<br />
 	<p> <%= rtime %> <%= rdate %></p>
 		
 </DIV>
