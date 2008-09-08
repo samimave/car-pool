@@ -1,4 +1,4 @@
-<%@page contentType="text/html; charset=ISO-8859-1" import="java.util.*, java.text.*, org.verisign.joid.consumer.OpenIdFilter"%>
+<%@page contentType="text/html; charset=ISO-8859-1" import="java.util.*, java.text.*, car.pool.persistance.*, org.verisign.joid.consumer.OpenIdFilter"%>
 
 <%
 //force the user to login to view the page
@@ -10,6 +10,12 @@ if (OpenIdFilter.getCurrentUser(request.getSession()) == null && session.getAttr
 Date now = new Date();
 String time = DateFormat.getTimeInstance(DateFormat.SHORT).format(now);
 String date = DateFormat.getDateInstance().format(now);
+
+CarPoolStore cps = new CarPoolStoreImpl();
+
+
+
+
 %>
 
 <HTML>
@@ -69,48 +75,57 @@ String date = DateFormat.getDateInstance().format(now);
 						Streets is a combo box so user can type or use drop down to select
 						a street. All streets boxes will need to be populated 
 						from the database table streets*/%>
-					<tr> <th> <h2>Location:</h2> </th> <th>&nbsp;</th> </tr>
 					
+					<tr> <th> <h2>Location:</h2> </th> <th>&nbsp;</th> </tr>	
 					<tr> <td>FROM -</td> <td>
-					<tr> <td>Region:</td> <td>
-					<SELECT name="regionFrom">
-						<option>Palmerston North</option>
-					</SELECT></td> </tr>
+					<tr> <td>Region: Palmerston North</td> <td>
 					<tr> <td>Street:</td> <td>
 					<SELECT name="streetFrom">
-						<option>Select a Street</option>
-					</SELECT></td> </tr>
-					
+           		  <option selected="selected">Select a Street</option>
+	           		  <% 
+	           			LocationList locations = cps.getLocations();
+	        			 while (locations.next()){
+	            	  %>
+	                 <option value=<%=locations.getID()%>><%=locations.getStreetName()%></option>
+	        		  <%   } %>
+       				 </SELECT></td> </tr>
+					<tr> <td>Near house number:</td> <td><INPUT TYPE="text" NAME="houseFrom" SIZE="25"></td> </tr>
+        			</SELECT>
 					<tr> <td>TO -</td> <td>
-					<tr> <td>Region:</td> <td>
-					<SELECT name="regionTo">
-						<option>Palmerston North</option>
-					</SELECT></td> </tr>
+					<tr> <td>Region: Palmerston North</td> <td>
 					<tr> <td>Street:</td> <td>
 					<SELECT name="streetTo">
-						<option>Select a Street</option>
-					</SELECT></td> </tr>
-
+           		  <option selected="selected">Select a Street</option>
+	           		  <% 
+	           		LocationList locations2 = cps.getLocations();
+	        			 while (locations2.next()){
+	            	  %>
+	                 <option value=<%=locations2.getID()%>><%=locations2.getStreetName()%></option>
+	        		  <%   } %>
+       				 </SELECT></td> </tr>
+					
 					<%/* If one off option is chosen then user can choose date(s) of ride and if
 					regular is chosen user can choose startDate, days of ride and endDate*/%>
 					<tr> <th> <h2>Timing:</h2> </th> <th>&nbsp;</th> </tr>
-					<tr> <td>Reccurence:</td> <td>
-					<SELECT name="reccurence"  onchange="process_choice(this,document.offerFrm.depDate, document.offerFrm.depDays)">
+					<tr> <td>Recurrence:</td> <td>
+					<SELECT name="recurrence"  onchange="process_choice(this,document.offerFrm.depDate, document.offerFrm.depDays)">
 						<option value="sel">Select an Option</option>
 						<option value="oneoff">One-Off</option>
 						<option value="regular">Regular</option>
 					</SELECT></td> </tr>
+					
 					<tr> <td>Date (dd/MM/yyyy):</td> <td><INPUT TYPE="text" NAME="depDate" style="display: none" VALUE="<%= date %>" SIZE="25"> <A HREF="#" onClick="cal.select(document.forms['offerFrm'].depDate,'anchor1','dd/MM/yyyy'); return false;" NAME="anchor1" ID="anchor1"><img border="0" src="calendar_icon.jpg" width="27" height="23"></A> </td> </tr> 
 					<tr> <td>Days:</td> <td>
 					<SELECT name="depDays" multiple="true" style="display: none">
-						<option>Monday</option>
-						<option>Tuesday</option>
-						<option>Wednesday</option>
-						<option>Thursday</option>
-						<option>Friday</option>
-						<option>Saturday</option>
-						<option>Sunday</option>
+						<option value=1>Monday</option>
+						<option value =2>Tuesday</option>
+						<option value =3>Wednesday</option>
+						<option value=4>Thursday</option>
+						<option value=5>Friday</option>
+						<option value=6>Saturday</option>
+						<option value=7>Sunday</option>
 					</SELECT></td> </tr>
+					
 					<tr> <td>Departure Time (hh:mm):</td> <td><INPUT TYPE="text" NAME="depTime" VALUE="<%= time %>" SIZE="25"></td> </tr>
 					<tr> <td>Approximate Trip Length (minutes):</td> <td><INPUT TYPE="text" NAME="tripLength" VALUE="15" SIZE="25"></td> </tr>
 
