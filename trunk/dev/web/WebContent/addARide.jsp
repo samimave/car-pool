@@ -30,13 +30,15 @@ CarPoolStore cps = new CarPoolStoreImpl();
 				if(document.styleSheets)field.style.display  = 'inline';
 				  	field.focus(); 
 			}
-			function process_choice(selection,textfield, selectfield) {
+			function process_choice(selection,textfield, selectfield, image) {
 				if (selection.value == 'sel'){
 					textfield.style.display = 'none';
 					selectfield.style.display = 'none';
+					image.style.display = 'none';
 				}
 				if(selection.value == 'oneoff') {
-				    activate(textfield); 
+					activate(textfield); 
+					activate(image);
 				    selectfield.style.display = 'none';
 				    selectfield.disabled = true; 
 				    if(document.styleSheets)selectfield.style.display  = 'none';
@@ -44,6 +46,7 @@ CarPoolStore cps = new CarPoolStoreImpl();
 				 }
 				if(selection.value == 'regular') {
 					activate(selectfield)
+					image.style.display = 'none';
 					textfield.style.display = 'none';
 				    textfield.disabled = true; 
 				    if(document.styleSheets)textfield.style.display  = 'none';
@@ -77,8 +80,8 @@ CarPoolStore cps = new CarPoolStoreImpl();
 						from the database table streets*/%>
 					
 					<tr> <th> <h2>Location:</h2> </th> <th>&nbsp;</th> </tr>	
-					<tr> <td>FROM -</td> <td>
-					<tr> <td>Region: Palmerston North</td> <td>
+					<tr> <td>DEPARTURE FROM -</td> </tr>
+					<tr> <td>House number:</td> <td><INPUT TYPE="text" NAME="houseFrom" SIZE="25"></td> </tr>
 					<tr> <td>Street:</td> <td>
 					<SELECT name="streetFrom">
            		  <option selected="selected">Select a Street</option>
@@ -89,10 +92,8 @@ CarPoolStore cps = new CarPoolStoreImpl();
 	                 <option value=<%=locations.getID()%>><%=locations.getStreetName()%></option>
 	        		  <%   } %>
        				 </SELECT></td> </tr>
-					<tr> <td>Departure place near house number:</td> <td><INPUT TYPE="text" NAME="houseFrom" SIZE="25"></td> </tr>
-        			</SELECT>
-					<tr> <td>TO -</td> <td>
-					<tr> <td>Region: Palmerston North</td> <td>
+        			<tr> <td>Region: Palmerston North</td> </tr>
+					<tr><td>ARRIVAL AT -</td></tr> 
 					<tr> <td>Street:</td> <td>
 					<SELECT name="streetTo">
            		  <option selected="selected">Select a Street</option>
@@ -103,18 +104,18 @@ CarPoolStore cps = new CarPoolStoreImpl();
 	                 <option value=<%=locations2.getID()%>><%=locations2.getStreetName()%></option>
 	        		  <%   } %>
        				 </SELECT></td> </tr>
-					
+					<tr> <td>Region: Palmerston North</td> </tr>
 					<%/* If one off option is chosen then user can choose date(s) of ride and if
 					regular is chosen user can choose startDate, days of ride and endDate*/%>
 					<tr> <th> <h2>Timing:</h2> </th> <th>&nbsp;</th> </tr>
 					<tr> <td>Recurrence:</td> <td>
-					<SELECT name="recurrence"  onchange="process_choice(this,document.offerFrm.depDate, document.offerFrm.depDays)">
+					<SELECT name="recurrence"  onchange="process_choice(this,document.offerFrm.depDate, document.offerFrm.depDays, document.offerFrm.calIcon, document.offerFrm.calIcon)">
 						<option value="sel">Select an Option</option>
 						<option value="oneoff">One-Off</option>
 						<option value="regular">Regular</option>
 					</SELECT></td> </tr>
 					
-					<tr> <td>Date (dd/MM/yyyy):</td> <td><INPUT TYPE="text" NAME="depDate" style="display: none" VALUE="<%= date %>" SIZE="25"> <A HREF="#" onClick="cal.select(document.forms['offerFrm'].depDate,'anchor1','dd/MM/yyyy'); return false;" NAME="anchor1" ID="anchor1"><img border="0" src="calendar_icon.jpg" width="27" height="23"></A> </td> </tr> 
+					<tr> <td>Date (dd/MM/yyyy):</td> <td><INPUT TYPE="text" NAME="depDate" style="display: none" VALUE="<%= date %>" SIZE="25"> <A HREF="#" onClick="cal.select(document.forms['offerFrm'].depDate,'anchor1','dd/MM/yyyy'); return false;" NAME="anchor1" ID="anchor1"><img name="calIcon" style="display: none" border="0" src="calendar_icon.jpg" width="27" height="23"></A> </td> </tr> 
 					<tr> <td>Days:</td> <td>
 					<SELECT name="depDays" multiple="true" style="display: none">
 						<option value=1>Monday</option>
