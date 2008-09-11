@@ -77,10 +77,12 @@ if (ridesExist) {
 		<h2>Your ride details appear below:</h2><br>
 		<p>Your offers</p>
 		<%=offerTable %><br>
-		<p>Accepted Rides</p>
-		<%=acceptedTable %>
-		<p>Your requests</p>
+		<p>Approving acceptance</p>
+		<p>The users below are awaiting your approval on their acceptance of your offer. If you can pick them up at the place they want click Approve otherwise click Reject.</p>
+		<%//when the user click approve the boolean value confirm should be set to true. %>
 		<%=requestTable %>
+		<p>Rides you have been accepted and approved for.</p>
+		<%=acceptedTable %>
 
 	</DIV>
 
