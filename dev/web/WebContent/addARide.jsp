@@ -105,10 +105,6 @@ CarPoolStore cps = new CarPoolStoreImpl();
 	        		  <%   } %>
        				 </SELECT></td> </tr>
 
-					<tr> <td><h2>Route Map:  </h2> </td> </tr>
-					<tr> <th><%@ include file="displayRouteMap.jsp" %></th> </tr>
-					
-
 					<tr> <td>Region: Palmerston North</td> </tr>
 
 					<%/* If one off option is chosen then user can choose date(s) of ride and if
@@ -142,6 +138,9 @@ CarPoolStore cps = new CarPoolStoreImpl();
 					<tr> <td>Other Comments (e.g. place of departure):</td> <td><INPUT TYPE="text" NAME="xtraInfo" SIZE="25"></td> </tr>
 					<tr> <td><INPUT TYPE="submit" NAME="submit" VALUE="Confirm" SIZE="25"></td> <td>&nbsp;</td> </tr>
 				</TABLE>
+
+					<tr> <td><h2>Route Map:  </h2> </td> </tr>
+					<tr> <th><%@ include file="displayRouteMap.jsp" %></th> </tr>
 			</FORM>
 		</DIV>
 
