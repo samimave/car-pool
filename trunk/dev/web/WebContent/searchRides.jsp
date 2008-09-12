@@ -15,23 +15,23 @@ CarPoolStore cps = new CarPoolStoreImpl();
 RideListing rl = cps.getRideListing();
 if (rl.next()) {
 	ridesExist = true;
-	rideTable = "<table class='rideDetails'> <tr> <th> Offered By </th> <th> From </th> <th> To </th> <th> Date </th> <th> Time </th> <th> Seats </th> <th> More Info</th> </tr>";
-	rideTable += "<tr> <td>"+ rl.getUsername() +"</td> ";
-	rideTable += "<td> <a href='"+ request.getContextPath() +"/temp.jsp?rideselect="+ rl.getRideID() +"'>"+ rl.getStartLocation() +"</a> </td> ";
-	rideTable += "<td>"+ rl.getEndLocation() +"</td> ";
-	rideTable += "<td>"+ rl.getRideDate() +"</td> ";
-	rideTable += "<td> null </td> ";
-	rideTable += "<td>"+ rl.getAvailableSeats() +"</td>";
-	rideTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ rl.getRideID() +"'>"+ "Link to ride page" +"</a> </td> ";
+	rideTable = "<table class = 'rideDetailsSearch'> <tr> <th class = rDh> Offered By </th> <th class = rDh> From </th> <th class = rDh> To </th> <th class = rDh> Date </th> <th class = rDh> Time </th> <th class = rDh> Seats </th> <th class = rDh> More Info</th> </tr>";
+	rideTable += "<tr> <td class = 'rD'>"+ rl.getUsername() +"</td> ";
+	rideTable += "<td  class = 'rD'> <a href='"+ request.getContextPath() +"/temp.jsp?rideselect="+ rl.getRideID() +"'>"+ rl.getStartLocation() +"</a> </td> ";
+	rideTable += "<td  class = 'rD'>"+ rl.getEndLocation() +"</td> ";
+	rideTable += "<td  class = 'rD'>"+ rl.getRideDate() +"</td> ";
+	rideTable += "<td  class = 'rD'> null </td> ";
+	rideTable += "<td  class = 'rD'>"+ rl.getAvailableSeats() +"</td>";
+	rideTable += "<td  class = 'rD'> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ rl.getRideID() +"'>"+ "Link to ride page" +"</a> </td> </tr>";
 }
 while (rl.next()) {
 	rideTable += "<tr> <td>"+ rl.getUsername() +"</td> ";	
-	rideTable += "<td> <a href='"+ request.getContextPath() +"/temp.jsp?rideselect="+ "More" +"'>"+ rl.getStartLocation() +"</a> </td> ";
-	rideTable += "<td>"+ rl.getEndLocation() +"</td> ";
-	rideTable += "<td>"+ rl.getRideDate() +"</td> ";
-	rideTable += "<td> null </td> ";
-	rideTable += "<td>"+ rl.getAvailableSeats() +"</td> ";
-	rideTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ rl.getRideID() +"'>"+ "Link to ride page" +"</a> </td> ";
+	rideTable += "<td  class = 'rD'> <a href='"+ request.getContextPath() +"/temp.jsp?rideselect="+ "More" +"'>"+ rl.getStartLocation() +"</a> </td> ";
+	rideTable += "<td  class = 'rD'>"+ rl.getEndLocation() +"</td> ";
+	rideTable += "<td  class = 'rD'>"+ rl.getRideDate() +"</td> ";
+	rideTable += "<td  class = 'rD'> null </td> ";
+	rideTable += "<td  class = 'rD'>"+ rl.getAvailableSeats() +"</td> ";
+	rideTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ rl.getRideID() +"'>"+ "Link to ride page" +"</a> </td> </tr>";
 }
 if (ridesExist) {
 	rideTable += "</table>";
@@ -42,7 +42,8 @@ if (ridesExist) {
 <HTML>
 	<HEAD>
 		<TITLE>Ride Search</TITLE>
-		<STYLE type="text/css" media="screen">@import "3ColumnLayout.css";</STYLE>
+		<STYLE type="text/css" media="screen">@import "3ColumnLayout.css"; 
+		</STYLE>
 	</HEAD>
 	<BODY>
 

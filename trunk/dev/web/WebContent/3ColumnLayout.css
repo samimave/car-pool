@@ -29,14 +29,26 @@ table {
 	border:"0";
 	font:11px verdana, arial, helvetica, sans-serif;
 	}
-table.rideDetails {
+table.rideDetailsSearch {
+	border: 1px solid #666666;
+	width:600px; 	   
+	border-collapse: collapse;	
 	}
+	
+td.rD { 
+	border: 1px solid #666666;
+	}
+	
+th.rDh {
+	border: 1px solid #666666;  
+	}	
+		
 table.register {
 	}
 table.userDetails {
 	}
 table.login {
-	}
+	}	
 p {
 	font:11px/20px verdana, arial, helvetica, sans-serif;
 	margin:0px 0px 16px 0px;
@@ -131,3 +143,4 @@ body>#navBeta {width:218px;}
 
 /* BlueRobot used here - http://www.bluerobot.com/web/layouts/ */
 /* background from http://minty-peach.livejournal.com/33584.html*/
+/*table borders set with help from http://www.cssf1.com/tutorial/css-table-border.html?page=3*/

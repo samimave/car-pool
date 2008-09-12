@@ -29,21 +29,21 @@ boolean ridesExist = false;
 RideListing rl = cps.getRideListing();
 if ((rl.next()) && (rl.getUserID() == currentUser)) {
 	ridesExist = true;
-	offerTable = "<table class='rideDetails'> <tr> <th> Offered By </th> <th> From </th> <th> To </th> <th> Date </th> <th> Time </th> <th> Available Seats </th> </tr>";
-	offerTable += "<tr> <td>"+ rl.getUsername() +"</td> ";
-	offerTable += "<td>"+ rl.getStartLocation() + "</td> ";
-	offerTable += "<td>"+ rl.getEndLocation() +"</td> ";
-	offerTable += "<td>"+ rl.getRideDate() +"</td> ";
-	offerTable += "<td> null </td> ";
-	offerTable += "<td>"+ rl.getAvailableSeats() +"</td> </tr>";
+	offerTable = "<table class='rideDetailsSearch'> <tr> <th class = rDh> Offered By </th> <th class = rDh> From </th> <th class = rDh> To </th> <th class = rDh> Date </th> <th class = rDh> Time </th> <th class = rDh> Available Seats </th> </tr>";
+	offerTable += "<tr> <td  class = 'rD'>"+ rl.getUsername() +"</td> ";
+	offerTable += "<td  class = 'rD'>"+ rl.getStartLocation() + "</td> ";
+	offerTable += "<td  class = 'rD'>"+ rl.getEndLocation() +"</td> ";
+	offerTable += "<td  class = 'rD'>"+ rl.getRideDate() +"</td> ";
+	offerTable += "<td  class = 'rD'> null </td> ";
+	offerTable += "<td  class = 'rD'>"+ rl.getAvailableSeats() +"</td> </tr>";
 }
 while ((rl.next())&& (rl.getUserID() == currentUser))  {
 	offerTable += "<tr> <td>"+ rl.getUsername() +"</td> ";	
-	offerTable += "<td>"+ rl.getStartLocation() + "</td> ";
-	offerTable += "<td>"+ rl.getEndLocation() +"</td> ";
-	offerTable += "<td>"+ rl.getRideDate() +"</td> ";
-	offerTable += "<td> null </td> ";
-	offerTable += "<td>"+ rl.getAvailableSeats() +"</td> </tr>";
+	offerTable += "<td  class = 'rD'>"+ rl.getStartLocation() + "</td> ";
+	offerTable += "<td  class = 'rD'>"+ rl.getEndLocation() +"</td> ";
+	offerTable += "<td  class = 'rD'>"+ rl.getRideDate() +"</td> ";
+	offerTable += "<td  class = 'rD'> null </td> ";
+	offerTable += "<td  class = 'rD'>"+ rl.getAvailableSeats() +"</td> </tr>";
 }
 if (ridesExist) {
 	offerTable += "</table>";
