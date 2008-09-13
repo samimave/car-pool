@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.Random;
 
 import junit.framework.TestCase;
+
 import car.pool.persistance.CarPoolStoreImpl;
 import car.pool.persistance.RideListing;
 import car.pool.persistance.exception.InvaildUserNamePassword;
@@ -226,7 +227,7 @@ public class CarPoolStoreImplTest extends TestCase {
 		int ride = 0;
 		try {
 			Date date = new Date(System.currentTimeMillis());
-			ride = cps.addRide(id, 4, date.toString(), idLocation, idLocation, 0);
+			ride = cps.addRide(id, 4, date.toString(), idLocation, idLocation, 0, 0, "5:22 PM", "be on time");
 		} catch (RideException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -333,7 +334,7 @@ public class CarPoolStoreImplTest extends TestCase {
 		
 		try {
 			int idUser = cps.addUser("jordan", "jordan.d.carter@gmail.com", "0274681876", "thisismypassword");
-			int idRide = cps.addRide(idUser, 4, date.toString(), idLocation, idLocation, 0);
+			int idRide = cps.addRide(idUser, 4, date.toString(), idLocation, idLocation, 0, 0, "5:22 PM", "be on time");
 			cps.attachOpenID("www.google.com", idUser);
 			cps.takeRide(idUser, idRide, idLocation, idLocation, 0);
 		
@@ -373,7 +374,7 @@ public class CarPoolStoreImplTest extends TestCase {
 		try {
 			int idUser = cps.addUser("jordan", "jordan.d.carter@gmail.com", "0274681876", "thisismypassword");
 			int idUser2 = cps.addUser("jordanda", "jordan.d.caasdfrter@gmail.com", "027468187adsfasdf6", "thisismypassword");
-			int idRide = cps.addRide(idUser, 4, date.toString(), idLocation, idLocation, 0);
+			int idRide = cps.addRide(idUser, 4, date.toString(), idLocation, idLocation, 0, 0, "5:22 PM", "be on time");
 			cps.attachOpenID("www.google.com", idUser);
 			assertEquals(4, cps.getAvailableSeats(idRide));
 			assertEquals(4, cps.getMaxSeats(idRide));

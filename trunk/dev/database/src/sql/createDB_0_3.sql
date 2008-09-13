@@ -33,7 +33,9 @@ CREATE  TABLE IF NOT EXISTS `carpool`.`Ride` (
   `rideStartLocation` MEDIUMTEXT NOT NULL ,
   `rideStopLocation` MEDIUMTEXT NOT NULL ,
   `rideDate` DATE NOT NULL ,
+  `rideTime` MEDIUMTEXT NOT NULL,
   `rideReoccur` INT NOT NULL ,
+  `rideComment` MEDIUMTEXT NOT NULL ,
   PRIMARY KEY (`idRide`) ,
   INDEX fk_Ride_User (`idUser` ASC) ,
   CONSTRAINT `fk_Ride_User`

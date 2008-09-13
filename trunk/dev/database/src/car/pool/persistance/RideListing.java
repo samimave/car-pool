@@ -13,4 +13,7 @@ public interface RideListing {
 	public Date getRideDate() throws SQLException;
 	public String getStartLocation() throws SQLException;
 	public String getEndLocation() throws SQLException;
+	public String getOccur() throws SQLException;
+	public String getTime() throws SQLException;
+	public String getComment() throws SQLException;
 }
