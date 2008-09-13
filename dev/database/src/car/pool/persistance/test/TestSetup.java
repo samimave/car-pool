@@ -53,11 +53,11 @@ public class TestSetup {
 			int t = cps.addUser("t", "d");
 */			
 			Date date = new Date(System.currentTimeMillis());
-			
-			int ride1 = cps.addRide(a, 4, date.toString(), idLocation, idLocation,0);
-			int ride2 = cps.addRide(b, 4, date.toString(), idLocation, idLocation,1);
-			int ride3 = cps.addRide(c, 4, date.toString(), idLocation, idLocation,2);
-			int ride4 = cps.addRide(d, 4, date.toString(), idLocation, idLocation,3);
+			//addRide(int user, int availableSeats, String startDate, int startLocation, int endLocation, int streetNumber, int reoccur, String time, String comment)			
+			int ride1 = cps.addRide(a, 4, date.toString(), idLocation, idLocation, 0, 0, "5:22 PM", "be on time");
+			int ride2 = cps.addRide(b, 4, date.toString(), idLocation, idLocation,1, 0, "6:22 AM", "no latecomers please");
+			int ride3 = cps.addRide(c, 4, date.toString(), idLocation, idLocation,2, 0, "3:22 PM", "I might be a few minutes late");
+			int ride4 = cps.addRide(d, 4, date.toString(), idLocation, idLocation,3, 0, "9:22 PM", "be on time");
 //			int ride5 = cps.addRide(e, 4, date.toString(), "asgadfg", "adfgadfgafd home");
 			
 			cps.takeRide(e, ride1, idLocation,0);

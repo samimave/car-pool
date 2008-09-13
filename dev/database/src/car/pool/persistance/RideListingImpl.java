@@ -15,9 +15,9 @@ public class RideListingImpl implements RideListing {
 		
 		String sql = "Select * " +
 		"FROM " +
-		"(Select r.idRide, u.idUser, u.username,(r.availableSeats - Count(*)) as availableSeats, r.rideDate, r.rideStartLocation, r.rideStopLocation " +
+		"(Select r.idRide, u.idUser, u.username,(r.availableSeats - Count(*)) as availableSeats, r.rideDate, r.rideStartLocation, r.rideStopLocation, r.rideTime, r.rideReoccur, r.rideComment " +
 		"FROM " +
-		"(SELECT r.idRide, r.idUser, r.rideDate, r.rideStartLocation, r.rideStopLocation, r.availableSeats " +
+		"(SELECT r.idRide, r.idUser, r.rideDate, r.rideStartLocation, r.rideStopLocation, r.availableSeats, r.rideTime, r.rideReoccur, r.rideComment " +
 		"FROM User as u, Ride as r, Matches as m " +
 		"WHERE u.idUser = m.idUser " +
 		"AND m.idRide = r.idRide) as r, " +
@@ -71,4 +71,18 @@ public class RideListingImpl implements RideListing {
 		return rs.getString("username");
 	}
 
+	//@Override
+	public String getTime() throws SQLException {
+		return rs.getString("rideTime");
+	}
+	
+	//@Override
+	public String getOccur() throws SQLException{
+		return rs.getString("rideReoccur");
+	}
+	
+	//@Override
+	public String getComment() throws SQLException{
+		return rs.getString("rideComment");
+	}
 }
