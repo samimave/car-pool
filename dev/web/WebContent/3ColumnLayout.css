@@ -33,6 +33,7 @@ table.rideDetailsSearch {
 	border: 1px solid #666666;
 	width:600px; 	   
 	border-collapse: collapse;	
+	layout: fixed;
 	}
 	
 td.rD { 

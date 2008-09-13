@@ -25,8 +25,9 @@ if ((rl.next()) && (rl.getRideID() == rideID)) {
 	detailsTable += "<tr> <td> Start Region: </td> <td>"+ rl.getStartLocation() + "</td> </tr>";
 	detailsTable += "<tr> <td> Stop Region: </td> <td>"+ rl.getEndLocation() +"</td></tr> ";
 	detailsTable += "<tr> <td>Date: </td> <td>"+ rl.getRideDate() +"</td></tr> ";
-	detailsTable += "<tr> <td> Time: </td> <td> nul </td> </tr>";
+	detailsTable += "<tr> <td> Time: </td> <td>" + rl.getTime()+ "</td> </tr>";
 	detailsTable += "<tr> <td> Seats: </td> <td>"+ rl.getAvailableSeats() +"</td> </tr>";
+	detailsTable += "<tr> <td> Additional Info: </td> <td>"+ rl.getComment() +"</td> </tr>";
 }
 
 while ((rl.next()) && (rl.getRideID() == rideID)) {
@@ -35,8 +36,9 @@ while ((rl.next()) && (rl.getRideID() == rideID)) {
 	detailsTable += "<tr> <td> Start Region: </td> <td>"+ rl.getStartLocation() + "</td> </tr>";
 	detailsTable += "<tr> <td> Stop Region: </td> <td>"+ rl.getEndLocation() +"</td></tr> ";
 	detailsTable += "<tr> <td>Date: </td> <td>"+ rl.getRideDate() +"</td></tr> ";
-	detailsTable += "<tr> <td> Time: </td> <td> nul </td> </tr>";
+	detailsTable += "<tr> <td> Time: </td> <td>" + rl.getTime()+ "</td> </tr>";
 	detailsTable += "<tr> <td> Seats: </td> <td>"+ rl.getAvailableSeats() +"</td> </tr>";
+	detailsTable += "<tr> <td> Additional Info: </td> <td>"+ rl.getComment() +"</td> </tr>";
 }
 
 if (ridesExist) {
