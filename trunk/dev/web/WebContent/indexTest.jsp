@@ -42,34 +42,34 @@ if (request.getParameter("delete") != null) {
 
 	<%@ include file="headingTest.html" %> <br />
 
-	<DIV id="content">
+	<DIV id="Content" class="Content">
 		<p>Please log in.</p>
 	</DIV>
 
-	<DIV id="Menu">
+	<DIV id="Menu" class="Menu">
 
-		<a href="welcome.jsp"> <img class="logo" border="0" src="Car Pool 6 75.bmp" width="263" height="158"> </a> <br />
+		<p><a href="welcome.jsp"> <img class="logo" border="0" src="Car Pool 6 75.bmp" width="263" height="158"> </a></p> <br />
 
-		Log in via OpenId:
+		<p>Log in via OpenId:</p>
 		<FORM class="login" name="openid_identifier" action="openidlogin" method="post">
 			<INPUT type="hidden" name="openid_signin" value="true"/>
 				<TABLE class="login" border="0">
-			   		<tr><td>OpenId:</td><td><INPUT type="text" name="openid_url" id="openid_url" size="10"/></td></tr>
+			   		<tr><td>OpenId:</td><td><INPUT type="text" name="openid_url" id="openid_url" size="18"/></td></tr>
 			   		<tr><td></td><td align="left"><INPUT type="submit" value="Login"/></td></tr>
 				</TABLE>
 		</FORM>
-		Enter your OpenID and if you have not registered with our site previously and your OpenID is valid you will eventually be redirected to Registration page. <br><br>
+		<p>Enter your OpenID and if you have not registered with our site previously and your OpenID is valid you will eventually be redirected to Registration page.</p> <br />
  
-		Or Log in via your username and password
+		<p>Or Log in via your username and password</p>
 		<FORM name="passwordlogin" action="login" method="post">
 			<INPUT type="hidden" name="normal_signin" value="true">
 			<TABLE class="login">
-				<tr><td>Username:</td><td><INPUT type="text" name="username" size="10"/></td></tr>
-				<tr><td>Password:</td><td><INPUT type="password"name="userpass" size="10"/></td></tr>
+				<tr><td>Username:</td><td><INPUT type="text" name="username" size="18"/></td></tr>
+				<tr><td>Password:</td><td><INPUT type="password"name="userpass" size="18"/></td></tr>
 				<tr><td></td><td><INPUT type="submit" value="Login"/></td></tr>
 			</TABLE>
 		</FORM>
-		Not registered and don't want to use OpenId, then <a href="register.jsp">register here</a>.
+		<p>Not registered and don't want to use OpenId, then <a href="register.jsp">register here</a>.</p>
 	</DIV>		
 	</BODY>
 </HTML>
