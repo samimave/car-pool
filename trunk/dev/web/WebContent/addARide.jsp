@@ -36,7 +36,7 @@ CarPoolStore cps = new CarPoolStoreImpl();
 					selectfield.style.display = 'none';
 					image.style.display = 'none';
 				}
-				if(selection.value == 'oneoff') {
+				if(selection.value == '0') {
 					activate(textfield); 
 					activate(image);
 				    selectfield.style.display = 'none';
@@ -44,7 +44,7 @@ CarPoolStore cps = new CarPoolStoreImpl();
 				    if(document.styleSheets)selectfield.style.display  = 'none';
 				    	selectfield.value = ''; 
 				 }
-				if(selection.value == 'regular') {
+				if(selection.value == '1') {
 					activate(selectfield)
 					image.style.display = 'none';
 					textfield.style.display = 'none';
@@ -113,8 +113,8 @@ CarPoolStore cps = new CarPoolStoreImpl();
 					<tr> <td>Recurrence:</td> <td>
 					<SELECT name="recurrence"  onchange="process_choice(this,document.offerFrm.depDate, document.offerFrm.depDays, document.offerFrm.calIcon, document.offerFrm.calIcon)">
 						<option value="sel">Select an Option</option>
-						<option value="oneoff">One-Off</option>
-						<option value="regular">Regular</option>
+						<option value="0">One-Off</option>
+						<option value="1">Regular</option>
 					</SELECT></td> </tr>
 					
 					<tr> <td>Date (dd/MM/yyyy):</td> <td><INPUT TYPE="text" NAME="depDate" style="display: none" VALUE="<%= date %>" SIZE="25"> <A HREF="#" onClick="cal.select(document.forms['offerFrm'].depDate,'anchor1','dd/MM/yyyy'); return false;" NAME="anchor1" ID="anchor1"><img name="calIcon" style="display: none" border="0" src="calendar_icon.jpg" width="27" height="23"></A> </td> </tr> 

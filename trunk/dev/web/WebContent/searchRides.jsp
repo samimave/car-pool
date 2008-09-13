@@ -42,8 +42,7 @@ if (ridesExist) {
 <HTML>
 	<HEAD>
 		<TITLE>Ride Search</TITLE>
-		<STYLE type="text/css" media="screen">@import "3ColumnLayout.css"; 
-		</STYLE>
+		<STYLE type="text/css" media="screen">@import "3ColumnLayout.css"; </STYLE>
 	</HEAD>
 	<BODY>
 
