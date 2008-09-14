@@ -1,6 +1,23 @@
+<%@page import="car.pool.persistance.*" %>
 <html>
   <head>
     <title>Add Car-Pool Ride Event</title>
+	<%
+		CarPoolStore cps = new CarPoolStoreImpl();
+		LocationList allLocs = cps.getLocations();
+		String from = "";
+		while (allLocs.next()){
+			if (allLocs.getID() == Integer.parseInt(request.getParameter("from")))
+				from = allLocs.getStreetName();	
+		}
+		
+		LocationList allLocs2 = cps.getLocations();
+		String to = "";
+		while (allLocs2.next()){
+			if (allLocs2.getID() == Integer.parseInt(request.getParameter("to")))
+				to = allLocs2.getStreetName();	
+		}
+	%>
     <script type="text/javascript">
 
 
@@ -9,7 +26,7 @@
 			//for more info about adding ride events via a link, go here: http://www.google.com/googlecalendar/event_publisher_guide_detail.html
 						
 			//construct the title from start and end locations
-           	var text = "Ride from <%=request.getParameter("from") %> to <%=request.getParameter("to") %>";
+           	var text = "Ride from <%=from %> to <%=to %>";
 
 			//get ISO start date-time / end date-time
    			var dates = getISODate(false) + "/" + getISODate(true);
@@ -53,6 +70,9 @@
         var length = "<%=request.getParameter("length") %>";
 
         var hhmm = sTime.split(":");
+
+        //if user has enter a date with a leading 0 (ie 08:20) then remove it
+        if(hhmm[0].substr(0,1) == "0"){hhmm[0] = hhmm[0].replace("0","");}
 
         var hh = parseInt(hhmm[0]);
         var mm = parseInt(hhmm[1]);
