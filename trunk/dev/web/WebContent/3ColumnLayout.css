@@ -3,12 +3,7 @@ body {
 	padding:0px;
 	font:11px verdana, arial, helvetica, sans-serif;
 	vertical-align: middle;
-	
-	background-color: #ffffff;
-	background-image: url('http://i178.photobucket.com/albums/w242/mythbusterjen/GRYDRK.png');
-	background-repeat: repeat;
-	background-position: top-left;
-	background-attachment: fixed;
+
 	text-align: center;
 	color: #000000;
 
@@ -86,10 +81,7 @@ ul.none {
 	border:1px solid black;
 	padding: 10px;
 	z-index:3; /* This allows the content to overlap the right menu in narrow windows in good browsers. */
-	
-	background-color: transparent;
-	background-image: url('http://i178.photobucket.com/albums/w242/mythbusterjen/GRYLGHT.png');
-	background-repeat: repeat;
+
 	
 	}
 
@@ -101,10 +93,8 @@ ul.none {
 	border:1px dashed black;
 	padding:10px;
 	z-index:2;
-	
-	background-color: transparent;
-	background-image: url('http://i178.photobucket.com/albums/w242/mythbusterjen/GRYLGHT.png');
-	background-repeat: repeat;
+		background-color:#eee;
+
 
 /* Here is the ugly brilliant hack that protects IE5/Win from its own stupidity. 
 Thanks to Tantek Celik for the hack and to Eric Costello for publicizing it. 
@@ -135,9 +125,7 @@ body>#navAlpha {width:218px;}
 	voice-family:inherit;
 	width:218px;
 	
-	background-color: transparent;
-	background-image: url('http://i178.photobucket.com/albums/w242/mythbusterjen/GRYLGHT.png');
-	background-repeat: repeat;
+
 	}
 /* Again, "be nice to Opera 5". */
 body>#navBeta {width:218px;}
