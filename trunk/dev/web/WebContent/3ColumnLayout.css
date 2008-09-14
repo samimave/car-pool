@@ -30,15 +30,13 @@ table.rideDetailsSearch {
 	border-collapse: collapse;	
 	layout: fixed;
 	}
-	
-td.rD { 
+table.rideDetailsSearch TD {
 	border: 1px solid #666666;
 	}
+table.rideDetailsSearch TH {
+	border: 1px solid #666666;
+	} 
 	
-th.rDh {
-	border: 1px solid #666666;  
-	}	
-		
 table.register {
 	}
 table.userDetails {
