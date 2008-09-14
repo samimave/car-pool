@@ -34,6 +34,8 @@ public class LocationImporter {
 	}
 	
 	public static void main(String[] args) {
-		LocationImporter.importLocations();
+		for(String name : LocationImporter.importLocations() ) {
+			System.out.println(name);
+		}
 	}
 }
