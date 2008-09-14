@@ -48,6 +48,16 @@ while ((rl.next())&& (rl.getUserID() == currentUser))  {
 if (ridesExist) {
 	offerTable += "</table>";
 }
+
+//input openids to the table
+String entries = "";
+String openIDTableRow = "";
+for (String oid : user.getOpenIds()) {
+	entries += "<option value="+oid+">"+oid+"</option>";
+}
+if (entries != "") {
+	openIDTableRow = "<tr> <td>Open ID:</td> <td><select multiple='multiple' NAME='openid_url'>"+entries+"</select></td> </tr>";
+}
 %>
 
 
@@ -67,7 +77,7 @@ if (ridesExist) {
 		<FORM name="updateDetails" action="test.jsp" method="post">
 			<INPUT type="hidden" name="updateDetails" value="yes">
 			<TABLE class='userDetails'>
-				<tr> <td>Open ID:</td> <td><select multiple NAME="openid_url"> <%for(String oid : user.getOpenIds()) { %><option value="<%=oid%>"><%=oid %></option><%} %></select></td> </tr>
+				<%=openIDTableRow %>
 				<tr> <td>Username:</td> <td><INPUT TYPE="text" NAME="userName" SIZE="25" value="<%=user.getUserName()%>"></td> </tr> 
 				<tr> <td>Email Address:</td> <td><INPUT TYPE="text" NAME="email" SIZE="25" value="<%=user.getEmail()%>"></td> </tr> 
 				<tr> <td>Phone Number:</td> <td><INPUT TYPE="text" NAME="phone" SIZE="25" value="<%=user.getPhoneNumber()%>"></td> </tr>
@@ -83,7 +93,6 @@ if (ridesExist) {
 		<%=requestTable %>
 		<p>Rides you have been accepted and approved for.</p>
 		<%=acceptedTable %>
-
 	</DIV>
 
 	<%@ include file="leftMenu.html" %>
