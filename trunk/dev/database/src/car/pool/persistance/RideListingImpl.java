@@ -33,7 +33,11 @@ public class RideListingImpl implements RideListing {
 	}
 	
 	public boolean next() throws SQLException{
-		return rs.next();
+		if(rs != null) {
+			return rs.next();
+		} else {
+			return false;
+		}
 	}
 
 	@Override

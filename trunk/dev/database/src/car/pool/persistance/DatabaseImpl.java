@@ -74,6 +74,7 @@ public class DatabaseImpl implements Database{
 				// This user is the default administrator
 				// having full privileges to do anything.
 				try {
+					
 					connection = DriverManager.getConnection(url, user,
 							password);
 				} catch (SQLException e) {

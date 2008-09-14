@@ -150,7 +150,7 @@ public class CarPoolStoreImpl implements CarPoolStore {
 
 		Statement statement = db.getStatement();
 		String sql = "SELECT r.availableSeats "+
-					"FROM ride as r "+
+					"FROM Ride as r "+
 					"WHERE r.idRide = "+ride+";";
 		try {
 			statement = db.getStatement();
