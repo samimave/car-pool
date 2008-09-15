@@ -75,7 +75,9 @@ while (locations.next()){
 		<FORM name="comments" action="myDetails.jsp" method="post">
 			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect") %>">
 			<TABLE class='userComments'>
-				<tr> <td>Pick me up from:</td> <td><SELECT name="streetTo">
+				<tr> <td>Pick me up from:</td> </tr>
+				<tr> <td>House Number</td> <td><INPUT type="text" name="houseNo"></td> </tr>
+				<tr> <td>Street</td> <td><SELECT name="streetTo">
            				<option selected="selected">Select a Street</option>
 	                	<%=options %>
        				</SELECT></td> </tr>

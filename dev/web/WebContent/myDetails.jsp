@@ -66,6 +66,12 @@ for (String oid : user.getOpenIds()) {
 if (entries != "") {
 	openIDTableRow = "<tr> <td>Open ID:</td> <td><select multiple='multiple' NAME='openid_url'>"+entries+"</select></td> </tr>";
 }
+
+//if you have been redirected here from taking a ride
+if (request.getParameter("rideSelect") != null && request.getParameter("streetTo") != null && request.getParameter("houseNo") != null) {
+	cps.takeRide(currentUser,Integer.parseInt(request.getParameter("rideSelect")),Integer.parseInt(request.getParameter("streetTo")),
+			Integer.parseInt(request.getParameter("houseNo")));
+}
 %>
 
 
