@@ -26,31 +26,11 @@ String acceptedTable = "<p>No rides found.</p>";
 String requestTable = "<p>No rides found.</p>";
 boolean ridesExist = false;
 RideListing rl = cps.getRideListing();
-if ((rl.next()) && (rl.getUserID() == currentUser)) {
-	ridesExist = true;
-	
-	//code to get the name associated with the street id
-	LocationList allLocs = cps.getLocations();
-	String from = "";
-	String to = "";
-	while (allLocs.next()){
-		if (allLocs.getID() == Integer.parseInt(rl.getStartLocation())) {
-			from = allLocs.getStreetName();	
-		} else if (allLocs.getID() == Integer.parseInt(rl.getEndLocation())) {
-			to = allLocs.getStreetName();
-		}
-			
-	}
-	
-	offerTable = "<table class='rideDetailsSearch'> <tr> <th class = rDh> Offered By </th> <th class = rDh> From </th> <th class = rDh> To </th> <th class = rDh> Date </th> <th class = rDh> Time </th> <th class = rDh> Available Seats </th> </tr>";
-	offerTable += "<tr> <td  class = 'rD'>"+ rl.getUsername() +"</td> ";
-	offerTable += "<td  class = 'rD'>"+ from + "</td> ";
-	offerTable += "<td  class = 'rD'>"+ to +"</td> ";
-	offerTable += "<td  class = 'rD'>"+ rl.getRideDate() +"</td> ";
-	offerTable += "<td  class = 'rD'></td> ";
-	offerTable += "<td  class = 'rD'>"+ rl.getAvailableSeats() +"</td> </tr>";
-}
 while ((rl.next())&& (rl.getUserID() == currentUser))  {
+	if (!ridesExist) {
+		offerTable = "";		//first time round get rid of unwanted text
+	}
+	ridesExist = true;
 	
 	//code to get the name associated with the street id
 	LocationList allLocs = cps.getLocations();
@@ -73,7 +53,8 @@ while ((rl.next())&& (rl.getUserID() == currentUser))  {
 	offerTable += "<td  class = 'rD'>"+ rl.getAvailableSeats() +"</td> </tr>";
 }
 if (ridesExist) {
-	offerTable += "</table>";
+	offerTable = "<table class='rideDetailsSearch'> <tr> <th>Ride Offered By</th> <th>Starting From</th> <th>Going To</th>"+
+	"<th>Departure Date</th> <th>Departure Time</th> <th>Number of Available Seats</th> </tr>"+ offerTable +"</table>";
 }
 
 //input openids to the table
@@ -111,9 +92,9 @@ if (entries != "") {
   				<tr> <td>&nbsp;</td> <td><INPUT TYPE="submit" NAME="confirmUpdate" VALUE="Update Details" SIZE="25"></td> </tr>
 			</TABLE>
 		</FORM>
-		<h2>Your ride details appear below:</h2><br>
+		<h2>Your ride details appear below:</h2><br />
 		<p>Your offers</p>
-		<%=offerTable %><br>
+		<%=offerTable %><br />
 		<p>Approving acceptance</p>
 		<p>The users below are awaiting your approval on their acceptance of your offer. If you can pick them up at the place they want click Approve otherwise click Reject.</p>
 		<%//when the user click approve the boolean value confirm should be set to true. %>

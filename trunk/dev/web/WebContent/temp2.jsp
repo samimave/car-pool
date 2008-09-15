@@ -18,31 +18,38 @@ int rideID = Integer.parseInt(request.getParameter("rideselect"));
 String detailsTable = "<p>No info found.</p>";
 boolean ridesExist = false;
 
-if ((rl.next()) && (rl.getRideID() == rideID)) {
-	ridesExist = true;
-	detailsTable = "<table class='detailsTable'> <tr> </tr>";
-	detailsTable += "<tr> <td>Username:</td>  <td>"+ rl.getUsername() +"</td></tr> ";
-	detailsTable += "<tr> <td> Start Region: </td> <td>"+ rl.getStartLocation() + "</td> </tr>";
-	detailsTable += "<tr> <td> Stop Region: </td> <td>"+ rl.getEndLocation() +"</td></tr> ";
-	detailsTable += "<tr> <td>Date: </td> <td>"+ rl.getRideDate() +"</td></tr> ";
-	detailsTable += "<tr> <td> Time: </td> <td>" + rl.getTime()+ "</td> </tr>";
-	detailsTable += "<tr> <td> Seats: </td> <td>"+ rl.getAvailableSeats() +"</td> </tr>";
-	detailsTable += "<tr> <td> Additional Info: </td> <td>"+ rl.getComment() +"</td> </tr>";
-}
-
-while ((rl.next()) && (rl.getRideID() == rideID)) {
-	detailsTable = "<table class='detailsTable'> <tr> </tr>";
-	detailsTable += "<tr> <td>Username:</td>  <td>"+ rl.getUsername() +"</td></tr> ";
-	detailsTable += "<tr> <td> Start Region: </td> <td>"+ rl.getStartLocation() + "</td> </tr>";
-	detailsTable += "<tr> <td> Stop Region: </td> <td>"+ rl.getEndLocation() +"</td></tr> ";
-	detailsTable += "<tr> <td>Date: </td> <td>"+ rl.getRideDate() +"</td></tr> ";
-	detailsTable += "<tr> <td> Time: </td> <td>" + rl.getTime()+ "</td> </tr>";
-	detailsTable += "<tr> <td> Seats: </td> <td>"+ rl.getAvailableSeats() +"</td> </tr>";
-	detailsTable += "<tr> <td> Additional Info: </td> <td>"+ rl.getComment() +"</td> </tr>";
+while (rl.next()) {
+	if (rl.getRideID() == rideID) {
+		if (!ridesExist) {
+			detailsTable = "";		//first time round get rid of unwanted text
+		}
+		ridesExist = true;
+		
+		//code to get the name associated with the street id
+		LocationList allLocs = cps.getLocations();
+		String from = "";
+		String to = "";
+		while (allLocs.next()){
+			if (allLocs.getID() == Integer.parseInt(rl.getStartLocation())) {
+				from = allLocs.getStreetName();	
+			} else if (allLocs.getID() == Integer.parseInt(rl.getEndLocation())) {
+				to = allLocs.getStreetName();
+			}
+				
+		}
+		
+		detailsTable += "<tr> <td>Username:</td>  <td>"+ rl.getUsername() +"</td></tr> ";
+		detailsTable += "<tr> <td> Start Region: </td> <td>"+ from + "</td> </tr>";
+		detailsTable += "<tr> <td> Stop Region: </td> <td>"+ to +"</td></tr> ";
+		detailsTable += "<tr> <td>Date: </td> <td>"+ rl.getRideDate() +"</td></tr> ";
+		detailsTable += "<tr> <td> Time: </td> <td>" + rl.getTime()+ "</td> </tr>";
+		detailsTable += "<tr> <td> Seats: </td> <td>"+ rl.getAvailableSeats() +"</td> </tr>";
+		detailsTable += "<tr> <td> Additional Info: </td> <td>"+ rl.getComment() +"</td> </tr>";
+	}
 }
 
 if (ridesExist) {
-	detailsTable += "</table>";
+	detailsTable = "<table class='rideDetailsSearch'>"+ detailsTable +"</table>";
 }
 %>
 
