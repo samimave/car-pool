@@ -13,12 +13,11 @@ CarPoolStore cps = new CarPoolStoreImpl();
 //String openID = OpenIdFilter.getCurrentUser(request.getSession());
 int currentUser = user.getUserId();//cps.getUserIdByURL(openID);
 
-//cps.
-
 //code to update details if requested
 if (request.getParameter("updateDetails") != null) {
 	cps.addUser((String)request.getParameter("openid_url"),(String)request.getParameter("userName"),(String)request.getParameter("email"),(String)request.getParameter("phone"));
 }
+
 
 // code to get ride details
 //temp placeholder variables
@@ -29,20 +28,48 @@ boolean ridesExist = false;
 RideListing rl = cps.getRideListing();
 if ((rl.next()) && (rl.getUserID() == currentUser)) {
 	ridesExist = true;
+	
+	//code to get the name associated with the street id
+	LocationList allLocs = cps.getLocations();
+	String from = "";
+	String to = "";
+	while (allLocs.next()){
+		if (allLocs.getID() == Integer.parseInt(rl.getStartLocation())) {
+			from = allLocs.getStreetName();	
+		} else if (allLocs.getID() == Integer.parseInt(rl.getEndLocation())) {
+			to = allLocs.getStreetName();
+		}
+			
+	}
+	
 	offerTable = "<table class='rideDetailsSearch'> <tr> <th class = rDh> Offered By </th> <th class = rDh> From </th> <th class = rDh> To </th> <th class = rDh> Date </th> <th class = rDh> Time </th> <th class = rDh> Available Seats </th> </tr>";
 	offerTable += "<tr> <td  class = 'rD'>"+ rl.getUsername() +"</td> ";
-	offerTable += "<td  class = 'rD'>"+ rl.getStartLocation() + "</td> ";
-	offerTable += "<td  class = 'rD'>"+ rl.getEndLocation() +"</td> ";
+	offerTable += "<td  class = 'rD'>"+ from + "</td> ";
+	offerTable += "<td  class = 'rD'>"+ to +"</td> ";
 	offerTable += "<td  class = 'rD'>"+ rl.getRideDate() +"</td> ";
-	offerTable += "<td  class = 'rD'> null </td> ";
+	offerTable += "<td  class = 'rD'></td> ";
 	offerTable += "<td  class = 'rD'>"+ rl.getAvailableSeats() +"</td> </tr>";
 }
 while ((rl.next())&& (rl.getUserID() == currentUser))  {
+	
+	//code to get the name associated with the street id
+	LocationList allLocs = cps.getLocations();
+	String from = "";
+	String to = "";
+	while (allLocs.next()){
+		if (allLocs.getID() == Integer.parseInt(rl.getStartLocation())) {
+			from = allLocs.getStreetName();	
+		} else if (allLocs.getID() == Integer.parseInt(rl.getEndLocation())) {
+			to = allLocs.getStreetName();
+		}
+			
+	}
+	
 	offerTable += "<tr> <td>"+ rl.getUsername() +"</td> ";	
-	offerTable += "<td  class = 'rD'>"+ rl.getStartLocation() + "</td> ";
-	offerTable += "<td  class = 'rD'>"+ rl.getEndLocation() +"</td> ";
+	offerTable += "<td  class = 'rD'>"+ from + "</td> ";
+	offerTable += "<td  class = 'rD'>"+ to +"</td> ";
 	offerTable += "<td  class = 'rD'>"+ rl.getRideDate() +"</td> ";
-	offerTable += "<td  class = 'rD'> null </td> ";
+	offerTable += "<td  class = 'rD'>"+ rl.getTime() +"</td> ";
 	offerTable += "<td  class = 'rD'>"+ rl.getAvailableSeats() +"</td> </tr>";
 }
 if (ridesExist) {

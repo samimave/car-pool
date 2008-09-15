@@ -15,19 +15,47 @@ CarPoolStore cps = new CarPoolStoreImpl();
 RideListing rl = cps.getRideListing();
 if (rl.next()) {
 	ridesExist = true;
+	
+	//code to get the name associated with the street id
+	LocationList allLocs = cps.getLocations();
+	String from = "";
+	String to = "";
+	while (allLocs.next()){
+		if (allLocs.getID() == Integer.parseInt(rl.getStartLocation())) {
+			from = allLocs.getStreetName();	
+		} else if (allLocs.getID() == Integer.parseInt(rl.getEndLocation())) {
+			to = allLocs.getStreetName();
+		}
+			
+	}
+	
 	rideTable = "<table class='rideDetailsSearch'> <tr> <th> Offered By </th> <th> From </th> <th> To </th> <th> Date </th> <th> Departure Time </th> <th> Seats </th> <th> More Info</th> </tr>";
 	rideTable += "<tr> <td>"+ rl.getUsername() +"</td> ";
-	rideTable += "<td> <a href='"+ request.getContextPath() +"/temp.jsp?rideselect="+ rl.getRideID() +"'>"+ rl.getStartLocation() +"</a> </td> ";
-	rideTable += "<td>"+ rl.getEndLocation() +"</td> ";
+	rideTable += "<td>"+ from +"</td> ";
+	rideTable += "<td>"+ to +"</td> ";
 	rideTable += "<td>"+ rl.getRideDate() +"</td> ";
 	rideTable += "<td>"+ rl.getTime() +"</td> ";
 	rideTable += "<td>"+ rl.getAvailableSeats() +"</td>";
 	rideTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ rl.getRideID() +"'>"+ "Link to ride page" +"</a> </td> </tr>";
 }
 while (rl.next()) {
+	
+	//code to get the name associated with the street id
+	LocationList allLocs = cps.getLocations();
+	String from = "";
+	String to = "";
+	while (allLocs.next()){
+		if (allLocs.getID() == Integer.parseInt(rl.getStartLocation())) {
+			from = allLocs.getStreetName();	
+		} else if (allLocs.getID() == Integer.parseInt(rl.getEndLocation())) {
+			to = allLocs.getStreetName();
+		}
+			
+	}
+	
 	rideTable += "<tr> <td>"+ rl.getUsername() +"</td> ";	
-	rideTable += "<td> <a href='"+ request.getContextPath() +"/temp.jsp?rideselect="+ "More" +"'>"+ rl.getStartLocation() +"</a> </td> ";
-	rideTable += "<td>"+ rl.getEndLocation() +"</td> ";
+	rideTable += "<td>"+ from +"</td> ";
+	rideTable += "<td>"+ to +"</td> ";
 	rideTable += "<td>"+ rl.getRideDate() +"</td> ";
 	rideTable += "<td>"+ rl.getTime() +"</td> ";
 	rideTable += "<td>"+ rl.getAvailableSeats() +"</td> ";
@@ -36,7 +64,6 @@ while (rl.next()) {
 if (ridesExist) {
 	rideTable += "</table>";
 }
-//int dbID = cps.getUserIdByURL(request.getParameter("user"));
 %>
 
 <HTML>
@@ -69,7 +96,7 @@ if (ridesExist) {
 						<option value="sel">Select an Option</option>
 						<option value="Yes">Yes</option>
 						<option value="No">No</option>
-					</SELECT></td> </tr><br></br>
+					</SELECT></td> </tr>
 					<tr> <td>&nbsp;</td> <td><INPUT TYPE="submit" NAME="search" VALUE="Search" SIZE="25"></td> </tr>
 
 					<%=rideTable %>
