@@ -13,32 +13,11 @@ boolean ridesExist = false;
 String rideTable = "<p>No rides found.</p>";
 CarPoolStore cps = new CarPoolStoreImpl();
 RideListing rl = cps.getRideListing();
-if (rl.next()) {
-	ridesExist = true;
-	
-	//code to get the name associated with the street id
-	LocationList allLocs = cps.getLocations();
-	String from = "";
-	String to = "";
-	while (allLocs.next()){
-		if (allLocs.getID() == Integer.parseInt(rl.getStartLocation())) {
-			from = allLocs.getStreetName();	
-		} else if (allLocs.getID() == Integer.parseInt(rl.getEndLocation())) {
-			to = allLocs.getStreetName();
-		}
-			
-	}
-	
-	rideTable = "<table class='rideDetailsSearch'> <tr> <th> Offered By </th> <th> From </th> <th> To </th> <th> Date </th> <th> Departure Time </th> <th> Seats </th> <th> More Info</th> </tr>";
-	rideTable += "<tr> <td>"+ rl.getUsername() +"</td> ";
-	rideTable += "<td>"+ from +"</td> ";
-	rideTable += "<td>"+ to +"</td> ";
-	rideTable += "<td>"+ rl.getRideDate() +"</td> ";
-	rideTable += "<td>"+ rl.getTime() +"</td> ";
-	rideTable += "<td>"+ rl.getAvailableSeats() +"</td>";
-	rideTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ rl.getRideID() +"'>"+ "Link to ride page" +"</a> </td> </tr>";
-}
 while (rl.next()) {
+	if (!ridesExist) {
+		rideTable = "";		//first time round get rid of unwanted text
+	}
+	ridesExist = true;
 	
 	//code to get the name associated with the street id
 	LocationList allLocs = cps.getLocations();
@@ -62,7 +41,8 @@ while (rl.next()) {
 	rideTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ rl.getRideID() +"'>"+ "Link to ride page" +"</a> </td> </tr>";
 }
 if (ridesExist) {
-	rideTable += "</table>";
+	rideTable = "<table class='rideDetailsSearch'> <tr> <th>Ride Offered By</th> <th>Starting From</th> <th>Going To</th>"+
+		"<th>Departure Date</th> <th>Departure Time</th> <th>Number of Available Seats</th> <th>More Info</th> </tr>"+ rideTable +"</table>";
 }
 %>
 
