@@ -47,9 +47,16 @@ while (rl.next()) {
 		detailsTable += "<tr> <td> Additional Info: </td> <td>"+ rl.getComment() +"</td> </tr>";
 	}
 }
-
+//finish table
 if (ridesExist) {
 	detailsTable = "<table class='rideDetailsSearch'>"+ detailsTable +"</table>";
+}
+
+//make the options for the street select box
+LocationList locations = cps.getLocations();
+String options = "";
+while (locations.next()){
+	options += "<option value='"+locations.getID()+"'>"+locations.getStreetName()+"</option>";
 }
 %>
 
@@ -64,13 +71,17 @@ if (ridesExist) {
 
 	<DIV class="content">
 		<h2>The ride details appear below:</h2>
-		<%=request.getParameter("rideselect") %>
 		<%=detailsTable %><br>
-		<FORM name="comments" action="" method="post">
+		<FORM name="comments" action="myDetails.jsp" method="post">
+			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect") %>">
 			<TABLE class='userComments'>
-				<tr> <td>Add a Comment/Query</td> <td><INPUT TYPE="text" NAME="xtraInfo" SIZE="55"></td> </tr>
+				<tr> <td>Pick me up from:</td> <td><SELECT name="streetTo">
+           				<option selected="selected">Select a Street</option>
+	                	<%=options %>
+       				</SELECT></td> </tr>
+				<tr> <td>Add a Comment/Query</td> <td><INPUT type="text" name="xtraInfo" size="55"></td> </tr>
+				<tr> <td>&nbsp;</td> <td><INPUT type="submit" name="joinRide" value="Take Ride" size="25"></td> </tr>
 			</TABLE>
-			<INPUT TYPE="submit" NAME="addComment" VALUE="Add Comment" SIZE="25">
 		</FORM>
 		
 		

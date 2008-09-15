@@ -13,9 +13,12 @@ String date = DateFormat.getDateInstance().format(now);
 
 CarPoolStore cps = new CarPoolStoreImpl();
 
-
-
-
+//make the options for the street select box
+LocationList locations = cps.getLocations();
+String options = "";
+while (locations.next()){
+	options += "<option value='"+locations.getID()+"'>"+locations.getStreetName()+"</option>";
+}
 %>
 
 <HTML>
@@ -84,25 +87,15 @@ CarPoolStore cps = new CarPoolStoreImpl();
 					<tr> <td>House number:</td> <td><INPUT TYPE="text" NAME="houseFrom" SIZE="25"></td> </tr>
 					<tr> <td>Street:</td> <td>
 					<SELECT name="streetFrom">
-           		  <option selected="selected">Select a Street</option>
-	           		  <% 
-	           			LocationList locations = cps.getLocations();
-	        			 while (locations.next()){
-	            	  %>
-	                 <option value=<%=locations.getID()%>><%=locations.getStreetName()%></option>
-	        		  <%   } %>
-       				 </SELECT></td> </tr>
+           		  		<option selected="selected">Select a Street</option>
+	           		 	<%=options %>
+       				</SELECT></td> </tr>
         			<tr> <td>Region: Palmerston North</td> </tr>
 					<tr><td>ARRIVAL AT -</td></tr> 
 					<tr> <td>Street:</td> <td>
 					<SELECT name="streetTo">
-           		  <option selected="selected">Select a Street</option>
-	           		  <% 
-	           		LocationList locations2 = cps.getLocations();
-	        			 while (locations2.next()){
-	            	  %>
-	                 <option value=<%=locations2.getID()%>><%=locations2.getStreetName()%></option>
-	        		  <%   } %>
+           		  		<option selected="selected">Select a Street</option>
+	           		  	<%=options %>
        				 </SELECT></td> </tr>
 
 					<tr> <td>Region: Palmerston North</td> </tr>
