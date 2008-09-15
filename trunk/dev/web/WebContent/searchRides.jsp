@@ -71,12 +71,6 @@ if (ridesExist) {
 						<option value="oneoff">One-Off</option>
 						<option value="regular">Regular</option>
 					</SELECT></td> </tr>
-					<tr> <td>Return Trip:</td> <td>						
-					<SELECT name="return">
-						<option value="sel">Select an Option</option>
-						<option value="Yes">Yes</option>
-						<option value="No">No</option>
-					</SELECT></td> </tr>
 					<tr> <td>&nbsp;</td> <td><INPUT TYPE="submit" NAME="search" VALUE="Search" SIZE="25"></td> </tr>
 
 					<%=rideTable %>
