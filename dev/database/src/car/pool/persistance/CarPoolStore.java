@@ -43,4 +43,5 @@ public interface CarPoolStore {
 	public boolean detachOpenIDsByUser(int idUser);
 	
 	public RideListing getRideListing();
+	public RideListing searchRideListing(int searchType, String searchField);
 }

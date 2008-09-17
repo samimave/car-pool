@@ -50,7 +50,7 @@ public class LocationList {
 		}
 		
 	}
-	
+
 	public boolean next() throws SQLException{
 		return rs.next();
 	}
