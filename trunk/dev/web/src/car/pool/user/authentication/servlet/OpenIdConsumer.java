@@ -1,23 +1,20 @@
 package car.pool.user.authentication.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.net.ProxySelector;
 import java.sql.SQLException;
-import java.util.Enumeration;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.verisign.joid.OpenIdException;
 import org.verisign.joid.consumer.OpenIdFilter;
 import org.verisign.joid.util.UrlUtils;
 
 import car.pool.persistance.exception.InvaildUserNamePassword;
+import car.pool.proxy.ProxyConfig;
 import car.pool.user.User;
 import car.pool.user.UserManager;
 
@@ -28,16 +25,29 @@ import car.pool.user.UserManager;
  */
  public class OpenIdConsumer extends javax.servlet.http.HttpServlet implements javax.servlet.Servlet {
    static final long serialVersionUID = 1L;
+   ProxyConfig proxyConfig = null;
 /* (non-Java-doc)
 	 * @see javax.servlet.http.HttpServlet#HttpServlet()
 	 */
 	public OpenIdConsumer() {
 		super();
-	}   	
+	}
+	
+	/* Happens when web server started.  The init method is run once and a instance of this class is kept around and used over and over.
+	 * This is a useful method to set some config setting up.
+	 * (non-Javadoc)
+	 * @see javax.servlet.GenericServlet#init()
+	 */
+	@Override
+	public void init() {
+		proxyConfig = new ProxyConfig(ProxySelector.getDefault());
+		ProxySelector.setDefault(proxyConfig);
+	}
 	
 	/* (non-Java-doc)
 	 * @see javax.servlet.http.HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}  	
@@ -45,7 +55,7 @@ import car.pool.user.UserManager;
 	/* (non-Java-doc)
 	 * @see javax.servlet.http.HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	//@SuppressWarnings("unchecked")
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession session = request.getSession();
@@ -72,8 +82,9 @@ import car.pool.user.UserManager;
 				//The web site url that you want the OpenId provider to trust
 				String trustRoot = UrlUtils.getBaseUrl(request);
 				//The url plus query string is created here for redirection purposes
-				System.out.println(String.format("OpenIdConsumer: id: %s, returnTo: %s, trustRoot %s", id, returnTo.toString(), trustRoot));
+				System.out.format("OpenIdConsumer: id: %s, returnTo: %s, trustRoot %s\n", id, returnTo.toString(), trustRoot);
 				String s = OpenIdFilter.joid().getAuthUrl(id, returnTo.toString(), trustRoot);
+				System.out.format("%s\n", s);
 				response.sendRedirect(s);
 				return;
 			} catch (OpenIdException e) {

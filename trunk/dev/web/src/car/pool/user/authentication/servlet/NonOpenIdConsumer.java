@@ -48,7 +48,7 @@ public class NonOpenIdConsumer extends HttpServlet {
 				// Log in failed go back to index
 				StringBuffer buff = new StringBuffer();
 				buff.append(request.getContextPath());
-				buff.append("/index.jsp");
+				buff.append("/loginfailed.jsp");
 				response.sendRedirect(buff.toString());
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
