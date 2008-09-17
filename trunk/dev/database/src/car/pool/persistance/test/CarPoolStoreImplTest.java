@@ -357,6 +357,62 @@ public class CarPoolStoreImplTest extends TestCase {
 		}
 	}
 	
+	public void testSearchRideListing(){
+		new TestSetup();
+		Date date = new Date(System.currentTimeMillis());
+		
+		int region = 0;
+		int idLocation = 0;
+		int idLocation2 = 0;
+		try {
+			region = cps.addRegion("Palmy");
+			idLocation = cps.addLocation(region,"Blair St");
+			idLocation2 = cps.addLocation(region,"Massey Street");
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}
+		try {
+			int idUser = cps.addUser("thisismypassword","jordan", "jordan.d.carter@gmail.com", "0274681876");
+			int idRide = cps.addRide(idUser, 4, date.toString(), idLocation, idLocation2, 0, 0, "noon", "this is a comment");
+			cps.attachOpenID("www.google.com", idUser);
+			cps.takeRide(idUser, idRide, idLocation, idLocation2, 0);
+		
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		RideListing rl = cps.searchRideListing(RideListing.searchUser, "jordan");
+		try {
+			while(rl.next()){
+				System.out.println(rl.getRideID()+", "+rl.getUserID()+", "+rl.getUsername()+", "+rl.getAvailableSeats()+", "+rl.getRideDate().toString()+", "+rl.getStartLocation()+", "+rl.getEndLocation());
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		rl = cps.searchRideListing(RideListing.searchDate, date.toString());
+		try {
+			while(rl.next()){
+				System.out.println(rl.getRideID()+", "+rl.getUserID()+", "+rl.getUsername()+", "+rl.getAvailableSeats()+", "+rl.getRideDate().toString()+", "+rl.getStartLocation()+", "+rl.getEndLocation());
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		rl = cps.searchRideListing(RideListing.searchLocation, "Blair St");
+		try {
+			while(rl.next()){
+				System.out.println(rl.getRideID()+", "+rl.getUserID()+", "+rl.getUsername()+", "+rl.getAvailableSeats()+", "+rl.getRideDate().toString()+", "+rl.getStartLocation()+", "+rl.getEndLocation());
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public void testGetMax(){
 		Date date = new Date(System.currentTimeMillis());
 		

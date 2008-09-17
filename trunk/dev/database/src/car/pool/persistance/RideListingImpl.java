@@ -12,14 +12,20 @@ public class RideListingImpl implements RideListing {
 
 	protected RideListingImpl(Statement statement){
 		super();
+		this.statement = statement;
+	}
+	
+	public RideListing getAll(){
 		
 		String sql = "Select * " +
 		"FROM " +
 		"(Select r.idRide, u.idUser, u.username,(r.availableSeats - Count(*)) as availableSeats, r.rideDate, r.rideStartLocation, r.rideStopLocation, r.rideTime, r.rideReoccur, r.rideComment " +
 		"FROM " +
-		"(SELECT r.idRide, r.idUser, r.rideDate, r.rideStartLocation, r.rideStopLocation, r.availableSeats, r.rideTime, r.rideReoccur, r.rideComment " +
-		"FROM User as u, Ride as r, Matches as m " +
-		"WHERE u.idUser = m.idUser " +
+		"(SELECT r.idRide, r.idUser, r.rideDate, l.street as rideStartLocation, ll.street as rideStopLocation, r.availableSeats, r.rideReoccur, r.rideComment  "+
+		"FROM User as u, Ride as r, Matches as m, locations as l, locations as ll "+
+		"WHERE u.idUser = m.idUser "+
+		"AND l.idLocations = r.rideStartLocation "+
+		"AND ll.idLocations = r.rideStopLocation "+
 		"AND m.idRide = r.idRide) as r, " +
 		"User as u " +
 		"WHERE u.idUser = r.idUser " +
@@ -30,6 +36,93 @@ public class RideListingImpl implements RideListing {
 		} catch (SQLException e) {
 			//throw new
 		}
+		
+		return this;
+	}
+	
+	public RideListing search(int searchType, String searchField){
+		
+		if(searchType == searchUser){
+			String username = "%" + searchField.replace(' ', '%') + "%";
+			String sql = "SELECT * "+
+			"FROM ("	+	
+			"Select * " +
+			"FROM " +
+			"(Select r.idRide, u.idUser, u.username,(r.availableSeats - Count(*)) as availableSeats, r.rideDate, r.rideStartLocation, r.rideStopLocation " +
+			"FROM " +
+			"(SELECT r.idRide, r.idUser, r.rideDate, l.street as rideStartLocation, ll.street as rideStopLocation, r.availableSeats "+
+			"FROM User as u, Ride as r, Matches as m, locations as l, locations as ll "+
+			"WHERE u.idUser = m.idUser "+
+			"AND l.idLocations = r.rideStartLocation "+
+			"AND ll.idLocations = r.rideStopLocation "+
+			"AND m.idRide = r.idRide) as r, " +
+			"User as u " +
+			"WHERE u.idUser = r.idUser " +
+			"GROUP BY r.idRide) as t " +
+			"WHERE t.availableSeats > 0 "+
+			") as a "+
+			"WHERE a.username LIKE '"+username+"';";
+			try {
+				rs = statement.executeQuery(sql);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}else if(searchType == searchDate){
+			String date = searchField;
+			String sql = "SELECT * "+
+			"FROM ("	+	
+			"Select * " +
+			"FROM " +
+			"(Select r.idRide, u.idUser, u.username,(r.availableSeats - Count(*)) as availableSeats, r.rideDate, r.rideStartLocation, r.rideStopLocation " +
+			"FROM " +
+			"(SELECT r.idRide, r.idUser, r.rideDate, l.street as rideStartLocation, ll.street as rideStopLocation, r.availableSeats "+
+			"FROM User as u, Ride as r, Matches as m, locations as l, locations as ll "+
+			"WHERE u.idUser = m.idUser "+
+			"AND l.idLocations = r.rideStartLocation "+
+			"AND ll.idLocations = r.rideStopLocation "+
+			"AND m.idRide = r.idRide) as r, " +
+			"User as u " +
+			"WHERE u.idUser = r.idUser " +
+			"GROUP BY r.idRide) as t " +
+			"WHERE t.availableSeats > 0 "+
+			") as a "+
+			"WHERE a.rideDate = '"+date+"';";
+			try {
+				rs = statement.executeQuery(sql);
+			} catch (SQLException e) {
+				//throw new
+			}
+		}else if(searchType == searchLocation){
+			String location = searchField;
+			String sql = "SELECT * "+
+			"FROM ("	+	
+			"Select * " +
+			"FROM " +
+			"(Select r.idRide, u.idUser, u.username,(r.availableSeats - Count(*)) as availableSeats, r.rideDate, r.rideStartLocation, r.rideStopLocation " +
+			"FROM " +
+			"(SELECT r.idRide, r.idUser, r.rideDate, l.street as rideStartLocation, ll.street as rideStopLocation, r.availableSeats "+
+			"FROM User as u, Ride as r, Matches as m, locations as l, locations as ll "+
+			"WHERE u.idUser = m.idUser "+
+			"AND l.idLocations = r.rideStartLocation "+
+			"AND ll.idLocations = r.rideStopLocation "+
+			"AND m.idRide = r.idRide) as r, " +
+			"User as u " +
+			"WHERE u.idUser = r.idUser " +
+			"GROUP BY r.idRide) as t " +
+			"WHERE t.availableSeats > 0 "+
+			") as a "+
+			"WHERE a.rideStartLocation LIKE '"+location+"' "+
+			"OR a.rideStopLocation LIKE '"+location+"';";
+			try {
+				rs = statement.executeQuery(sql);
+			} catch (SQLException e) {
+				//throw new
+			}
+		}else{
+			getAll();
+		}
+		
+		return this;
 	}
 	
 	public boolean next() throws SQLException{

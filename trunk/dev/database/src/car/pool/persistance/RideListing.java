@@ -13,7 +13,19 @@ public interface RideListing {
 	public Date getRideDate() throws SQLException;
 	public String getStartLocation() throws SQLException;
 	public String getEndLocation() throws SQLException;
+	
+	public RideListing getAll();
+	public RideListing search(int searchType, String searchField);
+	
+	public static final int searchUser = 0;
+	//public static final int searchStartLocation = 1;
+	//public static final int searchEndLocation = 2;
+	public static final int searchDate = 3;
+	//public static final int searchAll = 4;
+	public static final int searchLocation = 5;
+
 	public String getOccur() throws SQLException;
 	public String getTime() throws SQLException;
 	public String getComment() throws SQLException;
+
 }

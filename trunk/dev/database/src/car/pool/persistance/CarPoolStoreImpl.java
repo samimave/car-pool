@@ -234,7 +234,7 @@ public class CarPoolStoreImpl implements CarPoolStore {
 				+ "(idUser,idRide, seatNum, idLocation, streetNumber) "
 				+ "VALUES ('" + user + "','" + ride + "','" + seatNum + "','" + idLocation + "','" + streetNumber + "');";
 		
-		try {
+		try {	
 			statement.executeUpdate(sql);
 			statement.close();
 		} catch (SQLException e) {
@@ -564,5 +564,14 @@ public class CarPoolStoreImpl implements CarPoolStore {
 	public LocationList getLocations() {
 		LocationList locList = new LocationList("", db.getStatement(), true);
 		return locList;
+	}
+
+	@Override
+	/**
+	 * Returns a rideListing with the search results
+	 * @param searchType should be a RideListing.searchType
+	 */
+	public RideListing searchRideListing(int searchType, String searchField) {
+		return RideListingFactory.searchRideListing(db.getStatement(), searchType, searchField);
 	}
 }
