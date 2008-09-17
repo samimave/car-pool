@@ -133,8 +133,6 @@
 	</div>
 
   </body>
-
-  </body>
 </html>
   
 

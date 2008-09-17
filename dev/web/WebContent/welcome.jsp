@@ -6,6 +6,8 @@
 User user = null;
 if(session.getAttribute("signedin") != null ) {
 	user = (User)session.getAttribute("user");
+} else {
+	response.sendRedirect("");
 }
 
 //being nice to our users

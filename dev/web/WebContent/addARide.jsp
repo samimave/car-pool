@@ -28,6 +28,30 @@ while (locations.next()){
 		<TITLE> Offer or Request a Ride </TITLE>
 		<STYLE type="text/css" media="screen">@import "3ColumnLayout.css";</STYLE>
 		<SCRIPT type="text/javascript" src="CalendarPopup.js"></SCRIPT>
+		<script type="text/javascript">
+			var locations = new Array();
+			
+			<%
+			LocationList loc = cps.getLocations();
+			for(int i = 0; loc.next(); i++) {
+				%>locations[<%=i%>] = <%=loc.getStreetName()%>;<%
+			}
+			%>
+			 function getAddress1(addrs){
+                 var from = "";
+                 //LocationList loc = cps.getLocations();
+                 addrs = document.getElementById('streetFrom').value;
+                         // from = locations.getStreetName(addrs);
+                 for(i = 0; i < locations.length; i++ ) {
+                     if(i == addrs) {
+                         return locations[i];
+                     }
+                 }
+
+                 return -1;
+                         
+         }
+		</script>
 		<SCRIPT type="text/javascript">
 			var cal = new CalendarPopup();
 

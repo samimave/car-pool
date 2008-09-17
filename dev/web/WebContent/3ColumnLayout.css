@@ -21,15 +21,15 @@ h2 {
 	padding:0px;
 	}
 table {
-	border:"0";
+	border: 0;
 	font:11px verdana, arial, helvetica, sans-serif;
 	}
 table.rideDetailsSearch {
 	border: 1px solid #666666;
 	width:600px; 	   
 	border-collapse: collapse;	
-	layout: fixed;
-	}
+	/*layout: fixed;*/
+}
 table.rideDetailsSearch TD {
 	border: 1px solid #666666;
 	}
