@@ -10,8 +10,9 @@ if (OpenIdFilter.getCurrentUser(request.getSession()) == null && session.getAttr
 Date now = new Date();
 String time = DateFormat.getTimeInstance(DateFormat.SHORT).format(now);
 String date = DateFormat.getDateInstance().format(now);
-
 CarPoolStore cps = new CarPoolStoreImpl();
+
+
 
 //make the options for the street select box
 LocationList locations = cps.getLocations();
@@ -19,6 +20,7 @@ String options = "";
 while (locations.next()){
 	options += "<option value='"+locations.getID()+"'>"+locations.getStreetName()+"</option>";
 }
+
 %>
 
 <HTML>
@@ -28,6 +30,19 @@ while (locations.next()){
 		<SCRIPT type="text/javascript" src="CalendarPopup.js"></SCRIPT>
 		<SCRIPT type="text/javascript">
 			var cal = new CalendarPopup();
+
+			// a function to get the from and to streets from the combobox and pass them to the 
+			// form call "showMap" which then post to the "displayRouteMap.jsp" to be display on google map
+      		function getAddress(){
+      			  startIdx = document.getElementById("offer").streetFrom.selectedIndex;
+      		   	  startLoc = document.getElementById("offer").streetFrom.options[startIdx].text;
+     			  endIdx   = document.getElementById("offer").streetTo.selectedIndex;
+     		   	  endLoc   = document.getElementById("offer").streetTo.options[endIdx].text;
+     		   	  document.getElementById("map").mapFrom.value=startLoc;
+     		   	  document.getElementById("map").mapTo.value=endLoc;
+     		   	 
+      		}
+      		
 			function activate(field) {
 				field.disabled=false;
 				if(document.styleSheets)field.style.display  = 'inline';
@@ -65,7 +80,7 @@ while (locations.next()){
 
 		<DIV class="content">
 			<p>Please enter the relevant details and click confirm.</p>
-			<FORM NAME="offerFrm" method="post" action="newRideConfirmation.jsp">
+			<FORM NAME="offerFrm" id="offer" method="post" action="newRideConfirmation.jsp">
 				<INPUT TYPE="hidden" NAME="user" VALUE="<%=OpenIdFilter.getCurrentUser(request.getSession())%>" SIZE="25">
 					<TABLE class="rideDetails">
 
@@ -86,14 +101,14 @@ while (locations.next()){
 					<tr> <td>DEPARTURE FROM -</td> </tr>
 					<tr> <td>House number:</td> <td><INPUT TYPE="text" NAME="houseFrom" SIZE="25"></td> </tr>
 					<tr> <td>Street:</td> <td>
-					<SELECT name="streetFrom">
+					<SELECT name="streetFrom"  onChange="getAddress()">
            		  		<option selected="selected">Select a Street</option>
 	           		 	<%=options %>
        				</SELECT></td> </tr>
         			<tr> <td>Region: Palmerston North</td> </tr>
 					<tr><td>ARRIVAL AT -</td></tr> 
 					<tr> <td>Street:</td> <td>
-					<SELECT name="streetTo">
+					<SELECT name="streetTo" onChange="getAddress()">
            		  		<option selected="selected">Select a Street</option>
 	           		  	<%=options %>
        				 </SELECT></td> </tr>
@@ -132,11 +147,16 @@ while (locations.next()){
 					<tr> <td><INPUT TYPE="submit" NAME="submit" VALUE="Confirm" SIZE="25"></td> <td>&nbsp;</td> </tr>
 				</TABLE>
 
-					<tr> <td><h2>Route Map:  </h2> </td> </tr>
-					<tr> <th><%@ include file="displayRouteMap.jsp" %></th> </tr>
 			</FORM>
-		</DIV>
 
+		</DIV>
+		
+			<FORM name="showMap" id="map" method="post" target="_blank" action="displayRouteMap.jsp">
+					<INPUT type="submit" value="View Map" onClick="getAddress()"/> 
+					<INPUT type="hidden" name="mapFrom" >
+				    <INPUT type="hidden" name="mapTo"   >
+			</FORM>
+	
 	<%@ include file="leftMenu.html" %>
 
 	<%@ include file="rightMenu.jsp" %>

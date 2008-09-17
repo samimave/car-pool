@@ -41,15 +41,16 @@
       map.addControl(new GLargeMapControl());
       map.addControl(new GMapTypeControl());
 	  map.setCenter(new GLatLng(-40.35814342293522, 175.6267547607422),13);
+
+	  // get the street from and street to from the combobox	
+	  var tempFrom = "<%=request.getParameter("mapFrom") %>";
+	  var tempTo = "<%=request.getParameter("mapTo") %>"; 
+	  // assign the right format to the variables
+	  var fromAddress = tempFrom.toString() + "  palmerston north new zealand";
+	  var toAddress = tempTo.toString() + "  palmerston north new zealand";
       var addressArray = [
-                          "milson line palmerston north new zealand",
-                          "main street palmerston north new zealand",
-                          "albert street palmerston north new zealand",
-                          "church street palmerston north new zealand",
-                          "cook street palmerston north new zealand",
-                          "college street palmerston north new zealand",
-                          "marne street palmerston north new zealand",
-                          "campus road palmerston north new zealand"
+                          fromAddress,
+                          toAddress,                        
                           ];
      
       // ===== Start with an empty GLatLngBounds object =====     
@@ -61,7 +62,7 @@
       function addAddressToMap(response) {
 
           if (!response || response.Status.code != 200) {
-            alert("Sorry, we were unable to geocode that address");
+            alert("Sorry, the address is unable to display");
           } else {
             place = response.Placemark[0];
             point = new GLatLng(place.Point.coordinates[1],
