@@ -43,11 +43,13 @@
 	  map.setCenter(new GLatLng(-40.35814342293522, 175.6267547607422),13);
 
 	  // get the street from and street to from the combobox	
-	  var tempFrom = "<%=request.getParameter("mapFrom") %>";
-	  var tempTo = "<%=request.getParameter("mapTo") %>"; 
+	  var tempFrom  = "<%=request.getParameter("mapFrom") %>";
+	  var tempTo    = "<%=request.getParameter("mapTo") %>";
+	  var tempHouse = "<%=request.getParameter("mapHouse") %>";
+	   
 	  // assign the right format to the variables
-	  var fromAddress = tempFrom.toString() + "  palmerston north new zealand";
-	  var toAddress = tempTo.toString() + "  palmerston north new zealand";
+	  var fromAddress =tempHouse.toString() + " " + tempFrom.toString() + "  palmerston north new zealand";
+	  var toAddress   =tempTo.toString() + "  palmerston north new zealand";
       var addressArray = [
                           fromAddress,
                           toAddress,                        
