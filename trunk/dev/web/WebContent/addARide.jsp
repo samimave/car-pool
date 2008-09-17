@@ -38,8 +38,10 @@ while (locations.next()){
       		   	  startLoc = document.getElementById("offer").streetFrom.options[startIdx].text;
      			  endIdx   = document.getElementById("offer").streetTo.selectedIndex;
      		   	  endLoc   = document.getElementById("offer").streetTo.options[endIdx].text;
+     		   	  houseNum  = document.getElementById("offer").houseFrom.value;
      		   	  document.getElementById("map").mapFrom.value=startLoc;
      		   	  document.getElementById("map").mapTo.value=endLoc;
+     		   	  document.getElementById("map").mapHouse.value=houseNum;
      		   	 
       		}
       		
@@ -99,7 +101,8 @@ while (locations.next()){
 					
 					<tr> <th> <h2>Location:</h2> </th> <th>&nbsp;</th> </tr>	
 					<tr> <td>DEPARTURE FROM -</td> </tr>
-					<tr> <td>House number:</td> <td><INPUT TYPE="text" NAME="houseFrom" SIZE="25"></td> </tr>
+					<tr> <td>House number:</td> 
+					<td><INPUT TYPE="text" NAME="houseFrom" SIZE="25"></td> </tr>
 					<tr> <td>Street:</td> <td>
 					<SELECT name="streetFrom"  onChange="getAddress()">
            		  		<option selected="selected">Select a Street</option>
@@ -155,6 +158,7 @@ while (locations.next()){
 					<INPUT type="submit" value="View Map" onClick="getAddress()"/> 
 					<INPUT type="hidden" name="mapFrom" >
 				    <INPUT type="hidden" name="mapTo"   >
+					<INPUT type="hidden" name="mapHouse" >
 			</FORM>
 	
 	<%@ include file="leftMenu.html" %>
