@@ -44,4 +44,9 @@ public interface CarPoolStore {
 	
 	public RideListing getRideListing();
 	public RideListing searchRideListing(int searchType, String searchField);
+	
+	int addComment(int user, int ride, String comment) throws SQLException;
+	int delComment(int idComment) throws SQLException;
+	String[] getComment(int idComment) throws SQLException;
+
 }

@@ -574,4 +574,74 @@ public class CarPoolStoreImpl implements CarPoolStore {
 	public RideListing searchRideListing(int searchType, String searchField) {
 		return RideListingFactory.searchRideListing(db.getStatement(), searchType, searchField);
 	}
+	
+	public int addComment(int user, int ride, String comment) throws SQLException{
+		//add a comment
+		Statement statement = null;
+		int id = FAILED;
+
+		statement = db.getStatement();
+		String sql = "INSERT INTO comments (idUser, idTrip, comment) VALUES ('"
+			+user+"','"
+			+ride+"','"
+			+comment+"');";
+		statement.executeUpdate(sql);
+		statement.close();
+
+		try {
+			statement = db.getStatement();
+			sql = "SELECT LAST_INSERT_ID();";
+			ResultSet rs = statement.executeQuery(sql);
+			if (rs.next()) {
+				id = rs.getInt(1);
+			}
+			rs.close();
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return id;
+	}
+	
+	//NOT WORKING
+	public int delComment(int idComment) throws SQLException{
+		//delete a comment
+		Statement statement = null;
+		int count = 0;
+
+		try {
+			statement = db.getStatement();
+			count = statement.executeUpdate("DELETE FROM comments WHERE " +
+									"idComment='"+idComment+"';");
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return count;
+	}	
+	
+	//NOT WORKING
+	public String[] getComment(int idComment) throws SQLException{
+		//return a single comment
+		String comment[] = new String[5];
+		
+		Statement statement = db.getStatement();
+		String sql = "SELECT * FROM comments WHERE idComment='"+idComment+"';";
+		try {
+			statement = db.getStatement();
+			ResultSet rs = statement.executeQuery(sql);
+			rs.first();
+			for(int i=0;i<5;i++){comment[i] = rs.getString(i);}
+			
+			rs.close();
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return comment;
+
+	}
 }
