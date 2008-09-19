@@ -146,7 +146,7 @@ if (Sto != null) {
 		<STYLE type="text/css" media="screen">@import "3ColumnLayout.css"; </STYLE>
 	</HEAD>
 	<BODY>
-
+<%@ include file="heading.html" %>
 		<DIV class="content">
 		
 			<FORM NAME="resultFrm" id="result">	
@@ -166,6 +166,8 @@ if (Sto != null) {
 			</FORM>
 		</DIV>
 
+	<%@ include file="leftMenu.html" %>
 
+	<%@ include file="rightMenu.jsp" %>
 	</BODY>
 </HTML>
