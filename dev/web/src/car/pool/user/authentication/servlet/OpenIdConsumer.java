@@ -40,7 +40,15 @@ import car.pool.user.UserManager;
 	 */
 	@Override
 	public void init() {
-		proxyConfig = new ProxyConfig(ProxySelector.getDefault());
+		try {
+			proxyConfig = new ProxyConfig(ProxySelector.getDefault());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		ProxySelector.setDefault(proxyConfig);
 	}
 	
