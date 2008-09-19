@@ -10,8 +10,21 @@ String date = request.getParameter("searchDate");
 
 //code to get the name associated with the street id
 LocationList forSallLocs = cps.getLocations();
-String Sfrom = request.getParameter("startLoc");
-String Sto = request.getParameter("endLoc");
+String fromIdx = request.getParameter("searchTo");
+String toIdx = request.getParameter("searchFrom");
+
+//code to get the name associated with the street id
+LocationList allLocs = cps.getLocations();
+String Sfrom = "";
+String Sto = "";
+while (allLocs.next()){
+	if (allLocs.getID() == Integer.parseInt(fromIdx)) {
+		Sfrom = allLocs.getStreetName();	
+	} else if (allLocs.getID() == Integer.parseInt(toIdx)) {
+		Sto = allLocs.getStreetName();
+	}
+		
+}
 
 //----search parameters-----
 
@@ -31,8 +44,6 @@ if (username != null)	{
 		//}
 		ridesExist = true;
 		
-		//code to get the name associated with the street id
-		LocationList allLocs = cps.getLocations();
 		String from = rl.getEndLocation();
 		String to = rl.getStartLocation();
 
@@ -59,7 +70,6 @@ if (date != null)	{
 		ridesExist = true;
 		
 		//code to get the name associated with the street id
-		LocationList allLocs = cps.getLocations();
 		String from = rl.getEndLocation();
 		String to = rl.getStartLocation();
 
@@ -86,8 +96,7 @@ if (Sfrom != null) {
 //		}
 		ridesExist = true;
 		
-		//code to get the name associated with the street id
-		LocationList allLocs = cps.getLocations();
+
 		String from = rl.getEndLocation();
 		String to = rl.getStartLocation();
 
@@ -112,8 +121,7 @@ if (Sto != null) {
 //		}
 		ridesExist = true;
 		
-		//code to get the name associated with the street id
-		LocationList allLocs = cps.getLocations();
+
 		String from = rl.getEndLocation();
 		String to = rl.getStartLocation();
 
