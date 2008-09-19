@@ -7,10 +7,10 @@ create table if not exists carpool.proxyaddress (
  primary key(ipaddress, port)
 ) ENGINE = InnoDB;
 
-drop table if exists carpool.proxyuser;
+#drop table if exists carpool.proxyuser;
 
-create table if not exists carpool.proxyuser (
-  username varchar(40) not null,
-  password varchar(40) not null,
-  primary key(username)
-) ENGINE = InnoDB;
+#create table if not exists carpool.proxyuser (
+#  username varchar(40) not null,
+#  password varchar(40) not null,
+#  primary key(username)
+#) ENGINE = InnoDB;
