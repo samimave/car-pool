@@ -2,54 +2,38 @@
 <%@page import="org.verisign.joid.consumer.OpenIdFilter, car.pool.persistance.*, car.pool.user.*" %>
 
 <%
-//force the user to login to view the page
-if (OpenIdFilter.getCurrentUser(request.getSession()) == null && session.getAttribute("signedin") == null) {
-	response.sendRedirect(request.getContextPath()+"/index.jsp");
-}
 
 User user = (User)session.getAttribute("user");
 
-boolean ridesExist = false;
-String rideTable = "<p>No rides found.</p>";
+//simple date processing for display on page
+Date now = new Date();
+String date = DateFormat.getDateInstance().format(now);
+
 CarPoolStore cps = new CarPoolStoreImpl();
-RideListing rl = cps.getRideListing();
-while (rl.next()) {
-	if (!ridesExist) {
-		rideTable = "";		//first time round get rid of unwanted text
-	}
-	ridesExist = true;
-	
-	//code to get the name associated with the street id
-	LocationList allLocs = cps.getLocations();
-	String from = "";
-	String to = "";
-	while (allLocs.next()){
-		if (allLocs.getID() == Integer.parseInt(rl.getStartLocation())) {
-			from = allLocs.getStreetName();	
-		} else if (allLocs.getID() == Integer.parseInt(rl.getEndLocation())) {
-			to = allLocs.getStreetName();
-		}
-			
-	}
-	
-	rideTable += "<tr> <td>"+ rl.getUsername() +"</td> ";	
-	rideTable += "<td>"+ from +"</td> ";
-	rideTable += "<td>"+ to +"</td> ";
-	rideTable += "<td>"+ rl.getRideDate() +"</td> ";
-	rideTable += "<td>"+ rl.getTime() +"</td> ";
-	rideTable += "<td>"+ rl.getAvailableSeats() +"</td> ";
-	rideTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ rl.getRideID() +"'>"+ "Link to ride page" +"</a> </td> </tr>";
+//make the options for the street select box
+LocationList locations = cps.getLocations();
+String options = "";
+while (locations.next()){
+	options += "<option value='"+locations.getID()+"'>"+locations.getStreetName()+"</option>";
 }
-if (ridesExist) {
-	rideTable = "<table class='rideDetailsSearch'> <tr> <th>Ride Offered By</th> <th>Starting From</th> <th>Going To</th>"+
-		"<th>Departure Date</th> <th>Departure Time</th> <th>Number of Available Seats</th> <th>More Info</th> </tr>"+ rideTable +"</table>";
-}
+
 %>
 
 <HTML>
 	<HEAD>
 		<TITLE>Ride Search</TITLE>
 		<STYLE type="text/css" media="screen">@import "3ColumnLayout.css"; </STYLE>
+		<SCRIPT type="text/javascript">
+			var cal = new CalendarPopup();
+      		function getAddress(){
+    			  startIdx = document.getElementById("search").searchFrom.selectedIndex;
+    		   	  startLoc = document.getElementById("search").searchFrom.options[startIdx].text;
+   			  	  endIdx   = document.getElementById("search").searchTo.selectedIndex;
+   		   	  	  endLoc   = document.getElementById("search").searchTo.options[endIdx].text;
+   		   	 	  document.getElementById("search").sFrom.value=startLoc;
+		   	  	  document.getElementById("search").sTo.value=endLoc;
+      		}
+      	</SCRIPT>
 	</HEAD>
 	<BODY>
 
@@ -57,23 +41,30 @@ if (ridesExist) {
 
 		<DIV class="content">
 			<p>Please enter the search criteria in the boxes below and click search</p>
-			<FORM NAME="searchFrm" method="post" action="newRideConfirmation.jsp" >	
+			<FORM NAME="searchFrm" id="search" method="post" action="result.jsp">	
+					<INPUT type="hidden" name="sFrom" >
+				    <INPUT type="hidden" name="sTo"   >
 				<TABLE class="rideSearch">
-					<tr> <td>Ride Type:</td> <td>
-					<SELECT name="rideType">
-						<option value="sel">Select an Option</option>
-						<option value="Ride Offer">Ride Offer</option>
-						<option value="Ride Request">Ride Request</option>
-					</SELECT></td> </tr>	
-					<tr> <td>Reccurence:</td> <td>
-					<SELECT name="reccurence">
-						<option value="sel">Select an Option</option>
-						<option value="oneoff">One-Off</option>
-						<option value="regular">Regular</option>
-					</SELECT></td> </tr>
-					<tr> <td>&nbsp;</td> <td><INPUT TYPE="submit" NAME="search" VALUE="Search" SIZE="25"></td> </tr>
+					<tr> <th> <h2>Location:</h2> </th> <th>&nbsp;</th> </tr>	
+					<tr> <td>DEPARTURE FROM -</td> </tr>
+					<tr> <td>Street:</td> <td>
+					<SELECT name="searchFrom" onChange="getAddress()" >
+           		  		<option selected="selected">Select a Street</option>
+	           		 	<%=options %>
+       				</SELECT></td> </tr>
+        			<tr> <td>Region: Palmerston North</td> </tr>
+					<tr><td>ARRIVAL AT -</td></tr> 
+					<tr> <td>Street:</td> <td>
+					<SELECT name="searchTo"  onChange="getAddress()">
+           		  		<option selected="selected">Select a Street</option>
+	           		  	<%=options %>
+       				 </SELECT></td> </tr>
 
-					<%=rideTable %>
+					<tr> <td>Region: Palmerston North</td> </tr>					
+					<tr> <td>Date (dd/MM/yyyy):</td> <td><INPUT TYPE="text" NAME="searchDate" VALUE="<%= date %>" SIZE="25"> <A HREF="#" onClick="cal.select(document.forms['searchFrm'].depDate,'anchor1','dd/MM/yyyy'); return false;" NAME="anchor1" ID="anchor1"><img name="calIcon" border="0" src="calendar_icon.jpg" width="27" height="23"></A> </td> </tr> 
+					<tr> <td>User:</td> <td><INPUT TYPE="text" NAME="sUser" VALUE="15" SIZE="25"></td> </tr>
+					<tr> <td>&nbsp;</td> <td><INPUT TYPE="submit" NAME="search" VALUE="Search" onclick="getAddress()" SIZE="25"></td> </tr>
+
 				</TABLE>
 			</FORM>
 		</DIV>
