@@ -6,11 +6,17 @@ import java.net.Proxy;
 import java.net.ProxySelector;
 import java.net.SocketAddress;
 import java.net.URI;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+
+import car.pool.persistance.Database;
+import car.pool.persistance.DatabaseImpl;
 
 public class ProxyConfig extends ProxySelector {
 
@@ -21,19 +27,41 @@ public class ProxyConfig extends ProxySelector {
 	 */
 	Map<SocketAddress,ProxyData> proxies = Collections.synchronizedMap(new Hashtable<SocketAddress, ProxyData>());
 	
-	public ProxyConfig(ProxySelector def) {
+	public ProxyConfig(ProxySelector def) throws IOException, SQLException {
 		defsel = def;
 		setProxies();
 		System.out.format("ProxyConfig with proxies: %s\n", proxies.toString());
 	}
 	
-	private void setProxies() {
-		SocketAddress addr = new InetSocketAddress("tur-cache1.massey.ac.nz", 8080);
-		ProxyData data = new ProxyData(addr);
-		proxies.put(addr, data);
-		addr = new InetSocketAddress("tur-cache2.massey.ac.nz", 8080);
-		data = new ProxyData(addr);
-		proxies.put(addr, data);
+	private void setProxies() throws IOException, SQLException {
+		Database db = new DatabaseImpl();
+		Statement stmnt = db.getStatement();
+		String sql = "SELECT ipaddress,port,ptypes FROM proxyaddress;";
+		ResultSet rs = stmnt.executeQuery(sql);
+		while(rs.next()) {
+			String addr = rs.getString(1);
+			Integer port = rs.getInt(2);
+			String[] types = rs.getString(3).split(",");
+			for(String type : types) {
+				SocketAddress address = new InetSocketAddress(addr, port);
+				if(type.equalsIgnoreCase("http") || type.equalsIgnoreCase("https")) {
+					proxies.put(address, new ProxyData(address));
+				} else if( type.equalsIgnoreCase("direct") ) {
+					proxies.put(address, new ProxyData(address, new Proxy(Proxy.Type.DIRECT, address)));
+				} else if(type.toLowerCase().matches("^socks.*")) {
+					proxies.put(address, new ProxyData(address, new Proxy(Proxy.Type.SOCKS, address)));
+				} else {
+					System.out.format("ProxyConfig: wanted address: %s:%d.  %s is not a recognised type\n", addr,port,type);
+				}
+			}
+			//Proxy.Type.DIRECT; Proxy.Type.HTTP; Proxy.Type.SOCKS;
+		}
+		//SocketAddress addr = new InetSocketAddress("tur-cache1.massey.ac.nz", 8080);
+		//ProxyData data = new ProxyData(addr);
+		//proxies.put(addr, data);
+		//addr = new InetSocketAddress("tur-cache2.massey.ac.nz", 8080);
+		//data = new ProxyData(addr);
+		//proxies.put(addr, data);
 	}
 	
 	public void addProxy(SocketAddress addr, ProxyData p) {
@@ -55,7 +83,7 @@ public class ProxyConfig extends ProxySelector {
 		 */
 		ProxyData p = proxies.get(sa); 
 		if (p != null) {
-			System.out.format("count: %d\n", p.failedCount);
+			
 			/*
 			 * It's one of ours, if it failed more than 3 times
 			 * let's remove it from the list.
@@ -65,6 +93,7 @@ public class ProxyConfig extends ProxySelector {
 			} else {
 				p.failedCount++;
 			}
+			System.out.format("count: %d\n", p.failedCount);
 		} else {
 			/*
 			 * Not one of ours, let's delegate to the default.
