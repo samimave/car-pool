@@ -62,6 +62,8 @@ else {
 
 //##############################ALL RIDES TABLE##############################
 
+
+
 String allTable = "";
 String yes = "no";
 RideListing all = cps.getRideListing();
@@ -84,7 +86,7 @@ while (all.next()) {
 
 //##############################SEARCH RIDE TABLE##############################
 
-
+ArrayList<Integer> avoidDuplicates = new ArrayList<Integer>();
 
 //---------------SEARCH RIDES BY USER----------------------------------
 String userTable = "";
@@ -102,14 +104,21 @@ if (username != "no username entered")	{
 		String from = u.getEndLocation();
 		String to = u.getStartLocation();
 
-		
-		userTable += "<tr> <td>"+ u.getUsername() +"</td> ";	
-		userTable += "<td>"+ from +"</td> ";
-		userTable += "<td>"+ to +"</td> ";
-		userTable += "<td>"+ u.getRideDate() +"</td> ";
-		userTable += "<td>"+ "rl.getTime()" +"</td> ";
-		userTable += "<td>"+ u.getAvailableSeats() +"</td> ";
-		userTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ u.getRideID() +"'>"+ "Link to ride page" +"</a> </td> </tr>";
+		if (!avoidDuplicates.contains(u.getRideID())){
+			avoidDuplicates.add(u.getRideID());
+			
+			userTable += "<tr> <td>"+ u.getUsername() +"</td> ";	
+			userTable += "<td>"+ from +"</td> ";
+			userTable += "<td>"+ to +"</td> ";
+			userTable += "<td>"+ u.getRideDate() +"</td> ";
+			userTable += "<td>"+ "rl.getTime()" +"</td> ";
+			userTable += "<td>"+ u.getAvailableSeats() +"</td> ";
+			userTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ u.getRideID() +"'>"+ "Link to ride page" +"</a> </td> </tr>";
+		}
+		else {
+			userTable = "";
+		}
+
 	}
 }
 
@@ -131,14 +140,21 @@ if (strTmp != "")	{
 		String from = daTbl.getEndLocation();
 		String to = daTbl.getStartLocation();
 
+		if (!avoidDuplicates.contains(daTbl.getRideID())){
+			avoidDuplicates.add(daTbl.getRideID());
+			
+			dateTable += "<tr> <td>"+ daTbl.getUsername() +"</td> ";	
+			dateTable += "<td>"+ from +"</td> ";
+			dateTable += "<td>"+ to +"</td> ";
+			dateTable += "<td>"+ daTbl.getRideDate() +"</td> ";
+			dateTable += "<td>"+ "rl.getTime()" +"</td> ";
+			dateTable += "<td>"+ daTbl.getAvailableSeats() +"</td> ";
+			dateTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ daTbl.getRideID() +"'>"+ "Link to ride page" +"</a> </td> </tr>";
+		}
+		else {
+			dateTable = "";
+		}
 		
-		dateTable += "<tr> <td>"+ daTbl.getUsername() +"</td> ";	
-		dateTable += "<td>"+ from +"</td> ";
-		dateTable += "<td>"+ to +"</td> ";
-		dateTable += "<td>"+ daTbl.getRideDate() +"</td> ";
-		dateTable += "<td>"+ "rl.getTime()" +"</td> ";
-		dateTable += "<td>"+ daTbl.getAvailableSeats() +"</td> ";
-		dateTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ daTbl.getRideID() +"'>"+ "Link to ride page" +"</a> </td> </tr>";
 	}
 }
 
@@ -160,14 +176,21 @@ if (Sfrom != "no location entered") {
 		String from = f.getEndLocation();
 		String to = f.getStartLocation();
 
+		if (!avoidDuplicates.contains(f.getRideID())){
+			avoidDuplicates.add(f.getRideID());
+			
+			fromTable += "<tr> <td>"+ f.getUsername() +"</td> ";	
+			fromTable += "<td>"+ from +"</td> ";
+			fromTable += "<td>"+ to +"</td> ";
+			fromTable += "<td>"+ f.getRideDate() +"</td> ";
+			fromTable += "<td>"+ "rl.getTime()" +"</td> ";
+			fromTable += "<td>"+ f.getAvailableSeats() +"</td> ";
+			fromTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ f.getRideID() +"'>"+ "Link to ride page" +"</a> </td> </tr>";
+		}
+		else{
+			fromTable = "";
+		}
 		
-		fromTable += "<tr> <td>"+ f.getUsername() +"</td> ";	
-		fromTable += "<td>"+ from +"</td> ";
-		fromTable += "<td>"+ to +"</td> ";
-		fromTable += "<td>"+ f.getRideDate() +"</td> ";
-		fromTable += "<td>"+ "rl.getTime()" +"</td> ";
-		fromTable += "<td>"+ f.getAvailableSeats() +"</td> ";
-		fromTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ f.getRideID() +"'>"+ "Link to ride page" +"</a> </td> </tr>";
 	}
 }
 
@@ -189,13 +212,21 @@ if (Sto != "no location entered") {
 		String from = t.getEndLocation();
 		String to = t.getStartLocation();
 		
-		toTable += "<tr> <td>"+ t.getUsername() +"</td> ";	
-		toTable += "<td>"+ from +"</td> ";
-		toTable += "<td>"+ to +"</td> ";
-		toTable += "<td>"+ t.getRideDate() +"</td> ";
-		toTable += "<td>"+ "rl.getTime()" +"</td> ";
-		toTable += "<td>"+ t.getAvailableSeats() +"</td> ";
-		toTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ t.getRideID() +"'>"+ "Link to ride page" +"</a> </td> </tr>";
+		if (!avoidDuplicates.contains(t.getRideID())){
+			avoidDuplicates.add(t.getRideID());
+			
+			toTable += "<tr> <td>"+ t.getUsername() +"</td> ";	
+			toTable += "<td>"+ from +"</td> ";
+			toTable += "<td>"+ to +"</td> ";
+			toTable += "<td>"+ t.getRideDate() +"</td> ";
+			toTable += "<td>"+ "rl.getTime()" +"</td> ";
+			toTable += "<td>"+ t.getAvailableSeats() +"</td> ";
+			toTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ t.getRideID() +"'>"+ "Link to ride page" +"</a> </td> </tr>";
+		}
+		else {
+			toTable = "";
+		}
+	
 	}
 }
 
