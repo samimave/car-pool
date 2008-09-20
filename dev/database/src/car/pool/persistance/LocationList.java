@@ -46,7 +46,8 @@ public class LocationList {
 		try {
 			rs = statement.executeQuery(sql);
 		} catch (SQLException e) {
-			//throw new
+			System.out.println("sql:"+sql);
+			e.printStackTrace();
 		}
 		
 	}
