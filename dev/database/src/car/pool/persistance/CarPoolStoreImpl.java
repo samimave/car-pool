@@ -487,6 +487,8 @@ public class CarPoolStoreImpl implements CarPoolStore {
 			statement.executeUpdate("DELETE FROM user_openids;");
 			statement.executeUpdate("DELETE FROM Matches;");
 			statement.executeUpdate("DELETE FROM Ride;");
+			statement.executeUpdate("DELETE FROM ridecomment;");
+			statement.executeUpdate("DELETE FROM comments;");
 			statement.executeUpdate("DELETE FROM User;");
 			statement.close();
 		} catch (SQLException e) {
