@@ -129,6 +129,7 @@ public class RideListingImpl implements RideListing {
 		if(rs != null) {
 			return rs.next();
 		} else {
+			System.out.println("rs equals null");
 			return false;
 		}
 	}
