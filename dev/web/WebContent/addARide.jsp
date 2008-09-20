@@ -17,9 +17,11 @@ CarPoolStore cps = new CarPoolStoreImpl();
 //make the options for the street select box
 LocationList locations = cps.getLocations();
 String options = "";
-while (locations.next()){
-	options += "<option value='"+locations.getID()+"'>"+locations.getStreetName()+"</option>";
-}
+//if (locations != null) {
+	while (locations.next()){
+		options += "<option value='"+locations.getID()+"'>"+locations.getStreetName()+"</option>";
+	}
+//}
 
 %>
 

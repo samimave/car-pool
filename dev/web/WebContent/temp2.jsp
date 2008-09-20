@@ -12,13 +12,15 @@ String message = "";
 CarPoolStore cps = new CarPoolStoreImpl();
 RideListing rl = cps.getRideListing();
 User user = (User)session.getAttribute("user");
-int dbID = user.getUserId();//cps.getUserIdByURL(request.getParameter("user"));
+int dbID = user.getUserId();
 int rideID = Integer.parseInt(request.getParameter("rideselect"));
 
 String detailsTable = "<p>No info found.</p>";
 boolean ridesExist = false;
 
-while (rl.next()) {
+//System.out.println("got here!");
+while (rl.next()) {					//TODO: this page will work when rl.next() returns
+	//System.out.println("rl.getRideID(): "+rl.getRideID());
 	if (rl.getRideID() == rideID) {
 		if (!ridesExist) {
 			detailsTable = "";		//first time round get rid of unwanted text
