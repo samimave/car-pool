@@ -1,5 +1,5 @@
 <%@page contentType="text/html; charset=ISO-8859-1" %>
-<%@page contentType="text/html; charset=ISO-8859-1" import="java.util.*, java.text.*, org.verisign.joid.consumer.OpenIdFilter, car.pool.persistance.*, car.pool.locations.*"%>
+<%@page contentType="text/html; charset=ISO-8859-1" import="java.util.*, java.text.*, org.verisign.joid.consumer.OpenIdFilter, car.pool.persistance.*,car.pool.persistance.test.*, car.pool.locations.*"%>
 
 <%
 //force the user to login to view the page
@@ -10,14 +10,14 @@ CarPoolStore cps = new CarPoolStoreImpl();
 String[] locations = LocationImporter.importLocations();
 
 if (request.getParameter("locations") != null) {
-	System.out.println("we made it");
+	String loc = request.getParameter("locations");	
+	System.out.println(loc);	
 	   //dosomething
 	int region = -1;
-	region = cps.addRegion("Palmerston North");
-	for(String street : locations){
-			cps.addLocation(region, street);
-			System.out.println("street: "+street);
-	}
+	region = cps.addRegion("Palmerston North");	
+			cps.addLocation(region, loc);
+			System.out.println("street: "+loc);
+	
 }
 %>
 
@@ -119,16 +119,15 @@ if (request.getParameter("locations") != null) {
 	<BODY>
 		<DIV class="content">
 			<h1>Administrative functions below</h1>
-			<FORM NAME="admin" action="adminView.jsp" method="post" >
-				<input type="hidden" name="locations" value="true">	
+			<FORM NAME="admin" action="#" method="post" >				
 				<table>
 					<tr><td>Add locations in database?</td>
-			
-						<td><INPUT type="submit" name="addLocations" value="addLocations" size="25"></td>
+						<td><INPUT type="text" name="locations" value="Enter location here..." size="30"></td>
+						<td>&nbsp;</td> <td><INPUT type="submit" value="Add Locations" size="25"></td>
 					</tr>
 				</table>
 			</FORM>
-			<%=locations.length %>
+			<%//=locations.length %>
 		</DIV>
 	<%@ include file="leftMenu.html" %>
 
