@@ -5,6 +5,7 @@ import java.net.ProxySelector;
 import java.sql.SQLException;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -23,9 +24,12 @@ import car.pool.user.UserManager;
  * Servlet implementation class for Servlet: OpenIdConsumer
  *
  */
- public class OpenIdConsumer extends javax.servlet.http.HttpServlet implements javax.servlet.Servlet {
+ public class OpenIdConsumer extends HttpServlet {
    static final long serialVersionUID = 1L;
-   ProxyConfig proxyConfig = null;
+   /**
+    * The plugin ProxySelector used to determine what proxy to use, if any for any network connections made by this servlet. 
+    */
+   public ProxyConfig proxyConfig = null;
 /* (non-Java-doc)
 	 * @see javax.servlet.http.HttpServlet#HttpServlet()
 	 */

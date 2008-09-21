@@ -33,6 +33,11 @@ public class ProxyConfig extends ProxySelector {
 		System.out.format("ProxyConfig with proxies: %s\n", proxies.toString());
 	}
 	
+	/**
+	 * run at startup to determine from a database what addresses to add to the list of proxies.
+	 * @throws IOException when connection fails to the database
+	 * @throws SQLException when a error hapens in the sql transaction run by this method
+	 */
 	private void setProxies() throws IOException, SQLException {
 		Database db = new DatabaseImpl();
 		Statement stmnt = db.getStatement();
@@ -64,6 +69,11 @@ public class ProxyConfig extends ProxySelector {
 		//proxies.put(addr, data);
 	}
 	
+	/**
+	 * public method for adding a proxy to the proxies table
+	 * @param addr the aocket address to add of the proxy
+	 * @param p the proxy object to add
+	 */
 	public void addProxy(SocketAddress addr, ProxyData p) {
 		proxies.put(addr, p);
 	}
@@ -117,8 +127,8 @@ public class ProxyConfig extends ProxySelector {
 		System.out.format("ProxyConfig.select: uri = %s\n", uri.toString());
 		
 		String protocol = uri.getScheme();
-		if ("http".equalsIgnoreCase(protocol) ||
-			"https".equalsIgnoreCase(protocol)) {
+		if (("http".equalsIgnoreCase(protocol) ||
+			"https".equalsIgnoreCase(protocol) ) && proxies.size() > 0) {
 			ArrayList<Proxy> l = new ArrayList<Proxy>();
 			for(ProxyData d: proxies.values()) {
 				l.add(d.proxy);
