@@ -12,7 +12,7 @@ User user = (User)session.getAttribute("user");
 CarPoolStore cps = new CarPoolStoreImpl();
 //String openID = OpenIdFilter.getCurrentUser(request.getSession());
 int currentUser = user.getUserId();//cps.getUserIdByURL(openID);
-
+String nameOfUser = user.getUserName();
 //code to update details if requested
 //if (request.getParameter("updateDetails") != null) {
 //	cps.addUser((String)request.getParameter("openid_url"),(String)request.getParameter("userName"),(String)request.getParameter("email"),(String)request.getParameter("phone"));
@@ -21,40 +21,41 @@ int currentUser = user.getUserId();//cps.getUserIdByURL(openID);
 
 // code to get ride details
 //temp placeholder variables
-String offerTable = "<p>No rides found.</p>";
+String userTable = "<p>No rides found.</p>";
 String acceptedTable = "<p>No rides found.</p>";
 String requestTable = "<p>No rides found.</p>";
-boolean ridesExist = false;
-RideListing rl = cps.getRideListing();
-while ((rl.next())&& (rl.getUserID() == currentUser))  {
-	if (!ridesExist) {
-		offerTable = "";		//first time round get rid of unwanted text
-	}
-	ridesExist = true;
+
+
+boolean userExist = false;
+
+
+	RideListing rl = cps.searchRideListing(RideListing.searchUser, nameOfUser);
 	
-	//code to get the name associated with the street id
-	LocationList allLocs = cps.getLocations();
-	String from = "";
-	String to = "";
-	while (allLocs.next()){
-		if (allLocs.getID() == Integer.parseInt(rl.getStartLocation())) {
-			from = allLocs.getStreetName();	
-		} else if (allLocs.getID() == Integer.parseInt(rl.getEndLocation())) {
-			to = allLocs.getStreetName();
+	while (rl.next()) {
+		if (!userExist) {
+			userTable = "";		//first time round get rid of unwanted text
 		}
+		userExist = true;
+		
+		String from = rl.getEndLocation();
+		String to = rl.getStartLocation();
 			
+			userTable += "<tr> <td>"+ rl.getUsername() +"</td> ";	
+			userTable += "<td>"+ from +"</td> ";
+			userTable += "<td>"+ to +"</td> ";
+			userTable += "<td>"+ rl.getRideDate() +"</td> ";
+			userTable += "<td>"+ "rl.getTime()" +"</td> ";
+			userTable += "<td>"+ rl.getAvailableSeats() +"</td> ";
+			userTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ rl.getRideID() +"&userselect="+rl.getUsername()+"'>"+ "Link to ride page" +"</a> </td> </tr>";
+
+
 	}
-	
-	offerTable += "<tr> <td>"+ rl.getUsername() +"</td> ";	
-	offerTable += "<td  class = 'rD'>"+ from + "</td> ";
-	offerTable += "<td  class = 'rD'>"+ to +"</td> ";
-	offerTable += "<td  class = 'rD'>"+ rl.getRideDate() +"</td> ";
-	offerTable += "<td  class = 'rD'>"+ rl.getTime() +"</td> ";
-	offerTable += "<td  class = 'rD'>"+ rl.getAvailableSeats() +"</td> </tr>";
-}
-if (ridesExist) {
-	offerTable = "<table class='rideDetailsSearch'> <tr> <th>Ride Offered By</th> <th>Starting From</th> <th>Going To</th>"+
-	"<th>Departure Date</th> <th>Departure Time</th> <th>Number of Available Seats</th> </tr>"+ offerTable +"</table>";
+
+
+
+if (userExist) {
+	userTable = "<table class='rideDetailsSearch'> <tr> <th>Ride Offered By</th> <th>Starting From</th> <th>Going To</th>"+
+	"<th>Departure Date</th> <th>Departure Time</th> <th>Number of Available Seats</th> </tr>"+ userTable +"</table>";
 }
 
 //input openids to the table
@@ -100,7 +101,7 @@ if (request.getParameter("rideSelect") != null && request.getParameter("streetTo
 		</FORM>
 		<h2>Your ride details appear below:</h2><br />
 		<p>Your offers</p>
-		<%=offerTable %><br />
+		<%=userTable %><br />
 		<p>Approving acceptance</p>
 		<p>The users below are awaiting your approval on their acceptance of your offer. If you can pick them up at the place they want click Approve otherwise click Reject.</p>
 		<%//when the user click approve the boolean value confirm should be set to true. %>
