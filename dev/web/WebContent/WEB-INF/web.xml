@@ -76,4 +76,13 @@
     <servlet-name>OpenIdRegistrationProcessor</servlet-name>
     <url-pattern>/oadduser</url-pattern>
   </servlet-mapping>
+  <servlet>
+  	<display-name>UpdateUserDetailsServlet</display-name>
+  	<servlet-name>UpdateUserDetailsServlet</servlet-name>
+  	<servlet-class>car.pool.user.update.servlet.UpdateUserDetailsServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>UpdateUserDetailsServlet</servlet-name>
+  	<url-pattern>/updateuser</url-pattern>
+  </servlet-mapping>
 </web-app>

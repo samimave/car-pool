@@ -14,9 +14,9 @@ CarPoolStore cps = new CarPoolStoreImpl();
 int currentUser = user.getUserId();//cps.getUserIdByURL(openID);
 
 //code to update details if requested
-if (request.getParameter("updateDetails") != null) {
-	cps.addUser((String)request.getParameter("openid_url"),(String)request.getParameter("userName"),(String)request.getParameter("email"),(String)request.getParameter("phone"));
-}
+//if (request.getParameter("updateDetails") != null) {
+//	cps.addUser((String)request.getParameter("openid_url"),(String)request.getParameter("userName"),(String)request.getParameter("email"),(String)request.getParameter("phone"));
+//}
 
 
 // code to get ride details
@@ -88,11 +88,11 @@ if (request.getParameter("rideSelect") != null && request.getParameter("streetTo
 	<DIV class="content">
 		<h2 align="center">Welcome to your Account Page</h2><br /><br />
 		<h2>Your user details appear below:</h2>
-		<FORM name="updateDetails" action="test.jsp" method="post">
+		<FORM name="updateDetails" action="updateuser" method="post">
 			<INPUT type="hidden" name="updateDetails" value="yes">
 			<TABLE class='userDetails'>
 				<%=openIDTableRow %>
-				<tr> <td>Username:</td> <td><INPUT TYPE="text" NAME="userName" SIZE="25" value="<%=user.getUserName()%>"></td> </tr> 
+				<tr> <td>Username:</td> <td><%=user.getUserName()%><!-- <INPUT TYPE="text" NAME="userName" SIZE="25" value="<%=user.getUserName()%>">--></td> </tr> 
 				<tr> <td>Email Address:</td> <td><INPUT TYPE="text" NAME="email" SIZE="25" value="<%=user.getEmail()%>"></td> </tr> 
 				<tr> <td>Phone Number:</td> <td><INPUT TYPE="text" NAME="phone" SIZE="25" value="<%=user.getPhoneNumber()%>"></td> </tr>
   				<tr> <td>&nbsp;</td> <td><INPUT TYPE="submit" NAME="confirmUpdate" VALUE="Update Details" SIZE="25"></td> </tr>
