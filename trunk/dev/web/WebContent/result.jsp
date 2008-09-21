@@ -113,7 +113,7 @@ if (username != "no username entered")	{
 			userTable += "<td>"+ u.getRideDate() +"</td> ";
 			userTable += "<td>"+ "rl.getTime()" +"</td> ";
 			userTable += "<td>"+ u.getAvailableSeats() +"</td> ";
-			userTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ u.getRideID() +"'>"+ "Link to ride page" +"</a> </td> </tr>";
+			userTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ u.getRideID() +"&userselect="+u.getUsername()+"'>"+ "Link to ride page" +"</a> </td> </tr>";
 		}
 		else {
 			userTable = "";
@@ -149,7 +149,7 @@ if (strTmp != "")	{
 			dateTable += "<td>"+ daTbl.getRideDate() +"</td> ";
 			dateTable += "<td>"+ "rl.getTime()" +"</td> ";
 			dateTable += "<td>"+ daTbl.getAvailableSeats() +"</td> ";
-			dateTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ daTbl.getRideID() +"'>"+ "Link to ride page" +"</a> </td> </tr>";
+			dateTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ daTbl.getRideID() +"&userselect="+daTbl.getUsername()+"'>"+ "Link to ride page" +"</a> </td> </tr>";
 		}
 		else {
 			dateTable = "";
@@ -185,7 +185,7 @@ if (Sfrom != "no location entered") {
 			fromTable += "<td>"+ f.getRideDate() +"</td> ";
 			fromTable += "<td>"+ "rl.getTime()" +"</td> ";
 			fromTable += "<td>"+ f.getAvailableSeats() +"</td> ";
-			fromTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ f.getRideID() +"'>"+ "Link to ride page" +"</a> </td> </tr>";
+			fromTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ f.getRideID()  +"&userselect="+f.getUsername()+"'>"+ "Link to ride page" +"</a> </td> </tr>";
 		}
 		else{
 			fromTable = "";
@@ -221,7 +221,7 @@ if (Sto != "no location entered") {
 			toTable += "<td>"+ t.getRideDate() +"</td> ";
 			toTable += "<td>"+ "rl.getTime()" +"</td> ";
 			toTable += "<td>"+ t.getAvailableSeats() +"</td> ";
-			toTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ t.getRideID() +"'>"+ "Link to ride page" +"</a> </td> </tr>";
+			toTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ t.getRideID() +"&userselect="+t.getUsername() +"'>"+ "Link to ride page" +"</a> </td> </tr>";
 		}
 		else {
 			toTable = "";
