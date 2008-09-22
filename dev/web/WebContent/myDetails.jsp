@@ -85,7 +85,7 @@ if (request.getParameter("rideSelect") != null && request.getParameter("streetTo
 	String dt = "";
 	String tm = "";
 	while (rl2.next()){
-		System.out.println(rl2.getRideID()+", "+request.getParameter("rideSelect"));
+		//System.out.println(rl2.getRideID()+", "+request.getParameter("rideSelect"));
 		if (rl2.getRideID() == Integer.parseInt(request.getParameter("rideSelect"))) {
 			el = rl2.getEndLocation();
 			dt = new SimpleDateFormat("dd/MM/yyyy").format(rl2.getRideDate());
