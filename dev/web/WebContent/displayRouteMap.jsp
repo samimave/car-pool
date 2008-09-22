@@ -26,6 +26,7 @@
     
 	window.onload = function() {
     	showLocation(); 
+    
     }
 	window.unload = GUnload();
 
@@ -46,15 +47,33 @@
 	  var tempFrom  = "<%=request.getParameter("mapFrom") %>";
 	  var tempTo    = "<%=request.getParameter("mapTo") %>";
 	  var tempHouse = "<%=request.getParameter("mapHouse") %>";
-	   
-	  // assign the right format to the variables
-	  var fromAddress =tempHouse.toString() + " " + tempFrom.toString() + "  palmerston north new zealand";
-	  var toAddress   =tempTo.toString() + "  palmerston north new zealand";
+
+	  //address formating, tempHouse is the house number, because two jsp page is using the same variable
+	  //one is the "offer ride" page which can provide house number, so tempHouse value is either null or not null
+	  //the other one is the "temp2" page which doesn't provide the house number, so the value is "null" as a string.
+	  if (tempHouse == null){	   
+		  // assign the right format to the variables
+		     var addressNoHouse =tempFrom.toString() + "  PALMERSTON NORTH NEW ZEALAND";
+		   		 toAddress   =tempTo.toString() + "  PALMERSTON NORTH NEW ZEALAND";
+		         fromAddress = addressNoHouse;
+		  }
+
+	  if (tempHouse != null){
+		  var addressHouse =tempHouse.toString() + " " + tempFrom.toString() + "  PALMERSTON NORTH NEW ZEALAND";				   
+		   	  toAddress   =tempTo.toString() + "  PALMERSTON NORTH NEW ZEALAND";
+		      fromAddress = addressHouse;
+	  }
+
+	  if (tempHouse == "null"){
+		  var detailAddress =tempFrom.toString() + "  PALMERSTON NORTH NEW ZEALAND";				   
+		   	  toAddress   =tempTo.toString() + "  PALMERSTON NORTH NEW ZEALAND";
+		      fromAddress = detailAddress;
+	  }
       var addressArray = [
                           fromAddress,
                           toAddress,                        
                           ];
-     
+	  
       // ===== Start with an empty GLatLngBounds object =====     
       var bounds = new GLatLngBounds();
                      
@@ -65,6 +84,7 @@
 
           if (!response || response.Status.code != 200) {
             alert("Sorry, the address is unable to display");
+           // alert(response + " " + response.Status.code);
           } else {
             place = response.Placemark[0];
             point = new GLatLng(place.Point.coordinates[1],
@@ -77,8 +97,10 @@
                 marker.openInfoWindowHtml(html);
               });
             map.addOverlay(marker); 
-            return marker;          
+            return marker;   
+                  
           }
+          
         }     
                 
       // It geocodes the address in the database associate with the ride
