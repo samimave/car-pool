@@ -92,8 +92,8 @@ public class RideListingImpl implements RideListing {
 			} catch (SQLException e) {
 				//throw new
 			}
-		}else if(searchType == searchLocation){
-			String location = searchField;
+		}else if(searchType == searchLocationBoth){
+			String location = "%" + searchField.replace(' ', '%') + "%";
 			String sql = "SELECT * "+
 			"FROM ("	+	
 			"Select * " +
@@ -113,6 +113,56 @@ public class RideListingImpl implements RideListing {
 			") as a "+
 			"WHERE a.rideStartLocation LIKE '"+location+"' "+
 			"OR a.rideStopLocation LIKE '"+location+"';";
+			try {
+				rs = statement.executeQuery(sql);
+			} catch (SQLException e) {
+				//throw new
+			}
+		}else if(searchType == searchLocationEnd){
+			String location = "%" + searchField.replace(' ', '%') + "%";
+			String sql = "SELECT * "+
+			"FROM ("	+	
+			"Select * " +
+			"FROM " +
+			"(Select r.idRide, u.idUser, u.username,(r.availableSeats - Count(*)) as availableSeats, r.rideDate, r.rideTime, r.rideStartLocation, r.rideStopLocation " +
+			"FROM " +
+			"(SELECT r.idRide, r.idUser, r.rideDate, r.rideTime, l.street as rideStartLocation, ll.street as rideStopLocation, r.availableSeats "+
+			"FROM User as u, Ride as r, Matches as m, locations as l, locations as ll "+
+			"WHERE u.idUser = m.idUser "+
+			"AND l.idLocations = r.rideStartLocation "+
+			"AND ll.idLocations = r.rideStopLocation "+
+			"AND m.idRide = r.idRide) as r, " +
+			"User as u " +
+			"WHERE u.idUser = r.idUser " +
+			"GROUP BY r.idRide) as t " +
+			"WHERE t.availableSeats > 0 "+
+			") as a "+
+			"WHERE a.rideStopLocation LIKE '"+location+"';";
+			try {
+				rs = statement.executeQuery(sql);
+			} catch (SQLException e) {
+				//throw new
+			}
+		}else if(searchType == searchLocationStart){
+			String location = "%" + searchField.replace(' ', '%') + "%";
+			String sql = "SELECT * "+
+			"FROM ("	+	
+			"Select * " +
+			"FROM " +
+			"(Select r.idRide, u.idUser, u.username,(r.availableSeats - Count(*)) as availableSeats, r.rideDate, r.rideTime, r.rideStartLocation, r.rideStopLocation " +
+			"FROM " +
+			"(SELECT r.idRide, r.idUser, r.rideDate, r.rideTime, l.street as rideStartLocation, ll.street as rideStopLocation, r.availableSeats "+
+			"FROM User as u, Ride as r, Matches as m, locations as l, locations as ll "+
+			"WHERE u.idUser = m.idUser "+
+			"AND l.idLocations = r.rideStartLocation "+
+			"AND ll.idLocations = r.rideStopLocation "+
+			"AND m.idRide = r.idRide) as r, " +
+			"User as u " +
+			"WHERE u.idUser = r.idUser " +
+			"GROUP BY r.idRide) as t " +
+			"WHERE t.availableSeats > 0 "+
+			") as a "+
+			"WHERE a.rideStartLocation LIKE '"+location+"';";
 			try {
 				rs = statement.executeQuery(sql);
 			} catch (SQLException e) {
