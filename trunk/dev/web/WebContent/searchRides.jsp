@@ -26,11 +26,6 @@ RideListing rl = cps.getRideListing();		//TODO: make this work
 while (rl.next()){
 	rideCount++;
 }
-
-
-
-
-
 %>
 
 <HTML>

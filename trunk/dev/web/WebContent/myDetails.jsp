@@ -68,11 +68,33 @@ if (entries != "") {
 	openIDTableRow = "<tr> <td>Open ID:</td> <td><select multiple='multiple' NAME='openid_url'>"+entries+"</select></td> </tr>";
 }
 
-//if you have been redirected here from taking a ride
+String takeConf = "";
+//if you have been redirected here from taking a ride print useful info
 if (request.getParameter("rideSelect") != null && request.getParameter("streetTo") != null && request.getParameter("houseNo") != null) {
 	cps.takeRide(currentUser,Integer.parseInt(request.getParameter("rideSelect")),Integer.parseInt(request.getParameter("streetTo")),
 			Integer.parseInt(request.getParameter("houseNo")));
+	LocationList locations = cps.getLocations();
+	String target = "";
+	while (locations.next()){
+		if (locations.getID() == Integer.parseInt(request.getParameter("streetTo"))) {
+			target = locations.getStreetName();
+		}
+	}
+	RideListing rl2 = cps.getRideListing();
+	String el = "";
+	String dt = "";
+	String tm = "";
+	while (rl2.next()){
+		System.out.println(rl2.getRideID()+", "+request.getParameter("rideSelect"));
+		if (rl2.getRideID() == Integer.parseInt(request.getParameter("rideSelect"))) {
+			el = rl2.getEndLocation();
+			dt = new SimpleDateFormat("dd/MM/yyyy").format(rl2.getRideDate());
+			tm = rl2.getTime();
+		}
+	}
+	takeConf = "<p>" + "You have requested to be picked up from " +request.getParameter("houseNo")+" "+target+" at "+tm+" on "+dt+ "</p>";
 }
+
 %>
 
 
@@ -88,6 +110,7 @@ if (request.getParameter("rideSelect") != null && request.getParameter("streetTo
 
 	<DIV class="content">
 		<h2 align="center">Welcome to your Account Page</h2><br /><br />
+		<%=takeConf %>
 		<h2>Your user details appear below:</h2>
 		<FORM name="updateDetails" action="updateuser" method="post">
 			<INPUT type="hidden" name="updateDetails" value="yes">
