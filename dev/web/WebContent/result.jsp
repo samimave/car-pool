@@ -159,12 +159,12 @@ if (strTmp != "")	{
 }
 
 
-//---------------SEARCH RIDES BY FROM----------------------------------
+//---------------SEARCH RIDES BY FROM ONLY----------------------------------
 String fromTable = "";
 boolean fromExist = false;
 
 if (Sfrom != "no location entered") {
-	RideListing f = cps.searchRideListing(RideListing.searchLocation, Sfrom);
+	RideListing f = cps.searchRideListing(RideListing.searchLocationStart, Sfrom);
 	
 	while (f.next()) {
 		if (!fromExist) {
@@ -173,8 +173,8 @@ if (Sfrom != "no location entered") {
 		fromExist = true;
 		
 
-		String from = f.getEndLocation();
-		String to = f.getStartLocation();
+		String from = f.getStartLocation();
+		String to = f.getEndLocation();
 
 		if (!avoidDuplicates.contains(f.getRideID())){
 			avoidDuplicates.add(f.getRideID());
@@ -196,12 +196,12 @@ if (Sfrom != "no location entered") {
 
 
 
-//---------------SEARCH RIDES BY TO----------------------------------
+//---------------SEARCH RIDES BY TO ONLY----------------------------------
 String toTable = "";
 boolean toExist = false;
 
 if (Sto != "no location entered") {
-	RideListing t = cps.searchRideListing(RideListing.searchLocation, Sto);
+	RideListing t = cps.searchRideListing(RideListing.searchLocationEnd, Sto);
 	
 	while (t.next()) {
 		if (!toExist) {
@@ -209,8 +209,8 @@ if (Sto != "no location entered") {
 		}
 		toExist = true;
 
-		String from = t.getEndLocation();
-		String to = t.getStartLocation();
+		String from = t.getStartLocation();
+		String to = t.getEndLocation();
 		
 		if (!avoidDuplicates.contains(t.getRideID())){
 			avoidDuplicates.add(t.getRideID());
@@ -229,7 +229,6 @@ if (Sto != "no location entered") {
 	
 	}
 }
-
 
 //---------------COMBINE RESULTS----------------------------------
 	String rideTable = "";
