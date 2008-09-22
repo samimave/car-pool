@@ -21,6 +21,8 @@ while (locations.next()){
 	options += "<option value='"+locations.getID()+"'>"+locations.getStreetName()+"</option>";
 }
 
+//count the number of rides in the db
+RideListing rl = null;		//TODO: make this work
 %>
 
 <HTML>
@@ -37,6 +39,7 @@ while (locations.next()){
 	<%@ include file="heading.html" %>
 
 		<DIV class="content">
+			<p>There are currently <%=rideCount %> rides in the database!</p>
 			<p>Please enter the search criteria in the boxes below and click search</p>
 			<FORM NAME="searchFrm" id="search" method="post" action="result.jsp">	
 				<TABLE class="rideSearch">
