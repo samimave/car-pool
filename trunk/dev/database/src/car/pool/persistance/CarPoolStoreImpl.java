@@ -628,14 +628,45 @@ public class CarPoolStoreImpl implements CarPoolStore {
 	public String[] getComment(int idComment) throws SQLException{
 		//return a single comment
 		String comment[] = new String[5];
+		int i=0;
 		
 		Statement statement = db.getStatement();
 		String sql = "SELECT * FROM comments WHERE idComment='"+idComment+"';";
 		try {
 			statement = db.getStatement();
 			ResultSet rs = statement.executeQuery(sql);
-			rs.first();
-			for(int i=0;i<5;i++){comment[i] = rs.getString(i);}
+			while(rs.next()){
+			for(int j=1;j<5;j++){
+				comment[i] += rs.getString(j) + "|";
+				}
+			}
+			
+			rs.close();
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return comment;
+
+	}
+	public Vector<String> getRideComment(int idTrip) throws SQLException{
+		//return a single comment
+		Vector<String> comment = new Vector<String>();
+		String temp = "";
+		
+		Statement statement = db.getStatement();
+		String sql = "SELECT * FROM comments WHERE idTrip='"+idTrip+"';";
+		try {
+			statement = db.getStatement();
+			ResultSet rs = statement.executeQuery(sql);
+			while(rs.next()){
+			for(int i=1;i<5;i++){
+				temp += rs.getString(i) + "|";
+				}
+			comment.add(temp);
+			temp = "";
+			}
 			
 			rs.close();
 			statement.close();

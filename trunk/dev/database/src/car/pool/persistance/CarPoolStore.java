@@ -48,5 +48,6 @@ public interface CarPoolStore {
 	int addComment(int user, int ride, String comment) throws SQLException;
 	int delComment(int idComment) throws SQLException;
 	String[] getComment(int idComment) throws SQLException;
-
+	public Vector<String> getRideComment(int idTrip) throws SQLException;
+	
 }
