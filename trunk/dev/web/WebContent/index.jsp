@@ -32,13 +32,12 @@ if (request.getParameter("delete") != null) {
 	<%@ include file="heading.html" %>
 
 	<DIV id="content" class="content">
-		<h2 align="center">Welcome to The Car Pool</h2>
-		<p>To find out more about our website and what we offer; <a href="about.jsp">click here.</a></p>
+		<h2 align="center">Welcome to The Car Pool</h2><br />
+		<p>To see what rides we have available without logging in <a href="searchRides.jsp">click here.</a></p>
+		<p>To find out more about our website and what we offer <a href="about.jsp">click here.</a></p>
 	</DIV>
 
-	<DIV id="navAlpha" class="navAlpha">
-		<p>Please log in.</p>
-	</DIV>
+	<%@ include file="leftMenuLogin.html" %>
 
 	<%@ include file="rightMenuLogin.html" %>	
 

@@ -3,8 +3,7 @@
 <%@page import="org.verisign.joid.consumer.OpenIdFilter, car.pool.persistance.*, car.pool.user.*" %>
 <%
 User user = null;
-
-//force the user to login to view the page
+//check if the user is logged in and viewing the page
 if (!(OpenIdFilter.getCurrentUser(request.getSession()) == null && session.getAttribute("signedin") == null)) {
 	user = (User)session.getAttribute("user"); 
 }
@@ -27,17 +26,14 @@ if (!(OpenIdFilter.getCurrentUser(request.getSession()) == null && session.getAt
 	</DIV>
 
 <%
-if (user != null) { 
+if (user != null) { 		//depending if the user is logged in or not different side menus should be displayed
 %> 
 	<jsp:include page="leftMenu.html" flush="false" />
-
 	<jsp:include page="rightMenu.jsp" flush="false" />
 <%
 } else { 
 %>
-	<DIV id="navAlpha" class="navAlpha">
-		<p>alpha</p>
-	</DIV>
+	<jsp:include page="leftMenuLogin.html" flush="false" />
 	<jsp:include page="rightMenuLogin.html" flush="false" />
 <%
 } 

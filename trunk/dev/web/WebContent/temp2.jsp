@@ -2,6 +2,8 @@
 <%@page import="org.verisign.joid.consumer.OpenIdFilter, car.pool.persistance.*, car.pool.user.*" %>
 <%
 //force the user to login to view the page
+System.out.println(OpenIdFilter.getCurrentUser(request.getSession()));
+System.out.println(session.getAttribute("signedin"));
 if (OpenIdFilter.getCurrentUser(request.getSession()) == null && session.getAttribute("signedin") == null) {
 	response.sendRedirect(request.getContextPath()+"/index.jsp");
 }
