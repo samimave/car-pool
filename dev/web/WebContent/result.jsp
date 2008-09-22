@@ -71,20 +71,16 @@ else {
 
 
 String allTable = "";
-String yes = "no";
 RideListing all = cps.getRideListing();
-if (all.next()){
-	yes = "yes";
-}
 while (all.next()) {
-	String from = all.getEndLocation();
-	String to = all.getStartLocation();
+	String from = all.getStartLocation();
+	String to = all.getEndLocation();
 	
 	allTable += "<tr> <td>"+ all.getUsername() +"</td> ";	
 	allTable += "<td>"+ from +"</td> ";
 	allTable += "<td>"+ to +"</td> ";
 	allTable += "<td>"+ all.getRideDate() +"</td> ";
-	allTable += "<td>"+ "rl.getTime()" +"</td> ";
+	allTable += "<td>"+ all.getTime() +"</td> ";
 	allTable += "<td>"+ all.getAvailableSeats() +"</td> ";
 	if (user != null) {
 		allTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ all.getRideID() +"'>"+ "Link to ride page" +"</a> </td> </tr>";
@@ -121,7 +117,7 @@ if (username != "no username entered")	{
 			userTable += "<td>"+ from +"</td> ";
 			userTable += "<td>"+ to +"</td> ";
 			userTable += "<td>"+ u.getRideDate() +"</td> ";
-			userTable += "<td>"+ "rl.getTime()" +"</td> ";
+			userTable += "<td>"+ u.getTime() +"</td> ";
 			userTable += "<td>"+ u.getAvailableSeats() +"</td> ";
 			if (user != null) {
 				userTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ u.getRideID() +"&userselect="+u.getUsername()+"'>"+ "Link to ride page" +"</a> </td> </tr>";
@@ -161,7 +157,7 @@ if (strTmp != "")	{
 			dateTable += "<td>"+ from +"</td> ";
 			dateTable += "<td>"+ to +"</td> ";
 			dateTable += "<td>"+ daTbl.getRideDate() +"</td> ";
-			dateTable += "<td>"+ "rl.getTime()" +"</td> ";
+			dateTable += "<td>"+ daTbl.getTime() +"</td> ";
 			dateTable += "<td>"+ daTbl.getAvailableSeats() +"</td> ";
 			if (user != null) {	
 				dateTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ daTbl.getRideID() +"&userselect="+daTbl.getUsername()+"'>"+ "Link to ride page" +"</a> </td> </tr>";
@@ -201,7 +197,7 @@ if (Sfrom != "no location entered") {
 			fromTable += "<td>"+ from +"</td> ";
 			fromTable += "<td>"+ to +"</td> ";
 			fromTable += "<td>"+ f.getRideDate() +"</td> ";
-			fromTable += "<td>"+ "rl.getTime()" +"</td> ";
+			fromTable += "<td>"+ f.getTime() +"</td> ";
 			fromTable += "<td>"+ f.getAvailableSeats() +"</td> ";
 			if (user != null) {
 				fromTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ f.getRideID()  +"&userselect="+f.getUsername()+"'>"+ "Link to ride page" +"</a> </td> </tr>";
@@ -241,7 +237,7 @@ if (Sto != "no location entered") {
 			toTable += "<td>"+ from +"</td> ";
 			toTable += "<td>"+ to +"</td> ";
 			toTable += "<td>"+ t.getRideDate() +"</td> ";
-			toTable += "<td>"+ "rl.getTime()" +"</td> ";
+			toTable += "<td>"+ t.getTime() +"</td> ";
 			toTable += "<td>"+ t.getAvailableSeats() +"</td> ";
 			if (user != null) {
 				toTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ t.getRideID() +"&userselect="+t.getUsername() +"'>"+ "Link to ride page" +"</a> </td> </tr>";
@@ -295,7 +291,7 @@ if (Sto != "no location entered") {
 					<tr><td>Date:</td> <td><%=strTmp%></td></tr>
 					<tr><td>User:</td> <td><%=username %></td>
 	
-					<tr><td>Search results appear below</td><td><%=yes%></td></tr>
+					<tr><td>Search results appear below</td></tr>
 					<%=rideTable %>
 					
 					<tr><td> <a href=searchRides.jsp>Go back to Search page</a> </td> </tr>
