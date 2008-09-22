@@ -1,8 +1,14 @@
 <%@page contentType="text/html; charset=ISO-8859-1" %>
-<%@page import="org.verisign.joid.consumer.OpenIdFilter, car.pool.persistance.*, java.text.SimpleDateFormat" %>
+<%@page import="org.verisign.joid.consumer.OpenIdFilter, car.pool.persistance.*, java.text.SimpleDateFormat,car.pool.user.*,java.util.*" %>
 
 <%
 CarPoolStore cps = new CarPoolStoreImpl();
+
+User user = null;
+//check if the user is logged in and viewing the page
+if (!(OpenIdFilter.getCurrentUser(request.getSession()) == null && session.getAttribute("signedin") == null)) {
+	user = (User)session.getAttribute("user"); 
+}
 
 //----------------------search parameters------------------------
 //USERNAME
@@ -80,7 +86,11 @@ while (all.next()) {
 	allTable += "<td>"+ all.getRideDate() +"</td> ";
 	allTable += "<td>"+ "rl.getTime()" +"</td> ";
 	allTable += "<td>"+ all.getAvailableSeats() +"</td> ";
-	allTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ all.getRideID() +"'>"+ "Link to ride page" +"</a> </td> </tr>";
+	if (user != null) {
+		allTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ all.getRideID() +"'>"+ "Link to ride page" +"</a> </td> </tr>";
+	} else {
+		allTable += "<td>login to view more</td> </tr>";
+	}
 }
 
 
@@ -113,7 +123,11 @@ if (username != "no username entered")	{
 			userTable += "<td>"+ u.getRideDate() +"</td> ";
 			userTable += "<td>"+ "rl.getTime()" +"</td> ";
 			userTable += "<td>"+ u.getAvailableSeats() +"</td> ";
-			userTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ u.getRideID() +"&userselect="+u.getUsername()+"'>"+ "Link to ride page" +"</a> </td> </tr>";
+			if (user != null) {
+				userTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ u.getRideID() +"&userselect="+u.getUsername()+"'>"+ "Link to ride page" +"</a> </td> </tr>";
+			} else {
+				userTable += "<td>login to view more</td> </tr>";
+			}
 		}
 		else {
 			userTable = "";
@@ -149,7 +163,11 @@ if (strTmp != "")	{
 			dateTable += "<td>"+ daTbl.getRideDate() +"</td> ";
 			dateTable += "<td>"+ "rl.getTime()" +"</td> ";
 			dateTable += "<td>"+ daTbl.getAvailableSeats() +"</td> ";
-			dateTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ daTbl.getRideID() +"&userselect="+daTbl.getUsername()+"'>"+ "Link to ride page" +"</a> </td> </tr>";
+			if (user != null) {	
+				dateTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ daTbl.getRideID() +"&userselect="+daTbl.getUsername()+"'>"+ "Link to ride page" +"</a> </td> </tr>";
+			} else {
+				dateTable += "<td>login to view more</td> </tr>";
+			}
 		}
 		else {
 			dateTable = "";
@@ -185,7 +203,11 @@ if (Sfrom != "no location entered") {
 			fromTable += "<td>"+ f.getRideDate() +"</td> ";
 			fromTable += "<td>"+ "rl.getTime()" +"</td> ";
 			fromTable += "<td>"+ f.getAvailableSeats() +"</td> ";
-			fromTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ f.getRideID()  +"&userselect="+f.getUsername()+"'>"+ "Link to ride page" +"</a> </td> </tr>";
+			if (user != null) {
+				fromTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ f.getRideID()  +"&userselect="+f.getUsername()+"'>"+ "Link to ride page" +"</a> </td> </tr>";
+			} else {
+				fromTable += "<td>login to view more</td> </tr>";
+			}
 		}
 		else{
 			fromTable = "";
@@ -221,7 +243,11 @@ if (Sto != "no location entered") {
 			toTable += "<td>"+ t.getRideDate() +"</td> ";
 			toTable += "<td>"+ "rl.getTime()" +"</td> ";
 			toTable += "<td>"+ t.getAvailableSeats() +"</td> ";
-			toTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ t.getRideID() +"&userselect="+t.getUsername() +"'>"+ "Link to ride page" +"</a> </td> </tr>";
+			if (user != null) {
+				toTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ t.getRideID() +"&userselect="+t.getUsername() +"'>"+ "Link to ride page" +"</a> </td> </tr>";
+			} else {
+				toTable += "<td>login to view more</td> </tr>";
+			}
 		}
 		else {
 			toTable = "";
@@ -278,8 +304,18 @@ if (Sto != "no location entered") {
 			</FORM>
 		</DIV>
 
-	<%@ include file="leftMenu.html" %>
-
-	<%@ include file="rightMenu.jsp" %>
+<%
+if (user != null) { 		//depending if the user is logged in or not different side menus should be displayed
+%> 
+	<jsp:include page="leftMenu.html" flush="false" />
+	<jsp:include page="rightMenu.jsp" flush="false" />
+<%
+} else { 
+%>
+	<jsp:include page="leftMenuLogin.html" flush="false" />
+	<jsp:include page="rightMenuLogin.html" flush="false" />
+<%
+} 
+%>
 	</BODY>
 </HTML>

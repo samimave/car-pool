@@ -1,9 +1,12 @@
 <%@page contentType="text/html; charset=ISO-8859-1" %>
-<%@page import="org.verisign.joid.consumer.OpenIdFilter, car.pool.persistance.*, car.pool.user.*" %>
+<%@page import="org.verisign.joid.consumer.OpenIdFilter, car.pool.persistance.*, car.pool.user.*,java.util.*,java.text.*" %>
 
 <%
-
-User user = (User)session.getAttribute("user");
+User user = null;
+//check if the user is logged in and viewing the page
+if (!(OpenIdFilter.getCurrentUser(request.getSession()) == null && session.getAttribute("signedin") == null)) {
+	user = (User)session.getAttribute("user"); 
+}
 
 //simple date processing for display on page
 Date now = new Date();
@@ -55,11 +58,22 @@ while (locations.next()){
 
 				</TABLE>
 			</FORM>
+			<p><a href="welcome.jsp">Home</a></p>
 		</DIV>
 
-	<%@ include file="leftMenu.html" %>
-
-	<%@ include file="rightMenu.jsp" %>
+<%
+if (user != null) { 		//depending if the user is logged in or not different side menus should be displayed
+%> 
+	<jsp:include page="leftMenu.html" flush="false" />
+	<jsp:include page="rightMenu.jsp" flush="false" />
+<%
+} else { 
+%>
+	<jsp:include page="leftMenuLogin.html" flush="false" />
+	<jsp:include page="rightMenuLogin.html" flush="false" />
+<%
+} 
+%>
 
 	</BODY>
 </HTML>
