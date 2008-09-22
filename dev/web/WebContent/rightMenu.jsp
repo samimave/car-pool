@@ -13,7 +13,7 @@ String rtime = DateFormat.getTimeInstance(DateFormat.SHORT).format(rnow);
 String rdate = DateFormat.getDateInstance().format(rnow);
 %>
 
-<DIV id="navBeta">
+<DIV id="navBeta" class="navBeta">
 	Hi <%=name  %><br />
 	Your current social score is: &lt;integer?&gt;.<br />
 	<p> <%= rtime %> <%= rdate %></p>
