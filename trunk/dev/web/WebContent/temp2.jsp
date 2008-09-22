@@ -88,6 +88,8 @@ while (locations.next()){
 			</TABLE>
 		</FORM>
 			
+	</DIV>
+
 	<FORM name="showMap" id="map2" method="post" target="_blank" action="displayRouteMap.jsp">
 		<INPUT type="submit" value="View Map" > 
 		<INPUT type="hidden" name="mapFrom" value= "<%=from%>">
@@ -96,7 +98,6 @@ while (locations.next()){
 	</FORM>
 		
 
-	</DIV>
 
 	<%@ include file="leftMenu.html" %>
 
