@@ -128,6 +128,15 @@ if (request.getParameter("locations") != null) {
 				</table>
 			</FORM>
 			<%//=locations.length %>
+			&nbsp;	
+			<FORM NAME="delComment" action="delAComment.jsp" method="post" >
+				<table>
+					<tr><td>Delete a comment</td>
+						<td><INPUT type="text" name="idComment" value="Enter comment number here..." size="30"></td>
+						<td>&nbsp;</td> <td><INPUT type="submit" value="Delete Comment" size="25"></td>
+					</tr>
+				</table>
+			</FORM>
 		</DIV>
 	<%@ include file="leftMenu.html" %>
 
