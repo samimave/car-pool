@@ -85,13 +85,13 @@ ul.none {
 
 #navAlpha {
 	position:absolute;
-	width:230px;
+	width:210px;
 	top:20px;
 	left:20px;
 	border:1px dashed black;
 	padding:10px;
 	z-index:2;
-		background-color:#eee;
+	background-color:#eee;
 
 
 /* Here is the ugly brilliant hack that protects IE5/Win from its own stupidity. 
@@ -101,17 +101,17 @@ declaration. The incorrect IE5/Win value is above, while the correct value is
 below. See http://glish.com/css/hacks.asp for details. */
 	voice-family: "\"}\"";
 	voice-family:inherit;
-	width:218px;
+	width:198px;
 	}
 /* I've heard this called the "be nice to Opera 5" rule. Basically, it feeds correct 
 length values to user agents that exhibit the parsing error exploited above yet get 
 the CSS box model right and understand the CSS2 parent-child selector. ALWAYS include
 a "be nice to Opera 5" rule every time you use the Tantek Celik hack (above). */
-body>#navAlpha {width:218px;}
+body>#navAlpha {width:198px;}
 		
 #navBeta {
 	position:absolute;
-	width:230px;
+	width:210px;
 	top:20px;
 	right:20px;
 	border:1px dashed black;
@@ -121,12 +121,12 @@ body>#navAlpha {width:218px;}
 /* Again, the ugly brilliant hack. */
 	voice-family: "\"}\"";
 	voice-family:inherit;
-	width:218px;
+	width:198px;
 	
 
 	}
 /* Again, "be nice to Opera 5". */
-body>#navBeta {width:218px;}
+body>#navBeta {width:198px;}
 
 /* BlueRobot used here - http://www.bluerobot.com/web/layouts/ */
 /* background from http://minty-peach.livejournal.com/33584.html*/
