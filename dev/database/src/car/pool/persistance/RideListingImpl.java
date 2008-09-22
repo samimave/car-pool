@@ -19,9 +19,9 @@ public class RideListingImpl implements RideListing {
 		
 		String sql = "Select * " +
 		"FROM " +
-		"(Select r.idRide, u.idUser, u.username,(r.availableSeats - Count(*)) as availableSeats, r.rideDate, r.rideStartLocation, r.rideStopLocation, r.rideTime, r.rideReoccur, r.rideComment " +
+		"(Select r.idRide, u.idUser, u.username,(r.availableSeats - Count(*)) as availableSeats, r.rideDate, r.rideTime, r.rideStartLocation, r.rideStopLocation, r.rideReoccur, r.rideComment " +
 		"FROM " +
-		"(SELECT r.idRide, r.idUser, r.rideDate, l.street as rideStartLocation, ll.street as rideStopLocation, r.availableSeats, r.rideReoccur, r.rideComment  "+
+		"(SELECT r.idRide, r.idUser, r.rideDate, r.rideTime, l.street as rideStartLocation, ll.street as rideStopLocation, r.availableSeats, r.rideReoccur, r.rideComment  "+
 		"FROM User as u, Ride as r, Matches as m, locations as l, locations as ll "+
 		"WHERE u.idUser = m.idUser "+
 		"AND l.idLocations = r.rideStartLocation "+
@@ -48,9 +48,9 @@ public class RideListingImpl implements RideListing {
 			"FROM ("	+	
 			"Select * " +
 			"FROM " +
-			"(Select r.idRide, u.idUser, u.username,(r.availableSeats - Count(*)) as availableSeats, r.rideDate, r.rideStartLocation, r.rideStopLocation " +
+			"(Select r.idRide, u.idUser, u.username,(r.availableSeats - Count(*)) as availableSeats, r.rideDate, r.rideTime, r.rideStartLocation, r.rideStopLocation " +
 			"FROM " +
-			"(SELECT r.idRide, r.idUser, r.rideDate, l.street as rideStartLocation, ll.street as rideStopLocation, r.availableSeats "+
+			"(SELECT r.idRide, r.idUser, r.rideDate, r.rideTime, l.street as rideStartLocation, ll.street as rideStopLocation, r.availableSeats "+
 			"FROM User as u, Ride as r, Matches as m, locations as l, locations as ll "+
 			"WHERE u.idUser = m.idUser "+
 			"AND l.idLocations = r.rideStartLocation "+
@@ -73,9 +73,9 @@ public class RideListingImpl implements RideListing {
 			"FROM ("	+	
 			"Select * " +
 			"FROM " +
-			"(Select r.idRide, u.idUser, u.username,(r.availableSeats - Count(*)) as availableSeats, r.rideDate, r.rideStartLocation, r.rideStopLocation " +
+			"(Select r.idRide, u.idUser, u.username,(r.availableSeats - Count(*)) as availableSeats, r.rideDate, r.rideTime, r.rideStartLocation, r.rideStopLocation " +
 			"FROM " +
-			"(SELECT r.idRide, r.idUser, r.rideDate, l.street as rideStartLocation, ll.street as rideStopLocation, r.availableSeats "+
+			"(SELECT r.idRide, r.idUser, r.rideDate, r.rideTime, l.street as rideStartLocation, ll.street as rideStopLocation, r.availableSeats "+
 			"FROM User as u, Ride as r, Matches as m, locations as l, locations as ll "+
 			"WHERE u.idUser = m.idUser "+
 			"AND l.idLocations = r.rideStartLocation "+
@@ -98,9 +98,9 @@ public class RideListingImpl implements RideListing {
 			"FROM ("	+	
 			"Select * " +
 			"FROM " +
-			"(Select r.idRide, u.idUser, u.username,(r.availableSeats - Count(*)) as availableSeats, r.rideDate, r.rideStartLocation, r.rideStopLocation " +
+			"(Select r.idRide, u.idUser, u.username,(r.availableSeats - Count(*)) as availableSeats, r.rideDate, r.rideTime, r.rideStartLocation, r.rideStopLocation " +
 			"FROM " +
-			"(SELECT r.idRide, r.idUser, r.rideDate, l.street as rideStartLocation, ll.street as rideStopLocation, r.availableSeats "+
+			"(SELECT r.idRide, r.idUser, r.rideDate, r.rideTime, l.street as rideStartLocation, ll.street as rideStopLocation, r.availableSeats "+
 			"FROM User as u, Ride as r, Matches as m, locations as l, locations as ll "+
 			"WHERE u.idUser = m.idUser "+
 			"AND l.idLocations = r.rideStartLocation "+

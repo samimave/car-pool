@@ -383,29 +383,41 @@ public class CarPoolStoreImplTest extends TestCase {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		System.out.println("search Jordan");
 		RideListing rl = cps.searchRideListing(RideListing.searchUser, "jordan");
 		try {
 			while(rl.next()){
-				System.out.println(rl.getRideID()+", "+rl.getUserID()+", "+rl.getUsername()+", "+rl.getAvailableSeats()+", "+rl.getRideDate().toString()+", "+rl.getStartLocation()+", "+rl.getEndLocation());
+				System.out.println(rl.getRideID()+", "+rl.getUserID()+", "+rl.getUsername()+", "+rl.getAvailableSeats()+", "+rl.getRideDate().toString()+", "+rl.getTime()+", "+rl.getStartLocation()+", "+rl.getEndLocation());
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		System.out.println("searchDate");
 		rl = cps.searchRideListing(RideListing.searchDate, date.toString());
 		try {
 			while(rl.next()){
-				System.out.println(rl.getRideID()+", "+rl.getUserID()+", "+rl.getUsername()+", "+rl.getAvailableSeats()+", "+rl.getRideDate().toString()+", "+rl.getStartLocation()+", "+rl.getEndLocation());
+				System.out.println(rl.getRideID()+", "+rl.getUserID()+", "+rl.getUsername()+", "+rl.getAvailableSeats()+", "+rl.getRideDate().toString()+", "+rl.getTime()+", "+rl.getStartLocation()+", "+rl.getEndLocation());
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		System.out.println("search Blair St");
 		rl = cps.searchRideListing(RideListing.searchLocation, "Blair St");
 		try {
 			while(rl.next()){
-				System.out.println(rl.getRideID()+", "+rl.getUserID()+", "+rl.getUsername()+", "+rl.getAvailableSeats()+", "+rl.getRideDate().toString()+", "+rl.getStartLocation()+", "+rl.getEndLocation());
+				System.out.println(rl.getRideID()+", "+rl.getUserID()+", "+rl.getUsername()+", "+rl.getAvailableSeats()+", "+rl.getRideDate().toString()+", "+rl.getTime()+", "+rl.getStartLocation()+", "+rl.getEndLocation());
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("getall");
+		rl = cps.getRideListing();
+		try {
+			while(rl.next()){
+				System.out.println(rl.getRideID()+", "+rl.getUserID()+", "+rl.getUsername()+", "+rl.getAvailableSeats()+", "+rl.getRideDate().toString()+", "+rl.getTime()+", "+rl.getStartLocation()+", "+rl.getEndLocation());
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
