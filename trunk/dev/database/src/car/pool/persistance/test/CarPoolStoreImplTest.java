@@ -482,7 +482,7 @@ public class CarPoolStoreImplTest extends TestCase {
 		
 		int id1 = 0, id2 = 0, id3 = 0 ;
 		int deleted = 0;
-		String the_comment[];
+		String the_comment;
 		Vector<String> all_comments;
 		
 		//add a comment (add user first to get a valid ID)
@@ -502,7 +502,7 @@ public class CarPoolStoreImplTest extends TestCase {
 		//try to get the comment added above
 		try {
 			the_comment = cps.getComment(id1);
-			assertTrue("Couldn't get first comment", the_comment[4].contains("TestComment"));
+			assertTrue("Couldn't get first comment", the_comment.contains("Test Comment"));
 		}catch(SQLException e){
 			fail("Couldn't get comment - SQL Error");
 		}

@@ -625,9 +625,9 @@ public class CarPoolStoreImpl implements CarPoolStore {
 	}	
 	
 	//NOT WORKING
-	public String[] getComment(int idComment) throws SQLException{
+	public String getComment(int idComment) throws SQLException{
 		//return a single comment
-		String comment[] = new String[5];
+		String comment = "";
 		int i=0;
 		
 		Statement statement = db.getStatement();
@@ -637,10 +637,10 @@ public class CarPoolStoreImpl implements CarPoolStore {
 			ResultSet rs = statement.executeQuery(sql);
 			while(rs.next()){
 			for(int j=1;j<5;j++){
-				comment[i] += rs.getString(j) + "|";
+				comment += rs.getString(j) + "|";
 				}
 			}
-			
+		
 			rs.close();
 			statement.close();
 		} catch (SQLException e) {
@@ -662,7 +662,7 @@ public class CarPoolStoreImpl implements CarPoolStore {
 			ResultSet rs = statement.executeQuery(sql);
 			while(rs.next()){
 			for(int i=1;i<5;i++){
-				temp += rs.getString(i) + "|";
+				temp += rs.getString(i) + "_delim_";
 				}
 			comment.add(temp);
 			temp = "";
