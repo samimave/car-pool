@@ -38,7 +38,7 @@ import car.pool.user.UserManager;
 	}
 	
 	/* Happens when web server started.  The init method is run once and a instance of this class is kept around and used over and over.
-	 * This is a useful method to set some config setting up.
+	 * This is a useful method for some config setting up.
 	 * (non-Javadoc)
 	 * @see javax.servlet.GenericServlet#init()
 	 */

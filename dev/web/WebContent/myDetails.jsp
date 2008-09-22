@@ -65,7 +65,7 @@ for (String oid : user.getOpenIds()) {
 	entries += "<option value="+oid+">"+oid+"</option>";
 }
 if (entries != "") {
-	openIDTableRow = "<tr> <td>Open ID:</td> <td><select multiple='multiple' NAME='openid_url'>"+entries+"</select></td> </tr>";
+	openIDTableRow = "<tr> <td>Open ID:</td> <td><select multiple='multiple' NAME='openid'>"+entries+"</select></td> </tr>";
 }
 
 String takeConf = "";
@@ -115,13 +115,28 @@ if (request.getParameter("rideSelect") != null && request.getParameter("streetTo
 		<FORM name="updateDetails" action="updateuser" method="post">
 			<INPUT type="hidden" name="updateDetails" value="yes">
 			<TABLE class='userDetails'>
-				<%=openIDTableRow %>
 				<tr> <td>Username:</td> <td><%=user.getUserName()%><!-- <INPUT TYPE="text" NAME="userName" SIZE="25" value="<%=user.getUserName()%>">--></td> </tr> 
 				<tr> <td>Email Address:</td> <td><INPUT TYPE="text" NAME="email" SIZE="25" value="<%=user.getEmail()%>"></td> </tr> 
 				<tr> <td>Phone Number:</td> <td><INPUT TYPE="text" NAME="phone" SIZE="25" value="<%=user.getPhoneNumber()%>"></td> </tr>
   				<tr> <td>&nbsp;</td> <td><INPUT TYPE="submit" NAME="confirmUpdate" VALUE="Update Details" SIZE="25"></td> </tr>
 			</TABLE>
 		</FORM>
+		<h2>Detach a OpenId from your account</h2>
+		<form action="removeopenid">
+			<input type="hidden" name="removeopenid"/>
+			<table class="updateDetails">
+				<tr><td><%=openIDTableRow %></td></tr>
+				<tr><td><input type="submit" value="Detach"/></td></tr>
+			</table>
+		</form>
+		<h2>Detach a OpenId from your account</h2>
+		<form action="addopenid">
+			<input type="hidden" name="addopenid"/>
+			<table class="updateDetails">
+				<tr><td>OpneId to add: <input type="text" name="openid"/ size="25"/></td></tr>
+				<tr><td><input type="submit" value="Attach"/></td></tr>
+			</table>
+		</form>
 		<h2>Your ride details appear below:</h2><br />
 		<p>Your offers</p>
 		<%=userTable %><br />
