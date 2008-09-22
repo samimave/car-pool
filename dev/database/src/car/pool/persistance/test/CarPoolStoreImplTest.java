@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.Random;
+import java.util.Vector;
 
 import junit.framework.TestCase;
 
@@ -479,26 +480,36 @@ public class CarPoolStoreImplTest extends TestCase {
 	
 	public void testAddGetDeleteComment() {
 		
-		int idComment = 0;
+		int id1 = 0, id2 = 0, id3 = 0 ;
 		int deleted = 0;
-		String[] the_comment;
+		String the_comment[];
+		Vector<String> all_comments;
 		
 		//add a comment (add user first to get a valid ID)
 		try {
 			int idUser = cps.addUser("testUserComments", "testPassword");
-			idComment = cps.addComment(idUser, 1, "Test Comment 1");
+			id1 = cps.addComment(idUser, 1, "Test Comment 1 - Ride 1");
+			id2 = cps.addComment(idUser, 1, "Test Comment 2 - Ride 1");
+			id3 = cps.addComment(idUser, 2, "Test Comment 3 - Ride 2");
 		}catch(SQLException e){
 			fail("Couldn't add comment - SQL Error");
 		}catch(Exception e){
 			fail("User doesn't exist");
 		}
-		assertTrue("Couldn't add comment",idComment>0);
+		assertTrue("Couldn't add comment",id1>0);
 		
-		/* NOT WORKING
+		
 		//try to get the comment added above
 		try {
-			the_comment = cps.getComment(idComment);
-			assertTrue("!"+the_comment[0]+the_comment[1]+the_comment[2]+the_comment[3]+the_comment[4]+"!", the_comment[3] == "Test Comment 1");
+			the_comment = cps.getComment(id1);
+			assertTrue("Couldn't get first comment", the_comment[4].contains("TestComment"));
+		}catch(SQLException e){
+			fail("Couldn't get comment - SQL Error");
+		}
+		
+		try {
+			all_comments = cps.getRideComment(1);
+			assertTrue("Couldn't get all comments for ride 1", all_comments.elementAt(0).contains("Test Comment"));
 		}catch(SQLException e){
 			fail("Couldn't get comment - SQL Error");
 		}
@@ -506,12 +517,15 @@ public class CarPoolStoreImplTest extends TestCase {
 		
 		//try to delete the comment added above
 		try {
-			deleted = cps.delComment(0);
+			deleted = cps.delComment(id1);
+			deleted = cps.delComment(id2);
+			deleted = cps.delComment(id3);
 		}catch(SQLException e){
 			fail("Couldn't delete comment - SQL Error");
 		}
-		assertTrue("Couldn't delete comment"+ idComment + "" + deleted,deleted>0);
-		*/
+		assertTrue("Couldn't delete comment"+ id3 + "" + deleted,deleted>0);
+		
+		
 	}
 	
 }
