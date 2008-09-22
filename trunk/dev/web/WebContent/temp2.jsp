@@ -39,13 +39,15 @@ while (u.next()) {
 		from = u.getEndLocation();
 		to = u.getStartLocation();
 		
+		String comment_button_builder = "<FORM action=\"viewComments.jsp\" method=\"post\" target=\"_blank\"> <INPUT type=\"hidden\" name=\"idRide\" value=\"" + rideID + "\"> <INPUT type=\"hidden\" name=\"idUser\" value=\"" + dbID + "\"> <INPUT type=\"submit\" value=\"View Ride Comments\" /></FORM>";
+		
 		detailsTable += "<tr> <td>Username:</td>  <td>"+ u.getUsername() +"</td></tr> ";
 		detailsTable += "<tr> <td> Start Region: </td> <td>"+ from + "</td> </tr>";
 		detailsTable += "<tr> <td> Stop Region: </td> <td>"+ to +"</td></tr> ";
 		detailsTable += "<tr> <td>Date: </td> <td>"+ u.getRideDate() +"</td></tr> ";
 		detailsTable += "<tr> <td> Time: </td> <td>" + " null"+ "</td> </tr>";
 		detailsTable += "<tr> <td> Seats: </td> <td>"+ u.getAvailableSeats() +"</td> </tr>";
-		detailsTable += "<tr> <td> Additional Info: </td> <td>"+ "u.getComment()" +"</td> </tr>";
+		detailsTable += "<tr> <td> Additional Info: </td> <td>"+ comment_button_builder +"</td> </tr>";
 	}
 }
 //finish table
