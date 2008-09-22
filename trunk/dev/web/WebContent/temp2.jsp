@@ -22,6 +22,8 @@ RideListing u = cps.searchRideListing(RideListing.searchUser, request.getParamet
 
 String detailsTable = "<p>No info found.</p>";
 boolean ridesExist = false;
+String from = "";
+String to = "";
 
 //System.out.println("got here!");
 while (u.next()) {					
@@ -32,10 +34,8 @@ while (u.next()) {
 			detailsTable = "";		//first time round get rid of unwanted text
 		}
 		ridesExist = true;
-		
-
-		String from = u.getEndLocation();
-		String to = u.getStartLocation();
+		from = u.getEndLocation();
+		to = u.getStartLocation();
 		
 		detailsTable += "<tr> <td>Username:</td>  <td>"+ u.getUsername() +"</td></tr> ";
 		detailsTable += "<tr> <td> Start Region: </td> <td>"+ from + "</td> </tr>";
@@ -48,7 +48,7 @@ while (u.next()) {
 }
 //finish table
 if (ridesExist) {
-	detailsTable = "<table class='rideDetailsSearch'>"+ detailsTable +"</table>";
+	detailsTable = "<table class='rideDetailsSearch'>"+ detailsTable +"</table>";	
 }
 
 //make the options for the street select box
@@ -57,7 +57,10 @@ String options = "";
 while (locations.next()){
 	options += "<option value='"+locations.getID()+"'>"+locations.getStreetName()+"</option>";
 }
+
 %>
+
+
 
 <HTML>
 	<HEAD>
@@ -84,9 +87,14 @@ while (locations.next()){
 				<tr> <td>&nbsp;</td> <td><INPUT type="submit" name="joinRide" value="Take Ride" size="25"></td> </tr>
 			</TABLE>
 		</FORM>
+			
+	<FORM name="showMap" id="map2" method="post" target="_blank" action="displayRouteMap.jsp">
+		<INPUT type="submit" value="View Map" > 
+		<INPUT type="hidden" name="mapFrom" value= "<%=from%>">
+		<INPUT type="hidden" name="mapTo"  value= "<%=to%>" >
 		
+	</FORM>
 		
-
 
 	</DIV>
 
