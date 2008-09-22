@@ -1,7 +1,6 @@
 package car.pool.user.update.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 
 import javax.servlet.http.HttpServlet;
@@ -13,7 +12,7 @@ import car.pool.persistance.exception.InvaildUserNamePassword;
 import car.pool.user.User;
 import car.pool.user.UserManager;
 
-public class UpdateUserDetailsServlet extends HttpServlet {
+public class UpdateUserDetails extends HttpServlet {
 	private static final long serialVersionUID = 8039935676680953454L;
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -29,8 +28,8 @@ public class UpdateUserDetailsServlet extends HttpServlet {
 			UserManager manager = new UserManager();
 			try {
 				user = manager.updateUserDetails(user);
+				session.removeAttribute("user");
 				session.setAttribute("user", user);
-				session.setAttribute("signedin", true);
 			} catch (InvaildUserNamePassword e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -39,6 +38,8 @@ public class UpdateUserDetailsServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 			response.sendRedirect("updatesuccess.jsp");
+		} else {
+			response.sendRedirect("");
 		}
 	}
 }
