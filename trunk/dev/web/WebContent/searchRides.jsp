@@ -20,9 +20,17 @@ String options = "";
 while (locations.next()){
 	options += "<option value='"+locations.getID()+"'>"+locations.getStreetName()+"</option>";
 }
-
+int rideCount=0;
 //count the number of rides in the db
-RideListing rl = null;		//TODO: make this work
+RideListing rl = cps.getRideListing();		//TODO: make this work
+while (rl.next()){
+	rideCount++;
+}
+
+
+
+
+
 %>
 
 <HTML>
