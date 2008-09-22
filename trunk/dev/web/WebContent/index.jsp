@@ -26,35 +26,18 @@ if (request.getParameter("delete") != null) {
 	<HEAD>
 		<TITLE> The Car Pool </TITLE>
 		<STYLE type="text/css" media="screen">@import "3ColumnLayout.css";</STYLE>
-		<script type="text/javascript">
-		function confirmation() {
-			var answer = confirm("DO NOT delete the database!!!")
-			if (answer){
-				window.location = "/Car_Pool_Project/index.jsp?delete=yes";
-			}
-			else{
-				alert("phew, good choice.")
-			}
-		}
-		</script>
 	</HEAD>
 	<BODY>
 
 	<%@ include file="heading.html" %>
 
-	<DIV class="content">
+	<DIV id="content" class="content">
 		<h2 align="center">Welcome to The Car Pool</h2>
-		<p>Please log in.</p>
+		<p>To find out more about our website and what we offer; <a href="about.jsp">click here.</a></p>
 	</DIV>
 
-	<DIV id="navAlpha">
-		<%if (OpenIdFilter.getCurrentUser(s) != null || session.getAttribute("signedin") != null) { %>
-			<%=message %> <br />
-		<%} else { %>
-			<%=message %>
-			
-		<%} %>
-		<a onclick="confirmation()">DANGEROUS!<br />DO NOT CLICK!</a>
+	<DIV id="navAlpha" class="navAlpha">
+		<p>Please log in.</p>
 	</DIV>
 
 	<%@ include file="rightMenuLogin.html" %>	

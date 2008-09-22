@@ -21,8 +21,9 @@ if (!(OpenIdFilter.getCurrentUser(request.getSession()) == null && session.getAt
 <body>
 	<%@ include file="heading.html" %>
 
-	<DIV class="content">
+	<DIV class="content" id="content">
 		<p>A paragraph about our website</p>
+		<p><a href="welcome.jsp">Home</a></p>
 	</DIV>
 
 <%
