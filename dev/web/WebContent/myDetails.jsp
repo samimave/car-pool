@@ -2,16 +2,17 @@
 <%@page import="org.verisign.joid.consumer.OpenIdFilter, car.pool.persistance.*, car.pool.user.*" %>
 
 <%
+HttpSession s = request.getSession(false);
+
 //force the user to login to view the page
-if (OpenIdFilter.getCurrentUser(request.getSession()) == null && session.getAttribute("signedin") == null) {
+if (OpenIdFilter.getCurrentUser(s) == null && s.getAttribute("signedin") == null) {
 	response.sendRedirect(request.getContextPath()+"/index.jsp");
 }
-User user = (User)session.getAttribute("user");
+User user = (User)s.getAttribute("user");
 
 //code to interact with db
 CarPoolStore cps = new CarPoolStoreImpl();
-//String openID = OpenIdFilter.getCurrentUser(request.getSession());
-int currentUser = user.getUserId();//cps.getUserIdByURL(openID);
+int currentUser = user.getUserId();
 String nameOfUser = user.getUserName();
 //code to update details if requested
 //if (request.getParameter("updateDetails") != null) {

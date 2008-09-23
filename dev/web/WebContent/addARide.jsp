@@ -1,8 +1,10 @@
 <%@page contentType="text/html; charset=ISO-8859-1" import="java.util.*, java.text.*, car.pool.persistance.*, org.verisign.joid.consumer.OpenIdFilter"%>
 
 <%
+HttpSession s = request.getSession(false);
+
 //force the user to login to view the page
-if (OpenIdFilter.getCurrentUser(request.getSession()) == null && session.getAttribute("signedin") == null) {
+if (OpenIdFilter.getCurrentUser(s) == null && s.getAttribute("signedin") == null) {
 	response.sendRedirect(request.getContextPath()+"/index.jsp");
 }
 
@@ -109,7 +111,7 @@ String options = "";
 		<DIV class="content">
 			<p>Please enter the relevant details and click confirm.</p>
 			<FORM NAME="offerFrm" id="offer" method="post" action="newRideConfirmation.jsp">
-				<INPUT TYPE="hidden" NAME="user" VALUE="<%=OpenIdFilter.getCurrentUser(request.getSession())%>" SIZE="25">
+				<INPUT TYPE="hidden" NAME="user" VALUE="<%=OpenIdFilter.getCurrentUser(s)%>" SIZE="25">
 					<TABLE class="rideDetails">
 
 					<%// Information on if ride is an offer or request. 

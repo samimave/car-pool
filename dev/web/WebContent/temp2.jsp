@@ -1,10 +1,12 @@
 <%@page contentType="text/html; charset=ISO-8859-1" %>
 <%@page import="org.verisign.joid.consumer.OpenIdFilter, car.pool.persistance.*, car.pool.user.*" %>
 <%
+HttpSession s = request.getSession(false);
+
 //force the user to login to view the page
-System.out.println(OpenIdFilter.getCurrentUser(request.getSession()));
-System.out.println(session.getAttribute("signedin"));
-if (OpenIdFilter.getCurrentUser(request.getSession()) == null && session.getAttribute("signedin") == null) {
+//System.out.println(OpenIdFilter.getCurrentUser(s));
+//System.out.println(s.getAttribute("signedin"));
+if (OpenIdFilter.getCurrentUser(s) == null && s.getAttribute("signedin") == null) {
 	response.sendRedirect(request.getContextPath()+"/index.jsp");
 }
 
@@ -14,7 +16,7 @@ String message = "";
 CarPoolStore cps = new CarPoolStoreImpl();
 
 // RideListing rl = cps.getRideListing();
-User user = (User)session.getAttribute("user");
+User user = (User)s.getAttribute("user");
 int dbID = user.getUserId();
 int rideID = Integer.parseInt(request.getParameter("rideselect"));
 

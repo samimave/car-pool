@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="US-ASCII" ?>
 <%@ page language="java" contentType="text/html; charset=US-ASCII"
     pageEncoding="US-ASCII"%>
+<%
+HttpSession s = request.getSession(false);
+
+//force the user to login to view the page
+if (OpenIdFilter.getCurrentUser(s) == null && s.getAttribute("signedin") == null) {
+	response.sendRedirect(request.getContextPath()+"/index.jsp");
+}
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>

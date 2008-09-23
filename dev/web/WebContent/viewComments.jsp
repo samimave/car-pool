@@ -1,13 +1,11 @@
 <%@page contentType="text/html; charset=ISO-8859-1" import="java.util.*, java.text.*, car.pool.persistance.*, org.verisign.joid.consumer.OpenIdFilter"%>
 <%
-if (OpenIdFilter.getCurrentUser(request.getSession()) == null && session.getAttribute("signedin") == null) {
+HttpSession s = request.getSession(false);
+
+if (OpenIdFilter.getCurrentUser(s) == null && s.getAttribute("signedin") == null) {
 	response.sendRedirect(request.getContextPath()+"/index.jsp");
 }
-%>
-<html>
-<head>
-<title>Ride Comments - Ride # <%=request.getParameter("idRide") %></title>
-<%
+
 CarPoolStore cps = new CarPoolStoreImpl();
 int idRide = Integer.parseInt(request.getParameter("idRide"));	
 Vector<String> comments = cps.getRideComment(idRide);
@@ -31,6 +29,9 @@ for(int i=0;i<comments.size();i++){
 }
 
 %>
+<html>
+<head>
+<title>Ride Comments - Ride # <%=request.getParameter("idRide") %></title>
 </head>
 <body>
 <table width = 100%>

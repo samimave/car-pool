@@ -2,14 +2,16 @@
 <%@page import="org.verisign.joid.consumer.OpenIdFilter, car.pool.persistance.*, java.text.SimpleDateFormat" %>
 
 <%
+HttpSession s = request.getSession(false);
+
 //force the user to login to view the page
-if (OpenIdFilter.getCurrentUser(request.getSession()) == null && session.getAttribute("signedin") == null) {
+if (OpenIdFilter.getCurrentUser(s) == null && s.getAttribute("signedin") == null) {
 	response.sendRedirect(request.getContextPath()+"/index.jsp");
 }
 
 //add ride information to database
 CarPoolStore cps = new CarPoolStoreImpl();
-User user = (User)session.getAttribute("user");
+User user = (User)s.getAttribute("user");
 int dbID = user.getUserId();//cps.getUserIdByURL(request.getParameter("user"));
 
 //date formatting for use by db 
