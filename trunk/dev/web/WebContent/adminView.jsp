@@ -2,10 +2,12 @@
 <%@page contentType="text/html; charset=ISO-8859-1" import="java.util.*, java.text.*, org.verisign.joid.consumer.OpenIdFilter, car.pool.persistance.*,car.pool.persistance.test.*, car.pool.locations.*"%>
 
 <%
+HttpSession s = request.getSession(false);
+
 //force the user to login to view the page
-/*if (OpenIdFilter.getCurrentUser(request.getSession()) == null && session.getAttribute("signedin") == null) {
+if (OpenIdFilter.getCurrentUser(s) == null && s.getAttribute("signedin") == null) {
 	response.sendRedirect(request.getContextPath()+"/index.jsp");
-}*/
+}
 CarPoolStore cps = new CarPoolStoreImpl();
 String[] locations = LocationImporter.importLocations();
 

@@ -2,10 +2,12 @@
 <%@page import="org.verisign.joid.consumer.OpenIdFilter, org.verisign.joid.util.UrlUtils, org.verisign.joid.OpenIdException, car.pool.persistance.*, car.pool.user.User, car.pool.user.UserManager, car.pool.user.UserFactory, car.pool.persistance.exception.InvaildUserNamePassword" %>
 
 <%
+HttpSession s = request.getSession(false);
+
 // a container for the users information
 User user = null;
-if(session.getAttribute("signedin") != null ) {
-	user = (User)session.getAttribute("user");
+if(s.getAttribute("signedin") != null ) {
+	user = (User)s.getAttribute("user");
 } else {
 	response.sendRedirect("");
 }
@@ -36,8 +38,8 @@ if (request.getParameter("newUser") != null) {
 
 	<DIV class="content">
 		<h2 align="center">Welcome to The Car Pool,
-		<%if(session.getAttribute("signedin") != null ) {%>
-			<%=" "+user.getUserName()%><%//OpenIdFilter.getCurrentUser(request.getSession())%></h2>
+		<%if(s.getAttribute("signedin") != null ) {%>
+			<%=" "+user.getUserName()%><%//OpenIdFilter.getCurrentUser(s)%></h2>
 		<%} %>
 		<%=message %>
 		<p>Eventually the person's upcoming rides will be displayed here.</p>

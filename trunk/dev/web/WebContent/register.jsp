@@ -1,7 +1,7 @@
 <%@page contentType="text/html; charset=ISO-8859-1" import="car.pool.persistance.*"%>
 
 <%
-
+HttpSession s = request.getSession(true);
 %>
 
 <HTML>

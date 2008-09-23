@@ -2,8 +2,10 @@
 <%@page import="org.verisign.joid.consumer.OpenIdFilter, car.pool.persistance.*" %>
 
 <%
+HttpSession s = request.getSession(false);
+
 //force the user to login to view the page
-if (OpenIdFilter.getCurrentUser(request.getSession()) == null) {
+if (OpenIdFilter.getCurrentUser(s) == null && s.getAttribute("signedin") == null) {
 	response.sendRedirect(request.getContextPath()+"/index.jsp");
 }
 
@@ -13,7 +15,7 @@ String message = "";
 //code to allow interaction with db
 CarPoolStore cps = new CarPoolStoreImpl();
 RideListing rl = cps.getRideListing();
-int currentUser = cps.getUserIdByURL(OpenIdFilter.getCurrentUser(request.getSession()));
+int currentUser = cps.getUserIdByURL(OpenIdFilter.getCurrentUser(s));
 
 //code to add a ride to the user's selected rides
 if (request.getParameter("rideselect") != null) {

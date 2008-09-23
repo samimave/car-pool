@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=US-ASCII" pageEncoding="US-ASCII"%>
 <%@ page import="org.verisign.joid.consumer.OpenIdFilter, car.pool.user.authentication.servlet.HtmlUtils"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%
+HttpSession s = request.getSession(true);
+%>
+
 <HTML>
 <HEAD>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">

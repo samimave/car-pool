@@ -8,8 +8,8 @@ HttpSession s = request.getSession(true);
 String message = "Please log in.";
 /*if (OpenIdFilter.getCurrentUser(s) != null ) {
 	message = "Logged in as "+OpenIdFilter.getCurrentUser(s);
-} else*/ if(  session.getAttribute("signedin") != null ) {
-	User user = ((User)session.getAttribute("user"));
+} else*/ if(  s.getAttribute("signedin") != null ) {
+	User user = ((User)s.getAttribute("user"));
 	message = "Logged in as " + user.getUserName();
 	message += " " + user.getUserId();
 }

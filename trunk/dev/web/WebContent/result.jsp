@@ -4,10 +4,12 @@
 <%
 CarPoolStore cps = new CarPoolStoreImpl();
 
+HttpSession s = request.getSession(true);
+
 User user = null;
 //check if the user is logged in and viewing the page
-if (!(OpenIdFilter.getCurrentUser(request.getSession()) == null && session.getAttribute("signedin") == null)) {
-	user = (User)session.getAttribute("user"); 
+if (!(OpenIdFilter.getCurrentUser(s) == null && s.getAttribute("signedin") == null)) {
+	user = (User)s.getAttribute("user"); 
 }
 
 //----------------------search parameters------------------------

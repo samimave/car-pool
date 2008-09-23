@@ -1,8 +1,14 @@
-<%@page import="car.pool.persistance.*" %>
+<%@page import="car.pool.persistance.*,org.verisign.joid.consumer.OpenIdFilter" %>
 <html>
   <head>
     <title>Add Car-Pool Ride Event</title>
 	<%
+	HttpSession s = request.getSession(false);
+
+	if (OpenIdFilter.getCurrentUser(s) == null && s.getAttribute("signedin") == null) {
+		response.sendRedirect(request.getContextPath()+"/index.jsp");
+	}
+	
 		CarPoolStore cps = new CarPoolStoreImpl();
 		LocationList allLocs = cps.getLocations();
 		String from = "";
