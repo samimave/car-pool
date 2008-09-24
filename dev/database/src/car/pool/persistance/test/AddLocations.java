@@ -9,6 +9,10 @@ import car.pool.persistance.CarPoolStoreImpl;
 
 public class AddLocations {
 	public static void main(String[] args) {
+		addFromFile();
+	}
+	
+	public static void addFromFile(){
 		String[] locations = LocationImporter.importLocations();
 		
 		CarPoolStore cps = null;
