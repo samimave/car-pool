@@ -12,5 +12,5 @@ int idRide = Integer.parseInt(request.getParameter("idComment"));
 
 cps.delComment(idRide);
 
-response.sendRedirect("adminView.jsp");
+response.sendRedirect(request.getParameter("reDirURL"));
 %>

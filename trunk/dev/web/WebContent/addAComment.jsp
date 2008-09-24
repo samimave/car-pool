@@ -12,17 +12,11 @@ int idRide = Integer.parseInt(request.getParameter("idRide"));
 int idUser = Integer.parseInt(request.getParameter("idUser"));
 String comment = request.getParameter("comment");
 
-int success = cps.addComment(idUser, idRide, comment);
+if(comment != ""){cps.addComment(idUser, idRide, comment);}
 
-String html;
+String html = "Comment added!";
 
-String form = "<FORM action=\"viewComments.jsp\" method=\"post\"><INPUT type=\"hidden\" name=\"idRide\" value=\"" + idRide + "\"><INPUT type=\"hidden\" name=\"idUser\" value=\"" + idUser + "\"><INPUT type=\"submit\" value=\"View Comments\" />";
-
-if(success < 1){
-	html = "Error adding comment<br>" + form;
-}else{
-	html = "Comment added!<br>" + form;
-}
+response.sendRedirect(request.getParameter("reDirURL"));
 
 %>
 
