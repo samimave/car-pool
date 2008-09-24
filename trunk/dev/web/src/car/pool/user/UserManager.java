@@ -185,7 +185,7 @@ public class UserManager {
 	 * @throws SQLException
 	 * @throws InvaildUserNamePassword
 	 */
-	protected User getUserByUserId(Integer id) throws IOException, SQLException, InvaildUserNamePassword {
+	public User getUserByUserId(Integer id) throws IOException, SQLException, InvaildUserNamePassword {
 		User user = UserFactory.newInstance();
 		user.setUserId(id);
 		
