@@ -143,6 +143,7 @@ table += "</table>";
 			<INPUT type="hidden" name="mapTo"  value= "<%=to%>" >
 		</FORM>
 		<FORM name="withdraw" action="rideEditSuccess.jsp" method="post">
+			<input type="hidden" name="remRide"/>
 			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect") %>">
 			<TABLE class='rideWithdraw'>
 				<tr> <td>&nbsp;</td> <td><INPUT type="submit" name="removeRide" value="Withdraw Ride" size="25"></td> </tr>

@@ -147,16 +147,15 @@ table += "</table>";
 			<INPUT type="hidden" name="mapFrom" value= "<%=from%>">
 			<INPUT type="hidden" name="mapTo"  value= "<%=to%>" >
 		</FORM>
-		<FORM name="comments" action="myDetails.jsp" method="post">
+		<FORM name="ride" action="myDetails.jsp" method="post">
 			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect") %>">
-			<TABLE class='userComments'>
+			<TABLE class='rideD'>
 				<tr> <td>Pick me up from:</td> </tr>
 				<tr> <td>House Number</td> <td><INPUT type="text" name="houseNo"></td> </tr>
 				<tr> <td>Street</td> <td><SELECT name="streetTo">
            				<option selected="selected">Select a Street</option>
 	                	<%=options %>
        				</SELECT></td> </tr>
-				<tr> <td>Add a Comment/Query</td> <td><INPUT type="text" name="xtraInfo" size="55"></td> </tr>
 				<tr> <td>&nbsp;</td> <td><INPUT type="submit" name="joinRide" value="Take Ride" size="25"></td> </tr>
 			</TABLE>
 		</FORM>
