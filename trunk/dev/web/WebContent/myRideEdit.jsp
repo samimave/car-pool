@@ -37,11 +37,11 @@ while (u.next()) {
 		to = u.getStartLocation();
 		
 		detailsTable += "<tr> <td>Username:</td>  <td>"+ u.getUsername() +"</td></tr> ";
-		detailsTable += "<tr> <td> Start Region: </td> <td>"+ from + "</td> </tr>";
-		detailsTable += "<tr> <td> Stop Region: </td> <td>"+ to +"</td></tr> ";
-		detailsTable += "<tr> <td>Date: </td> <td>"+ u.getRideDate() +"</td></tr> ";
-		detailsTable += "<tr> <td> Time: </td> <td>" + u.getTime()+ "</td> </tr>";
-		detailsTable += "<tr> <td> Seats: </td> <td>"+ u.getAvailableSeats() +"</td> </tr>";
+		detailsTable += "<tr> <td> Start Region: </td> </td>"+ "<td><INPUT TYPE=\"text\" NAME=\"Rtime\" SIZE=\"25\" value=\""+u.getStartLocation()+"\"></td></tr>";
+		detailsTable += "<tr> <td> Stop Region: </td>"+ "<td><INPUT TYPE=\"text\" NAME=\"Rtime\" SIZE=\"25\" value=\""+u.getEndLocation()+"\"></td></tr>";
+		detailsTable += "<tr> <td>Date: </td>"+ "<td><INPUT TYPE=\"text\" NAME=\"Rdate\" SIZE=\"25\" value=\""+u.getRideDate()+"\"></td></tr>";
+		detailsTable += "<tr> <td> Time: </td>"+ "<td><INPUT TYPE=\"text\" NAME=\"Rtime\" SIZE=\"25\" value=\""+u.getTime()+"\"></td></tr>";
+		detailsTable += "<tr> <td> Seats:</td>"+ "<td><INPUT TYPE=\"text\" NAME=\"Rtime\" SIZE=\"25\" value=\""+u.getAvailableSeats()+"\"></td></tr>";
 		detailsTable += "<tr> <td> Additional Info: </td> <td></td> </tr>";
 	}
 }
