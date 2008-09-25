@@ -5,7 +5,11 @@
 HttpSession s = request.getSession(true);
 
 //to show who is logged in
-String message = "Please log in.";
+String message = "";
+String error = (String)request.getAttribute("error");
+if(error != null) {
+	message = String.format("%s", error);
+} else
 /*if (OpenIdFilter.getCurrentUser(s) != null ) {
 	message = "Logged in as "+OpenIdFilter.getCurrentUser(s);
 } else*/ if(  s.getAttribute("signedin") != null ) {
@@ -13,6 +17,8 @@ String message = "Please log in.";
 	message = "Logged in as " + user.getUserName();
 	message += " " + user.getUserId();
 }
+
+int timeout = session.getMaxInactiveInterval();
 
 //will delete the current database
 if (request.getParameter("delete") != null) {
@@ -32,6 +38,7 @@ if (request.getParameter("delete") != null) {
 	<%@ include file="heading.html" %>
 
 	<DIV id="content" class="content">
+		<%if(error != null){ %><p><%=message %></p><%}%>
 		<h2 align="center">Welcome to The Car Pool</h2><br />
 		<p>To see what rides we have available without logging in <a href="searchRides.jsp">click here.</a></p>
 		<p>To find out more about our website and what we offer <a href="about.jsp">click here.</a></p>
