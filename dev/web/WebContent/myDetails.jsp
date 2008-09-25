@@ -41,9 +41,9 @@ if (session.isNew() || (OpenIdFilter.getCurrentUser(session) == null && session.
 			userTable += "<td>"+ from +"</td> ";
 			userTable += "<td>"+ to +"</td> ";
 			userTable += "<td>"+ rl.getRideDate() +"</td> ";
-			userTable += "<td>"+ "rl.getTime()" +"</td> ";
+			userTable += "<td>"+ rl.getTime() +"</td> ";
 			userTable += "<td>"+ rl.getAvailableSeats() +"</td> ";
-			userTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ rl.getRideID() +"&userselect="+rl.getUsername()+"'>"+ "Link to ride page" +"</a> </td> </tr>";
+			userTable += "<td> <a href='"+ request.getContextPath() +"/myRideEdit.jsp?rideselect="+ rl.getRideID() +"&userselect="+rl.getUsername()+"'>"+ "Link to ride page" +"</a> </td> </tr>";
 
 
 	}
