@@ -45,7 +45,7 @@ while (u.next()) {
 		detailsTable += "<tr> <td> Start Region: </td> <td>"+ from + "</td> </tr>";
 		detailsTable += "<tr> <td> Stop Region: </td> <td>"+ to +"</td></tr> ";
 		detailsTable += "<tr> <td>Date: </td> <td>"+ u.getRideDate() +"</td></tr> ";
-		detailsTable += "<tr> <td> Time: </td> <td>" + " null"+ "</td> </tr>";
+		detailsTable += "<tr> <td> Time: </td> <td>" +  u.getTime()+ "</td> </tr>";
 		detailsTable += "<tr> <td> Seats: </td> <td>"+ u.getAvailableSeats() +"</td> </tr>";
 		detailsTable += "<tr> <td> Additional Info: </td> <td></td> </tr>";
 	}
