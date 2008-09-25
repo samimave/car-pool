@@ -2,32 +2,28 @@
 <%@page import="org.verisign.joid.consumer.OpenIdFilter, car.pool.persistance.*, car.pool.user.*" %>
 
 <%
-HttpSession s = request.getSession(false);
-
-//force the user to login to view the page
-if (OpenIdFilter.getCurrentUser(s) == null && s.getAttribute("signedin") == null) {
-	response.sendRedirect(request.getContextPath()+"/index.jsp");
-}
-User user = (User)s.getAttribute("user");
-
-//code to interact with db
-CarPoolStore cps = new CarPoolStoreImpl();
-int currentUser = user.getUserId();
-String nameOfUser = user.getUserName();
-//code to update details if requested
-//if (request.getParameter("updateDetails") != null) {
-//	cps.addUser((String)request.getParameter("openid_url"),(String)request.getParameter("userName"),(String)request.getParameter("email"),(String)request.getParameter("phone"));
-//}
-
-
-// code to get ride details
+String takeConf = "";
+String openIDTableRow = "";
+User user = null;
+//code to get ride details
 //temp placeholder variables
 String userTable = "<p>No rides found.</p>";
 String acceptedTable = "<p>No rides found.</p>";
 String requestTable = "<p>No rides found.</p>";
+//force the user to login to view the page
+if (session.isNew() || (OpenIdFilter.getCurrentUser(session) == null && session.getAttribute("signedin") == null)) {
+	//response.sendRedirect("");
+	request.getRequestDispatcher("").forward(request, response);
+} else {
+	user = (User)session.getAttribute("user");
+
+	//code to interact with db
+	CarPoolStore cps = new CarPoolStoreImpl();
+	int currentUser = user.getUserId();
+	String nameOfUser = user.getUserName();
 
 
-boolean userExist = false;
+	boolean userExist = false;
 
 
 	RideListing rl = cps.searchRideListing(RideListing.searchUser, nameOfUser);
@@ -54,48 +50,48 @@ boolean userExist = false;
 
 
 
-if (userExist) {
-	userTable = "<table class='rideDetailsSearch'> <tr> <th>Ride Offered By</th> <th>Starting From</th> <th>Going To</th>"+
-	"<th>Departure Date</th> <th>Departure Time</th> <th>Number of Available Seats</th> </tr>"+ userTable +"</table>";
-}
+	if (userExist) {
+		userTable = "<table class='rideDetailsSearch'> <tr> <th>Ride Offered By</th> <th>Starting From</th> <th>Going To</th>"+
+		"<th>Departure Date</th> <th>Departure Time</th> <th>Number of Available Seats</th> </tr>"+ userTable +"</table>";
+	}
 
-//input openids to the table
-String entries = "";
-String openIDTableRow = "";
-for (String oid : user.getOpenIds()) {
-	entries += "<option value="+oid+">"+oid+"</option>";
-}
-if (entries != "") {
-	openIDTableRow = "<tr> <td>Open ID:</td> <td><select multiple='multiple' NAME='openid'>"+entries+"</select></td> </tr>";
-}
+	//input openids to the table
+	String entries = "";
+	
+	for (String oid : user.getOpenIds()) {
+		entries += "<option value="+oid+">"+oid+"</option>";
+	}
+	if (entries != "") {
+		openIDTableRow = "<tr> <td>Open ID:</td> <td><select multiple='multiple' NAME='openid'>"+entries+"</select></td> </tr>";
+	}
 
-String takeConf = "";
-//if you have been redirected here from taking a ride print useful info
-if (request.getParameter("rideSelect") != null && request.getParameter("streetTo") != null && request.getParameter("houseNo") != null) {
-	cps.takeRide(currentUser,Integer.parseInt(request.getParameter("rideSelect")),Integer.parseInt(request.getParameter("streetTo")),
+	
+	//if you have been redirected here from taking a ride print useful info
+	if (request.getParameter("rideSelect") != null && request.getParameter("streetTo") != null && request.getParameter("houseNo") != null) {
+		cps.takeRide(currentUser,Integer.parseInt(request.getParameter("rideSelect")),Integer.parseInt(request.getParameter("streetTo")),
 			Integer.parseInt(request.getParameter("houseNo")));
-	LocationList locations = cps.getLocations();
-	String target = "";
-	while (locations.next()){
-		if (locations.getID() == Integer.parseInt(request.getParameter("streetTo"))) {
-			target = locations.getStreetName();
+		LocationList locations = cps.getLocations();
+		String target = "";
+		while (locations.next()){
+			if (locations.getID() == Integer.parseInt(request.getParameter("streetTo"))) {
+				target = locations.getStreetName();
+			}
 		}
-	}
-	RideListing rl2 = cps.getRideListing();
-	String el = "";
-	String dt = "";
-	String tm = "";
-	while (rl2.next()){
-		//System.out.println(rl2.getRideID()+", "+request.getParameter("rideSelect"));
-		if (rl2.getRideID() == Integer.parseInt(request.getParameter("rideSelect"))) {
-			el = rl2.getEndLocation();
-			dt = new SimpleDateFormat("dd/MM/yyyy").format(rl2.getRideDate());
-			tm = rl2.getTime();
+		RideListing rl2 = cps.getRideListing();
+		String el = "";
+		String dt = "";
+		String tm = "";
+		while (rl2.next()){
+			//System.out.println(rl2.getRideID()+", "+request.getParameter("rideSelect"));
+			if (rl2.getRideID() == Integer.parseInt(request.getParameter("rideSelect"))) {
+				el = rl2.getEndLocation();
+				dt = new SimpleDateFormat("dd/MM/yyyy").format(rl2.getRideDate());
+				tm = rl2.getTime();
+			}
 		}
+		takeConf = "<p>" + "You have requested to be picked up from " +request.getParameter("houseNo")+" "+target+" at "+tm+" on "+dt+ "</p>";
 	}
-	takeConf = "<p>" + "You have requested to be picked up from " +request.getParameter("houseNo")+" "+target+" at "+tm+" on "+dt+ "</p>";
 }
-
 %>
 
 
@@ -116,9 +112,9 @@ if (request.getParameter("rideSelect") != null && request.getParameter("streetTo
 		<FORM name="updateDetails" action="updateuser" method="post">
 			<INPUT type="hidden" name="updateDetails" value="yes">
 			<TABLE class='userDetails'>
-				<tr> <td>Username:</td> <td><%=user.getUserName()%><!-- <INPUT TYPE="text" NAME="userName" SIZE="25" value="<%=user.getUserName()%>">--></td> </tr> 
-				<tr> <td>Email Address:</td> <td><INPUT TYPE="text" NAME="email" SIZE="25" value="<%=user.getEmail()%>"></td> </tr> 
-				<tr> <td>Phone Number:</td> <td><INPUT TYPE="text" NAME="phone" SIZE="25" value="<%=user.getPhoneNumber()%>"></td> </tr>
+				<tr> <td>Username:</td> <td><%=user != null ? user.getUserName():""%><!-- <INPUT TYPE="text" NAME="userName" SIZE="25" value="<%=user != null ? user.getUserName() : ""%>">--></td> </tr> 
+				<tr> <td>Email Address:</td> <td><INPUT TYPE="text" NAME="email" SIZE="25" value="<%=user != null ? user.getEmail() : ""%>"></td> </tr> 
+				<tr> <td>Phone Number:</td> <td><INPUT TYPE="text" NAME="phone" SIZE="25" value="<%=user != null ? user.getPhoneNumber() : ""%>"></td> </tr>
   				<tr> <td>&nbsp;</td> <td><INPUT TYPE="submit" NAME="confirmUpdate" VALUE="Update Details" SIZE="25"></td> </tr>
 			</TABLE>
 		</FORM>

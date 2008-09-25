@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -25,18 +26,18 @@ public class NonOpenIdConsumer extends HttpServlet {
 		doPost(request, response);
 	}
 	
+	/* (non-Javadoc)
+	 * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
-		PrintWriter out = response.getWriter();
-		out.println("<html><body><p>is normal_login?</p>");
+		HttpSession session = request.getSession();
 		if( request.getParameter("normal_signin") != null ) {
-			out.println("<p>yes</p>;");
 			String username = request.getParameter("username");
 			String userpass = request.getParameter("userpass");
 			UserManager manager = new UserManager();
 			try {
 				// authenticate the user and get their details from the database put it into the session attributes along with signedin
 				User user = manager.getUserByUsername(username, userpass);
-				HttpSession session = request.getSession();
 				session.setAttribute("user", user);
 				session.setAttribute("signedin", Boolean.TRUE);
 				// now redirect to welcome.jsp
@@ -46,16 +47,22 @@ public class NonOpenIdConsumer extends HttpServlet {
 				response.sendRedirect(buff.toString());
 			} catch (InvaildUserNamePassword e) {
 				// Log in failed go back to index
-				StringBuffer buff = new StringBuffer();
-				buff.append(request.getContextPath());
-				buff.append("/loginfailed.jsp");
-				response.sendRedirect(buff.toString());
+//				StringBuffer buff = new StringBuffer();
+//				buff.append(request.getContextPath());
+				request.setAttribute("error", String.format("%s", e.getMessage()));
+				request.getRequestDispatcher("/loginfailed.jsp").forward(request, response);
+				//response.sendRedirect(buff.toString());
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		} else if(session.isNew()) {
+			request.setAttribute("error", "cookies must be enabled for authentication to work");
+			request.getRequestDispatcher("/loginfailed.jsp").forward(request, response);
 		} else {
-			out.println("<p>NO</p></body></html>");
+			request.setAttribute("error", "form must have a input of \"normal_signin\"");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/loginfailed.jsp");
+			dispatcher.forward(request, response);
 		}
 	}
 }
