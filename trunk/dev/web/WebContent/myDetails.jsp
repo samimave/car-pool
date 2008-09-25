@@ -91,6 +91,10 @@ if (session.isNew() || (OpenIdFilter.getCurrentUser(session) == null && session.
 		}
 		takeConf = "<p>" + "You have requested to be picked up from " +request.getParameter("houseNo")+" "+target+" at "+tm+" on "+dt+ "</p>";
 	}
+	
+	
+	
+	
 }
 %>
 
@@ -130,7 +134,7 @@ if (session.isNew() || (OpenIdFilter.getCurrentUser(session) == null && session.
 		<form action="addopenid">
 			<input type="hidden" name="addopenid"/>
 			<table class="updateDetails">
-				<tr><td>OpneId to add: <input type="text" name="openid"/ size="25"/></td></tr>
+				<tr><td>OpenId to add: <input type="text" name="openid"/ size="25"/></td></tr>
 				<tr><td><input type="submit" value="Attach"/></td></tr>
 			</table>
 		</form>
