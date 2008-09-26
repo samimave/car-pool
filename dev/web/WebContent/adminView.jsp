@@ -22,7 +22,7 @@ if (request.getParameter("locations") != null) {
 	
 }
 %>
-
+		
 
 <%@page import="car.pool.persistance.test.AddLocations"%><HTML>
 	<HEAD>
@@ -123,9 +123,19 @@ if (request.getParameter("locations") != null) {
 			<h1>Administrative functions below</h1>
 			<FORM NAME="admin" action="#" method="post" >				
 				<table>
-					<tr><td>Add locations in database?</td>
+					<tr><td>Add new locations to database?</td>
 						<td><INPUT type="text" name="locations" value="Enter location here..." size="30"></td>
-						<td>&nbsp;</td> <td><INPUT type="submit" value="Add Locations" size="25"></td>
+						<td>&nbsp;</td> <td><INPUT type="submit" value="Add Locations" size="25" onClick="<%AddLocations.addFromFile();%>" ></td>
+					</tr>
+				</table>
+			</FORM>
+			<%//=locations.length %>
+			&nbsp;	
+
+			<FORM NAME="admin2" action="#">				
+				<table>
+					<tr><td>Add locations in database?</td>						
+						<td>&nbsp;</td> <td><INPUT type="submit" value="Add Locations" size="25" onClick="<%AddLocations.addFromFile();%>"></td>
 					</tr>
 				</table>
 			</FORM>
