@@ -24,7 +24,7 @@ while (locations.next()){
 }
 int rideCount=0;
 //count the number of rides in the db
-RideListing rl = cps.getRideListing();		//TODO: make this work
+RideListing rl = cps.getRideListing();		
 while (rl.next()){
 	rideCount++;
 }

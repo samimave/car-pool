@@ -14,6 +14,12 @@ if (OpenIdFilter.getCurrentUser(s) == null && s.getAttribute("signedin") == null
 String message = "";
 
 CarPoolStore cps = new CarPoolStoreImpl();
+//make the options for the street select box
+LocationList locations = cps.getLocations();
+String options = "";
+while (locations.next()){
+	options += "<option value='"+locations.getID()+"'>"+locations.getStreetName()+"</option>";
+}
 
 User user = (User)s.getAttribute("user");
 int dbID = user.getUserId();
@@ -36,27 +42,19 @@ while (u.next()) {
 		from = u.getEndLocation();
 		to = u.getStartLocation();
 		
+		detailsTable += "<tr> <td>Info</td> <td> Previous details </td> <td> New details </td>";
 		detailsTable += "<tr> <td>Username:</td>  <td>"+ u.getUsername() +"</td></tr> ";
-		detailsTable += "<tr> <td> Start Region: </td> </td>"+ "<td><INPUT TYPE=\"text\" NAME=\"Rtime\" SIZE=\"25\" value=\""+u.getStartLocation()+"\"></td></tr>";
-		detailsTable += "<tr> <td> Stop Region: </td>"+ "<td><INPUT TYPE=\"text\" NAME=\"Rtime\" SIZE=\"25\" value=\""+u.getEndLocation()+"\"></td></tr>";
-		detailsTable += "<tr> <td>Date: </td>"+ "<td><INPUT TYPE=\"text\" NAME=\"Rdate\" SIZE=\"25\" value=\""+u.getRideDate()+"\"></td></tr>";
-		detailsTable += "<tr> <td> Time: </td>"+ "<td><INPUT TYPE=\"text\" NAME=\"Rtime\" SIZE=\"25\" value=\""+u.getTime()+"\"></td></tr>";
-		detailsTable += "<tr> <td> Seats:</td>"+ "<td><INPUT TYPE=\"text\" NAME=\"Rtime\" SIZE=\"25\" value=\""+u.getAvailableSeats()+"\"></td></tr>";
-		detailsTable += "<tr> <td> Additional Info: </td> <td></td> </tr>";
+		detailsTable += "<tr> <td> Start Region: </td> <td>"+ u.getStartLocation()+"</td>"+"<td><SELECT name=\"startFrom\">"+"<option selected=\"selected\">Select a Street</option>"+options+"</SELECT></td></tr>";
+		detailsTable += "<tr> <td> Stop Region: </td> <td>"+u.getEndLocation()+"</td>"+"<td><SELECT name=\"stopAt\">"+"<option selected=\"selected\">Select a Street</option>"+options+"</SELECT></td></tr>";
+		detailsTable += "<tr> <td>Date: </td> <td>"+ u.getRideDate()+"</td><td><INPUT TYPE=\"text\" NAME=\"Rdate\" SIZE=\"25\" value=\""+u.getRideDate()+"\"></td></tr>";
+		detailsTable += "<tr> <td> Time: </td><td>"+ u.getTime()+"</td><td><INPUT TYPE=\"text\" NAME=\"Rtime\" SIZE=\"25\" value=\""+u.getTime()+"\"></td></tr>";
+		detailsTable += "<tr> <td> Seats:</td><td>"+u.getAvailableSeats() +"</td><td><INPUT TYPE=\"text\" NAME=\"Rseats\" SIZE=\"25\" value=\""+u.getAvailableSeats()+"\"></td></tr>";
 	}
 }
 //finish table
 if (ridesExist) {
 	detailsTable = "<table class='rideDetailsSearch'>"+ detailsTable +"</table>";	
 }
-
-//make the options for the street select box
-LocationList locations = cps.getLocations();
-String options = "";
-while (locations.next()){
-	options += "<option value='"+locations.getID()+"'>"+locations.getStreetName()+"</option>";
-}
-
 %>
 
 <%
@@ -141,6 +139,12 @@ table += "</table>";
 			<INPUT type="submit" value="View Map" > 
 			<INPUT type="hidden" name="mapFrom" value= "<%=from%>">
 			<INPUT type="hidden" name="mapTo"  value= "<%=to%>" >
+		</FORM>
+		<FORM name="update" action="rideEditSuccess.jsp" method="post">
+			<input type="hidden" name="updateRide" value="yes"/>
+			<TABLE class='rideUpdate'>
+				<tr> <td>&nbsp;</td> <td><INPUT type="submit" name="updateRide" value="Update Ride" size="25"></td> </tr>
+			</TABLE>
 		</FORM>
 		<FORM name="withdraw" action="rideEditSuccess.jsp" method="post">
 			<input type="hidden" name="remRide"/>
