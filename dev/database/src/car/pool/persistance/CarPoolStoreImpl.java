@@ -677,4 +677,28 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		return comment;
 
 	}
+
+	@Override
+	public UserList getUserName() {
+		UserList UList = new UserList(db.getStatement(),true);		
+		return UList;
+	}
+
+	@Override
+	public UserList getUserEmail() {
+		UserList UList = new UserList(db.getStatement(),true);		
+		return UList;
+	}
+
+	@Override
+	public UserList getUserPhone() {
+		UserList UList = new UserList(db.getStatement(),true);		
+		return UList;
+	}
+
+	@Override
+	public UserList getUserSignUpDate() {
+		UserList UList = new UserList(db.getStatement(),true);		
+		return UList;
+	}
 }
