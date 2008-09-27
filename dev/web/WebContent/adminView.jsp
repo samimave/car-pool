@@ -17,10 +17,34 @@ if (request.getParameter("locations") != null) {
 	   //dosomething
 	int region = -1;
 	region = cps.addRegion("Palmerston North");	
-			cps.addLocation(region, loc);
-			System.out.println("street: "+loc);
-	
+			 cps.addLocation(region, loc);
+			 System.out.println("street: "+loc);
 }
+
+String uName;
+String uEmail;
+String uPhone;
+String uSignUpDate;
+UserList nList = cps.getUserName();
+UserList eList = cps.getUserEmail();
+UserList pList = cps.getUserPhone();
+UserList sList = cps.getUserSignUpDate();
+
+String Table = "";
+String userTable ="";
+while (nList.next()){
+	uName 	= nList.getUserName();
+	uEmail 	= nList.getUserEmail();
+	uPhone	= nList.getUserPhone();
+	uSignUpDate 	= nList.getUserSignUpDate();
+	Table += "<tr> <td>"+ uName +"</td> ";
+	Table += "<td>"+ uEmail +"</td> ";
+	Table += "<td>"+ uPhone +"</td> ";
+	Table += "<td>"+ uSignUpDate +"</td> </tr>";
+}
+userTable = "<table class='allUsers'> <tr> <th>User Name</th> <th>Email</th> <th>Phone</th>"+
+"<th>Sign Up Date</th> </tr>"+ Table +"</table>";
+
 %>
 		
 
@@ -149,6 +173,16 @@ if (request.getParameter("locations") != null) {
 					</tr>
 				</table>
 			</FORM>
+
+			<FORM NAME="resultFrm" id="result">	
+				<TABLE class="rideSearch">
+
+					<tr><td>All users in the system</td></tr>
+					<%=userTable%>					
+				</TABLE>
+			</FORM>
+
+
 		</DIV>
 	<%@ include file="leftMenu.html" %>
 
