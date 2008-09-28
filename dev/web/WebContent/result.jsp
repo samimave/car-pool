@@ -109,8 +109,8 @@ if (username != "no username entered")	{
 		}
 		userExist = true;
 		
-		String from = u.getEndLocation();
-		String to = u.getStartLocation();
+		String from = u.getStartLocation();
+		String to = u.getEndLocation();
 
 		if (!avoidDuplicates.contains(u.getRideID())){
 			avoidDuplicates.add(u.getRideID());
@@ -149,8 +149,8 @@ if (strTmp != "")	{
 		dateExist = true;
 		
 		//code to get the name associated with the street id
-		String from = daTbl.getEndLocation();
-		String to = daTbl.getStartLocation();
+		String from = daTbl.getStartLocation();
+		String to = daTbl.getEndLocation();
 
 		if (!avoidDuplicates.contains(daTbl.getRideID())){
 			avoidDuplicates.add(daTbl.getRideID());
