@@ -1,9 +1,12 @@
 <DIV id="navAlpha" class="navAlpha">
-	<script type="text/javascript" src="javascript/checkbrowser.js">
-	</script>
 	<script type="text/javascript">
 		<!--
+		if(typeof(formCookieCheck) == "undefined" ) {
+			alert("required javascript not included: javascript/checkbrowser.js");
+		} else {
 			runBrowserTests();
+		}
+		//alert(screen.availWidth + "x" + screen.availHeight);
 		// -->
 	</script>
 	<p>For full use of our sites awesome features please login/register using form opposite.</p>

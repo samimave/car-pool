@@ -15,6 +15,7 @@ if (OpenIdFilter.getCurrentUser(s) == null && s.getAttribute("signedin") == null
 		<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII" />
 		<style type="text/css" media="screen">@import "3ColumnLayout.css";</style>
 		<title>User Details Update Success</title>
+		<%@include file="include/javascriptincludes.html" %>
 	</head>
 	<body>
 		<div class="content">

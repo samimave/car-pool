@@ -18,6 +18,7 @@ if (!(OpenIdFilter.getCurrentUser(s) == null && s.getAttribute("signedin") == nu
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<title>About Us</title>
 	<style type="text/css" media="screen">@import "3ColumnLayout.css";</style>
+	<%@include file="include/javascriptincludes.html" %>
 </head>
 <body>
 	<%@ include file="heading.html" %>

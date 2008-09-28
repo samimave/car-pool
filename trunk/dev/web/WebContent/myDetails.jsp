@@ -104,6 +104,7 @@ if (session.isNew() || (OpenIdFilter.getCurrentUser(session) == null && session.
 	<HEAD>
 		<TITLE>User Account Page</TITLE>
 		<STYLE type="text/css" media="screen">@import "3ColumnLayout.css";</STYLE>
+		<%@include file="include/javascriptincludes.html" %>
 	</HEAD>
 	<BODY>
 

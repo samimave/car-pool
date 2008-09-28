@@ -33,6 +33,7 @@ if (request.getParameter("rideselect") != null) {
 	<HEAD>
 		<TITLE> Ride Successfully Booked! </TITLE>
 		<STYLE type="text/css" media="screen">@import "3ColumnLayout.css";</STYLE>
+		<%@include file="include/javascriptincludes.html" %>
 	</HEAD>
 	<BODY>
 

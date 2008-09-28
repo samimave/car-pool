@@ -1,5 +1,5 @@
 function  normalLoginInputValidation(form) {
-	if(!form.username || !form.userpass ) {
+	if(!form.username || !form.userpass || !form.normal_signin) {
 		alert('wrong form used, please inform webmaster');
 		return false;
 	}
@@ -18,7 +18,7 @@ function  normalLoginInputValidation(form) {
 }
 
 function openidLoginInputValidation(form) {
-	if(!form.openid_url) {
+	if(!form.openid_url || !form.openid_signin) {
 		alert('wrong form used, please inform webmaster');
 		return false;
 	}
@@ -27,5 +27,22 @@ function openidLoginInputValidation(form) {
 		alert("Please enter a valid OpenId URL");
 		return false;
 	}
+	
+	return true;
+}
+
+
+function normalRegisterFormValidation(form) {
+	if(!form.userName || !form.password1 || !form.password2 || !form.email || !form.phone ) {
+		alert('wrong form used, please inform webmaster');
+		return false;
+	}
+	
+	return true;
+}
+
+
+function openidRegisterFormValidation(form) {
+	
 	return true;
 }

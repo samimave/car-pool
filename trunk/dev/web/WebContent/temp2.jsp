@@ -129,7 +129,7 @@ table += "</table>";
 
 		<TITLE> Ride Details </TITLE>
 		<STYLE type="text/css" media="screen">@import "3ColumnLayout.css";</STYLE>
-
+		<%@include file="include/javascriptincludes.html" %>
 	</HEAD>
 	<BODY>
 
@@ -139,7 +139,7 @@ table += "</table>";
 
 	<%@ include file="rightMenu.jsp" %>
 
-	<DIV class="content">
+ 	<DIV class="content">
 		<h2>The ride details appear below:</h2>
 		<%=detailsTable %><br>
 		<FORM name="showMap" id="map2" method="post" target="_blank" action="displayRouteMap.jsp">

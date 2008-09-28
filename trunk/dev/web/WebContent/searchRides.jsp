@@ -38,6 +38,7 @@ while (rl.next()){
 		<SCRIPT type="text/javascript">
 			var cal = new CalendarPopup();
 		</script>
+		<%@include file="include/javascriptincludes.html" %>
 	</HEAD>
 	<BODY>
 
