@@ -29,7 +29,7 @@ if (session.isNew() || (OpenIdFilter.getCurrentUser(session) == null && session.
 	if (request.getParameter("rideSelect") != null && request.getParameter("updateRide") != null){
 		//Integer.parseInt(request.getParameter("Rseats"))
 		cps.updateRide( Integer.parseInt(request.getParameter("rideSelect")), 100);
-		updateConf = "<p>" + "You have successfully updated the ride you wanted to" + "</p>";
+		updateConf = "<p>" + "You have successfullyy updated the ride you wanted to" + "</p>";
 	}
 	
 }
