@@ -31,6 +31,10 @@ String detailsTable = "<p>No info found.</p>";
 boolean ridesExist = false;
 String from = "";
 String to = "";
+String uname = "";
+int seats = 0;
+Date dateR = null;
+String timeR = "";
 
 //System.out.println("got here!");
 while (u.next()) {					
@@ -39,22 +43,15 @@ while (u.next()) {
 			detailsTable = "";		//first time round get rid of unwanted text
 		}
 		ridesExist = true;
-		from = u.getEndLocation();
-		to = u.getStartLocation();
-		
-		detailsTable += "<tr> <td>Info</td> <td> Previous details </td> <td> New details </td>";
-		detailsTable += "<tr> <td>Username:</td>  <td>"+ u.getUsername() +"</td></tr> ";
-		detailsTable += "<tr> <td> Start Region: </td> <td>"+ u.getStartLocation()+"</td>"+"<td><SELECT name=\"startFrom\">"+"<option selected=\"selected\">Select a Street</option>"+options+"</SELECT></td></tr>";
-		detailsTable += "<tr> <td> Stop Region: </td> <td>"+u.getEndLocation()+"</td>"+"<td><SELECT name=\"stopAt\">"+"<option selected=\"selected\">Select a Street</option>"+options+"</SELECT></td></tr>";
-		detailsTable += "<tr> <td>Date: </td> <td>"+ u.getRideDate()+"</td><td><INPUT TYPE=\"text\" NAME=\"Rdate\" SIZE=\"25\" value=\""+u.getRideDate()+"\"></td></tr>";
-		detailsTable += "<tr> <td> Time: </td><td>"+ u.getTime()+"</td><td><INPUT TYPE=\"text\" NAME=\"Rtime\" SIZE=\"25\" value=\""+u.getTime()+"\"></td></tr>";
-		detailsTable += "<tr> <td> Seats:</td><td>"+u.getAvailableSeats() +"</td><td><INPUT TYPE=\"text\" NAME=\"Rseats\" SIZE=\"25\" value=\""+u.getAvailableSeats()+"\"></td></tr>";
+		from = u.getStartLocation();
+		to = u.getEndLocation();
+		uname = u.getUsername();
+		seats = u.getAvailableSeats();
+		dateR = u.getRideDate();
+		timeR = u.getTime();
 	}
 }
-//finish table
-if (ridesExist) {
-	detailsTable = "<table class='rideDetailsSearch'>"+ detailsTable +"</table>";	
-}
+
 %>
 
 <%
@@ -134,23 +131,25 @@ table += "</table>";
 
 	<DIV class="content">
 		<h2>The ride details appear below:</h2>
-		<%=detailsTable %><br>
-		<FORM name="showMap" id="map2" method="post" target="_blank" action="displayRouteMap.jsp">
-			<INPUT type="submit" value="View Map" > 
-			<INPUT type="hidden" name="mapFrom" value= "<%=from%>">
-			<INPUT type="hidden" name="mapTo"  value= "<%=to%>" >
-		</FORM>
 		<FORM name="update" action="rideEditSuccess.jsp" method="post">
 			<input type="hidden" name="updateRide" value="yes"/>
-			<TABLE class='rideUpdate'>
-				<tr> <td>&nbsp;</td> <td><INPUT type="submit" name="updateRide" value="Update Ride" size="25"></td> </tr>
+			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect") %>">
+			<TABLE class='rideDetailsSearch'>
+				<tr> <td>Info</td> <td> Previous details </td> <td> New details </td><td> Update </td></tr>
+				<tr><td>Ride By:</td><td><%=uname%></td><td>&nbsp;</td><td>&nbsp;</td></tr>
+				<tr> <td> Start Street: </td> <td><%=from %></td><td><SELECT name="startFrom"><option selected="selected">Select a Street</option><%=options %></SELECT></td><td><INPUT type="submit" name="startFrom" value="Update Street" size="25"></td></tr>
+				<tr> <td> End Street: </td> <td><%=to%></td><td><SELECT name="endTo"><option selected="selected">Select a Street</option><%=options %></SELECT></td><td><INPUT type="submit" name="endTo" value="Update Street" size="25"></td></tr>
+				<tr> <td>Date: </td> <td><%=dateR %></td><td><INPUT TYPE="text" NAME="Rdate" SIZE="25" value=<%=dateR%>></td><td><INPUT type="submit" name="updateDate" value="Update Date" size="25"></td></tr>
+				<tr> <td> Time: </td><td><%=timeR %></td><td><INPUT TYPE="text" NAME="Rtime" SIZE="25" value=<%=timeR %>></td><td><INPUT type="submit" name="updateTime" value="Update Time" size="25"></td></tr>
+				<tr><td>Seats available:</td><td><%=seats%> </td><td><INPUT TYPE="text" NAME="numSeats" value=<%=seats%> SIZE="25"></td><td><INPUT type="submit" name="updateSeats" value="Update Seats" size="25"></td></tr>
 			</TABLE>
 		</FORM>
+
 		<FORM name="withdraw" action="rideEditSuccess.jsp" method="post">
 			<input type="hidden" name="remRide"/>
 			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect") %>">
 			<TABLE class='rideWithdraw'>
-				<tr> <td>&nbsp;</td> <td><INPUT type="submit" name="removeRide" value="Withdraw Ride" size="25"></td> </tr>
+				<tr> <td><INPUT type="submit" name="removeRide" value="Withdraw Ride" size="25"></td> </tr>
 			</TABLE>
 		</FORM>
 	
