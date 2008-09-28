@@ -31,8 +31,13 @@ public interface CarPoolStore {
 	
 	int addRide(int user, int availableSeats, String startDate, int startLocation, int endLocation, int streetNumber,  int reoccur, String time, String comment) throws RideException;
 	int takeRide(int user, int ride, int idLocation, int streetNumber) throws RideException;
-	boolean updateRide(int ride, int availableSeats) throws RideException;
 	
+	boolean updateSeats(int ride, int availableSeats) throws RideException;
+	boolean updateStartDate(int ride, String startDate) throws RideException;
+	boolean updateStartLoc(int ride, int startLoc) throws RideException;
+	boolean updateEndLoc(int ride, int endLoc) throws RideException;
+//	boolean updateStreetNum(int ride, int streetNum) throws RideException;
+	boolean updateStartTime(int ride, String startTime) throws RideException;
 	
 	boolean removeUser(String username, String passwordHash) throws StoreException;
 	boolean removeRide(int user, int ride) throws StoreException;
