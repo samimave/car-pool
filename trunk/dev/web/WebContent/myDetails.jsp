@@ -34,8 +34,8 @@ if (session.isNew() || (OpenIdFilter.getCurrentUser(session) == null && session.
 		}
 		userExist = true;
 		
-		String from = rl.getEndLocation();
-		String to = rl.getStartLocation();
+		String from = rl.getStartLocation();
+		String to = rl.getEndLocation();
 			
 			userTable += "<tr> <td>"+ rl.getUsername() +"</td> ";	
 			userTable += "<td>"+ from +"</td> ";
@@ -104,7 +104,6 @@ if (session.isNew() || (OpenIdFilter.getCurrentUser(session) == null && session.
 	<HEAD>
 		<TITLE>User Account Page</TITLE>
 		<STYLE type="text/css" media="screen">@import "3ColumnLayout.css";</STYLE>
-		<%@include file="include/javascriptincludes.html" %>
 	</HEAD>
 	<BODY>
 
