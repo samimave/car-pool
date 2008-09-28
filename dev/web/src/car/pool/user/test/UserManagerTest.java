@@ -1,21 +1,17 @@
 package car.pool.user.test;
 
-import static org.junit.Assert.*;
-
-import java.io.IOException;
-import java.sql.SQLException;
+import static org.junit.Assert.fail;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.Assert;
 
 import car.pool.persistance.CarPoolStoreImpl;
-import car.pool.persistance.exception.InvaildUserNamePassword;
-import car.pool.user.UserManager;
 import car.pool.user.User;
 import car.pool.user.UserFactory;
+import car.pool.user.UserManager;
 
 public class UserManagerTest {
 

@@ -19,6 +19,7 @@ function runBrowserTests() {
 	if(!checkCookiesEnabled()) {
 		document.writeln(getCookiesDisabledMessage());
 	}
+	return true;
 }
 
 function formCookieCheck() {

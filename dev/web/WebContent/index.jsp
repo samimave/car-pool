@@ -32,8 +32,9 @@ if (request.getParameter("delete") != null) {
 	<HEAD>
 		<TITLE> The Car Pool </TITLE>
 		<STYLE type="text/css" media="screen">@import "3ColumnLayout.css";</STYLE>
+		<%@include file="include/javascriptincludes.html" %>
 	</HEAD>
-	<BODY>
+	<BODY onload="formCookieCheck()">
 
 	<%@ include file="heading.html" %>
 

@@ -280,6 +280,7 @@ if (Sto != "no location entered") {
 	<HEAD>
 		<TITLE>Ride Search Results</TITLE>
 		<STYLE type="text/css" media="screen">@import "3ColumnLayout.css"; </STYLE>
+		<%@include file="include/javascriptincludes.html" %>
 	</HEAD>
 	<BODY>
 <%@ include file="heading.html" %>

@@ -10,6 +10,7 @@ HttpSession s = request.getSession(true);
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <TITLE>Sign Up for The Car Pool!</TITLE>
 <style type="text/css" media="screen">@import "3ColumnLayout.css";</style>
+<%@include file="include/javascriptincludes.html" %>
 </HEAD>
 <BODY>
 	<%@ include file="heading.html" %>

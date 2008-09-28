@@ -28,7 +28,7 @@ if (session.isNew() || (OpenIdFilter.getCurrentUser(session) == null && session.
 	//if you have been redirected here from editing a ride print useful info && request.getParameter("Rseats") != null
 	if (request.getParameter("rideSelect") != null && request.getParameter("updateRide") != null){
 		//Integer.parseInt(request.getParameter("Rseats"))
-		cps.updateRide( Integer.parseInt(request.getParameter("rideSelect")), 100);
+		cps.updateSeats( Integer.parseInt(request.getParameter("rideSelect")), 100);
 		updateConf = "<p>" + "You have successfullyy updated the ride you wanted to" + "</p>";
 	}
 	
@@ -41,6 +41,7 @@ if (session.isNew() || (OpenIdFilter.getCurrentUser(session) == null && session.
 	<HEAD>
 		<TITLE>User Account Page</TITLE>
 		<STYLE type="text/css" media="screen">@import "3ColumnLayout.css";</STYLE>
+		<%@include file="include/javascriptincludes.html" %>
 	</HEAD>
 	<BODY>
 

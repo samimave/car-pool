@@ -141,6 +141,7 @@ userTable = "<table class='allUsers'> <tr> <th>User Name</th> <th>Email</th> <th
 		}
 		
 		</script>
+		<%@include file="include/javascriptincludes.html" %>
 		</HEAD>
 	<BODY>
 		<DIV class="content">

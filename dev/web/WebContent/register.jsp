@@ -8,6 +8,7 @@ HttpSession s = request.getSession(true);
 	<HEAD>
 		<TITLE>Sign Up for The Car Pool!</TITLE>
 		<style type="text/css" media="screen">@import "3ColumnLayout.css";</style>
+		<%@include file="include/javascriptincludes.html" %>
 	</HEAD>
 	<BODY>
 

@@ -31,8 +31,9 @@ if (request.getParameter("newUser") != null) {
 	<HEAD>
 		<TITLE> Welcome to The Car Pool </TITLE>
 		<STYLE type="text/css" media="screen">@import "3ColumnLayout.css";</STYLE>
+		<%@include file="include/javascriptincludes.html" %>
 	</HEAD>
-	<BODY>
+	<BODY onload="runBrowserTests()">
 
 	<%@ include file="heading.html" %>
 
