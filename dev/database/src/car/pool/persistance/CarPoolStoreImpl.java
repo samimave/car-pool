@@ -333,24 +333,81 @@ public class CarPoolStoreImpl implements CarPoolStore {
 	}
 
 	
-	public boolean updateRide(int ride, int availableSeats) throws RideException{
+	public boolean updateSeats(int ride, int availableSeats) throws RideException{
 		Statement statement = null;
-		//int countm = 0;
 		int countr = 0;
 		
 		try {
 			statement = db.getStatement();
-			//countm = statement.executeUpdate("UPDATE matches SET matches.availableSeats WHERE idRide='"+ride+"';");
 			countr = statement.executeUpdate("UPDATE ride SET ride.availableSeats='"+availableSeats+"' "+"WHERE idRide='"+ride+"';");
 			statement.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		//TODO check user was removed
-		return true;
+		return countr > 0;
 	}
 
+	public boolean updateStartDate(int ride, String startDate) throws RideException{
+		Statement statement = null;
+		int countr = 0;
+		
+		try {
+			statement = db.getStatement();
+			countr = statement.executeUpdate("UPDATE ride SET ride.rideDate='"+startDate+"' "+"WHERE idRide='"+ride+"';");
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return countr > 0;
+	}
+	
+	public boolean updateStartLoc(int ride, int startLoc) throws RideException{
+		Statement statement = null;
+		int countr = 0;
+		
+		try {
+			statement = db.getStatement();
+			countr = statement.executeUpdate("UPDATE ride SET ride.rideStartLocation='"+startLoc+"' "+"WHERE idRide='"+ride+"';");
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return countr > 0;
+	}
+	
+	public boolean updateEndLoc(int ride, int endLoc) throws RideException{
+		Statement statement = null;
+		int countr = 0;
+		
+		try {
+			statement = db.getStatement();
+			countr = statement.executeUpdate("UPDATE ride SET ride.rideStopLocation='"+endLoc+"' "+"WHERE idRide='"+ride+"';");
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return countr > 0;
+	}
+
+	public boolean updateStartTime(int ride, String startTime) throws RideException{
+		Statement statement = null;
+		int countr = 0;
+		
+		try {
+			statement = db.getStatement();
+			countr = statement.executeUpdate("UPDATE ride SET ride.rideTime='"+startTime+"' "+"WHERE idRide='"+ride+"';");
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return true;
+	}
+	
 	@Override
 	public boolean removeRide(int user, int ride) throws StoreException {
 		Statement statement = null;
