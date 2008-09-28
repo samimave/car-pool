@@ -131,20 +131,44 @@ table += "</table>";
 
 	<DIV class="content">
 		<h2>The ride details appear below:</h2>
-		<FORM name="update" action="rideEditSuccess.jsp" method="post">
+
+		<FORM name="updateStartS" action="rideEditSuccess.jsp" method="post">
 			<input type="hidden" name="updateRide" value="yes"/>
 			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect") %>">
-			<TABLE class='rideDetailsSearch'>
-				<tr> <td>Info</td> <td> Previous details </td> <td> New details </td><td> Update </td></tr>
-				<tr><td>Ride By:</td><td><%=uname%></td><td>&nbsp;</td><td>&nbsp;</td></tr>
-				<tr> <td> Start Street: </td> <td><%=from %></td><td><SELECT name="startFrom"><option selected="selected">Select a Street</option><%=options %></SELECT></td><td><INPUT type="submit" name="startFrom" value="Update Street" size="25"></td></tr>
-				<tr> <td> End Street: </td> <td><%=to%></td><td><SELECT name="endTo"><option selected="selected">Select a Street</option><%=options %></SELECT></td><td><INPUT type="submit" name="endTo" value="Update Street" size="25"></td></tr>
-				<tr> <td>Date: </td> <td><%=dateR %></td><td><INPUT TYPE="text" NAME="Rdate" SIZE="25" value=<%=dateR%>></td><td><INPUT type="submit" name="updateDate" value="Update Date" size="25"></td></tr>
-				<tr> <td> Time: </td><td><%=timeR %></td><td><INPUT TYPE="text" NAME="Rtime" SIZE="25" value=<%=timeR %>></td><td><INPUT type="submit" name="updateTime" value="Update Time" size="25"></td></tr>
-				<tr><td>Seats available:</td><td><%=seats%> </td><td><INPUT TYPE="text" NAME="numSeats" value=<%=seats%> SIZE="25"></td><td><INPUT type="submit" name="updateSeats" value="Update Seats" size="25"></td></tr>
+			<TABLE>
+				<tr> <td> Start Street: <%=from %></td></tr>
+				<tr><td><SELECT name="startFrom"><option selected="selected">Select a Street</option><%=options %></SELECT></td><td><INPUT type="submit" name="startFrom" value="Update Street" size="25"></td></tr>
 			</TABLE>
 		</FORM>
-
+		<FORM name="updateEndS" action="rideEditSuccess.jsp" method="post">
+			<input type="hidden" name="updateRide" value="yes"/>
+			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect") %>">
+			<TABLE>
+				<tr> <td>End Street: <%=to%></td></tr>
+				<tr> <td><SELECT name="endTo"><option selected="selected">Select a Street</option><%=options %></SELECT></td><td><INPUT type="submit" name="endTo" value="Update Street" size="25"></td></tr>
+			</TABLE>
+		</FORM>
+		<FORM name="updateDate" action="rideEditSuccess.jsp" method="post">
+			<input type="hidden" name="updateRide" value="yes"/>
+			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect") %>">
+			<TABLE>
+				<tr> <td>Date: </td> <td><INPUT TYPE="text" NAME="Rdate" SIZE="25" value=<%=dateR%>></td><td><INPUT type="submit" name="updateDate" value="Update Date" size="25"></td></tr>
+			</TABLE>
+		</FORM>
+		<FORM name="updateTime" action="rideEditSuccess.jsp" method="post">
+			<input type="hidden" name="updateRide" value="yes"/>
+			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect") %>">
+			<TABLE>
+				<tr> <td> Time: </td><td><INPUT TYPE="text" NAME="Rtime" SIZE="25" value=<%=timeR %>></td><td><INPUT type="submit" name="updateTime" value="Update Time" size="25"></td></tr>
+			</TABLE>
+		</FORM>
+		<FORM name="updateSeats" action="rideEditSuccess.jsp" method="post">
+			<input type="hidden" name="updateRide" value="yes"/>
+			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect") %>">
+			<TABLE>
+				<tr><td>Seats: </td><td><INPUT TYPE="text" NAME="numSeats" value=<%=seats%> SIZE="25"></td><td><INPUT type="submit" name="updateSeats" value="Update Seats" size="25"></td></tr>
+			</TABLE>
+		</FORM>
 		<FORM name="withdraw" action="rideEditSuccess.jsp" method="post">
 			<input type="hidden" name="remRide"/>
 			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect") %>">
