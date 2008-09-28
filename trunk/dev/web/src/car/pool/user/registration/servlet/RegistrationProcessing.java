@@ -33,24 +33,32 @@ public class RegistrationProcessing extends HttpServlet {
 		register(request, response);
 	}
 	
-	private void register(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	private void register(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		HttpSession session = request.getSession();
-		String loggedInAs = OpenIdFilter.getCurrentUser(request.getSession());
+		//String loggedInAs = OpenIdFilter.getCurrentUser(request.getSession());
 		String password1 = request.getParameter("password1");
 		String password2 = request.getParameter("password2");
 		String phone = request.getParameter("phone");
 		String email = request.getParameter("email");
 		String userName = request.getParameter("userName");
 		
-		UserManager manager = new UserManager();
-		User noidUser = UserFactory.newInstance();
-		if(password1.length() > 0 || password2.length() > 0) {
+		if(userName.length() == 0 || email.length() == 0) {
+			request.setAttribute("error", "Please input a username and a email address");
+			request.getRequestDispatcher("/register.jsp").forward(request, response);
+			return;
+		}else if(password1.length() > 0 || password2.length() > 0) {
 			if(!password1.equals(password2)) {
 				// TODO make sure they get a error message and the form is prefilled with the previous values they entered 
 				response.sendRedirect(String.format("%s/register.jsp", request.getContextPath()));
 				return;
 			}
+		} else {
+			request.setAttribute("error", "Please input a password");
+			request.getRequestDispatcher("/register.jsp").forward(request, response);
+			return;
 		}
+		UserManager manager = new UserManager();
+		User noidUser = UserFactory.newInstance();
 		noidUser.setUserName(userName);
 		noidUser.setEmail(email);
 		noidUser.setPassword(password1);  // it is assumed since the method got this far that password1 and password2 match
