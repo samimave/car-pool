@@ -261,6 +261,9 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		}
 	}
 
+	
+	
+	
 	public int addRide(int user, int availableSeats, String startDate, int startLocation, int endLocation, int streetNumber, int reoccur, String time, String comment) throws RideException {
 		
 		Statement statement = db.getStatement();
@@ -311,6 +314,7 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		}
 	}
 	
+	
 	public boolean removeUser(String username, String passwordHash){
 		Statement statement = null;
 		int count = 0;
@@ -328,6 +332,24 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		return count > 0;
 	}
 
+	
+	public boolean updateRide(int ride, int availableSeats) throws RideException{
+		Statement statement = null;
+		//int countm = 0;
+		int countr = 0;
+		
+		try {
+			statement = db.getStatement();
+			//countm = statement.executeUpdate("UPDATE matches SET matches.availableSeats WHERE idRide='"+ride+"';");
+			countr = statement.executeUpdate("UPDATE ride SET ride.availableSeats='"+availableSeats+"' "+"WHERE idRide='"+ride+"';");
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		//TODO check user was removed
+		return true;
+	}
 
 	@Override
 	public boolean removeRide(int user, int ride) throws StoreException {
