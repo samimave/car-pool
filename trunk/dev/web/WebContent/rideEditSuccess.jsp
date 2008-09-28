@@ -5,6 +5,8 @@
 String delConf = "";
 String updateSeatConf = "";
 String updateTimeConf = "";
+String updateStartS = "";
+String updateEndS = "";
 
 User user = null;
 //force the user to login to view the page
@@ -39,6 +41,17 @@ if (session.isNew() || (OpenIdFilter.getCurrentUser(session) == null && session.
 		updateTimeConf = "<p>" + "You have successfully updated the ride you wanted to" + "</p>";
 	}
 	
+	//if you have been redirected here from editing a ride print useful info && request.getParameter("Rseats") != null
+	if (request.getParameter("rideSelect") != null && request.getParameter("startFrom") != null){
+		cps.updateStartLoc( Integer.parseInt(request.getParameter("rideSelect")), Integer.parseInt(request.getParameter("startFrom")) );
+		updateStartS = "<p>" + "You have successfully updated the ride you wanted to" + "</p>";
+	}
+	
+	//if you have been redirected here from editing a ride print useful info && request.getParameter("Rseats") != null
+	if (request.getParameter("rideSelect") != null && request.getParameter("endTo") != null){
+		cps.updateEndLoc( Integer.parseInt(request.getParameter("rideSelect")), Integer.parseInt(request.getParameter("endTo")) );
+		updateEndS = "<p>" + "You have successfully updated the ride you wanted to" + "</p>";
+	}
 }
 %>
 
@@ -58,6 +71,8 @@ if (session.isNew() || (OpenIdFilter.getCurrentUser(session) == null && session.
 		<%=delConf%>
 		<%=updateSeatConf%>
 		<%=updateTimeConf%>
+		<%=updateStartS %>
+		<%=updateEndS %>
 	</DIV>
 
 	<%@ include file="leftMenu.html" %>
