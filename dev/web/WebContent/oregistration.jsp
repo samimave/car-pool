@@ -3,6 +3,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%
 HttpSession s = request.getSession(true);
+String message = "";
+if(request.getAttribute("error") != null) {
+	message = (String)request.getAttribute("error");
+}
 %>
 
 <HTML>
@@ -16,7 +20,8 @@ HttpSession s = request.getSession(true);
 	<%@ include file="heading.html" %>
 	
 	<div class="content">
-	<%if(OpenIdFilter.getCurrentUser(session) != null) { %>
+	<%if(OpenIdFilter.getCurrentUser(session) != null) { 
+		if(message.length() > 0) { %><strong><%=message %></strong><%} %>
 		<h1>Register yourself by filling in your details below</h1>
 		<FORM action="oadduser" method="post">
 			<TABLE class="register"> 
@@ -33,6 +38,7 @@ HttpSession s = request.getSession(true);
 	</div>
 
 	<div id="navAlpha">
+		<%if(message.length() > 0) { %><strong><%=message %></strong><%} %>
 		Please enter your details.
 	</div>
 

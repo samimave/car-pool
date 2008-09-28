@@ -3,6 +3,7 @@ package car.pool.user.registration.servlet;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,11 +24,11 @@ public class OpenIdRegistrationProcessor extends HttpServlet {
 	 */
 	private static final long serialVersionUID = -8682803597729939605L;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		doPost(request, response);
 	}
 	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		String loggedInAs = OpenIdFilter.getCurrentUser(request.getSession());
 		if(loggedInAs != null) {
 			UserManager manager = new UserManager();
@@ -35,6 +36,11 @@ public class OpenIdRegistrationProcessor extends HttpServlet {
 			String phone = request.getParameter("phone");
 			String email = request.getParameter("email");
 			String userName = request.getParameter("userName");
+			if(email.length() == 0 || userName.length() == 0) {
+				request.setAttribute("error", "Please input a username and a email address");
+				request.getRequestDispatcher("/oregistration.jsp").forward(request, response);
+				return;
+			}
 			noidUser.setUserName(userName);
 			noidUser.setEmail(email);
 			noidUser.setPhoneNumber(phone);

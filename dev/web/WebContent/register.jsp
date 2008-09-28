@@ -2,6 +2,10 @@
 
 <%
 HttpSession s = request.getSession(true);
+String message = "";
+if(request.getAttribute("error") != null) {
+	message = (String)request.getAttribute("error");
+}
 %>
 
 <HTML>
@@ -10,11 +14,12 @@ HttpSession s = request.getSession(true);
 		<style type="text/css" media="screen">@import "3ColumnLayout.css";</style>
 		<%@include file="include/javascriptincludes.html" %>
 	</HEAD>
-	<BODY>
+	<BODY onload="formCookieCheck()">
 
 	<%@ include file="heading.html" %>	
 
 		<div class="content">
+			<%if(message.length() > 0) { %><strong><%=message %></strong><%} %>
 			<p>Register yourself by filling in your details below</p>
 			<FORM method="post" action="adduser">
 				<TABLE class="register">
@@ -30,6 +35,7 @@ HttpSession s = request.getSession(true);
 
 	<div id="navAlpha">
 		Please enter your details.
+		<%if(message.length() > 0) { %><strong><%=message %></strong><%} %>
 	</div>
 
 	<div id="navBeta">
