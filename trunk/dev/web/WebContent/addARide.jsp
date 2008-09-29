@@ -10,8 +10,10 @@ if (OpenIdFilter.getCurrentUser(s) == null && s.getAttribute("signedin") == null
 
 //simple date processing for display on page
 Date now = new Date();
-String time = DateFormat.getTimeInstance(DateFormat.SHORT).format(now);
-String date = DateFormat.getDateInstance().format(now);
+String time = new SimpleDateFormat("HH:mm").format(now);
+String date = new SimpleDateFormat("dd/MM/yyyy").format(now);
+//String time = DateFormat.getTimeInstance(DateFormat.SHORT).format(now);
+//String date = DateFormat.getDateInstance().format(now);
 CarPoolStore cps = new CarPoolStoreImpl();
 
 
