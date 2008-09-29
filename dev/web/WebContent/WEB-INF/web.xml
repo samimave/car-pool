@@ -112,4 +112,13 @@
   	<servlet-name>CheckUserNameAvailable</servlet-name>
   	<url-pattern>/checknameavailable</url-pattern>
   </servlet-mapping>
+  <servlet>
+  	<display-name>BlurredImage</display-name>
+  	<servlet-name>BlurredImage</servlet-name>
+  	<servlet-class>car.pool.user.registration.servlet.BlurredImage</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>BlurredImage</servlet-name>
+  	<url-pattern>/blurredimage</url-pattern>
+  </servlet-mapping>
 </web-app>

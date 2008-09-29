@@ -33,7 +33,7 @@ function openidLoginInputValidation(form) {
 
 
 function normalRegisterFormValidation(form) {
-	if(!form.userName || !form.password1 || !form.password2 || !form.email || !form.phone ) {
+	if(!form.userName || !form.password1 || !form.password2 || !form.email || !form.phone || !form.verifytext) {
 		alert('wrong form used, please inform webmaster');
 		return false;
 	}
@@ -58,12 +58,17 @@ function normalRegisterFormValidation(form) {
 		return false;
 	}
 	
+	if(!form.verifytext.value) {
+		alert("Please enter the verification text displayed in the image");
+		return false;
+	}
+	
 	return true;
 }
 
 
 function openidRegisterFormValidation(form) {
-	if(!form.userName || !form.email || !form.phone) {
+	if(!form.userName || !form.email || !form.phone || !form.verifytext) {
 		alert("wrong form used, please inform webmaster");
 		return false;
 	}
@@ -76,6 +81,11 @@ function openidRegisterFormValidation(form) {
 	
 	if(!form.email.value) {
 		alert("please enter a email");
+		return false;
+	}
+	
+	if(!form.verifytext.value) {
+		alert("Please enter the verification text displayed in the image");
 		return false;
 	}
 	

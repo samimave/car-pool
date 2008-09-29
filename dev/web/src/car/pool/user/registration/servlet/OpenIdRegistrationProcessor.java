@@ -16,6 +16,7 @@ import car.pool.persistance.exception.UserException;
 import car.pool.user.User;
 import car.pool.user.UserFactory;
 import car.pool.user.UserManager;
+import car.pool.user.registration.RandomTextGenerator;
 
 public class OpenIdRegistrationProcessor extends HttpServlet {
 
@@ -29,24 +30,39 @@ public class OpenIdRegistrationProcessor extends HttpServlet {
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		String loggedInAs = OpenIdFilter.getCurrentUser(request.getSession());
+		HttpSession session = request.getSession();
+		String loggedInAs = OpenIdFilter.getCurrentUser(session);
 		if(loggedInAs != null) {
 			UserManager manager = new UserManager();
 			User noidUser = UserFactory.newInstance();
 			String phone = request.getParameter("phone");
 			String email = request.getParameter("email");
 			String userName = request.getParameter("userName");
-			if(email.length() == 0 || userName.length() == 0) {
+			
+			if(email == null || userName == null || email.length() == 0 || userName.length() == 0) {
 				request.setAttribute("error", "Please input a username and a email address");
 				request.getRequestDispatcher("/oregistration.jsp").forward(request, response);
 				return;
 			}
+			
+			String verifyText = request.getParameter("verifytext");
+			if(verifyText == null || verifyText.length() == 0) {
+				request.setAttribute("error", "Please input the verifiction text displayed in the image");
+				request.getRequestDispatcher("/oregistration.jsp").forward(request, response);
+				return;
+			}
+			
+			if(!verifyText.equals(new RandomTextGenerator().get((Integer) session.getAttribute("quote_pos")))) {
+				request.setAttribute("error", "Please input the correct verifiction text displayed in the image");
+				request.getRequestDispatcher("/oregistration.jsp").forward(request, response);
+				return;
+			}
+			
 			noidUser.setUserName(userName);
 			noidUser.setEmail(email);
 			noidUser.setPhoneNumber(phone);
 			noidUser.addOpenId(loggedInAs);
 			try {
-				HttpSession session = request.getSession();
 				User user = manager.registerUser(noidUser);
 				session.setAttribute("user", user);
 				session.setAttribute("signedin", Boolean.TRUE);

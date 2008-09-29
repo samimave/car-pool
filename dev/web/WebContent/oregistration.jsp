@@ -28,6 +28,8 @@ if(request.getAttribute("error") != null) {
 				<tr> <td>UserName:</td> <td><INPUT type="text" name="userName"/></td> <td><a href="#" onclick="checkUserNameAvailable()">Check Availability</a><b id="availableoutput"></b></td>
 				<tr> <td>Email:</td> <td><INPUT type="text" name="email"/></td> </tr>
 				<tr> <td>Phone:</td> <td><INPUT type="text" name="phone"/></td> </tr>
+				<tr> <td>&nbsp;</td><td><img src="blurredimage" width="200" height="100"/></td> </tr>
+				<tr> <td>Type in the characters in the image above</td><td><input type="text" name="verifytext"/></td> </tr>
 				<tr> <td>&nbsp;</td> <td><INPUT type="submit" value="Register"/></td> </tr>
 			</TABLE>
 		</FORM>
