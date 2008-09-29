@@ -28,6 +28,8 @@ if(request.getAttribute("error") != null) {
 					<tr> <td>Confirm password:</td> <td><INPUT type="password" name="password2" size="25"/></td> </tr>
 					<tr> <td>Email address:</td> <td><INPUT type="text" name="email" size="25"/></td> </tr>			
 					<tr> <td>Phone Number:</td> <td><INPUT type="text" name="phone" size="25"/></td> </tr>
+					<tr> <td>&nbsp;</td><td><img src="blurredimage" width="200" height="100"/></td> </tr>
+					<tr> <td>Type in the characters in the image above</td><td><input type="text" name="verifytext"/></td> </tr>
 					<tr> <td>&nbsp; </td> <td><INPUT type="submit" value="Register" SIZE="25"/></td> </tr>
 				</TABLE>
 			</FORM>
