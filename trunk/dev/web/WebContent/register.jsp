@@ -21,9 +21,9 @@ if(request.getAttribute("error") != null) {
 		<div class="content">
 			<%if(message.length() > 0) { %><strong><%=message %></strong><%} %>
 			<p>Register yourself by filling in your details below</p>
-			<FORM method="post" action="adduser">
+			<FORM name="register" id="register" method="post" action="adduser">
 				<TABLE class="register">
-					<tr> <td>User name:</td> <td><INPUT type="text" name="userName" size="25"/></td> <td><a href="#">Check Availability</a></td> </tr>
+					<tr> <td>User name:</td> <td><INPUT type="text" name="userName" size="25"/></td> <td><a href="#" onclick="checkUserNameAvailable()">Check Availability</a><b id="availableoutput"></b></td> </tr>
 					<tr> <td>Password:</td> <td><INPUT type="password" name="password1" size="25"/></td> </tr>
 					<tr> <td>Confirm password:</td> <td><INPUT type="password" name="password2" size="25"/></td> </tr>
 					<tr> <td>Email address:</td> <td><INPUT type="text" name="email" size="25"/></td> </tr>			
