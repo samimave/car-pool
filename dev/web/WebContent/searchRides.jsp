@@ -12,8 +12,8 @@ if (!(OpenIdFilter.getCurrentUser(s) == null && s.getAttribute("signedin") == nu
 
 //simple date processing for display on page
 Date now = new Date();
-String date = DateFormat.getDateInstance().format(now);
-
+//String date = DateFormat.getDateInstance().format(now);
+String date = new SimpleDateFormat("dd/MM/yyyy").format(now);
 
 CarPoolStore cps = new CarPoolStoreImpl();
 //make the options for the street select box

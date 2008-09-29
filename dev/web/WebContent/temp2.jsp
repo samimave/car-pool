@@ -31,7 +31,6 @@ String to = "";
 
 //System.out.println("got here!");
 while (u.next()) {					
-	//TODO: this page will work when rl.next() returns
 	//System.out.println("rl.getRideID(): "+rl.getRideID());
 	if (u.getRideID() == rideID) {
 		if (!ridesExist) {
@@ -44,7 +43,7 @@ while (u.next()) {
 		detailsTable += "<tr> <td>Username:</td>  <td>"+ u.getUsername() +"</td></tr> ";
 		detailsTable += "<tr> <td> Start Region: </td> <td>"+ from + "</td> </tr>";
 		detailsTable += "<tr> <td> Stop Region: </td> <td>"+ to +"</td></tr> ";
-		detailsTable += "<tr> <td>Date: </td> <td>"+ u.getRideDate() +"</td></tr> ";
+		detailsTable += "<tr> <td>Date: </td> <td>"+ new SimpleDateFormat("dd/MM/yyyy").format(u.getRideDate()) +"</td></tr> ";
 		detailsTable += "<tr> <td> Time: </td> <td>" +  u.getTime()+ "</td> </tr>";
 		detailsTable += "<tr> <td> Seats: </td> <td>"+ u.getAvailableSeats() +"</td> </tr>";
 		detailsTable += "<tr> <td> Additional Info: </td> <td></td> </tr>";
