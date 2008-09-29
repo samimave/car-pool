@@ -41,6 +41,11 @@ FROM
 GROUP BY r.idRide) as t
 WHERE t.availableSeats > 0;
 
+SELECT *
+FROM matches, user, locations
+WHERE user.idUser = matches.idUser
+AND matches.idLocation = locations.idLocations;
+
 --SEARCH ride with available seats with details--
 SELECT * 
 FROM (

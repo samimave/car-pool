@@ -804,4 +804,9 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		UserList UList = new UserList(db.getStatement(),true);		
 		return UList;
 	}
+
+	@Override
+	public RideDetail getRideDetail(int rideId) {
+		return new RideDetail(rideId, db.getStatement());
+	}
 }
