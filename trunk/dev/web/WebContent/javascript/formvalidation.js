@@ -38,11 +38,46 @@ function normalRegisterFormValidation(form) {
 		return false;
 	}
 	
+	if(!form.userName.value) {
+		alert("Please enter a username")
+		return false;
+	}
+	
+	if(!form.email.value) {
+		alert("please enter a email");
+		return false;
+	}
+	
+	if(form.password1.value != form.password2.value) {
+		alert("Passwords must match");
+		return false;
+	}
+	
+	if(!form.password1.value || !form.password2.value) {
+		alert("Please enter a password and verify it by entering it again in the second password input");
+		return false;
+	}
+	
 	return true;
 }
 
 
 function openidRegisterFormValidation(form) {
+	if(!form.userName || !form.email || !form.phone) {
+		alert("wrong form used, please inform webmaster");
+		return false;
+	}
+	
+	if(!form.userName.value) {
+		alert("please enter a username");
+		return false;
+	}
+	
+	
+	if(!form.email.value) {
+		alert("please enter a email");
+		return false;
+	}
 	
 	return true;
 }

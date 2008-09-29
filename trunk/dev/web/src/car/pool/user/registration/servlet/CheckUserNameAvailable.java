@@ -25,9 +25,9 @@ public class CheckUserNameAvailable extends HttpServlet {
 		if(username != null) {
 			CarPoolStore store = new CarPoolStoreImpl();
 			if(store.checkUserExists(username)) {
-				out.println("Username is not available");
+				out.print("false");
 			} else {
-				out.println("Username is available");
+				out.print("true");
 			}
 		} else {
 			out.println("Error: Parameter username does not exist");

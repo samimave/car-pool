@@ -17,6 +17,22 @@ try {
 if (!request)
         alert("Error initializing XMLHttpRequest!");
 
+//var response = null;
+
+function isUserNameAvailable() {
+	var username = document.getElementById("register").userName.value;
+	var url = "checknameavailable?username="+username;
+    request.open("GET", url, false);
+    request.onreadystatechange = callback;
+    request.send( null );
+    var response = request.responseText;
+    if(response == "true") {
+    	return true;
+    }
+    alert("username has already been taken, please use another")
+    return false;
+}
+
 function checkUserNameAvailable() {
 	var username = document.getElementById("register").userName.value;
 	var url = "checknameavailable?username="+username;
@@ -33,9 +49,9 @@ function callback() {
             if(response == "true") {
             	output.innerHTML = " Username is available";
             } else if(response == "false"){
-            	output.innerHTML = " Username is not available";
+            	output.innerHTML = " Username is not available so choose another please";
             } else {
-            	output.innerHTML = " :" + request.responseText;
+            	output.innerHTML = " :" + response;
             }
         }
     }

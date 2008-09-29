@@ -23,7 +23,7 @@ if(request.getAttribute("error") != null) {
 	<%if(OpenIdFilter.getCurrentUser(session) != null) { 
 		if(message.length() > 0) { %><strong><%=message %></strong><%} %>
 		<h1>Register yourself by filling in your details below</h1>
-		<FORM name="register" id="register" action="oadduser" method="post">
+		<FORM name="register" id="register" onsubmit="return (formCookieCheck() && openidRegisterFormValidation(this) && isUserNameAvailable())" action="oadduser" method="post">
 			<TABLE class="register"> 
 				<tr> <td>UserName:</td> <td><INPUT type="text" name="userName"/></td> <td><a href="#" onclick="checkUserNameAvailable()">Check Availability</a><b id="availableoutput"></b></td>
 				<tr> <td>Email:</td> <td><INPUT type="text" name="email"/></td> </tr>
