@@ -24,6 +24,7 @@ public interface CarPoolStore {
 	int addRegion(String name) throws SQLException;
 	int addLocation(int region, String name) throws SQLException;
 	
+	int getRegionIDbyName(String name) throws StoreException;
 	LocationList findLocation(String name);
 	LocationList getLocations();
 	

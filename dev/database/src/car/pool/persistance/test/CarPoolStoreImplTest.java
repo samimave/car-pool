@@ -348,14 +348,17 @@ public class CarPoolStoreImplTest extends TestCase {
 	public void testRideListing(){
 		new TestSetup();
 		RideListing rl = cps.getRideListing();
+		int rideCount = 0;
 		try {
 			while(rl.next()){
+				rideCount++;
 				System.out.println(rl.getRideID()+", "+rl.getUserID()+", "+rl.getUsername()+", "+rl.getAvailableSeats()+", "+rl.getRideDate().toString()+", "+rl.getStartLocation()+", "+rl.getEndLocation());
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		assertEquals(true, rideCount>0);
 	}
 	
 	public void testSearchRideListing(){
@@ -526,6 +529,34 @@ public class CarPoolStoreImplTest extends TestCase {
 		assertTrue("Couldn't delete comment"+ id3 + "" + deleted,deleted>0);
 		
 		
+	}
+	
+	public void testGetRegionName(){
+		int region = -1;
+		int region2 = -1;
+		int region3 = -1;
+		int region4 = -1;
+		int region5 = -1;
+		try {
+			region = cps.addRegion("TestRegion");
+			region2 = cps.addRegion("TestRegion2");
+			region3 = cps.addRegion("TestRegion3");
+			region4 = cps.addRegion("TestRegion4");
+			region5 = cps.addRegion("TestRegion5");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			assertEquals(region, cps.getRegionIDbyName("TestRegion"));
+			assertEquals(region2, cps.getRegionIDbyName("TestRegion2"));
+			assertEquals(region3, cps.getRegionIDbyName("TestRegion3"));
+			assertEquals(region4, cps.getRegionIDbyName("TestRegion4"));
+			assertEquals(region5, cps.getRegionIDbyName("TestRegion5"));
+		} catch (StoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 }

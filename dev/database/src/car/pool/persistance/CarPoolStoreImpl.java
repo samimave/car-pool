@@ -646,6 +646,30 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		LocationList locList = new LocationList("", db.getStatement(), true);
 		return locList;
 	}
+	
+	public int getRegionIDbyName(String name) throws StoreException{
+		int id = FAILED;
+		Statement statement = db.getStatement();
+		String sql = "SELECT idRegions from regions " +
+					"Where name='" + name + "';";
+		try {
+			statement = db.getStatement();
+			ResultSet rs = statement.executeQuery(sql);
+			while (rs.next()) {
+				id = rs.getInt("idRegions");
+			}
+			rs.close();
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		if (id == FAILED){
+			throw new StoreException("invalid region name");
+		} else {
+			return id;
+		}
+	}
 
 	@Override
 	/**
