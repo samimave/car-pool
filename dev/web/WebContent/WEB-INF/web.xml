@@ -103,4 +103,13 @@
   	<servlet-name>RemoveOpenId</servlet-name>
   	<url-pattern>/removeopenid</url-pattern>
   </servlet-mapping>
+  <servlet>
+  	<display-name>CheckUserNameAvailable</display-name>
+  	<servlet-name>CheckUserNameAvailable</servlet-name>
+  	<servlet-class>car.pool.user.registration.servlet.CheckUserNameAvailable</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>CheckUserNameAvailable</servlet-name>
+  	<url-pattern>/checknameavailable</url-pattern>
+  </servlet-mapping>
 </web-app>
