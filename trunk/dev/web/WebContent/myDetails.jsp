@@ -9,7 +9,7 @@ User user = null;
 //temp placeholder variables
 String userTable = "<p>No rides found.</p>";
 String acceptedTable = "<p>No rides found.</p>";
-String requestTable = "<p>No rides found.</p>";
+
 //force the user to login to view the page
 if (session.isNew() || (OpenIdFilter.getCurrentUser(session) == null && session.getAttribute("signedin") == null)) {
 	//response.sendRedirect("");
@@ -55,24 +55,7 @@ if (session.isNew() || (OpenIdFilter.getCurrentUser(session) == null && session.
 		"<th>Departure Date</th> <th>Departure Time</th> <th>Number of Available Seats</th><th>Link</th> </tr>"+ userTable +"</table>";
 	}
 	
-	boolean requestExist = false;
-	for (int i=0; i<rideIDs.size();i++){
-		RideDetail rd = cps.getRideDetail(rideIDs.get(i));
-		while (rd.hasNext()){
-			if (!requestExist){
-				requestTable = "";
-			}
-			requestExist = true;
-			
-			requestTable += "<tr><td>"+rd.getUsername()+"</td>";
-			requestTable += "<td>"+ rd.getStreetNumber()+"&nbsp;"+rd.getLocationName()+"</td>";
-			requestTable += "<td> <a href='"+ request.getContextPath() +"/myRideEdit.jsp?rideselect="+ rideIDs.get(i)+"&userselect="+nameOfUser+"'>"+ "Link to ride page" +"</a> </td> </tr>";
-		}
-		
-	}
-	if (requestExist) {
-		requestTable = "<table class='rideDetailsSearch'> <tr> <th>Request from</th> <th>Pick Up From</th><th>Link</th></tr>"+ requestTable +"</table>";
-	}
+
 
 	//input openids to the table
 	String entries = "";
@@ -163,14 +146,6 @@ if (session.isNew() || (OpenIdFilter.getCurrentUser(session) == null && session.
 		<tr><th>&nbsp;</th></tr>
 		</table>
 		<%=userTable %><br />
-		<table>
-		<tr> <th colspan='2' style='border:2px outset #333333'>Riders awaiting your approval</th><th>&nbsp;</th> <th>&nbsp;</th></tr>
-		<tr><th>&nbsp;</th></tr>
-		</table>
-		<p>The users below are awaiting your approval on their acceptance of your offer. If you can pick them up at the place they want click Approve otherwise click Reject.</p>
-		<%//when the user click approve the boolean value confirm should be set to true. %>
-		<%=requestTable %>
-		<tr><th>&nbsp;</th></tr>
 		<table>
 		<tr> <th colspan='2' style='border:2px outset #333333'>You have been approved for the following rides</th><th>&nbsp;</th> <th>&nbsp;</th></tr>
 		<tr><th>&nbsp;</th></tr>
