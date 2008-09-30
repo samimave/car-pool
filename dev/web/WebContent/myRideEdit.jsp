@@ -32,6 +32,8 @@ int rideID = Integer.parseInt(request.getParameter("rideselect"));
 RideListing u = cps.searchRideListing(RideListing.searchUser, request.getParameter("userselect"));
 
 
+
+
 String detailsTable = "<p>No info found.</p>";
 boolean ridesExist = false;
 String from = "";
@@ -58,6 +60,35 @@ while (u.next()) {
 	}
 }
 
+String requestTable = "no users found";
+boolean requestExist = false;
+	RideDetail rd = cps.getRideDetail(rideID);
+	while (rd.hasNext()){
+		if (!requestExist){
+			requestTable = "";
+		}
+		//String reDirURL = "temp2.jsp?rideselect=" + rideID + "&userselect=" + request.getParameter("userselect");
+		requestExist = true;
+		requestTable += "<tr><FORM action=\"myRideEdit.jsp\" method=\"post\">";
+		requestTable += "<INPUT type=\"hidden\" name=\"confirmUser\" value=\"yes" + "\">";
+		//requestTable += "<INPUT type=\"hidden\" name=\"reDirURL\" value=\"" + reDirURL + "\">";		
+		requestTable += "<td>"+rd.getUsername()+"</td>";
+		requestTable += "<td>"+ rd.getStreetNumber()+"&nbsp;"+rd.getLocationName()+"</td>";
+		requestTable += "<td><INPUT type=\"submit\" value=\"Confirm User\" /></td>";
+		requestTable += "</FORM>";
+		requestTable += "<FORM action=\"myRideEdit.jsp\" method=\"post\">";
+		requestTable += "<INPUT type=\"hidden\" name=\"rejectUser\" value=\"yes" + "\">";
+		//requestTable += "<INPUT type=\"hidden\" name=\"reDirURL\" value=\"" + reDirURL + "\">";		
+		requestTable += "<td><INPUT type=\"submit\" value=\"Reject User\" /></td>";
+		requestTable += "</FORM></tr>";
+	}
+	
+
+if (requestExist) {
+	requestTable = "<table class='rideDetailsSearch'> <tr> <th>Request from</th> <th>Pick Up From</th><th>Confirm</th><th>Reject</th></tr>"+ requestTable +"</table>";
+}
+
+requestTable +="<tr>&nbsp;</tr>";
 %>
 
 <%
@@ -186,7 +217,11 @@ table += "</table>";
 				<tr> <td><INPUT type="submit" name="removeRide" value="Withdraw Ride" size="25"></td> </tr>
 			</TABLE>
 		</FORM>
-	
+	<table>
+		<tr> <th colspan='2' style='border:2px outset #333333'>Riders awaiting your approval</th><th>&nbsp;</th> <th>&nbsp;</th></tr>
+		<tr><th>&nbsp;</th></tr>
+		<%=requestTable %>
+	</table>
 		<%=table %>
 		<FORM name = "addComment" action="addAComment.jsp" method="post">
 			<TABLE width="100%">
@@ -200,6 +235,7 @@ table += "</table>";
 					<INPUT type="submit" value="Add Comment" />
 				</td></tr>
 		</FORM>
+
 
 	</DIV>
 
