@@ -27,13 +27,15 @@ else {
 //dd/MM/yyyy -> yyyy-MM-dd
 String strOutDt = "no date entered";
 String strTmp = request.getParameter("searchDate");
-if (strTmp != ""){ 
+if (!strTmp.isEmpty() ){ 
 	Date dtTmp = new SimpleDateFormat("dd/MM/yyyy").parse(strTmp);
-	strOutDt = new SimpleDateFormat("dd/MM/yyyy").format(dtTmp);
+	strOutDt = new SimpleDateFormat("yyyy-MM-dd").format(dtTmp);
 }
 else {
 	strTmp = "no date was entered";
 }
+
+
 
 //FROM AND TO
 String Sfrom = "";
@@ -66,30 +68,6 @@ else {
 	}
 }
 //----------------------end search parameters------------------------
-
-
-//##############################ALL RIDES TABLE##############################
-
-
-
-String allTable = "";
-RideListing all = cps.getRideListing();
-while (all.next()) {
-	String from = all.getStartLocation();
-	String to = all.getEndLocation();
-	
-	allTable += "<tr> <td>"+ all.getUsername() +"</td> ";	
-	allTable += "<td>"+ from +"</td> ";
-	allTable += "<td>"+ to +"</td> ";
-	allTable += "<td>"+ new SimpleDateFormat("dd/MM/yyyy").format(all.getRideDate()) +"</td> ";
-	allTable += "<td>"+ all.getTime() +"</td> ";
-	allTable += "<td>"+ all.getAvailableSeats() +"</td> ";
-	if (user != null) {
-		allTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ all.getRideID() +"'>"+ "Link to ride page" +"</a> </td> </tr>";
-	} else {
-		allTable += "<td>login to view more</td> </tr>";
-	}
-}
 
 
 //##############################SEARCH RIDE TABLE##############################
@@ -266,9 +244,6 @@ if (Sto != "no location entered") {
 		rideTable = "<table class='rideDetailsSearch'> <tr> <th>Ride Offered By</th> <th>Starting From</th> <th>Going To</th>"+
 			"<th>Departure Date</th> <th>Departure Time</th> <th>Number of Available Seats</th> <th>More Info</th> </tr>"+ rideTable +"</table>";
 	}
-	else if ((username=="no username was entered")&&(strTmp=="no date was entered")&&(Sfrom == "no location was entered")&&(Sto=="no location was entered")){
-		rideTable = allTable;
-	}
 	else {
 		rideTable = "<tr><td>No rides were found</td></tr>";
 	}
@@ -295,8 +270,7 @@ if (Sto != "no location entered") {
 					<tr><td>User:</td> <td><%=username %></td>
 	
 					<tr><td>Search results appear below</td></tr>
-					<%=rideTable %>
-					
+					<%=rideTable %>				
 					<tr><td> <a href=searchRides.jsp>Go back to Search page</a> </td> </tr>
 
 				</TABLE>
