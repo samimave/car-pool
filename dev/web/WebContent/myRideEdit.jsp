@@ -125,6 +125,7 @@ table += "</table>";
 
 		<TITLE> Ride Details </TITLE>
 		<STYLE type="text/css" media="screen">@import "3ColumnLayout.css";</STYLE>
+		<SCRIPT type="text/javascript" src="CalendarPopup.js"></SCRIPT>
 		<SCRIPT type="text/javascript">
 			var cal = new CalendarPopup();
 		</script>
