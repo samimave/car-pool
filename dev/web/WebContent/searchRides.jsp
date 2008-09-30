@@ -67,6 +67,10 @@ while (rl.next()){
 
 				</TABLE>
 			</FORM>
+			<Form name="showAll" id="showAll" method="post" action="resultall.jsp">
+				<input type="hidden" name="showAll" value="yes"/>
+				<INPUT TYPE="submit" NAME="all" VALUE="Show All Rides" SIZE="25">
+			</Form>
 			<p><a href="welcome.jsp">Home</a></p>
 		</DIV>
 

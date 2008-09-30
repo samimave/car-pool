@@ -21,8 +21,8 @@ int dbID = user.getUserId();
 int rideID = Integer.parseInt(request.getParameter("rideselect"));
 
 
-RideListing u = cps.searchRideListing(RideListing.searchUser, request.getParameter("userselect"));
-
+RideListing r = cps.getRideListing();
+RideListing u = r.getAll();
 
 String detailsTable = "<p>No info found.</p>";
 boolean ridesExist = false;
