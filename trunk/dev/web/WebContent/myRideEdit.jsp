@@ -13,6 +13,11 @@ if (OpenIdFilter.getCurrentUser(s) == null && s.getAttribute("signedin") == null
 //being nice to our users
 String message = "";
 
+//simple date processing for display on page
+Date now = new Date();
+//String date = DateFormat.getDateInstance().format(now);
+String date = new SimpleDateFormat("dd/MM/yyyy").format(now);
+
 CarPoolStore cps = new CarPoolStoreImpl();
 //make the options for the street select box
 LocationList locations = cps.getLocations();
@@ -33,7 +38,7 @@ String from = "";
 String to = "";
 String uname = "";
 int seats = 0;
-Date dateR = null;
+String dateR = null;
 String timeR = "";
 
 //System.out.println("got here!");
@@ -47,8 +52,9 @@ while (u.next()) {
 		to = u.getEndLocation();
 		uname = u.getUsername();
 		seats = u.getAvailableSeats();
-		dateR = u.getRideDate();
+		dateR = new SimpleDateFormat("dd/MM/yyyy").format(u.getRideDate());
 		timeR = u.getTime();
+		
 	}
 }
 
@@ -119,6 +125,9 @@ table += "</table>";
 
 		<TITLE> Ride Details </TITLE>
 		<STYLE type="text/css" media="screen">@import "3ColumnLayout.css";</STYLE>
+		<SCRIPT type="text/javascript">
+			var cal = new CalendarPopup();
+		</script>
 
 	</HEAD>
 	<BODY>
@@ -152,7 +161,7 @@ table += "</table>";
 			<input type="hidden" name="updateRide" value="yes"/>
 			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect") %>">
 			<TABLE>
-				<tr> <td>Date: </td> <td><INPUT TYPE="text" NAME="Rdate" SIZE="25" value=<%=dateR%>></td><td><INPUT type="submit" name="updateDate" value="Update Date" size="25"></td></tr>
+				<tr> <td>Date: </td> <td><INPUT TYPE="text" NAME="Rdate" SIZE="25" value=<%=dateR%>><A HREF="#" onClick="cal.select(document.forms['updateDate'].Rdate,'anchor1','dd/MM/yyyy'); return false;" NAME="anchor1" ID="anchor1"><img name="calIcon" border="0" src="calendar_icon.jpg" width="27" height="23"></A></td><td><INPUT type="submit" name="updateDate" value="Update Date" size="25"></td></tr>
 			</TABLE>
 		</FORM>
 		<FORM name="updateTime" action="rideEditSuccess.jsp" method="post">
