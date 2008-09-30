@@ -2,11 +2,18 @@
 <%@page import="org.verisign.joid.consumer.OpenIdFilter, car.pool.persistance.*, car.pool.user.*" %>
 
 <%
+
+
 String delConf = "";
 String updateSeatConf = "";
 String updateTimeConf = "";
 String updateStartS = "";
 String updateEndS = "";
+String updateDateConf = "";
+
+String strTmp = request.getParameter("Rdate");
+Date dtTmp = new SimpleDateFormat("dd/MM/yyyy").parse(strTmp);
+String strOutDt = new SimpleDateFormat("yyyy-MM-dd").format(dtTmp);
 
 User user = null;
 //force the user to login to view the page
@@ -32,7 +39,7 @@ if (session.isNew() || (OpenIdFilter.getCurrentUser(session) == null && session.
 	if (request.getParameter("rideSelect") != null && request.getParameter("numSeats") != null){
 		//Integer.parseInt(request.getParameter("Rseats"))
 		cps.updateSeats( Integer.parseInt(request.getParameter("rideSelect")), Integer.parseInt(request.getParameter("numSeats")));
-		updateSeatConf = "<p>" + "You have successfullyy updated the ride you wanted to" + "</p>";
+		updateSeatConf = "<p>" + "You have successfully updated the ride you wanted to" + "</p>";
 	}
 	
 	//if you have been redirected here from editing a ride print useful info && request.getParameter("Rseats") != null
@@ -51,6 +58,13 @@ if (session.isNew() || (OpenIdFilter.getCurrentUser(session) == null && session.
 	if (request.getParameter("rideSelect") != null && request.getParameter("endTo") != null){
 		cps.updateEndLoc( Integer.parseInt(request.getParameter("rideSelect")), Integer.parseInt(request.getParameter("endTo")) );
 		updateEndS = "<p>" + "You have successfully updated the ride you wanted to" + "</p>";
+	}
+	
+	//if you have been redirected here from editing a ride print useful info && request.getParameter("Rseats") != null
+	if (request.getParameter("rideSelect") != null && request.getParameter("Rdate") != null){
+		//Integer.parseInt(request.getParameter("Rseats"))
+		cps.updateStartDate( Integer.parseInt(request.getParameter("rideSelect")), strOutDt);
+		updateSeatConf = "<p>" + "You have successfully updated the ride you wanted to" + "</p>";
 	}
 }
 %>
@@ -73,6 +87,7 @@ if (session.isNew() || (OpenIdFilter.getCurrentUser(session) == null && session.
 		<%=updateTimeConf%>
 		<%=updateStartS %>
 		<%=updateEndS %>
+		<%=updateDateConf %>
 	</DIV>
 
 	<%@ include file="leftMenu.html" %>
