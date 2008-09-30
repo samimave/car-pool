@@ -36,11 +36,12 @@ if (session.isNew() || (OpenIdFilter.getCurrentUser(session) == null && session.
 		
 		String from = rl.getStartLocation();
 		String to = rl.getEndLocation();
+		
 			
 			userTable += "<tr> <td>"+ rl.getUsername() +"</td> ";	
 			userTable += "<td>"+ from +"</td> ";
 			userTable += "<td>"+ to +"</td> ";
-			userTable += "<td>"+ rl.getRideDate() +"</td> ";
+			userTable += "<td>"+ new SimpleDateFormat("dd/MM/yyyy").format(rl.getRideDate()) +"</td> ";
 			userTable += "<td>"+ rl.getTime() +"</td> ";
 			userTable += "<td>"+ rl.getAvailableSeats() +"</td> ";
 			userTable += "<td> <a href='"+ request.getContextPath() +"/myRideEdit.jsp?rideselect="+ rl.getRideID() +"&userselect="+rl.getUsername()+"'>"+ "Link to ride page" +"</a> </td> </tr>";
