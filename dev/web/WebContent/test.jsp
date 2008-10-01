@@ -32,11 +32,12 @@ while(loc.next()) {
 	</head>
 	<body>
 		<p>
-		<%//Enumeration e = request.getParameterNames();
-		  //while(e.hasMoreElements()) {
-			//  String name = (String)e.nextElement();
-			  %><%=""//name%> = <%=""//request.getParameter(name)%> <%=""//request.getParameter(name).length()%><br/><%
-		  //}
+		<%Enumeration e = session.getAttributeNames();%>
+		<%=e.toString()%><%
+		  while(e.hasMoreElements()) {
+			  String name = (String)e.nextElement();
+			  %><%=name%> = <%=session.getAttribute(name)%> <%=((String)session.getAttribute(name)).length()%><br/><%
+		  }
 		%>
 		</p>
 		<p>

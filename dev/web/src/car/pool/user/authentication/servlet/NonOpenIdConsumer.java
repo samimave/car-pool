@@ -26,7 +26,7 @@ public class NonOpenIdConsumer extends HttpServlet {
 	 * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(true);
 		if( request.getParameter("normal_signin") != null ) {
 			String username = request.getParameter("username");
 			String userpass = request.getParameter("userpass");

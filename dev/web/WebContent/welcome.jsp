@@ -2,7 +2,7 @@
 <%@page import="java.util.Formatter, org.verisign.joid.consumer.OpenIdFilter, org.verisign.joid.util.UrlUtils, org.verisign.joid.OpenIdException, car.pool.persistance.*, car.pool.user.User, car.pool.user.UserManager, car.pool.user.UserFactory, car.pool.persistance.exception.InvaildUserNamePassword" %>
 
 <%
-HttpSession s = request.getSession(false);
+HttpSession s = request.getSession(true);
 
 // a container for the users information
 User user = null;
