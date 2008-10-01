@@ -11,7 +11,7 @@ public class UserList {
 	public UserList(Statement statement, boolean all){
 		String sql = null;
 		if(all){
-			sql = "Select userName, email, mobile_number, signUpDate "+ "FROM user;";
+			sql = "Select userName, email, mobile_number, signUpDate "+ "FROM User;";
 		}
 		
 		try {
