@@ -83,7 +83,7 @@
       function addAddressToMap(response) {
 
           if (!response || response.Status.code != 200) {
-            alert("Sorry, the address is unable to display");
+            alert("Sorry, the address is unable to display. Some map function is not campatible with IE 7. ");
            // alert(response + " " + response.Status.code);
           } else {
             place = response.Placemark[0];

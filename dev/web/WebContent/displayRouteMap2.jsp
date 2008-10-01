@@ -61,18 +61,18 @@
 	  var viaArray=[];
 	  var viaLoc = viaAddress.split(",");  	
 	  var i = 0;	
-		while(i < (viaLoc.length-1)){
-			viaArray[i] = viaLoc[i]+ " PALEMERSTON NORTH NEWZEALAND";
+		while(i < (viaLoc.length)){
+			viaArray[i] = viaLoc[i]+ " PALMERSTON NORTH NEW ZEALAND";
 			i++;		
 		}	    
-                     
+       alert(viaArray);              
       // addAddressToMap() is called when the geocoder returns an
       // answer.  It adds a marker("via address") to the map with an open info window
       // showing the nicely formatted version of the address        	
       function addAddressToMap(response) {
 
           if (!response || response.Status.code != 200) {
-            alert("Sorry, the address is unable to display");
+        	  alert("Sorry, the address is unable to display. Some map function is not campatible with IE 7. ");
           } 
           else {
             place = response.Placemark[0];
@@ -86,7 +86,7 @@
             map.addOverlay(marker); 
             return marker;   
                   
-          }
+         // }
           
         }     
                 
