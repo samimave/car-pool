@@ -1,5 +1,12 @@
 package car.pool.email;
 
+import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import car.pool.persistance.Database;
+import car.pool.persistance.DatabaseImpl;
+
 public class Email {
 	private String to = null;
 	private String from = null;
@@ -7,6 +14,20 @@ public class Email {
 	private String message = null;
 	
 	public Email() {
+		try {
+			Database db = new DatabaseImpl();
+			String sql = "select * from Email";
+			ResultSet results = db.getStatement().executeQuery(sql);
+			if(results.next()) {
+				setFromAddress(results.getString(2));
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	
@@ -19,7 +40,7 @@ public class Email {
 		return to;
 	}
 	
-	public void setFromAddress(String from) {
+	private void setFromAddress(String from) {
 		this.from = from;
 	}
 	
