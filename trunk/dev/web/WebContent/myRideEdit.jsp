@@ -60,6 +60,19 @@ while (u.next()) {
 	}
 }
 
+// pass the "via address"
+String sNumber = "";
+String sName = "";
+String viaLoc = "";
+List<String> viaAddress = new ArrayList<String>();
+RideDetail rdVia = cps.getRideDetail(rideID);
+       while (rdVia.hasNext()){
+                         sNumber =  Integer.toString(rdVia.getStreetNumber());
+                         sName = rdVia.getLocationName();
+                         viaLoc = sNumber +" "+sName;
+                         viaAddress.add(viaLoc);
+       }
+
 String requestTable = "no users found";
 boolean requestExist = false;
 	RideDetail rd = cps.getRideDetail(rideID);
@@ -89,7 +102,9 @@ if (requestExist) {
 }
 
 requestTable +="<tr>&nbsp;</tr>";
+
 %>
+
 
 <%
 ///////////////////////////
@@ -189,6 +204,14 @@ table += "</table>";
 				<tr> <td><SELECT name="endTo"><option selected="selected">Select a Street</option><%=options %></SELECT></td><td><INPUT type="submit" name="endTo" value="Update Street" size="25"></td></tr>
 			</TABLE>
 		</FORM>
+
+		<FORM name="showMap" id="map3" method="post" target="_blank" action="displayRouteMap2.jsp">
+			<INPUT type="submit" value="View Map" > 
+			<INPUT type="hidden" name="mapFrom" value= "<%=from%>">
+			<INPUT type="hidden" name="mapTo"  value= "<%=to%>" >
+			<INPUT type="hidden" name="mapVia"  value= "<%=viaAddress%>" >
+		</FORM>
+
 		<FORM name="updateDate" action="rideEditSuccess.jsp" method="post">
 			<input type="hidden" name="updateRide" value="yes"/>
 			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect") %>">
@@ -238,10 +261,6 @@ table += "</table>";
 
 
 	</DIV>
-
-		
-
-
 
 
 	</BODY>
