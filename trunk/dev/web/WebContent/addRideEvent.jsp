@@ -1,3 +1,4 @@
+<%@ page errorPage="errorPage.jsp" %>
 <%@page import="car.pool.persistance.*,org.verisign.joid.consumer.OpenIdFilter" %>
 <html>
   <head>

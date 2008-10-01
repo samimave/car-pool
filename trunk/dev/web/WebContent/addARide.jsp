@@ -1,3 +1,4 @@
+<%@ page errorPage="errorPage.jsp" %>
 <%@page contentType="text/html; charset=ISO-8859-1" import="java.util.*, java.text.*, car.pool.persistance.*, org.verisign.joid.consumer.OpenIdFilter"%>
 
 <%

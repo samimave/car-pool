@@ -1,4 +1,4 @@
-<%@ page errorPage="errorPage.jsp" %>
+<%@ page isErrorPage="true" %>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -18,7 +18,7 @@ if (!(OpenIdFilter.getCurrentUser(s) == null && s.getAttribute("signedin") == nu
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-	<title>About Us</title>
+	<title>Error</title>
 	<style type="text/css" media="screen">@import "3ColumnLayout.css";</style>
 	<%@include file="include/javascriptincludes.html" %>
 </head>
@@ -26,7 +26,7 @@ if (!(OpenIdFilter.getCurrentUser(s) == null && s.getAttribute("signedin") == nu
 	<%@ include file="heading.html" %>
 
 	<DIV class="content" id="content">
-		<p>A paragraph about our website</p>
+		<p>An error has occurred and the administrator has been notified. We are sorry for any inconvenience.</p>
 		<p><a href="welcome.jsp">Home</a></p>
 	</DIV>
 

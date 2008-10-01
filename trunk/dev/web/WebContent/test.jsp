@@ -1,3 +1,4 @@
+<%@ page errorPage="errorPage.jsp" %>
 <%@ page contentType="text/html; charset=US-ASCII" %>
 <%@ page import="java.util.Enumeration, car.pool.persistance.*,java.util.Formatter" %>
 <%
