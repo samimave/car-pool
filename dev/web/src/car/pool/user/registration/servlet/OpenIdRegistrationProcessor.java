@@ -11,6 +11,9 @@ import javax.servlet.http.HttpSession;
 
 import org.verisign.joid.consumer.OpenIdFilter;
 
+import car.pool.email.Email;
+import car.pool.email.SMTP;
+import car.pool.email.SMTPException;
 import car.pool.persistance.exception.DuplicateUserNameException;
 import car.pool.persistance.exception.UserException;
 import car.pool.user.User;
@@ -66,6 +69,18 @@ public class OpenIdRegistrationProcessor extends HttpServlet {
 				User user = manager.registerUser(noidUser);
 				session.setAttribute("user", user);
 				session.setAttribute("signedin", Boolean.TRUE);
+				// now to email the user with the success
+				Email mail = new Email();
+				mail.setToAddress(user.getEmail());
+				mail.setSubject("Registration for the Car Pool Service");
+				mail.setMessage(String.format("Congradulations %s\n\nYou have been sucessfully registered to the Car Pool Site.  We hope you make extensive use of it, and find your experience a good one.\n\nThe Car Pool Team\n", user.getUserName()));
+				try {
+					SMTP.send(mail);
+				} catch (SMTPException e) {
+					// If this fails we don't want to interrupt the process, maybe do something about it later.
+					e.printStackTrace();
+				}
+				// now to redirect
 				String s = String.format("%s/welcome.jsp", request.getContextPath());
 				response.sendRedirect(s);
 				return;
