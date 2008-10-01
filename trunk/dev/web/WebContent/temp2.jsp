@@ -49,6 +49,20 @@ while (u.next()) {
 		detailsTable += "<tr> <td> Additional Info: </td> <td></td> </tr>";
 	}
 }
+
+//pass the "via address"
+String sNumber = "";
+String sName = "";
+String viaLoc = "";
+List<String> viaAddress = new ArrayList<String>();
+RideDetail rdVia = cps.getRideDetail(rideID);
+       while (rdVia.hasNext()){
+                         sNumber =  Integer.toString(rdVia.getStreetNumber());
+                         sName = rdVia.getLocationName();
+                         viaLoc = sNumber +" "+sName;
+                         viaAddress.add(viaLoc);
+       }
+
 //finish table
 if (ridesExist) {
 	detailsTable = "<table class='rideDetailsSearch'>"+ detailsTable +"</table>";	
@@ -141,10 +155,11 @@ table += "</table>";
  	<DIV class="content">
 		<h2>The ride details appear below:</h2>
 		<%=detailsTable %><br>
-		<FORM name="showMap" id="map2" method="post" target="_blank" action="displayRouteMap.jsp">
+		<FORM name="showMap" id="map2" method="post" target="_blank" action="displayRouteMap2.jsp">
 			<INPUT type="submit" value="View Map" > 
 			<INPUT type="hidden" name="mapFrom" value= "<%=from%>">
 			<INPUT type="hidden" name="mapTo"  value= "<%=to%>" >
+			<INPUT type="hidden" name="mapVia"  value= "<%=viaAddress%>" >
 		</FORM>
 		<FORM name="ride" action="myDetails.jsp" method="post">
 			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect") %>">
