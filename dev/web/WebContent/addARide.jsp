@@ -34,6 +34,8 @@ String options = "";
 		<TITLE> Offer or Request a Ride </TITLE>
 		<STYLE type="text/css" media="screen">@import "3ColumnLayout.css";</STYLE>
 		<SCRIPT type="text/javascript" src="CalendarPopup.js"></SCRIPT>
+    	<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAA7rDxBnSa8ztdEea-bXHUqRRKOMZEnoyerBNNN7XbrW5T80f1pxRxpg7l2VcFxiQk2L5RouYsGk3NqQ" type="text/javascript"></script>
+ 
 		<script type="text/javascript">
 			var locations = new Array();
 			
@@ -61,9 +63,32 @@ String options = "";
 		<SCRIPT type="text/javascript">
 			var cal = new CalendarPopup();
 
+			//PLEASE LEAVE THESE THREE FUNCTIONS HERE
+			//for some reason they have to be above getAddress for geocoder to work
+			function codeFrom(response) {
+				document.getElementById("offer").fromCoord.value=response.lat() + "," + response.lng();
+				//getLength();
+				}
+			function codeTo(response) {
+				document.getElementById("offer").toCoord.value=response.lat() + "," + response.lng();
+				//getLength();
+				}
+			function getLength(){
+    			  fromCoord = document.getElementById("offer").fromCoord.value;
+    			  fromCoord = fromCoord.split(",");
+      		   	  toCoord = document.getElementById("offer").toCoord.value;
+      		   	  toCoord = toCoord.split(",");
+
+      		   	  fromPoint = new GLatLng(parseFloat(fromCoord[0]). parseFloat(fromCoord[1]));
+      		   	  toPoint = new GLatLng(parseFloat(toCoord[0]). parseFloat(toCoord[1]));
+
+      		   	  length = fromPoint.getDistance(toPoint);
+      		   	  alert(length);
+				
+			}
 			// a function to get the from and to streets from the combobox and pass them to the 
 			// form call "showMap" which then post to the "displayRouteMap.jsp" to be display on google map
-      		function getAddress(){
+      		function getAddress(origin){
       			  startIdx = document.getElementById("offer").streetFrom.selectedIndex;
       		   	  startLoc = document.getElementById("offer").streetFrom.options[startIdx].text;
      			  endIdx   = document.getElementById("offer").streetTo.selectedIndex;
@@ -72,7 +97,15 @@ String options = "";
      		   	  document.getElementById("map").mapFrom.value=startLoc;
      		   	  document.getElementById("map").mapTo.value=endLoc;
      		   	  document.getElementById("map").mapHouse.value=houseNum;
-     		   	 
+
+     		   	  var geocoder = new GClientGeocoder();
+
+     		   	  var from = houseNum + " " + startLoc + " PALMERSTON NORTH NEW ZEALAND";
+     		   	  var to = endLoc + " PALMERSTON NORTH NEW ZEALAND";
+    		   	
+     		   	  if(origin == "from"){geocoder.getLatLng(from, codeFrom);}
+     		   	  if(origin == "to"){geocoder.getLatLng(to, codeTo);}
+   		   	 
       		}
       		
 			function activate(field) {
@@ -102,6 +135,9 @@ String options = "";
 				    if(document.styleSheets)textfield.style.display  = 'none';
 				    	textfield.value = ''; 
 				 }
+
+
+			
 			}
 
 		</SCRIPT>
@@ -133,7 +169,7 @@ String options = "";
 					<tr> <td>House number:</td> 
 					<td><INPUT TYPE="text" NAME="houseFrom" SIZE="25"></td> </tr>
 					<tr> <td>Street:</td> <td>
-					<SELECT name="streetFrom"  onChange="getAddress()">
+					<SELECT name="streetFrom"  onChange="getAddress('from')">
            		  		<option selected="selected">Select a Street</option>
 	           		 	<%=options %>
        				</SELECT></td> </tr>
@@ -143,7 +179,7 @@ String options = "";
 					<tr> <th colspan='2' style='border:2px outset #333333'>Arrival At</th><th>&nbsp;</th> </tr>	
 					<tr><th>&nbsp;</th></tr> 
 					<tr> <td>Street:</td> <td>
-					<SELECT name="streetTo" onChange="getAddress()">
+					<SELECT name="streetTo" onChange="getAddress('to')">
            		  		<option selected="selected">Select a Street</option>
 	           		  	<%=options %>
        				 </SELECT></td> </tr>
@@ -181,6 +217,8 @@ String options = "";
 					<tr> <td>Number of passenger seats:</td> <td><INPUT TYPE="text" NAME="numSeats" SIZE="25"></td> </tr>
 
 					<tr> <td>Other Comments:</td> <td><INPUT TYPE="text" NAME="xtraInfo" SIZE="25"></td> </tr>
+					<tr> <td><INPUT TYPE="hidden" NAME="fromCoord" SIZE="25"></td> </tr>
+					<tr> <td><INPUT TYPE="hidden" NAME="toCoord" SIZE="25"></td> </tr>
 					<tr> <td><INPUT TYPE="submit" NAME="submit" VALUE="Confirm" SIZE="25"></td> <td>&nbsp;</td> </tr>
 				</TABLE>
 
