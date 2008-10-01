@@ -1,3 +1,4 @@
+<%@ page errorPage="errorPage.jsp" %>
 <?xml version="1.0" encoding="US-ASCII" ?>
 <%@ page language="java" contentType="text/html; charset=US-ASCII"
     pageEncoding="US-ASCII"%>
