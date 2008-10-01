@@ -35,7 +35,7 @@ public class RegistrationProcessing extends HttpServlet {
 	}
 	
 	private void register(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(true);
 		//String loggedInAs = OpenIdFilter.getCurrentUser(request.getSession());
 		String password1 = request.getParameter("password1");
 		String password2 = request.getParameter("password2");

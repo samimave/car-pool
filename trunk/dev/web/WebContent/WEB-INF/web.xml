@@ -13,21 +13,9 @@
       <param-value>/login,/server,/echo</param-value>
     </init-param>
   </filter>
-  <filter>
-    <filter-name>UserUrlFilter</filter-name>
-    <filter-class>examples.server.UserUrlFilter</filter-class>
-    <init-param>
-      <param-name>idJsp</param-name>
-      <param-value>/me.jsp</param-value>
-    </init-param>
-  </filter>
   <filter-mapping>
     <filter-name>OpenIdFilter</filter-name>
     <url-pattern>/*</url-pattern>
-  </filter-mapping>
-  <filter-mapping>
-    <filter-name>UserUrlFilter</filter-name>
-    <url-pattern>/user/*</url-pattern>
   </filter-mapping>
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
@@ -77,48 +65,48 @@
     <url-pattern>/oadduser</url-pattern>
   </servlet-mapping>
   <servlet>
-  	<display-name>UpdateUserDetails</display-name>
-  	<servlet-name>UpdateUserDetails</servlet-name>
-  	<servlet-class>car.pool.user.update.servlet.UpdateUserDetails</servlet-class>
+    <display-name>UpdateUserDetails</display-name>
+    <servlet-name>UpdateUserDetails</servlet-name>
+    <servlet-class>car.pool.user.update.servlet.UpdateUserDetails</servlet-class>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>UpdateUserDetails</servlet-name>
-  	<url-pattern>/updateuser</url-pattern>
+    <servlet-name>UpdateUserDetails</servlet-name>
+    <url-pattern>/updateuser</url-pattern>
   </servlet-mapping>
   <servlet>
-  	<display-name>AddOpenId</display-name>
-  	<servlet-name>AddOpenId</servlet-name>
-  	<servlet-class>car.pool.user.update.servlet.AddOpenId</servlet-class>
+    <display-name>AddOpenId</display-name>
+    <servlet-name>AddOpenId</servlet-name>
+    <servlet-class>car.pool.user.update.servlet.AddOpenId</servlet-class>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>AddOpenId</servlet-name>
-  	<url-pattern>/addopenid</url-pattern>
+    <servlet-name>AddOpenId</servlet-name>
+    <url-pattern>/addopenid</url-pattern>
   </servlet-mapping>
   <servlet>
-  	<display-name>RemoveOpenId</display-name>
-  	<servlet-name>RemoveOpenId</servlet-name>
-  	<servlet-class>car.pool.user.update.servlet.RemoveOpenId</servlet-class>
+    <display-name>RemoveOpenId</display-name>
+    <servlet-name>RemoveOpenId</servlet-name>
+    <servlet-class>car.pool.user.update.servlet.RemoveOpenId</servlet-class>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>RemoveOpenId</servlet-name>
-  	<url-pattern>/removeopenid</url-pattern>
+    <servlet-name>RemoveOpenId</servlet-name>
+    <url-pattern>/removeopenid</url-pattern>
   </servlet-mapping>
   <servlet>
-  	<display-name>CheckUserNameAvailable</display-name>
-  	<servlet-name>CheckUserNameAvailable</servlet-name>
-  	<servlet-class>car.pool.user.registration.servlet.CheckUserNameAvailable</servlet-class>
+    <display-name>CheckUserNameAvailable</display-name>
+    <servlet-name>CheckUserNameAvailable</servlet-name>
+    <servlet-class>car.pool.user.registration.servlet.CheckUserNameAvailable</servlet-class>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>CheckUserNameAvailable</servlet-name>
-  	<url-pattern>/checknameavailable</url-pattern>
+    <servlet-name>CheckUserNameAvailable</servlet-name>
+    <url-pattern>/checknameavailable</url-pattern>
   </servlet-mapping>
   <servlet>
-  	<display-name>BlurredImage</display-name>
-  	<servlet-name>BlurredImage</servlet-name>
-  	<servlet-class>car.pool.user.registration.servlet.BlurredImage</servlet-class>
+    <display-name>BlurredImage</display-name>
+    <servlet-name>BlurredImage</servlet-name>
+    <servlet-class>car.pool.user.registration.servlet.BlurredImage</servlet-class>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>BlurredImage</servlet-name>
-  	<url-pattern>/blurredimage</url-pattern>
+    <servlet-name>BlurredImage</servlet-name>
+    <url-pattern>/blurredimage</url-pattern>
   </servlet-mapping>
 </web-app>

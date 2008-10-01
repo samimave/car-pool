@@ -3,6 +3,7 @@ package car.pool.user.authentication.servlet;
 import java.io.IOException;
 import java.net.ProxySelector;
 import java.sql.SQLException;
+import java.util.Formatter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -80,6 +81,7 @@ import car.pool.user.UserManager;
 				//The url that is going to be returned to after the OpenId has been verified or not
 				StringBuffer returnTo = new StringBuffer(UrlUtils.getBaseUrl(request));
 				returnTo.append("/");
+				//returnTo.append("test.jsp");
 				returnTo.append(request.getServletPath());
 				//The actual OpenId the user supplied in the previous pages login form
 				String id = request.getParameter("openid_url");
@@ -95,9 +97,10 @@ import car.pool.user.UserManager;
 				String trustRoot = UrlUtils.getBaseUrl(request);
 				//The url plus query string is created here for redirection purposes
 				System.out.format("OpenIdConsumer: id: %s, returnTo: %s, trustRoot %s\n", id, returnTo.toString(), trustRoot);
-				String s = OpenIdFilter.joid().getAuthUrl(id, returnTo.toString(), trustRoot);
-				System.out.format("%s\n", s);
-				response.sendRedirect(s);
+				StringBuilder s = new StringBuilder(OpenIdFilter.joid().getAuthUrl(id, returnTo.toString(), trustRoot));
+				s.append("&openid.ns.sreg=http%3A%2F%2Fopenid.net%2Fextensions%2Fsreg%2F1.1&openid.sreg.optional=fullname%2Cemail&openid.sreg.required=nickname");
+				System.out.format("%s\n", s.toString());
+				response.sendRedirect(s.toString());
 				return;
 			} catch (OpenIdException e) {
 				System.out.println(String.format("OpenIdConsumer: OpenIdException %s", e.toString()));
@@ -128,6 +131,11 @@ import car.pool.user.UserManager;
 				loggedInAs = OpenIdFilter.getCurrentUser(request.getSession());
 			}
 			if(loggedInAs != null) {
+				//for(Object key: request.getParameterValues("")) {
+					//System.out.format("%s: %s", key, request.getParameter((String) key));
+				//}
+				System.out.println(request.getMethod());
+				
 				// The OpenId provider authenticated this user
 				// create a instance of UserManager
 				System.out.println(String.format("OpenIdConsumer: loggedInAs %s", loggedInAs));
