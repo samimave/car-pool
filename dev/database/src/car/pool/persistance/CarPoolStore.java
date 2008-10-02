@@ -21,6 +21,8 @@ public interface CarPoolStore {
 	int checkUser(String username, String passwordHash) throws InvaildUserNamePassword;
 	int checkUser(String username) throws InvaildUserNamePassword;
 	
+	int getTripID(int idRide, int idPassenger) throws StoreException;
+	
 	int addRegion(String name) throws SQLException;
 	int addLocation(int region, String name) throws SQLException;
 	
@@ -59,6 +61,9 @@ public interface CarPoolStore {
 	public UserList getUserEmail();
 	public UserList getUserPhone();
 	public UserList getUserSignUpDate();
+	
+	public void addScore(int idTrip, int idUser, int score) throws SQLException;
+	public int getScore(int idUser) throws SQLException;
 	
 	int addComment(int user, int ride, String comment) throws SQLException;
 	int delComment(int idComment) throws SQLException;

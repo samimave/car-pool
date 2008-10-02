@@ -89,3 +89,10 @@ WHERE a.username LIKE "%user%name%";
 Select idLocations, street
 FROM locations
 WHERE street LIKE "smi%";
+
+--getScore--
+SELECT SUM(score) as total
+FROM matches,ride,social
+WHERE ride.idUser = 450
+AND matches.idRide = ride.idRide
+AND matches.idTrip = social.idTrip;
