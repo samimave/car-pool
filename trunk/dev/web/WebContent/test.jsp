@@ -5,7 +5,7 @@
 %>
 <html>
 	<head>
-		<title>test<title>
+		<title>test</title>
 	</head>
 	<body>
 		<p>
