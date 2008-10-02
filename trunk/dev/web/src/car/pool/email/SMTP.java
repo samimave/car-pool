@@ -6,15 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
 
-import javax.mail.Address;
 import javax.mail.Message;
-import javax.mail.MessagingException;
 import javax.mail.Session;
-import javax.mail.Transport;
 import javax.mail.URLName;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 
 import car.pool.persistance.Database;
 import car.pool.persistance.DatabaseImpl;
@@ -93,7 +88,10 @@ public class SMTP {
 			transport.connect();
 			transport.sendMessage(message, InternetAddress.parse(email.getToAddress()));
 			transport.close();
-		} catch (AddressException e) {
+		} catch(Exception e) {
+			throw new SMTPException(e.getMessage());
+		}
+		/*catch (AddressException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			throw new SMTPException(e.toString());
@@ -101,6 +99,6 @@ public class SMTP {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			throw new SMTPException(e.toString());
-		}
+		}*/
 	}
 }
