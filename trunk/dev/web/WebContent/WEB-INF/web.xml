@@ -109,4 +109,13 @@
     <servlet-name>BlurredImage</servlet-name>
     <url-pattern>/blurredimage</url-pattern>
   </servlet-mapping>
+  <servlet>
+  	<display-name>SetupEmail</display-name>
+  	<servlet-name>SetupEmail</servlet-name>
+  	<servlet-class>car.pool.email.servlet.SetupEmail</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>SetupEmail</servlet-name>
+  	<url-pattern>/setupemail</url-pattern>
+  </servlet-mapping>
 </web-app>

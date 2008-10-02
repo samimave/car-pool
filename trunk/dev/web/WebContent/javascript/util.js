@@ -23,7 +23,7 @@ function isUserNameAvailable() {
 	var username = document.getElementById("register").userName.value;
 	var url = "checknameavailable?username="+username;
     request.open("GET", url, false);
-    request.onreadystatechange = callback;
+    request.onreadystatechange = usernamecallback;
     request.send( null );
     var response = request.responseText;
     if(response == "true") {
@@ -37,11 +37,11 @@ function checkUserNameAvailable() {
 	var username = document.getElementById("register").userName.value;
 	var url = "checknameavailable?username="+username;
     request.open("GET", url, true);
-    request.onreadystatechange = callback;
+    request.onreadystatechange = usernamecallback;
     request.send( null );
 }
 
-function callback() {
+function usernamecallback() {
     if (request.readyState == 4) {
         if (request.status == 200) {
             var output = document.getElementById("availableoutput");
@@ -55,4 +55,29 @@ function callback() {
             }
         }
     }
+}
+
+function setupemail(form) {
+	var authenticate = form.authenticate.checked ? "on" : "off";
+	var username = form.username.value;
+	var password = form.password.value;
+	var replyTo = form.replyTo.value;
+	var smtpURL = form.smtpURL.value;
+	var port = form.port.value;
+	var useTLS = form.useTLS.checked ? "on" : "off";
+	
+	var url = "setupemail";
+	var contentType = "application/x-www-form-urlencoded; charset=UTF-8";
+	var query = "emailconfig=yes&authenticate=" + authenticate + "&username=" + username + "&password=" + password + "&replyTo=" + replyTo + "&smtpURL=" + smtpURL + "&port=" + port + "&useTLS=" + useTLS;
+	request.open("POST", url, false);
+	request.setRequestHeader("Content-Type", contentType);
+	request.send(query);
+	var response = request.responseText;
+    if(response == "true") {
+    	alert("You have successfully updated the Email and SMTP tables");
+    } else {
+    	alert("You failed to update the Email and SMTP tables");
+    }
+    
+	return false;
 }
