@@ -564,6 +564,7 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		try {
 			statement = db.getStatement();
 			statement.executeUpdate("DELETE FROM user_openids;");
+			statement.executeUpdate("DELETE FROM social;");
 			statement.executeUpdate("DELETE FROM Matches;");
 			statement.executeUpdate("DELETE FROM Ride;");
 			statement.executeUpdate("DELETE FROM ridecomment;");
@@ -808,5 +809,69 @@ public class CarPoolStoreImpl implements CarPoolStore {
 	@Override
 	public RideDetail getRideDetail(int rideId) {
 		return new RideDetail(rideId, db.getStatement());
+	}
+	
+	public void addScore(int idTrip, int idUser, int score) throws SQLException{
+		//add a comment
+		Statement statement = null;
+		int id = FAILED;
+
+		statement = db.getStatement();
+		String sql = "INSERT INTO social (idTrip, idUser, score) VALUES ('"
+			+idTrip+"','"
+			+idUser+"','"
+			+score+"');";
+		statement.executeUpdate(sql);
+		statement.close();
+	}
+	
+	public int getScore(int idUser){
+		int score = 0;
+		Statement statement = db.getStatement();
+		String sql = 	"SELECT SUM(score) as total " +
+						"FROM matches,ride,social " +
+						"WHERE ride.idUser ='"+idUser+"' "+
+						"AND matches.idRide = ride.idRide " +
+						"AND matches.idTrip = social.idTrip;";
+		try {
+			statement = db.getStatement();
+			ResultSet rs = statement.executeQuery(sql);
+			while (rs.next()) {
+				score = rs.getInt("total");
+			}
+			rs.close();
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return score;
+		
+	}
+	
+	public int getTripID(int idRide, int idPassenger) throws StoreException{
+		int id = FAILED;
+		Statement statement = db.getStatement();
+		String sql = 	"SELECT matches.idTrip as tripID " +
+						"FROM matches,ride " +
+						"WHERE matches.idUser ='"+idPassenger+"' "+
+						"AND matches.idRide ='"+idRide+"';";
+		try {
+			statement = db.getStatement();
+			ResultSet rs = statement.executeQuery(sql);
+			while (rs.next()) {
+				id = rs.getInt("tripID");
+			}
+			rs.close();
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		if (id == FAILED){
+			throw new StoreException("invalid region name");
+		} else {
+			return id;
+		}
 	}
 }

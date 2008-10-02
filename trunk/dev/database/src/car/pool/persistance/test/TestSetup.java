@@ -82,7 +82,7 @@ public class TestSetup {
 	}
 	
 	public static void setup(){
-//		TestSetup ts = new TestSetup();
+		TestSetup ts = new TestSetup();
 	}
 	
 	public static void tearDown(){
