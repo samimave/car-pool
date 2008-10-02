@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.verisign.joid.consumer.OpenIdFilter;
-
 import car.pool.email.Email;
 import car.pool.email.SMTP;
 import car.pool.email.SMTPException;
@@ -23,10 +21,6 @@ import car.pool.user.registration.RandomTextGenerator;
 
 
 public class RegistrationProcessing extends HttpServlet {
-
-	/*
-	 * 
-	 */
 	private static final long serialVersionUID = -4410555702177133894L;
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

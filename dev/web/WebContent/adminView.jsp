@@ -143,6 +143,19 @@ else{
 					<%=rideTable %>					
 				</TABLE>
 			</FORM>
+			<form id="email" action="javascript:void(0)" onsubmit="return setupemail(this)">
+				<input type="hidden" name="emailconfig" value="yes"/>
+				<table class="email">
+					<tr><td>Use Authentication?:</td><td><input type="checkbox" name="authenticate"/></td></tr>
+					<tr><td>Username:</td><td><input type="text" name="username"/> </td></tr>
+					<tr><td>Password:</td><td><input type="password" name="password"/></td></tr>
+					<tr><td>Reply To Address:</td><td><input type="text" name="replyTo"/></td></tr>
+					<tr><td>SMTP URL:</td><td><input type="text" name="smtpURL"/></td></tr>
+					<tr><td>SMTP port:</td><td><input type="text" name="port"/></td></tr>
+					<tr><td>Use TLS?:</td><td><input type="checkbox" name="useTLS"/></td></tr>
+					<tr><td>&nbsp;</td><td><input type="submit"/> </td></tr>
+				</table>
+			</form>
 		</DIV>
 	<%@ include file="leftMenu.html" %>
 
