@@ -204,7 +204,7 @@ public class CarPoolStoreImpl implements CarPoolStore {
 	}
 	
 	
-	public int takeRide(int user, int ride, int idLocation, int streetNumber) throws RideException{
+	public int takeRide(int user, int ride, int idLocation, int streetNumber, String geoLocation) throws RideException{
 		boolean success = false;
 		int maxSeat = getMaxSeats(ride);
 		int seatNum = 0;
@@ -212,11 +212,9 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		while(!success && seatNum<=maxSeat){
 			success = true;
 			
-			try {
-				idTrip = takeRide(user, ride, seatNum, idLocation, streetNumber);
-			} catch (RideException e) {
-				success = false;
-			}
+			
+			idTrip = takeRide(user, ride, seatNum, idLocation, streetNumber, geoLocation);
+			
 			seatNum++;
 		}
 		
@@ -227,17 +225,22 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		}
 	}
 	
-	public int takeRide(int user, int ride, int seatNum, int idLocation, int streetNumber) throws RideException {
+	public int takeRide(int user, int ride, int idLocation, int streetNumber) throws RideException{
+		return takeRide(user, ride, idLocation, streetNumber, "noLocation");
+	}
+	
+	public int takeRide(int user, int ride, int seatNum, int idLocation, int streetNumber, String geoLocation) throws RideException {
 		Statement statement = db.getStatement();
 		int id = FAILED;
 		String sql = "INSERT INTO Matches "
-				+ "(idUser,idRide, seatNum, idLocation, streetNumber) "
-				+ "VALUES ('" + user + "','" + ride + "','" + seatNum + "','" + idLocation + "','" + streetNumber + "');";
+				+ "(idUser,idRide, seatNum, idLocation, streetNumber, geoLocation) "
+				+ "VALUES ('" + user + "','" + ride + "','" + seatNum + "','" + idLocation + "','" + streetNumber + "','" + geoLocation + "');";
 		
 		try {	
 			statement.executeUpdate(sql);
 			statement.close();
 		} catch (SQLException e) {
+			e.printStackTrace();
 			throw new RideException("add ride failed");
 		}
 		
@@ -261,10 +264,12 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		}
 	}
 
-	
-	
-	
 	public int addRide(int user, int availableSeats, String startDate, int startLocation, int endLocation, int streetNumber, int reoccur, String time, String comment) throws RideException {
+		return addRide(user, availableSeats, startDate, startLocation, endLocation, streetNumber, reoccur, time, comment, "noLocation");
+	}
+	
+	
+	public int addRide(int user, int availableSeats, String startDate, int startLocation, int endLocation, int streetNumber, int reoccur, String time, String comment, String geoLocation) throws RideException {
 		
 		Statement statement = db.getStatement();
 		int id = FAILED;
@@ -272,8 +277,8 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		availableSeats += 1;
 		
 		String sql = "INSERT INTO Ride "
-				+ "(idUser,rideDate,rideStartLocation,rideStopLocation,availableSeats, rideReoccur, rideTime, rideComment) "
-				+ "VALUES ('" + user + "','" + startDate+"','"+ startLocation + "','" + endLocation+"','"+ availableSeats+"','"+ reoccur+"','"+time+"','"+comment+"');";
+				+ "(idUser,rideDate,rideStartLocation,rideStopLocation,availableSeats, rideReoccur, rideTime, rideComment, geoLocation) "
+				+ "VALUES ('" + user + "','" + startDate+"','"+ startLocation + "','" + endLocation+"','"+ availableSeats+"','"+ reoccur+"','"+time+"','"+comment+"','"+geoLocation+"');";
 		
 		try {
 			statement.executeUpdate(sql);

@@ -247,7 +247,7 @@ public class CarPoolStoreImplTest extends TestCase {
 		}
 		
 		try {
-			cps.takeRide(u, ride,idLocation, idLocation, 0);
+			cps.takeRide(u, ride, idLocation, 0);
 		} catch (RideException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -338,7 +338,7 @@ public class CarPoolStoreImplTest extends TestCase {
 			int idUser = cps.addUser("jordan", "jordan.d.carter@gmail.com", "0274681876", "thisismypassword");
 			int idRide = cps.addRide(idUser, 4, date.toString(), idLocation, idLocation, 0, 0, "5:22 PM", "be on time");
 			cps.attachOpenID("www.google.com", idUser);
-			cps.takeRide(idUser, idRide, idLocation, idLocation, 0);
+			cps.takeRide(idUser, idRide, idLocation, 0);
 		
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -382,7 +382,7 @@ public class CarPoolStoreImplTest extends TestCase {
 			int idUser = cps.addUser("thisismypassword","jordan", "jordan.d.carter@gmail.com", "0274681876");
 			int idRide = cps.addRide(idUser, 4, date.toString(), idLocation, idLocation2, 0, 0, "noon", "this is a comment");
 			cps.attachOpenID("www.google.com", idUser);
-			cps.takeRide(idUser, idRide, idLocation, idLocation2, 0);
+			cps.takeRide(idUser, idRide, idLocation2, 0);
 		
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -471,7 +471,7 @@ public class CarPoolStoreImplTest extends TestCase {
 			cps.attachOpenID("www.google.com", idUser);
 			assertEquals(4, cps.getAvailableSeats(idRide));
 			assertEquals(4, cps.getMaxSeats(idRide));
-			cps.takeRide(idUser2, idRide, idLocation, idLocation, 0);
+			cps.takeRide(idUser2, idRide, idLocation, 0);
 			assertEquals(3, cps.getAvailableSeats(idRide));
 			assertEquals(4, cps.getMaxSeats(idRide));
 			
