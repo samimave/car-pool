@@ -143,6 +143,7 @@ else{
 					<%=rideTable %>					
 				</TABLE>
 			</FORM>
+			<h2>Setup Email form</h2>
 			<form id="email" action="javascript:void(0)" onsubmit="return setupemail(this)">
 				<input type="hidden" name="emailconfig" value="yes"/>
 				<table class="email">
