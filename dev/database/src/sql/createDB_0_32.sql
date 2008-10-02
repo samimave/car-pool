@@ -90,6 +90,7 @@ CREATE  TABLE IF NOT EXISTS `carpool`.`Matches` (
   `seatNum` INT NOT NULL ,
   `idLocation` INT NOT NULL ,
   `streetNumber` TEXT NULL ,
+  `geoLocation` TEXT NOT NULL ,
   PRIMARY KEY (`idTrip`) ,
   INDEX idRide (`idRide` ASC) ,
   INDEX idUser (`idUser` ASC) ,
