@@ -6,12 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
-import java.util.zip.DataFormatException;
-
-import com.sun.org.apache.xml.internal.utils.StopParseException;
 
 import car.pool.persistance.exception.DuplicateUserNameException;
-import car.pool.persistance.exception.InvaildUserName;
 import car.pool.persistance.exception.InvaildUserNamePassword;
 import car.pool.persistance.exception.RideException;
 import car.pool.persistance.exception.StoreException;
@@ -22,6 +18,7 @@ public class CarPoolStoreImpl implements CarPoolStore {
 	Database db = null;
 	StringBuffer errors = new StringBuffer();
 	
+	@SuppressWarnings("unused")
 	private static CarPoolStore cps;
 
 	public CarPoolStoreImpl() throws IOException {
@@ -344,7 +341,7 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		
 		try {
 			statement = db.getStatement();
-			countr = statement.executeUpdate("UPDATE ride SET ride.availableSeats='"+availableSeats+"' "+"WHERE idRide='"+ride+"';");
+			countr = statement.executeUpdate("UPDATE Ride SET Ride.availableSeats='"+availableSeats+"' "+"WHERE idRide='"+ride+"';");
 			statement.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -359,7 +356,7 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		
 		try {
 			statement = db.getStatement();
-			countr = statement.executeUpdate("UPDATE ride SET ride.rideDate='"+startDate+"' "+"WHERE idRide='"+ride+"';");
+			countr = statement.executeUpdate("UPDATE Ride SET Ride.rideDate='"+startDate+"' "+"WHERE idRide='"+ride+"';");
 			statement.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -374,7 +371,7 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		
 		try {
 			statement = db.getStatement();
-			countr = statement.executeUpdate("UPDATE ride SET ride.rideStartLocation='"+startLoc+"' "+"WHERE idRide='"+ride+"';");
+			countr = statement.executeUpdate("UPDATE Ride SET Ride.rideStartLocation='"+startLoc+"' "+"WHERE idRide='"+ride+"';");
 			statement.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -389,7 +386,7 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		
 		try {
 			statement = db.getStatement();
-			countr = statement.executeUpdate("UPDATE ride SET ride.rideStopLocation='"+endLoc+"' "+"WHERE idRide='"+ride+"';");
+			countr = statement.executeUpdate("UPDATE Ride SET Ride.rideStopLocation='"+endLoc+"' "+"WHERE idRide='"+ride+"';");
 			statement.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -404,7 +401,7 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		
 		try {
 			statement = db.getStatement();
-			countr = statement.executeUpdate("UPDATE ride SET ride.rideTime='"+startTime+"' "+"WHERE idRide='"+ride+"';");
+			countr = statement.executeUpdate("UPDATE Ride SET Ride.rideTime='"+startTime+"' "+"WHERE idRide='"+ride+"';");
 			statement.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -435,13 +432,14 @@ public class CarPoolStoreImpl implements CarPoolStore {
 	@Override
 	public boolean removeRide(int ride) throws StoreException {
 		Statement statement = null;
+		@SuppressWarnings("unused")
 		int countm = 0;
 		int countr = 0;
 
 		try {
 			statement = db.getStatement();
-			countm = statement.executeUpdate("DELETE FROM matches WHERE idRide='"+ride+"';");
-			countr = statement.executeUpdate("DELETE FROM ride WHERE idRide='"+ride+"';");
+			countm = statement.executeUpdate("DELETE FROM Matches WHERE idRide='"+ride+"';");
+			countr = statement.executeUpdate("DELETE FROM Ride WHERE idRide='"+ride+"';");
 			statement.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -572,8 +570,8 @@ public class CarPoolStoreImpl implements CarPoolStore {
 			statement.executeUpdate("DELETE FROM social;");
 			statement.executeUpdate("DELETE FROM Matches;");
 			statement.executeUpdate("DELETE FROM Ride;");
-			statement.executeUpdate("DELETE FROM ridecomment;");
-			statement.executeUpdate("DELETE FROM comments;");
+			statement.executeUpdate("DELETE FROM Ridecomment;");
+			statement.executeUpdate("DELETE FROM Comments;");
 			statement.executeUpdate("DELETE FROM User;");
 			statement.close();
 		} catch (SQLException e) {
@@ -692,7 +690,7 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		int id = FAILED;
 
 		statement = db.getStatement();
-		String sql = "INSERT INTO comments (idUser, idTrip, comment) VALUES ('"
+		String sql = "INSERT INTO Comments (idUser, idTrip, comment) VALUES ('"
 			+user+"','"
 			+ride+"','"
 			+comment+"');";
@@ -723,7 +721,7 @@ public class CarPoolStoreImpl implements CarPoolStore {
 
 		try {
 			statement = db.getStatement();
-			count = statement.executeUpdate("DELETE FROM comments WHERE " +
+			count = statement.executeUpdate("DELETE FROM Comments WHERE " +
 									"idComment='"+idComment+"';");
 			statement.close();
 		} catch (SQLException e) {
@@ -740,7 +738,7 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		int i=0;
 		
 		Statement statement = db.getStatement();
-		String sql = "SELECT * FROM comments WHERE idComment='"+idComment+"';";
+		String sql = "SELECT * FROM Comments WHERE idComment='"+idComment+"';";
 		try {
 			statement = db.getStatement();
 			ResultSet rs = statement.executeQuery(sql);
@@ -765,7 +763,7 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		String temp = "";
 		
 		Statement statement = db.getStatement();
-		String sql = "SELECT * FROM comments WHERE idTrip='"+idTrip+"';";
+		String sql = "SELECT * FROM Comments WHERE idTrip='"+idTrip+"';";
 		try {
 			statement = db.getStatement();
 			ResultSet rs = statement.executeQuery(sql);

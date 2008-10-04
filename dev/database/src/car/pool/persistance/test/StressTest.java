@@ -103,6 +103,7 @@ public class StressTest implements Runnable{
 		cpsi.removeAll("donotusethis");
 	}
 	
+	@SuppressWarnings("unused")
 	private void addRandom() throws IOException, StoreException, SQLException{
 		Date date = new Date(System.currentTimeMillis());
 		CarPoolStore cps = new CarPoolStoreImpl();
@@ -152,6 +153,7 @@ public class StressTest implements Runnable{
 		}
 	}
 	
+	@SuppressWarnings("static-access")
 	private void waitR(){
 		try {
 			

@@ -5,7 +5,6 @@ import java.util.Vector;
 import java.sql.SQLException;
 
 import car.pool.persistance.exception.DuplicateUserNameException;
-import car.pool.persistance.exception.InvaildUserName;
 import car.pool.persistance.exception.InvaildUserNamePassword;
 import car.pool.persistance.exception.RideException;
 import car.pool.persistance.exception.StoreException;
