@@ -1,43 +1,24 @@
-<%@ page errorPage="errorPage.jsp" %>
+<%@page errorPage="errorPage.jsp" %>
 <%@page contentType="text/html; charset=ISO-8859-1"%>
-<%@page import="org.verisign.joid.consumer.OpenIdFilter,car.pool.persistance.*, car.pool.user.*" %>
+<%@page import="org.verisign.joid.consumer.OpenIdFilter, car.pool.persistance.*, car.pool.user.*" %>
 <%@page import="java.io.ObjectOutputStream"%>
 <%
 HttpSession s = request.getSession(true);
 
 //to show who is logged in
 String message = "Please log in.";
-/*if (OpenIdFilter.getCurrentUser(s) != null ) {
-	message = "Logged in as "+OpenIdFilter.getCurrentUser(s);
-} else*/ if(  session.getAttribute("signedin") != null ) {
+/*if(  session.getAttribute("signedin") != null ) {
 	User user = ((User)session.getAttribute("user"));
 	message = "Logged in as " + user.getUserName();
 	message += " " + user.getUserId();
-}
-
-//will delete the current database, must be entered manually in the url 
-if (request.getParameter("delete") != null) {
-	CarPoolStoreImpl cps = new CarPoolStoreImpl();
-	cps.removeAll("donotusethis");
-}
+}*/
 %>
 
 
 <HTML>
 	<HEAD>
 		<TITLE> The Car Pool </TITLE>
-		<STYLE type="text/css" media="screen">@import "2ColumnLayout.css";</STYLE>
-		<script type="text/javascript">
-		function confirmation() {
-			var answer = confirm("DO NOT delete the database!!!")
-			if (answer){
-				window.location = "/Car_Pool_Project/index.jsp?delete=yes";
-			}
-			else{
-				alert("phew, good choice.")
-			}
-		}
-		</script>
+		<STYLE type="text/css" media="screen">@import "TwoColumnLayout.css";</STYLE>
 	</HEAD>
 	<BODY>
 
