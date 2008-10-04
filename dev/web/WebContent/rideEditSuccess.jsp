@@ -12,9 +12,6 @@ String updateStartS = "";
 String updateEndS = "";
 String updateDateConf = "";
 
-String strTmp = request.getParameter("Rdate");
-Date dtTmp = new SimpleDateFormat("dd/MM/yyyy").parse(strTmp);
-String strOutDt = new SimpleDateFormat("yyyy-MM-dd").format(dtTmp);
 
 User user = null;
 //force the user to login to view the page
@@ -63,6 +60,9 @@ if (session.isNew() || (OpenIdFilter.getCurrentUser(session) == null && session.
 	
 	//if you have been redirected here from editing a ride print useful info && request.getParameter("Rseats") != null
 	if (request.getParameter("rideSelect") != null && request.getParameter("Rdate") != null){
+		String strTmp = request.getParameter("Rdate");
+		Date dtTmp = new SimpleDateFormat("dd/MM/yyyy").parse(strTmp);
+		String strOutDt = new SimpleDateFormat("yyyy-MM-dd").format(dtTmp);
 		//Integer.parseInt(request.getParameter("Rseats"))
 		cps.updateStartDate( Integer.parseInt(request.getParameter("rideSelect")), strOutDt);
 		updateSeatConf = "<p>" + "You have successfully updated the ride you wanted to" + "</p>";

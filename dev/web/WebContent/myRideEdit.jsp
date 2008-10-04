@@ -221,6 +221,7 @@ table += "</table>";
 			</TABLE>
 		</FORM>
 		<FORM name="updateTime" action="rideEditSuccess.jsp" method="post">
+		<!-- <FORM name="updateTime" action="test.jsp" method="post">-->
 			<input type="hidden" name="updateRide" value="yes"/>
 			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect") %>">
 			<TABLE>
