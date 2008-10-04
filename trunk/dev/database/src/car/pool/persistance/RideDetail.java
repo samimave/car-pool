@@ -11,10 +11,10 @@ public class RideDetail {
 	public RideDetail(int idRide, Statement statement){
 		rs = null;
 		String sql = 	"SELECT * "+
-						"FROM matches, user, locations "+
+						"FROM Matches, User, locations "+
 						"WHERE idRide=" +idRide+
-						" AND user.idUser = matches.idUser "+
-						"AND matches.idLocation = locations.idLocations;";
+						" AND User.idUser = Matches.idUser "+
+						"AND Matches.idLocation = locations.idLocations;";
 		try {
 			rs = statement.executeQuery(sql);
 		} catch (SQLException e) {
