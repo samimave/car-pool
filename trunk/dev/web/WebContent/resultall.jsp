@@ -12,7 +12,7 @@ User user = null;
 if(s.getAttribute("signedin") != null ) {
 	user = (User)s.getAttribute("user");
 } else {
-	response.sendRedirect(request.getContextPath());
+	//response.sendRedirect(request.getContextPath());
 }
 int rideCount=0;
 //count the number of rides in the db
@@ -73,8 +73,12 @@ while (all.next()) {
 	<BODY>
 <%@ include file="heading.html" %>
 		<DIV class="Content" id="Content">
-		
-			<p>There are currently <%=rideCount %> rides in the database!</p>
+			<table>
+			<tr> <th colspan='2' style='border:2px outset #333333'>Displaying all rides in the database</th><tr>
+			<tr><th>&nbsp;</th> <th>&nbsp;</th></tr>
+			<tr><td>There are currently <%=rideCount %> rides in the database!</td></tr>
+			<tr><td>&nbsp;</td></tr>
+			</table>
 			<%=rideTable %>
 
 
