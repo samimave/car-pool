@@ -72,4 +72,9 @@ public interface CarPoolStore {
 	String getComment(int idComment) throws SQLException;
 	public Vector<String> getRideComment(int idTrip) throws SQLException;
 	
+	
+	TakenRides getTakenRides(int idUser);
+
+	
+	
 }

@@ -890,4 +890,10 @@ public class CarPoolStoreImpl implements CarPoolStore {
 			return id;
 		}
 	}
+
+	@Override
+	public TakenRides getTakenRides(int idUser) {	 
+		return new TakenRides(idUser,db.getStatement());
+	}
+
 }
