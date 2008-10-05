@@ -77,17 +77,15 @@ BODY #Header
 }
 #Menu
 {
-	position: absolute;
-	top: 120px;
-	left: 20px;
-	bottom: 20px;
-	width: auto;
+/*position: absolute;*/
 	padding: 10px;
 	background-color: #EEE;
 	border: 1px dashed #999;
 	line-height: 17px;
-	width: 150px;
+	width: 262px;
 	text-align: left;
+	float: left;
+	margin: -40px 20px 20px;
 }
 #Menu P
 {
