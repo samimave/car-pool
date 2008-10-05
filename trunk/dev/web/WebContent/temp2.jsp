@@ -183,6 +183,7 @@ table += "</table>";
 				<tr><td align=center>
 					<INPUT type="submit" value="Add Comment" />
 				</td></tr>
+			</TABLE>
 		</FORM>
 
 	</DIV>
