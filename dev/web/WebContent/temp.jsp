@@ -1,13 +1,16 @@
-<%@ page errorPage="errorPage.jsp" %>
+<%@page errorPage="errorPage.jsp" %>
 <%@page contentType="text/html; charset=ISO-8859-1" %>
-<%@page import="org.verisign.joid.consumer.OpenIdFilter, car.pool.persistance.*, car.pool.email.*" %>
+<%@page import="org.verisign.joid.consumer.OpenIdFilter, car.pool.persistance.*, car.pool.email.*, car.pool.user.*, java.util.*" %>
 
 <%
 HttpSession s = request.getSession(false);
 
-//force the user to login to view the page
-if (OpenIdFilter.getCurrentUser(s) == null && s.getAttribute("signedin") == null) {
-	response.sendRedirect(request.getContextPath()+"/index.jsp");
+//a container for the users information
+User user = null;
+if(s.getAttribute("signedin") != null ) {
+	user = (User)s.getAttribute("user");
+} else {
+	response.sendRedirect(request.getContextPath());
 }
 
 //being nice to our users
@@ -30,7 +33,7 @@ if (request.getParameter("rideselect") != null) {
 			//message += "<p>You have successfully booked a ride from: "+rl.getStartLocation()+", to: "+rl.getEndLocation()+", on "+rl.getRideDate()+".</p>";
 			try {
 				Email email = new Email();
-				User user = (User)session.getAttribute("user");
+				user = (User)s.getAttribute("user");
 				if(user != null && user.getEmail() != null) {
 					email.setToAddress(user.getEmail());
 					email.setSubject("Car Pool Ride booking success");
@@ -53,23 +56,22 @@ if (request.getParameter("rideselect") != null) {
 }
 %>
 
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 	<HEAD>
 		<TITLE> Ride Successfully Booked! </TITLE>
-		<STYLE type="text/css" media="screen">@import "3ColumnLayout.css";</STYLE>
+		<STYLE type="text/css" media="screen">@import "TwoColumnLayout.css";</STYLE>
 		<%@include file="include/javascriptincludes.html" %>
 	</HEAD>
 	<BODY>
 
 	<%@ include file="heading.html" %>
 
-		<DIV class="content">
+		<DIV class="Content" id="Content">
 			<%=message %>
 		</DIV>
 
 	<%@ include file="leftMenu.html" %>
-
-	<%@ include file="rightMenu.jsp" %>
 
 	</BODY>
 </HTML>

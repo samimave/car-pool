@@ -1,54 +1,30 @@
 <%@page errorPage="errorPage.jsp" %>
 <%@page contentType="text/html; charset=ISO-8859-1"%>
-<%@page import="org.verisign.joid.consumer.OpenIdFilter,car.pool.persistance.*, car.pool.user.*" %>
+<%@page import="org.verisign.joid.consumer.OpenIdFilter, car.pool.persistance.*, car.pool.user.*" %>
 <%@page import="java.io.ObjectOutputStream"%>
 <%
 HttpSession s = request.getSession(true);
 
-//to show who is logged in
-String message = "";
-String error = (String)request.getAttribute("error");
-if(error != null) {
-	message = String.format("%s", error);
-} else
-/*if (OpenIdFilter.getCurrentUser(s) != null ) {
-	message = "Logged in as "+OpenIdFilter.getCurrentUser(s);
-} else*/ if(  s.getAttribute("signedin") != null ) {
-	User user = ((User)s.getAttribute("user"));
-	message = "Logged in as " + user.getUserName();
-	message += " " + user.getUserId();
-}
-
-int timeout = session.getMaxInactiveInterval();
-
-//will delete the current database
-if (request.getParameter("delete") != null) {
-	CarPoolStoreImpl cps = new CarPoolStoreImpl();
-	cps.removeAll("donotusethis");
-}
+int timeout = s.getMaxInactiveInterval();
 %>
 
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 	<HEAD>
 		<TITLE> The Car Pool </TITLE>
-		<STYLE type="text/css" media="screen">@import "3ColumnLayout.css";</STYLE>
+		<STYLE type="text/css" media="screen">@import "TwoColumnLayout.css";</STYLE>
 		<%@include file="include/javascriptincludes.html" %>
 	</HEAD>
 	<BODY onload="formCookieCheck()">
 
 	<%@ include file="heading.html" %>
 
-	<DIV id="content" class="content">
-		<%if(error != null){ %><p><%=message %></p><%}%>
-		<h2 align="center">Welcome to The Car Pool</h2><br />
+	<DIV id="Content" class="Content">
 		<p>To see what rides we have available without logging in <a href="searchRides.jsp">click here.</a></p>
 		<p>To find out more about our website and what we offer <a href="about.jsp">click here.</a></p>
 	</DIV>
 
 	<%@ include file="leftMenuLogin.html" %>
-
-	<%@ include file="rightMenuLogin.html" %>	
 
 	</BODY>
 </HTML>

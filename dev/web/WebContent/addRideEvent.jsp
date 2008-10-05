@@ -1,39 +1,43 @@
-<%@ page errorPage="errorPage.jsp" %>
-<%@page import="car.pool.persistance.*,org.verisign.joid.consumer.OpenIdFilter" %>
+<%@page errorPage="errorPage.jsp" %>
+<%@page import="car.pool.persistance.*,org.verisign.joid.consumer.OpenIdFilter, car.pool.user.*" %>
+<%
+HttpSession s = request.getSession(false);
+
+//a container for the users information
+User user = null;
+if(s.getAttribute("signedin") != null ) {
+	user = (User)s.getAttribute("user");
+} else {
+	response.sendRedirect(request.getContextPath());
+}
+
+CarPoolStore cps = new CarPoolStoreImpl();
+LocationList allLocs = cps.getLocations();
+String from = "";
+while (allLocs.next()) {
+	if (allLocs.getID() == Integer.parseInt(request.getParameter("from")))
+		from = allLocs.getStreetName();
+}
+LocationList allLocs2 = cps.getLocations();
+String to = "";
+while (allLocs2.next()) {
+	if (allLocs2.getID() == Integer.parseInt(request.getParameter("to")))
+		to = allLocs2.getStreetName();
+}
+%>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
   <head>
     <title>Add Car-Pool Ride Event</title>
-	<%
-	HttpSession s = request.getSession(false);
-
-	if (OpenIdFilter.getCurrentUser(s) == null && s.getAttribute("signedin") == null) {
-		response.sendRedirect(request.getContextPath()+"/index.jsp");
-	}
-	
-		CarPoolStore cps = new CarPoolStoreImpl();
-		LocationList allLocs = cps.getLocations();
-		String from = "";
-		while (allLocs.next()){
-			if (allLocs.getID() == Integer.parseInt(request.getParameter("from")))
-				from = allLocs.getStreetName();	
-		}
-		
-		LocationList allLocs2 = cps.getLocations();
-		String to = "";
-		while (allLocs2.next()){
-			if (allLocs2.getID() == Integer.parseInt(request.getParameter("to")))
-				to = allLocs2.getStreetName();	
-		}
-	%>
+	<style type="text/css" media="screen">@import "TwoColumnLayout.css";</style>
     <script type="text/javascript">
-
-
 	function main()
 	{
 			//for more info about adding ride events via a link, go here: http://www.google.com/googlecalendar/event_publisher_guide_detail.html
 						
 			//construct the title from start and end locations
-           	var text = "Ride from <%=from %> to <%=to %>";
+           	var text = "Ride from <%=from%> to <%=to%>";
 
 			//get ISO start date-time / end date-time
    			var dates = getISODate(false) + "/" + getISODate(true);
@@ -52,7 +56,7 @@
     function getISODate(end)
     {
     	var time = "";
-    	var date = "<%=request.getParameter("date") %>";
+    	var date = "<%=request.getParameter("date")%>";
 
     	//remove the '-' delimiting yr-mnth-day
     	date = date.replace(/-/g, "");
@@ -73,8 +77,8 @@
     //add the length of the trip to the start time to get an end time
     function getTime(endTime)
     {
-        var sTime = "<%=request.getParameter("time") %>";
-        var length = "<%=request.getParameter("length") %>";
+        var sTime = "<%=request.getParameter("time")%>";
+        var length = "<%=request.getParameter("length")%>";
 
         var hhmm = sTime.split(":");
 
@@ -132,12 +136,16 @@
 
     </script>
   </head>
-  <body onload="main()">
+ <body onload="main()">
 
-    <div class="content">
+	<%@ include file="heading.html" %>
+
+    <div class="Content" id="Content">
 		Please wait while we transfer you to the Google Calendar site..
 		<img src="google.jpg">
 	</div>
+
+	<%@ include file="leftMenu.html" %>
 
   </body>
 </html>

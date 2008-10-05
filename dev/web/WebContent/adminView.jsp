@@ -1,14 +1,18 @@
-<%@ page errorPage="errorPage.jsp" %>
+<%@page errorPage="errorPage.jsp" %>
 <%@page contentType="text/html; charset=ISO-8859-1" %>
-<%@page contentType="text/html; charset=ISO-8859-1" import="java.util.*, java.text.*, org.verisign.joid.consumer.OpenIdFilter, car.pool.persistance.*,car.pool.persistance.test.*, car.pool.locations.*"%>
+<%@page import="java.util.*, java.text.*, org.verisign.joid.consumer.OpenIdFilter, car.pool.persistance.*,car.pool.persistance.test.*, car.pool.locations.*, car.pool.user.*, car.pool.persistance.test.AddLocations"%>
 
 <%
 HttpSession s = request.getSession(false);
 
-//force the user to login to view the page
-if (OpenIdFilter.getCurrentUser(s) == null && s.getAttribute("signedin") == null) {
-	response.sendRedirect(request.getContextPath()+"/index.jsp");
+//a container for the users information
+User user = null;
+if(s.getAttribute("signedin") != null ) {
+	user = (User)s.getAttribute("user");
+} else {
+	response.sendRedirect(request.getContextPath());
 }
+
 CarPoolStore cps = new CarPoolStoreImpl();
 String[] locations = LocationImporter.importLocations();
 
@@ -44,10 +48,7 @@ while (nList.next()){
 }
 userTable = "<table class='rideDetailsSearch'> <tr> <th>User Name</th> <th>Email</th> <th>Phone</th>"+
 "<th>Sign Up Date</th> </tr>"+ Table +"</table>";
-%>
 
-
-<%
 boolean rExist = false;
 String rideTable = "";
 RideListing all = cps.getRideListing();
@@ -72,17 +73,19 @@ if (rExist){
 
 %>
 		
-
-<%@page import="car.pool.persistance.test.AddLocations"%><HTML>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
 	<HEAD>
 		<TITLE> Administration Tasks</TITLE>
-		<STYLE type="text/css" media="screen">@import "3ColumnLayout.css";</STYLE>
-		
+		<STYLE type="text/css" media="screen">@import "TwoColumnLayout.css";</STYLE>
 		<%@include file="include/javascriptincludes.html" %>
 		</HEAD>
 	<BODY>
-		<DIV class="content">
-			<h1>Administrative functions below</h1>
+
+		<%@ include file="heading.html" %>
+
+		<DIV class="Content" id="Content">
+			<h2>Administrative functions below</h2>
 			<FORM NAME="admin" action="#" method="post" >				
 				<table>
 					<tr><td>Add new locations to database?</td>
@@ -92,8 +95,6 @@ if (rExist){
 				</table>
 			</FORM>
 			<%//=locations.length %>
-			&nbsp;	
-
 			<FORM NAME="admin2" action="#">				
 				<table>
 					<tr><td>Add locations in database?</td>						
@@ -102,7 +103,6 @@ if (rExist){
 				</table>
 			</FORM>
 			<%//=locations.length %>
-			&nbsp;	
 			<FORM NAME="delComment" action="delAComment.jsp" method="post" >
 				<table>
 					<tr><td>Delete a comment</td>
@@ -136,8 +136,6 @@ if (rExist){
 			</form>
 		</DIV>
 	<%@ include file="leftMenu.html" %>
-
-	<%@ include file="rightMenu.jsp" %>
 
 	</BODY>
 </HTML>

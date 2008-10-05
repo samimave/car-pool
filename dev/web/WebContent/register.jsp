@@ -1,5 +1,6 @@
-<%@ page errorPage="errorPage.jsp" %>
-<%@page contentType="text/html; charset=ISO-8859-1" import="car.pool.persistance.*"%>
+<%@page errorPage="errorPage.jsp" %>
+<%@page contentType="text/html; charset=ISO-8859-1"%>
+<%@page import="car.pool.persistance.*"%>
 
 <%
 HttpSession s = request.getSession(true);
@@ -9,17 +10,18 @@ if(request.getAttribute("error") != null) {
 }
 %>
 
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 	<HEAD>
 		<TITLE>Sign Up for The Car Pool!</TITLE>
-		<style type="text/css" media="screen">@import "3ColumnLayout.css";</style>
+		<style type="text/css" media="screen">@import "TwoColumnLayout.css";</style>
 		<%@include file="include/javascriptincludes.html" %>
 	</HEAD>
 	<BODY onload="formCookieCheck()">
 
 	<%@ include file="heading.html" %>	
 
-		<div class="content">
+		<div class="Content" id="Content">
 			<%if(message.length() > 0) { %><strong><%=message %></strong><%} %>
 			<p>Register yourself by filling in your details below</p>
 			<FORM name="register" id="register" onsubmit="return (formCookieCheck() && normalRegisterFormValidation(this) && isUserNameAvailable())" method="post" action="adduser">
@@ -36,13 +38,9 @@ if(request.getAttribute("error") != null) {
 			</FORM>
 		</div>
 
-	<div id="navAlpha">
+	<div class="Menu" id="Menu">
 		Please enter your details.
 		<%if(message.length() > 0) { %><strong><%=message %></strong><%} %>
-	</div>
-
-	<div id="navBeta">
-		
 	</div>
 
 	</BODY>

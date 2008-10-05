@@ -1,6 +1,6 @@
-<%@ page errorPage="errorPage.jsp" %>
+<%@page errorPage="errorPage.jsp" %>
 <%@page contentType="text/html; charset=ISO-8859-1" %>
-<%@page import="org.verisign.joid.consumer.OpenIdFilter, car.pool.persistance.*, car.pool.user.*" %>
+<%@page import="org.verisign.joid.consumer.OpenIdFilter, car.pool.persistance.*, car.pool.user.*, java.util.*, java.text.SimpleDateFormat " %>
 
 <%
 
@@ -70,19 +70,17 @@ if (session.isNew() || (OpenIdFilter.getCurrentUser(session) == null && session.
 }
 %>
 
-
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 	<HEAD>
 		<TITLE>User Account Page</TITLE>
-		<STYLE type="text/css" media="screen">@import "3ColumnLayout.css";</STYLE>
-		
+		<STYLE type="text/css" media="screen">@import "TwoColumnLayout.css";</STYLE>
 	</HEAD>
 	<BODY>
 
 	<%@ include file="heading.html" %>
 
-	<DIV class="content">
+	<DIV class="Content" id="Content">
 		<%=delConf%>
 		<%=updateSeatConf%>
 		<%=updateTimeConf%>
@@ -92,8 +90,6 @@ if (session.isNew() || (OpenIdFilter.getCurrentUser(session) == null && session.
 	</DIV>
 
 	<%@ include file="leftMenu.html" %>
-
-	<%@ include file="rightMenu.jsp" %>
 
 	</BODY>
 </HTML>

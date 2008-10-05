@@ -1,10 +1,15 @@
-<%@ page errorPage="errorPage.jsp" %>
-<%@page contentType="text/html; charset=ISO-8859-1" import="java.util.*, java.text.*, car.pool.persistance.*, org.verisign.joid.consumer.OpenIdFilter"%>
+<%@page errorPage="errorPage.jsp" %>
+<%@page contentType="text/html; charset=ISO-8859-1" %>
+<%@page import="java.util.*, java.text.*, car.pool.persistance.*, org.verisign.joid.consumer.OpenIdFilter, car.pool.user.*"%>
 <%
 HttpSession s = request.getSession(false);
 
-if (OpenIdFilter.getCurrentUser(s) == null && s.getAttribute("signedin") == null) {
-	response.sendRedirect(request.getContextPath()+"/index.jsp");
+//a container for the users information
+User user = null;
+if(s.getAttribute("signedin") != null ) {
+	user = (User)s.getAttribute("user");
+} else {
+	response.sendRedirect(request.getContextPath());
 }
 
 CarPoolStore cps = new CarPoolStoreImpl();
