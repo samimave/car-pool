@@ -14,7 +14,12 @@ if(s.getAttribute("signedin") != null ) {
 } else {
 	response.sendRedirect(request.getContextPath());
 }
-
+int rideCount=0;
+//count the number of rides in the db
+RideListing rl = cps.getRideListing();		
+while (rl.next()){
+	rideCount++;
+}
 
 
 
@@ -69,11 +74,10 @@ while (all.next()) {
 <%@ include file="heading.html" %>
 		<DIV class="Content" id="Content">
 		
-			<FORM NAME="resultFrm" id="result">	
+			<p>There are currently <%=rideCount %> rides in the database!</p>
+			<%=rideTable %>
 
-				<%=rideTable %>
 
-			</FORM>
 		</DIV>
 
 <%
