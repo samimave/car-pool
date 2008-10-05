@@ -46,12 +46,45 @@ if (session.isNew() || (OpenIdFilter.getCurrentUser(session) == null && session.
 			userTable += "<td>"+ rl.getTime() +"</td> ";
 			userTable += "<td>"+ rl.getAvailableSeats() +"</td> ";
 			userTable += "<td> <a href='"+ request.getContextPath() +"/myRideEdit.jsp?rideselect="+ rl.getRideID() +"&userselect="+rl.getUsername()+"'>"+ "Link to ride page" +"</a> </td> </tr>";
+
+			
 	}
 
 	if (userExist) {
 		userTable = "<table class='rideDetailsSearch'> <tr> <th>Ride Offered By</th> <th>Starting From</th> <th>Going To</th>"+
 		"<th>Departure Date</th> <th>Departure Time</th> <th>Number of Available Seats</th><th>Link</th> </tr>"+ userTable +"</table>";
 	}
+	
+	boolean rideExist = false;
+	TakenRides tr = cps.getTakenRides(currentUser);
+	while (tr.hasNext()){
+		if (!rideExist) {
+			acceptedTable = "";		//first time round get rid of unwanted text
+		}
+		rideExist = true;
+		//rideIDs.add(rl.getRideID());
+		String from = tr.getStartLocation();
+		String to = tr.getStopLocation();
+		
+		acceptedTable += "<tr><FORM action=\"myDetails.jsp\" method=\"post\">";	
+		acceptedTable += "<INPUT type=\"hidden\" name=\"withdrawRide\" value=\"yes" + "\">";
+		//acceptedTable += "<td>"+ tr.getUsername() +"</td> ";	
+		acceptedTable += "<td>"+ from +"</td> ";
+		acceptedTable += "<td>"+ to +"</td> ";
+		acceptedTable += "<td>"+ new SimpleDateFormat("dd/MM/yyyy").format(tr.getRideDate()) +"</td> ";
+		acceptedTable += "<td>"+ tr.getTime() +"</td> ";
+		acceptedTable += "<td>"+ tr.getAvailableSeats() +"</td> ";
+		acceptedTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ tr.getRideID() +"&userselect="+tr.getUsername() +"'>"+ "Link to ride page" +"</a> </td>";
+		acceptedTable += "<td><INPUT type=\"submit\" value=\"Withdraw\" /></td>";
+		acceptedTable += "</FORM></tr>";	
+	}
+
+	if (rideExist) {
+		acceptedTable = "<table class='rideDetailsSearch'> <tr><th>Starting From</th> <th>Going To</th>"+
+		"<th>Departure Date</th> <th>Departure Time</th> <th>Number of Available Seats</th><th>Link</th> <th>Withdraw from Ride</th> </tr>"+ acceptedTable +"</table>";
+	}
+		
+	
 	
 
 
