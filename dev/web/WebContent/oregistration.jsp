@@ -40,6 +40,7 @@ if(request.getAttribute("error") != null) {
 	</div>
 
 	<div class="Menu" id="Menu">
+		<p><a href="welcome.jsp"> <img class="logo" border="0" src="Car Pool 6 75.bmp" width="263" height="158"> </a></p> <br />
 		<%if(message.length() > 0) { %><strong><%=message %></strong><%} %>
 		Please enter your details.
 	</div>
