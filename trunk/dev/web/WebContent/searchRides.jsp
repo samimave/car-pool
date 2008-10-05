@@ -9,8 +9,6 @@ HttpSession s = request.getSession(true);
 User user = null;
 if(s.getAttribute("signedin") != null ) {
 	user = (User)s.getAttribute("user");
-} else {
-	response.sendRedirect(request.getContextPath());
 }
 
 //simple date processing for display on page
