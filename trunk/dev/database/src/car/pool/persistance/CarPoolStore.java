@@ -45,6 +45,7 @@ public interface CarPoolStore {
 //	boolean updateStreetNum(int ride, int streetNum) throws RideException;
 	boolean updateStartTime(int ride, String startTime) throws RideException;
 	
+	public boolean acceptUser(int user, int ride, int conf) throws StoreException;
 	boolean removeUser(String username, String passwordHash) throws StoreException;
 	boolean removeRide(int user, int ride) throws StoreException;
 	boolean removeRide(int ride) throws StoreException;

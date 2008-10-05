@@ -409,7 +409,20 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		
 		return true;
 	}
-	
+	public boolean acceptUser(int user, int ride, int conf) throws StoreException{
+		Statement statement = null;
+		int countr = 0;
+		
+		try {
+			statement = db.getStatement();
+			countr = statement.executeUpdate("UPDATE Matches SET Matches.confirmed='"+conf+"' "+"WHERE idUser='"+user+"' " +"AND idRide='"+ride+"';");
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return true;
+	}
 	@Override
 	public boolean removeRide(int user, int ride) throws StoreException {
 		Statement statement = null;
