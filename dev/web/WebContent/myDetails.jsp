@@ -45,14 +45,14 @@ if (session.isNew() || (OpenIdFilter.getCurrentUser(session) == null && session.
 			userTable += "<td>"+ new SimpleDateFormat("dd/MM/yyyy").format(rl.getRideDate()) +"</td> ";
 			userTable += "<td>"+ rl.getTime() +"</td> ";
 			userTable += "<td>"+ rl.getAvailableSeats() +"</td> ";
-			userTable += "<td> <a href='"+ request.getContextPath() +"/myRideEdit.jsp?rideselect="+ rl.getRideID() +"&userselect="+rl.getUsername()+"'>"+ "Link to ride page" +"</a> </td> </tr>";
+			userTable += "<td> <a href='"+ request.getContextPath() +"/myRideEdit.jsp?rideselect="+ rl.getRideID() +"&userselect="+rl.getUsername()+"'>"+ "Click to edit" +"</a> </td> </tr>";
 
 			
 	}
 
 	if (userExist) {
 		userTable = "<table class='rideDetailsSearch'> <tr> <th>Ride Offered By</th> <th>Starting From</th> <th>Going To</th>"+
-		"<th>Departure Date</th> <th>Departure Time</th> <th>Number of Available Seats</th><th>Link</th> </tr>"+ userTable +"</table>";
+		"<th>Departure Date</th> <th>Departure Time</th> <th>Number of Available Seats</th><th>Edit Ride Details</th> </tr>"+ userTable +"</table>";
 	}
 	
 	boolean rideExist = false;

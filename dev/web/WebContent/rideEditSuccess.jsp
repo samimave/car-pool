@@ -35,14 +35,15 @@ if (session.isNew() || (OpenIdFilter.getCurrentUser(session) == null && session.
 	}
 	
 	
-	//if you have been redirected here from editing a ride print useful info && request.getParameter("Rseats") != null
+	//if you have been redirected here from editing a ride print useful info
 	if (request.getParameter("rideSelect") != null && request.getParameter("numSeats") != null){
-		//Integer.parseInt(request.getParameter("Rseats"))
-		cps.updateSeats( Integer.parseInt(request.getParameter("rideSelect")), Integer.parseInt(request.getParameter("numSeats")));
+		int seat = Integer.parseInt(request.getParameter("numSeats"));
+		seat++;
+		cps.updateSeats( Integer.parseInt(request.getParameter("rideSelect")), seat);
 		updateSeatConf = "<p>" + "You have successfully updated the ride you wanted to" + "</p>";
 	}
 	
-	//if you have been redirected here from editing a ride print useful info && request.getParameter("Rseats") != null
+	//if you have been redirected here from editing a ride print useful info
 	if (request.getParameter("rideSelect") != null && request.getParameter("Rtime") != null){
 		cps.updateStartTime( Integer.parseInt(request.getParameter("rideSelect")), request.getParameter("Rtime") );
 		updateTimeConf = "<p>" + "You have successfully updated the ride you wanted to" + "</p>";

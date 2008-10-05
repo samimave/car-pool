@@ -80,10 +80,10 @@ boolean acceptExist = false;
 RideDetail rd = cps.getRideDetail(rideID);
 	while (rd.hasNext() ){
 		if (!requestExist){
-			requestTable = "";
+			requestTable = "<tr><td>no users found</td></tr><tr><td>&nbsp;</td></tr>";
 		}
 		if (!acceptExist){
-			acceptedTable = "";
+			acceptedTable = "<tr><td>no users found</td></tr><tr><td>&nbsp;</td></tr><tr><td>&nbsp;</td></tr>";
 		}
 	if ((rd.getUserID()!=dbID)&&(rd.getConfirmed()==false)){
 		requestExist = true;
@@ -113,13 +113,13 @@ RideDetail rd = cps.getRideDetail(rideID);
 if (requestExist) {
 	requestTable = "<table class='rideDetailsSearch'> <tr> <th>Request from</th> <th>Pick Up From</th><th>Confirm</th><th>Reject</th></tr>"+ requestTable +"</table>";
 }
-requestTable +="<tr>&nbsp;</tr>";
+requestTable +="<tr><td>&nbsp;</td></tr>";
 
 if (acceptExist) {
 	acceptedTable = "<table class='rideDetailsSearch'> <tr> <th>Request from</th> <th>Pick Up From</th></tr>"+ acceptedTable +"</table>";
 }
 
-acceptedTable +="<tr>&nbsp;</tr>";
+acceptedTable +="<tr><td>&nbsp;</td></tr>";
 
 
 %>
