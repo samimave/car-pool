@@ -10,15 +10,7 @@ User user = null;
 if(s.getAttribute("signedin") != null ) {
 	user = (User)s.getAttribute("user");
 } else {
-	response.sendRedirect("");
-}
-
-
-
-//being nice to our users
-String message = "";
-if (request.getParameter("sThx") != null) {
-	message += "<p> Thanks for signing up! </p>";
+	response.sendRedirect(request.getContextPath());
 }
 
 //code to allow interaction with db
@@ -30,28 +22,26 @@ if (request.getParameter("newUser") != null) {
 }
 %>
 
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 	<HEAD>
 		<TITLE> Welcome to The Car Pool </TITLE>
-		<STYLE type="text/css" media="screen">@import "3ColumnLayout.css";</STYLE>
+		<STYLE type="text/css" media="screen">@import "TwoColumnLayout.css";</STYLE>
 		<%@include file="include/javascriptincludes.html" %>
 	</HEAD>
 	<BODY onload="runBrowserTests()">
 
 	<%@ include file="heading.html" %>
 
-	<DIV class="content">
-		<h2 align="center">Welcome to The Car Pool,
+	<DIV class="Content" id="Content">
+		<h2>Welcome to The Car Pool,
 		<%if(s.getAttribute("signedin") != null ) {%>
 			<%=" "+user.getUserName()%><%//OpenIdFilter.getCurrentUser(s)%></h2>
 		<%} %>
-		<%=message %>
 		<p>Eventually the person's upcoming rides will be displayed here.</p>
 	</DIV>		
 
 	<%@ include file="leftMenu.html" %>
-
-	<%@ include file="rightMenu.jsp" %>
 
 	</BODY>
 </HTML>

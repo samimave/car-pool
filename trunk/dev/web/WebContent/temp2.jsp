@@ -1,14 +1,15 @@
-<%@ page errorPage="errorPage.jsp" %>
+<%@page errorPage="errorPage.jsp" %>
 <%@page contentType="text/html; charset=ISO-8859-1" %>
-<%@page import="org.verisign.joid.consumer.OpenIdFilter, car.pool.persistance.*, car.pool.user.*" %>
+<%@page import="org.verisign.joid.consumer.OpenIdFilter, car.pool.persistance.*, car.pool.user.*, java.util.*, java.text.*" %>
 <%
 HttpSession s = request.getSession(false);
 
-//force the user to login to view the page
-//System.out.println(OpenIdFilter.getCurrentUser(s));
-//System.out.println(s.getAttribute("signedin"));
-if (OpenIdFilter.getCurrentUser(s) == null && s.getAttribute("signedin") == null) {
-	response.sendRedirect(request.getContextPath()+"/index.jsp");
+//a container for the users information
+User user = null;
+if(s.getAttribute("signedin") != null ) {
+	user = (User)s.getAttribute("user");
+} else {
+	response.sendRedirect(request.getContextPath());
 }
 
 //being nice to our users
@@ -17,7 +18,6 @@ String message = "";
 CarPoolStore cps = new CarPoolStoreImpl();
 
 // RideListing rl = cps.getRideListing();
-User user = (User)s.getAttribute("user");
 int dbID = user.getUserId();
 int rideID = Integer.parseInt(request.getParameter("rideselect"));
 
@@ -138,22 +138,18 @@ table += "</table>";
 ///////////////////////////
 %>
 
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 	<HEAD>
-
 		<TITLE> Ride Details </TITLE>
-		<STYLE type="text/css" media="screen">@import "3ColumnLayout.css";</STYLE>
+		<STYLE type="text/css" media="screen">@import "TwoColumnLayout.css";</STYLE>
 		<%@include file="include/javascriptincludes.html" %>
 	</HEAD>
 	<BODY>
 
 	<%@ include file="heading.html" %>	
 
-	<%@ include file="leftMenu.html" %>
-
-	<%@ include file="rightMenu.jsp" %>
-
- 	<DIV class="content">
+ 	<DIV class="Content" id="Content">
 		<h2>The ride details appear below:</h2>
 		<%=detailsTable %><br>
 		<FORM name="showMap" id="map2" method="post" target="_blank" action="displayRouteMap2.jsp">
@@ -191,10 +187,7 @@ table += "</table>";
 
 	</DIV>
 
-		
-
-
-
+	<%@ include file="leftMenu.html" %>
 
 	</BODY>
 </HTML>

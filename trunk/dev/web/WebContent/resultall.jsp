@@ -1,4 +1,4 @@
-<%@ page errorPage="errorPage.jsp" %>
+<%@page errorPage="errorPage.jsp" %>
 <%@page contentType="text/html; charset=ISO-8859-1" %>
 <%@page import="org.verisign.joid.consumer.OpenIdFilter, car.pool.persistance.*, java.text.SimpleDateFormat,car.pool.user.*,java.util.*" %>
 
@@ -7,10 +7,12 @@ CarPoolStore cps = new CarPoolStoreImpl();
 
 HttpSession s = request.getSession(true);
 
+//a container for the users information
 User user = null;
-//check if the user is logged in and viewing the page
-if (!(OpenIdFilter.getCurrentUser(s) == null && s.getAttribute("signedin") == null)) {
-	user = (User)s.getAttribute("user"); 
+if(s.getAttribute("signedin") != null ) {
+	user = (User)s.getAttribute("user");
+} else {
+	response.sendRedirect(request.getContextPath());
 }
 
 
@@ -56,15 +58,16 @@ while (all.next()) {
 
 %>
 
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 	<HEAD>
 		<TITLE>Ride Search Results</TITLE>
-		<STYLE type="text/css" media="screen">@import "3ColumnLayout.css"; </STYLE>
+		<STYLE type="text/css" media="screen">@import "TwoColumnLayout.css"; </STYLE>
 		<%@include file="include/javascriptincludes.html" %>
 	</HEAD>
 	<BODY>
 <%@ include file="heading.html" %>
-		<DIV class="content">
+		<DIV class="Content" id="Content">
 		
 			<FORM NAME="resultFrm" id="result">	
 
@@ -77,12 +80,10 @@ while (all.next()) {
 if (user != null) { 		//depending if the user is logged in or not different side menus should be displayed
 %> 
 	<jsp:include page="leftMenu.html" flush="false" />
-	<jsp:include page="rightMenu.jsp" flush="false" />
 <%
 } else { 
 %>
 	<jsp:include page="leftMenuLogin.html" flush="false" />
-	<jsp:include page="rightMenuLogin.html" flush="false" />
 <%
 } 
 %>

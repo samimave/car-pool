@@ -1,18 +1,22 @@
-<%@ page errorPage="errorPage.jsp" %>
+<%@page errorPage="errorPage.jsp" %>
 <%@page contentType="text/html; charset=ISO-8859-1" %>
-<%@page import="org.verisign.joid.consumer.OpenIdFilter, car.pool.persistance.*, java.text.SimpleDateFormat" %>
+<%@page import="org.verisign.joid.consumer.OpenIdFilter, car.pool.persistance.*, java.text.SimpleDateFormat, car.pool.user.*, java.util.Date" %>
 
 <%
 HttpSession s = request.getSession(false);
 
 //force the user to login to view the page
-if (OpenIdFilter.getCurrentUser(s) == null && s.getAttribute("signedin") == null) {
-	response.sendRedirect(request.getContextPath()+"/index.jsp");
+// a container for the users information
+User user = null;
+if(s.getAttribute("signedin") != null ) {
+	user = (User)s.getAttribute("user");
+} else {
+	response.sendRedirect(request.getContextPath());
 }
 
 //add ride information to database
 CarPoolStore cps = new CarPoolStoreImpl();
-User user = (User)s.getAttribute("user");
+user = (User)s.getAttribute("user");
 int dbID = user.getUserId();//cps.getUserIdByURL(request.getParameter("user"));
 
 //date formatting for use by db 
@@ -42,16 +46,17 @@ while (allLocs2.next()){
 }
 %>
 
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 	<HEAD>
 		<TITLE> Ride Successfully Added! </TITLE>
-		<STYLE type="text/css" media="screen">@import "3ColumnLayout.css";</STYLE>
+		<STYLE type="text/css" media="screen">@import "TwoColumnLayout.css";</STYLE>
 	</HEAD>
 	<BODY>
 
 	<%@ include file="heading.html" %>
 
-		<DIV class="content">
+		<DIV class="Content" id="Content">
 			<p>Thank you for adding a <%=request.getParameter("rideType") %> from <%= from %>, to <%= to %> ;  
 			scheduled for <%= request.getParameter("depTime") %> <%= request.getParameter("depDate") %>. </p>
 			<FORM action="addRideEvent.jsp" method="post" target="_blank">
@@ -65,8 +70,6 @@ while (allLocs2.next()){
 		</DIV>
 
 	<%@ include file="leftMenu.html" %>
-
-	<%@ include file="rightMenu.jsp" %>
 
 	</BODY>
 </HTML>

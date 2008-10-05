@@ -1,14 +1,16 @@
-<%@ page errorPage="errorPage.jsp" %>
+<%@page errorPage="errorPage.jsp" %>
 <%@page contentType="text/html; charset=ISO-8859-1" %>
 <%@page import="org.verisign.joid.consumer.OpenIdFilter, car.pool.persistance.*, car.pool.user.*,java.util.*,java.text.*" %>
 
 <%
 HttpSession s = request.getSession(true);
 
+//a container for the users information
 User user = null;
-//check if the user is logged in and viewing the page
-if (!(OpenIdFilter.getCurrentUser(s) == null && s.getAttribute("signedin") == null)) {
-	user = (User)s.getAttribute("user"); 
+if(s.getAttribute("signedin") != null ) {
+	user = (User)s.getAttribute("user");
+} else {
+	response.sendRedirect(request.getContextPath());
 }
 
 //simple date processing for display on page
@@ -31,10 +33,11 @@ while (rl.next()){
 }
 %>
 
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 	<HEAD>
 		<TITLE>Ride Search</TITLE>
-		<STYLE type="text/css" media="screen">@import "3ColumnLayout.css"; </STYLE>
+		<STYLE type="text/css" media="screen">@import "TwoColumnLayout.css"; </STYLE>
 		<SCRIPT type="text/javascript" src="CalendarPopup.js"></SCRIPT>
 		<SCRIPT type="text/javascript">
 			var cal = new CalendarPopup();
@@ -45,7 +48,7 @@ while (rl.next()){
 
 	<%@ include file="heading.html" %>
 
-		<DIV class="content">
+		<DIV class="Content" id="Content">
 			<p>There are currently <%=rideCount %> rides in the database!</p>
 			<p>Please enter the search criteria in the boxes below and click search</p>
 			<FORM NAME="searchFrm" id="search" method="post" action="result.jsp">	
@@ -79,12 +82,10 @@ while (rl.next()){
 if (user != null) { 		//depending if the user is logged in or not different side menus should be displayed
 %> 
 	<jsp:include page="leftMenu.html" flush="false" />
-	<jsp:include page="rightMenu.jsp" flush="false" />
 <%
 } else { 
 %>
 	<jsp:include page="leftMenuLogin.html" flush="false" />
-	<jsp:include page="rightMenuLogin.html" flush="false" />
 <%
 } 
 %>

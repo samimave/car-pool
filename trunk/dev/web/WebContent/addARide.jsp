@@ -1,23 +1,24 @@
-<%@ page errorPage="errorPage.jsp" %>
-<%@page contentType="text/html; charset=ISO-8859-1" import="java.util.*, java.text.*, car.pool.persistance.*, org.verisign.joid.consumer.OpenIdFilter"%>
+<%@page errorPage="errorPage.jsp" %>
+<%@page contentType="text/html; charset=ISO-8859-1" %>
+<%@page import="java.util.*, java.text.*, car.pool.persistance.*, org.verisign.joid.consumer.OpenIdFilter, car.pool.user.*"%>
 
 <%
 HttpSession s = request.getSession(false);
 
 //force the user to login to view the page
-if (OpenIdFilter.getCurrentUser(s) == null && s.getAttribute("signedin") == null) {
-	response.sendRedirect(request.getContextPath()+"/index.jsp");
+//user a container for the users information
+User user = null;
+if(s.getAttribute("signedin") != null ) {
+	user = (User)s.getAttribute("user");
+} else {
+	response.sendRedirect(request.getContextPath());
 }
 
 //simple date processing for display on page
 Date now = new Date();
 String time = new SimpleDateFormat("HH:mm").format(now);
 String date = new SimpleDateFormat("dd/MM/yyyy").format(now);
-//String time = DateFormat.getTimeInstance(DateFormat.SHORT).format(now);
-//String date = DateFormat.getDateInstance().format(now);
 CarPoolStore cps = new CarPoolStoreImpl();
-
-
 
 //make the options for the street select box
 LocationList locations = cps.getLocations();
@@ -30,10 +31,11 @@ String options = "";
 
 %>
 
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 	<HEAD>
-		<TITLE> Offer or Request a Ride </TITLE>
-		<STYLE type="text/css" media="screen">@import "3ColumnLayout.css";</STYLE>
+		<TITLE> Offer a Ride </TITLE>
+		<STYLE type="text/css" media="screen">@import "TwoColumnLayout.css";</STYLE>
 		<SCRIPT type="text/javascript" src="CalendarPopup.js"></SCRIPT>
     	<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAA7rDxBnSa8ztdEea-bXHUqRRKOMZEnoyerBNNN7XbrW5T80f1pxRxpg7l2VcFxiQk2L5RouYsGk3NqQ" type="text/javascript"></script>
  
@@ -147,7 +149,7 @@ String options = "";
 
 	<%@ include file="heading.html" %>	
 
-		<DIV class="content">
+		<DIV class="Content" id="Content" >
 			<p>Please enter the relevant details and click confirm.</p>
 			<FORM NAME="offerFrm" id="offer" method="post" action="newRideConfirmation.jsp">
 				<INPUT TYPE="hidden" NAME="user" VALUE="<%=OpenIdFilter.getCurrentUser(s)%>" SIZE="25">
@@ -225,19 +227,15 @@ String options = "";
 
 			</FORM>
 
-		</DIV>
-		
 			<FORM name="showMap" id="map" method="post" target="_blank" action="displayRouteMap.jsp">
 					<INPUT type="submit" value="View Map" onClick="getAddress()"/> 
 					<INPUT type="hidden" name="mapFrom" >
 				    <INPUT type="hidden" name="mapTo"   >
 					<INPUT type="hidden" name="mapHouse" >
 			</FORM>
-	
+		</DIV>
+		
 	<%@ include file="leftMenu.html" %>
-
-	<%@ include file="rightMenu.jsp" %>
-	
 
 	</BODY>
 </HTML>
