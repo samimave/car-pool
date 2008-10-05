@@ -56,35 +56,54 @@ if (session.isNew() || (OpenIdFilter.getCurrentUser(session) == null && session.
 	}
 	
 	boolean rideExist = false;
+	boolean awaitExist = false;
 	TakenRides tr = cps.getTakenRides(currentUser);
 	while (tr.hasNext()){
 		if (!rideExist) {
 			acceptedTable = "";		//first time round get rid of unwanted text
 		}
-		rideExist = true;
+		if (!awaitExist) {
+			awaitTable = "";		//first time round get rid of unwanted text
+		}
+		
 		//rideIDs.add(rl.getRideID());
 		String from = tr.getStartLocation();
 		String to = tr.getStopLocation();
 		
-		acceptedTable += "<tr><FORM action=\"myDetails.jsp\" method=\"post\">";	
-		acceptedTable += "<INPUT type=\"hidden\" name=\"withdrawRide\" value=\"yes" + "\">";
-		//acceptedTable += "<td>"+ tr.getUsername() +"</td> ";	
-		acceptedTable += "<td>"+ from +"</td> ";
-		acceptedTable += "<td>"+ to +"</td> ";
-		acceptedTable += "<td>"+ new SimpleDateFormat("dd/MM/yyyy").format(tr.getRideDate()) +"</td> ";
-		acceptedTable += "<td>"+ tr.getTime() +"</td> ";
-		acceptedTable += "<td>"+ tr.getAvailableSeats() +"</td> ";
-		acceptedTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ tr.getRideID() +"&userselect="+tr.getUsername() +"'>"+ "Link to ride page" +"</a> </td>";
-		acceptedTable += "<td><INPUT type=\"submit\" value=\"Withdraw\" /></td>";
-		acceptedTable += "</FORM></tr>";	
+		if((tr.getConfirmed()==true)){
+			rideExist = true;
+			acceptedTable += "<tr><FORM action=\"myDetails.jsp\" method=\"post\">";	
+			acceptedTable += "<INPUT type=\"hidden\" name=\"withdrawRide\" value=\"yes" + "\">";
+			//acceptedTable += "<td>"+ tr.getUsername() +"</td> ";	
+			acceptedTable += "<td>"+ from +"</td> ";
+			acceptedTable += "<td>"+ to +"</td> ";
+			acceptedTable += "<td>"+ new SimpleDateFormat("dd/MM/yyyy").format(tr.getRideDate()) +"</td> ";
+			acceptedTable += "<td>"+ tr.getTime() +"</td> ";
+			acceptedTable += "<td>"+"Add"+"</td> ";
+			acceptedTable += "<td><INPUT type=\"submit\" value=\"Withdraw\" /></td>";
+			acceptedTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ tr.getRideID() +"&userselect="+tr.getUsername() +"'>"+ "Link to ride page" +"</a> </td>";
+			acceptedTable += "</FORM></tr>";	
+		}
+		else if (tr.getConfirmed()!=true){
+			awaitExist = true;
+			awaitTable += "<tr><td>"+from+"</td>";
+			awaitTable += "<td>"+ to+"</td>";
+			awaitTable += "<td>"+ new SimpleDateFormat("dd/MM/yyyy").format(tr.getRideDate()) +"</td> ";
+			awaitTable += "<td>"+ tr.getTime() +"</td> ";
+			awaitTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ tr.getRideID() +"&userselect="+tr.getUsername() +"'>"+ "Link to ride page" +"</a> </td>";
+			
+		}
 	}
 
 	if (rideExist) {
 		acceptedTable = "<table class='rideDetailsSearch'> <tr><th>Starting From</th> <th>Going To</th>"+
-		"<th>Departure Date</th> <th>Departure Time</th> <th>Number of Available Seats</th><th>Link</th> <th>Withdraw from Ride</th> </tr>"+ acceptedTable +"</table>";
+		"<th>Departure Date</th> <th>Departure Time</th><th>Add Ride to Google Calendar</th> <th>Withdraw from Ride</th> <th>Link</th> </tr>"+ acceptedTable +"</table>";
 	}
 		
-	
+	if (awaitExist) {
+		awaitTable = "<table class='rideDetailsSearch'> <tr><th>Starting From</th> <th>Going To</th>"+
+		"<th>Departure Date</th> <th>Departure Time</th> <th>Link</th> </tr>"+ awaitTable +"</table>";
+	}
 	
 
 
