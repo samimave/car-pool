@@ -174,13 +174,13 @@ table += "</table>";
 		<%=table %>
 		<FORM name = "addComment" action="addAComment.jsp" method="post">
 			<TABLE width="100%">
-				<tr><td align=center>
+				<tr><td>
 					<INPUT type="hidden" name="idRide" value="<%=rideID %>">
 					<INPUT type="hidden" name="idUser" value="<%=dbID %>">
 					<INPUT type="hidden" name="reDirURL" value="<%=reDirURL %>"/>
 					<TEXTAREA cols="50" rows="4" name="comment"></TEXTAREA>
 				</td></tr>
-				<tr><td align=center>
+				<tr><td>
 					<INPUT type="submit" value="Add Comment" />
 				</td></tr>
 			</TABLE>
