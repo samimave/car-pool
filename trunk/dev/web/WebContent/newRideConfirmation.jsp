@@ -25,9 +25,11 @@ String strTmp = request.getParameter("depDate");
 Date dtTmp = new SimpleDateFormat("dd/MM/yyyy").parse(strTmp);
 String strOutDt = new SimpleDateFormat("yyyy-MM-dd").format(dtTmp);
 
-//addRide(int user, int availableSeats, String startDate, int startLocation, int endLocation, int streetNumber, int reoccur, String time, String comment)
 
-cps.addRide(dbID,Integer.parseInt(request.getParameter("numSeats")),strOutDt,Integer.parseInt(request.getParameter("streetFrom")),Integer.parseInt(request.getParameter("streetTo")),Integer.parseInt(request.getParameter("houseFrom")),Integer.parseInt(request.getParameter("recurrence")),request.getParameter("depTime"),request.getParameter("xtraInfo"));
+
+int rideID = cps.addRide(dbID,Integer.parseInt(request.getParameter("numSeats")),strOutDt,Integer.parseInt(request.getParameter("streetFrom")),Integer.parseInt(request.getParameter("streetTo")),Integer.parseInt(request.getParameter("houseFrom")),Integer.parseInt(request.getParameter("recurrence")),request.getParameter("depTime"),request.getParameter("xtraInfo"));
+//add social score
+cps.addScore(cps.getTripID(rideID,dbID),dbID,5);
 
 LocationList allLocs = cps.getLocations();
 

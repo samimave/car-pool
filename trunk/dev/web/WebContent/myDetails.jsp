@@ -10,6 +10,8 @@ User user = null;
 //temp placeholder variables
 String userTable = "<p>No rides found.</p>";
 String acceptedTable = "<p>No rides found.</p>";
+String awaitTable = "<p>No rides found.</p>";
+int socialScore=0;
 
 //force the user to login to view the page
 if (session.isNew() || (OpenIdFilter.getCurrentUser(session) == null && session.getAttribute("signedin") == null)) {
@@ -22,7 +24,7 @@ if (session.isNew() || (OpenIdFilter.getCurrentUser(session) == null && session.
 	CarPoolStore cps = new CarPoolStoreImpl();
 	int currentUser = user.getUserId();
 	String nameOfUser = user.getUserName();
-
+	socialScore = cps.getScore(currentUser);
 
 	boolean userExist = false;
 	ArrayList<Integer> rideIDs = new ArrayList<Integer>();
@@ -37,8 +39,6 @@ if (session.isNew() || (OpenIdFilter.getCurrentUser(session) == null && session.
 		rideIDs.add(rl.getRideID());
 		String from = rl.getStartLocation();
 		String to = rl.getEndLocation();
-		
-			
 			userTable += "<tr> <td>"+ rl.getUsername() +"</td> ";	
 			userTable += "<td>"+ from +"</td> ";
 			userTable += "<td>"+ to +"</td> ";
@@ -46,9 +46,6 @@ if (session.isNew() || (OpenIdFilter.getCurrentUser(session) == null && session.
 			userTable += "<td>"+ rl.getTime() +"</td> ";
 			userTable += "<td>"+ rl.getAvailableSeats() +"</td> ";
 			userTable += "<td> <a href='"+ request.getContextPath() +"/myRideEdit.jsp?rideselect="+ rl.getRideID() +"&userselect="+rl.getUsername()+"'>"+ "Link to ride page" +"</a> </td> </tr>";
-
-			
-
 	}
 
 	if (userExist) {
@@ -115,6 +112,7 @@ if (session.isNew() || (OpenIdFilter.getCurrentUser(session) == null && session.
 		<h2 align="center">Welcome to your Account Page</h2><br /><br />
 		<%=takeConf %>
 		<h2>Your user details appear below:</h2>
+		<p>Your current social score is: <%=socialScore%></p>
 		<FORM name="updateDetails" action="updateuser" method="post">
 			<INPUT type="hidden" name="updateDetails" value="yes">
 			<TABLE class='userDetails'>
@@ -144,13 +142,21 @@ if (session.isNew() || (OpenIdFilter.getCurrentUser(session) == null && session.
 		<table>
 		<tr> <th colspan='2' style='border:2px outset #333333'>Rides you have Offered</th><th>&nbsp;</th> <th>&nbsp;</th></tr>
 		<tr><th>&nbsp;</th></tr>
+		<%=userTable %>
 		</table>
-		<%=userTable %><br />
+		
 		<table>
 		<tr> <th colspan='2' style='border:2px outset #333333'>You have been approved for the following rides</th><th>&nbsp;</th> <th>&nbsp;</th></tr>
 		<tr><th>&nbsp;</th></tr>
-		</table>
 		<%=acceptedTable %>
+		</table>
+
+		<table>
+		<tr> <th colspan='2' style='border:2px outset #333333'>You are awaiting approval for the following rides</th><th>&nbsp;</th> <th>&nbsp;</th></tr>
+		<tr><th>&nbsp;</th></tr>
+		<%=awaitTable %>
+		</table>
+		
 	</DIV>
 
 	<%@ include file="leftMenu.html" %>
