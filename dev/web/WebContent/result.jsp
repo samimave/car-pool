@@ -12,7 +12,7 @@ User user = null;
 if(s.getAttribute("signedin") != null ) {
 	user = (User)s.getAttribute("user");
 } else {
-	response.sendRedirect(request.getContextPath());
+	//response.sendRedirect(request.getContextPath());
 }
 
 //----------------------search parameters------------------------
