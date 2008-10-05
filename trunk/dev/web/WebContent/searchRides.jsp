@@ -65,15 +65,19 @@ while (rl.next()){
 				
 					<tr> <td>OR Date (dd/MM/yyyy):</td> <td><INPUT TYPE="text" NAME="searchDate" VALUE="<%= date %>" SIZE="25"> <A HREF="#" onClick="cal.select(document.forms['searchFrm'].searchDate,'anchor1','dd/MM/yyyy'); return false;" NAME="anchor1" ID="anchor1"><img name="calIcon" border="0" src="calendar_icon.jpg" width="27" height="23"></A> </td> </tr> 
 					<tr> <td>OR User:</td> <td><INPUT TYPE="text" NAME="sUser" VALUE="" SIZE="25"></td> </tr>
-					<tr> <td>&nbsp;</td> <td><INPUT TYPE="submit" NAME="search" VALUE="Search" SIZE="25"></td> </tr>
+					<tr> <td>&nbsp;</td> <td><INPUT TYPE="submit" NAME="search" VALUE="Search For Rides" SIZE="25"></td> </tr>
 
 				</TABLE>
 			</FORM>
-			<Form name="showAll" id="showAll" method="post" action="resultall.jsp">
+		
+			 <Form name="showAll" id="showAll" method="post" action="resultall.jsp">
 				<input type="hidden" name="showAll" value="yes"/>
-				<INPUT TYPE="submit" NAME="all" VALUE="Show All Rides" SIZE="25">
+				<table class="rideSearch">
+					<tr> <td>OR You can click button to  </td><td><INPUT TYPE="submit" NAME="all" VALUE="Show All Rides" SIZE="25"></td></tr>
+				</table>
 			</Form>
-			<p><a href="welcome.jsp">Home</a></p>
+			
+		
 		</DIV>
 
 <%

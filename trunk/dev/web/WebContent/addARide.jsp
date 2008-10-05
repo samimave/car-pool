@@ -156,12 +156,12 @@ String options = "";
 					<TABLE class="rideDetails">
 					<%// Information on if ride is an offer or request. 
 					 //If Ride is a request then numSeats label should be no. of seats requested
-					 //else it should be no. of seats available.%>
-					<tr> <td>Ride Type:</td> <td>	
-					<SELECT name="rideType">
-						<option value="Ride Offer">Ride Offer</option>
-					</SELECT></td> </tr>	
-					<tr><th>&nbsp;</th></tr> 
+					 //else it should be no. of seats available.
+					//<tr> <td>Ride Type:</td> <td>	
+					//<SELECT name="rideType">
+					//	<option value="Ride Offer">Ride Offer</option>
+					//</SELECT></td> </tr>	
+					//<tr><th>&nbsp;</th></tr> %>
 
 					<% /* Location FROM, TO & VIA. 
 						Streets is a combo box so user can type or use drop down to select
@@ -181,6 +181,8 @@ String options = "";
 
 					<tr> <th colspan='2' style='border:2px outset #333333'>Arrival At</th><th>&nbsp;</th> </tr>	
 					<tr><th>&nbsp;</th></tr> 
+					<tr> <td>House number:</td> 
+					<td><INPUT TYPE="text" NAME="houseTo" SIZE="25"></td> </tr>
 					<tr> <td>Street:</td> <td>
 					<SELECT name="streetTo" onChange="getAddress('to')">
            		  		<option selected="selected">Select a Street</option>

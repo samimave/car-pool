@@ -272,7 +272,7 @@ if (Sto != "no location entered") {
 				<tr><td>Location to:</td> <td><%=Sto%></td></tr>
 				<tr><td>Date:</td> <td><%=strTmp%></td></tr>
 				<tr><td>User:</td> <td><%=username %></td>
-
+				<tr><td>&nbsp;</td></tr>
 				<tr><td>Search results appear below</td></tr>
 				<%=rideTable %>				
 				<tr><td> <a href=searchRides.jsp>Go back to Search page</a> </td> </tr>
