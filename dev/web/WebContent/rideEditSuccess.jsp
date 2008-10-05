@@ -74,6 +74,7 @@ if (session.isNew() || (OpenIdFilter.getCurrentUser(session) == null && session.
 	//IF YOU ACCEPTED OR REJECTED A USER UPDATE DATABASE
 	if (request.getParameter("confirmUser")!= null){
 	 	cps.acceptUser(Integer.parseInt(request.getParameter("confirmUserID")),Integer.parseInt(request.getParameter("confirmForRide")),1);
+		cps.addScore(cps.getTripID(Integer.parseInt(request.getParameter("confirmForRide")),dbID),dbID,3);
 	 	updateUserConf = "<p>" + "You have accepted the user you wanted to" + "</p>";
 	}
 	if (request.getParameter("rejectUser")!= null){
