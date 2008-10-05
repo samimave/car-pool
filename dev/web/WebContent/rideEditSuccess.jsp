@@ -11,6 +11,7 @@ String updateTimeConf = "";
 String updateStartS = "";
 String updateEndS = "";
 String updateDateConf = "";
+String updateUserConf="";
 
 
 User user = null;
@@ -20,7 +21,7 @@ if (session.isNew() || (OpenIdFilter.getCurrentUser(session) == null && session.
 	request.getRequestDispatcher("").forward(request, response);
 } else {
 	user = (User)session.getAttribute("user");
-
+	int dbID = user.getUserId();
 	//code to interact with db
 	CarPoolStore cps = new CarPoolStoreImpl();
 
@@ -29,6 +30,7 @@ if (session.isNew() || (OpenIdFilter.getCurrentUser(session) == null && session.
 	//if you have been redirected here from deleting a ride print useful info
 	if (request.getParameter("rideSelect") != null && request.getParameter("remRide") != null ){
 		cps.removeRide( Integer.parseInt(request.getParameter("rideSelect")));
+		cps.addScore(cps.getTripID(Integer.parseInt(request.getParameter("rideSelect")),dbID),dbID,-3);
 		delConf = "<p>" + "You have successfully deleted the ride you wanted to" + "</p>";
 	}
 	
@@ -67,6 +69,20 @@ if (session.isNew() || (OpenIdFilter.getCurrentUser(session) == null && session.
 		cps.updateStartDate( Integer.parseInt(request.getParameter("rideSelect")), strOutDt);
 		updateSeatConf = "<p>" + "You have successfully updated the ride you wanted to" + "</p>";
 	}
+	
+	//if you have been redirected here from accepting a user print useful info
+	//IF YOU ACCEPTED OR REJECTED A USER UPDATE DATABASE
+	if (request.getParameter("confirmUser")!= null){
+	 	cps.acceptUser(Integer.parseInt(request.getParameter("confirmUserID")),Integer.parseInt(request.getParameter("confirmForRide")),1);
+	 	updateUserConf = "<p>" + "You have accepted the user you wanted to" + "</p>";
+	}
+	if (request.getParameter("rejectUser")!= null){
+	 	cps.removeRide(Integer.parseInt(request.getParameter("confirmUserID")),Integer.parseInt(request.getParameter("confirmForRide")));
+	 	updateUserConf = "<p>" + "You have removed the user you wanted to" + "</p>";
+	}
+	
+	
+
 }
 %>
 
@@ -87,6 +103,7 @@ if (session.isNew() || (OpenIdFilter.getCurrentUser(session) == null && session.
 		<%=updateStartS %>
 		<%=updateEndS %>
 		<%=updateDateConf %>
+		<%=updateUserConf %>
 	</DIV>
 
 	<%@ include file="leftMenu.html" %>

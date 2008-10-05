@@ -31,7 +31,7 @@ while (locations.next()){
 
 int dbID = user.getUserId();
 int rideID = Integer.parseInt(request.getParameter("rideselect"));
-RideListing u = cps.searchRideListing(RideListing.searchUser, request.getParameter("userselect"));
+RideListing u = cps.getRideListing();
 
 String detailsTable = "<p>No info found.</p>";
 boolean ridesExist = false;
@@ -73,34 +73,54 @@ RideDetail rdVia = cps.getRideDetail(rideID);
        }
 
 String requestTable = "no users found";
+String acceptedTable = "no users found";
+
 boolean requestExist = false;
-	RideDetail rd = cps.getRideDetail(rideID);
-	while (rd.hasNext()){
+boolean acceptExist = false;
+RideDetail rd = cps.getRideDetail(rideID);
+	while (rd.hasNext() ){
 		if (!requestExist){
 			requestTable = "";
 		}
-		//String reDirURL = "temp2.jsp?rideselect=" + rideID + "&userselect=" + request.getParameter("userselect");
+		if (!acceptExist){
+			acceptedTable = "";
+		}
+	if ((rd.getUserID()!=dbID)&&(rd.getConfirmed()==false)){
 		requestExist = true;
-		requestTable += "<tr><FORM action=\"myRideEdit.jsp\" method=\"post\">";
-		requestTable += "<INPUT type=\"hidden\" name=\"confirmUser\" value=\"yes" + "\">";
-		//requestTable += "<INPUT type=\"hidden\" name=\"reDirURL\" value=\"" + reDirURL + "\">";		
-		requestTable += "<td>"+rd.getUsername()+"</td>";
+		requestTable += "<tr><td>"+rd.getUsername()+"</td>";
 		requestTable += "<td>"+ rd.getStreetNumber()+"&nbsp;"+rd.getLocationName()+"</td>";
+		requestTable += "<FORM action=\"rideEditSuccess.jsp\" method=\"post\">";
+		requestTable += "<INPUT type=\"hidden\" name=\"confirmUser\" value=\"yes" + "\">";
+		requestTable += "<INPUT type=\"hidden\" name=\"confirmUserID\" value=\""+rd.getUserID() + "\">";
+		requestTable += "<INPUT type=\"hidden\" name=\"confirmForRide\" value=\""+rideID + "\">";	
 		requestTable += "<td><INPUT type=\"submit\" value=\"Confirm User\" /></td>";
 		requestTable += "</FORM>";
-		requestTable += "<FORM action=\"myRideEdit.jsp\" method=\"post\">";
+		requestTable += "<FORM action=\"rideEditSuccess.jsp\" method=\"post\">";
 		requestTable += "<INPUT type=\"hidden\" name=\"rejectUser\" value=\"yes" + "\">";
-		//requestTable += "<INPUT type=\"hidden\" name=\"reDirURL\" value=\"" + reDirURL + "\">";		
+		requestTable += "<INPUT type=\"hidden\" name=\"confirmUserID\" value=\""+rd.getUserID() + "\">";
+		requestTable += "<INPUT type=\"hidden\" name=\"confirmForRide\" value=\""+rideID + "\">";	
 		requestTable += "<td><INPUT type=\"submit\" value=\"Reject User\" /></td>";
 		requestTable += "</FORM></tr>";
 	}
+	else if ((rd.getUserID()!=dbID)&&(rd.getConfirmed()==true)){
+		acceptExist = true;
+		acceptedTable += "<tr><td>"+rd.getUsername()+"</td>";
+		acceptedTable += "<td>"+ rd.getStreetNumber()+"&nbsp;"+rd.getLocationName()+"</td></tr>";
+		//TODO: get the house number too
+	}
+}
 	
-
 if (requestExist) {
 	requestTable = "<table class='rideDetailsSearch'> <tr> <th>Request from</th> <th>Pick Up From</th><th>Confirm</th><th>Reject</th></tr>"+ requestTable +"</table>";
 }
-
 requestTable +="<tr>&nbsp;</tr>";
+
+if (acceptExist) {
+	acceptedTable = "<table class='rideDetailsSearch'> <tr> <th>Request from</th> <th>Pick Up From</th></tr>"+ acceptedTable +"</table>";
+}
+
+acceptedTable +="<tr>&nbsp;</tr>";
+
 
 %>
 
@@ -242,16 +262,21 @@ table += "</table>";
 		<tr><th>&nbsp;</th></tr>
 		<%=requestTable %>
 	</table>
+	<table>
+		<tr> <th colspan='2' style='border:2px outset #333333'>Riders you have approved</th><th>&nbsp;</th> <th>&nbsp;</th></tr>
+		<tr><th>&nbsp;</th></tr>
+		<%=acceptedTable %>
+	</table>
 		<%=table %>
 		<FORM name = "addComment" action="addAComment.jsp" method="post">
 			<TABLE width="100%">
-				<tr><td align=center>
+				<tr><td >
 					<INPUT type="hidden" name="idRide" value="<%=rideID %>">
 					<INPUT type="hidden" name="idUser" value="<%=dbID %>">
 					<INPUT type="hidden" name="reDirURL" value="<%=reDirURL %>"/>
 					<TEXTAREA cols="50" rows="4" name="comment"></TEXTAREA>
 				</td></tr>
-				<tr><td align=center>
+				<tr><td>
 					<INPUT type="submit" value="Add Comment" />
 				</td></tr>
 			</TABLE>
