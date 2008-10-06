@@ -86,7 +86,17 @@ while (rl.next()){
 			</FORM>
 			</div>
 			<br /> <br /> <br />
-			<p>-- <a href="welcome.jsp">Home</a> --</p>	
+<%
+if (user != null) { 		//depending if the user is logged in or not different link should be displayed
+%> 
+	<p>-- <a href="welcome.jsp">Home</a> --</p>	
+<%
+} else { 
+%>
+	<p>-- <a href="index.jsp">Back to Login Page</a> --</p>	
+<%
+} 
+%>
 		</DIV>
 
 <%
