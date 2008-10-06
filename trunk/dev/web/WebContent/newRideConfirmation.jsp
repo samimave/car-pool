@@ -68,7 +68,11 @@
 	<%@ include file="heading.html" %>
 
 		<DIV class="Content" id="Content">
-			<p>Thank you for adding a <%=request.getParameter("rideType")%> from <%=from%>, to <%=to%> ;  
+			<h2 class="title" id="title">Ride Successfully Offered</h2>
+			<br /><br />
+			<h2>Details:</h2>
+			<div class="Box" id="Box">
+			<p>Thank you for offering a ride from <%=from%>, to <%=to%>;  
 			scheduled for <%=request.getParameter("depTime")%> <%=request.getParameter("depDate")%>. </p>
 			<FORM action="addRideEvent.jsp" method="post" target="_blank">
             	<INPUT type="hidden" name="from" value="<%=request.getParameter("streetFrom")%>">
@@ -76,8 +80,11 @@
 				<INPUT type="hidden" name="time" value="<%=request.getParameter("depTime")%>">
 				<INPUT type="hidden" name="length" value="<%=request.getParameter("tripLength")%>">
 				<INPUT type="hidden" name="date" value="<%=strOutDt%>">
-				<INPUT type="submit" value="Add to Google Calendar" />
+				<p>Click here to <INPUT type="submit" value="Add to your Google Calendar" />
 			</FORM>
+			</div>
+			<br /> <br /> <br />
+			<p>-- <a href="welcome.jsp">Home</a> --</p>	
 		</DIV>
 
 	<%@ include file="leftMenu.html" %>
