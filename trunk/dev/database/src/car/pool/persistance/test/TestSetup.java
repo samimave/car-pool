@@ -81,6 +81,7 @@ public class TestSetup {
 		
 	}
 	
+	@SuppressWarnings("unused")
 	public static void setup(){
 		TestSetup ts = new TestSetup();
 	}
