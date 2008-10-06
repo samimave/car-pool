@@ -80,6 +80,7 @@ if (session.isNew() || (OpenIdFilter.getCurrentUser(session) == null && session.
 			acceptedTable += "<td>"+ to +"</td> ";
 			acceptedTable += "<td>"+ new SimpleDateFormat("dd/MM/yyyy").format(tr.getRideDate()) +"</td> ";
 			acceptedTable += "<td>"+ tr.getTime() +"</td> ";
+			acceptedTable += "<td>"+ tr.getStreetNumber()+" "+ tr.getPickUp() +"</td>";
 			acceptedTable += "<td>"+"Add"+"</td> ";
 			acceptedTable += "<td><INPUT type=\"submit\" value=\"Withdraw\" /></td>";
 			acceptedTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ tr.getRideID() +"&userselect="+tr.getUsername() +"'>"+ "Link to ride page" +"</a> </td>";
@@ -98,7 +99,7 @@ if (session.isNew() || (OpenIdFilter.getCurrentUser(session) == null && session.
 
 	if (rideExist) {
 		acceptedTable = "<table class='rideDetailsSearch'> <tr><th>Starting From</th> <th>Going To</th>"+
-		"<th>Departure Date</th> <th>Departure Time</th><th>Add Ride to Google Calendar</th> <th>Withdraw from Ride</th> <th>Link</th> </tr>"+ acceptedTable +"</table>";
+		"<th>Departure Date</th> <th>Departure Time</th><th>Your Pick Up Point</th><th>Add Ride to Google Calendar</th> <th>Withdraw from Ride</th> <th>Link</th> </tr>"+ acceptedTable +"</table>";
 	}
 		
 	if (awaitExist) {
