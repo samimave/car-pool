@@ -158,7 +158,7 @@
 		String col3 = "</td><td width=\"75%\">";
 		String endRow = "</td></tr>";
 
-		table = "<table width = \"100%\">";
+		table = "<table width=\"100%\">";
 
 		String delButton;
 
