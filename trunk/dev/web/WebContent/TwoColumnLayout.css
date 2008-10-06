@@ -15,15 +15,21 @@ H1
 	font-weight: 900;
 	color: #CCC;
 }
+H1.title
+{
+	margin-left: 30%;
+}
 H2
 {
 	font: bold 12px/14px verdana, arial, helvetica, sans-serif;
 	margin: 0px 0px 5px;
 	padding: 0px;
 }
-H1.title
+H3
 {
-	margin-left: 30%;
+	font: bold 11px/13px verdana, arial, helvetica, sans-serif;
+	margin: 0px 0px 5px;
+	padding: 0px;
 }
 P
 {
@@ -36,17 +42,20 @@ TABLE
 	border: 0;
 	font: 11px verdana, arial, helvetica, sans-serif;
 }
-TABLE.rideDetailsSearch {
+TABLE.rideDetailsSearch
+{
 	border: 1px solid #666666;
-	width:600px; 	   
-	border-collapse: collapse;	
+	width: 600px;
+	border-collapse: collapse;
 }
-TABLE.rideDetailsSearch TD {
+TABLE.rideDetailsSearch TD
+{
 	border: 1px solid #666666;
 }
-TABLE.rideDetailsSearch TH {
+TABLE.rideDetailsSearch TH
+{
 	border: 1px solid #666666;
-} 
+}
 A
 {
 	color: #09C;
@@ -103,5 +112,11 @@ BODY #Header
 #Menu P
 {
 	padding: 0px;
+}
+#Box
+{
+	border: 1px solid #999;
+	padding: 10px;
+	width: 600px;
 }
 /*BlueRobot used here - http://www.bluerobot.com/web/layouts/*/
