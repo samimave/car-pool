@@ -70,7 +70,7 @@ if (s.getAttribute("signedin") != null) {
 		//rideIDs.add(rl.getRideID());
 		String from = tr.getStartLocation();
 		String to = tr.getStopLocation();
-		String fromID = tr.getStartID();
+		//String fromID = tr.getStartID();
 		
 		// This acceptedTable shows the rides that the uesr is in and user can withdraw themself from the ride
 		// also user can add the ride to their google calender.
@@ -123,11 +123,17 @@ if (s.getAttribute("signedin") != null) {
 		acceptedTable = "<table class='rideDetailsSearch'> <tr><th>Starting From</th> <th>Going To</th>"+
 		"<th>Departure Date</th> <th>Departure Time</th><th>Your Pick Up Point</th><th>Add Ride to Google Calendar</th> <th>Withdraw from Ride</th> <th>Link</th> </tr>"+ acceptedTable +"</table>";
 	}
+	else{
+			acceptedTable = "<table><tr><td>No users were found.</td></tr></table>";
+	}
 		
 	if (awaitExist) {
 		awaitTable = "<table class='rideDetailsSearch'> <tr><th>Starting From</th> <th>Going To</th>"+
 		"<th>Departure Date</th> <th>Departure Time</th> <th>Your Pick Up Point</th> <th>Withdraw from Ride</th> <th>Link</th> </tr>"+ awaitTable +"</table>";
 	}
+	else{
+		awaitTable = "<table><tr><td>No users were found.</td></tr></table>";
+}
 	
 
 
