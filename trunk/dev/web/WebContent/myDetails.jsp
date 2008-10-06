@@ -70,22 +70,24 @@ if (s.getAttribute("signedin") != null) {
 		//rideIDs.add(rl.getRideID());
 		String from = tr.getStartLocation();
 		String to = tr.getStopLocation();
-		//String fromID = tr.getStartID();
+		String fromID = tr.getStartID();
+		String toID = tr.getStopID();
+		
 		
 		// This acceptedTable shows the rides that the uesr is in and user can withdraw themself from the ride
 		// also user can add the ride to their google calender.
 		if((tr.getConfirmed()==true)){
 			rideExist = true;
-			acceptedTable += "<tr><FORM action=\"rideEditSuccess.jsp\" method=\"post\" target=\"_blank\">";	
+			acceptedTable += "<tr><FORM action=\"addRideEvent.jsp\" method=\"post\" target=\"_blank\">";	
 			acceptedTable += "<INPUT type=\"hidden\" name=\"withdrawConfirmedRide\" value=\"yes" + "\">";
 			acceptedTable += "<td>"+ from +"</td> ";
 			acceptedTable += "<td>"+ to +"</td> ";
 			acceptedTable += "<td>"+ new SimpleDateFormat("dd/MM/yyyy").format(tr.getRideDate()) +"</td> ";
 			acceptedTable += "<td>"+ tr.getTime() +"</td> ";
 			acceptedTable += "<td>"+ tr.getStreetNumber()+" "+ tr.getPickUp() +"</td>";
-			acceptedTable += "<INPUT type=\"hidden\" name=\"from\" value=\""+from + "\">";
-			acceptedTable += "<INPUT type=\"hidden\" name=\"to\" value=\""+to + "\">";
-			acceptedTable += "<INPUT type=\"hidden\" name=\"date\" value=\""+new SimpleDateFormat("yyyy/MM/dd").format(tr.getRideDate()) + "\">";
+			acceptedTable += "<INPUT type=\"hidden\" name=\"from\" value=\""+fromID + "\">";
+			acceptedTable += "<INPUT type=\"hidden\" name=\"to\" value=\""+toID + "\">";
+			acceptedTable += "<INPUT type=\"hidden\" name=\"date\" value=\""+new SimpleDateFormat("yyyy-MM-dd").format(tr.getRideDate()) + "\">";
 			acceptedTable += "<INPUT type=\"hidden\" name=\"time\" value=\""+tr.getTime() + "\">";	
 			acceptedTable += "<INPUT type=\"hidden\" name=\"length\" value=\""+tr.getTime() + "\">";
 			acceptedTable += "<td><INPUT type=\"submit\" value=\"Add\" /></td>";
