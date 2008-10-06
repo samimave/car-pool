@@ -16,25 +16,16 @@
 		//code to allow interaction with db
 		CarPoolStore cps = new CarPoolStoreImpl();
 		RideListing rl = cps.getRideListing();
-		int currentUser = cps.getUserIdByURL(OpenIdFilter
-				.getCurrentUser(s));
+		int currentUser = cps.getUserIdByURL(OpenIdFilter.getCurrentUser(s));
 
 		//code to add a ride to the user's selected rides
 		if (request.getParameter("rideselect") != null) {
-			int rideID = Integer.parseInt(request
-					.getParameter("rideselect"));
+			int rideID = Integer.parseInt(request.getParameter("rideselect"));
 			while (rl.next()) {
 				if (rideID == rl.getRideID()) {
-					cps.takeRide(currentUser, rideID, Integer
-							.parseInt(rl.getStartLocation()), Integer
-							.parseInt(rl.getEndLocation()));
-					formatter
-							.format(String
-									.format(
-											"<p>You have successfully booked a ride from: %s, to: %s, on: %s</p>",
-											rl.getStartLocation(), rl
-													.getEndLocation(),
-											rl.getRideDate()));
+					cps.takeRide(currentUser, rideID, Integer.parseInt(rl.getStartLocation()), Integer.parseInt(rl.getEndLocation()));
+					formatter.format(String.format("<p>You have successfully booked a ride from: %s, to: %s, on: %s</p>",
+											rl.getStartLocation(), rl.getEndLocation(),rl.getRideDate()));
 					message = formatter.toString();
 					//message += "<p>You have successfully booked a ride from: "+rl.getStartLocation()+", to: "+rl.getEndLocation()+", on "+rl.getRideDate()+".</p>";
 					try {
@@ -42,35 +33,17 @@
 						user = (User) s.getAttribute("user");
 						if (user != null && user.getEmail() != null) {
 							email.setToAddress(user.getEmail());
-							email
-									.setSubject("Car Pool Ride booking success");
-							email
-									.setMessage(String
-											.format(
-													"You have successfully booked a ride from: %s, to: %s, on: %s\n",
-													rl
-															.getStartLocation(),
-													rl.getEndLocation(),
-													rl.getRideDate()));
+							email.setSubject("Car Pool Ride booking success");
+							email.setMessage(String.format("You have successfully booked a ride from: %s, to: %s, on: %s\n",
+													rl.getStartLocation(),rl.getEndLocation(),rl.getRideDate()));
 							SMTP.send(email);
 						}
-						User offerer = new UserManager()
-								.getUserByUserId(new Integer(rl
-										.getUserID()));
-						if (offerer != null
-								&& offerer.getEmail() != null) {
+						User offerer = new UserManager().getUserByUserId(new Integer(rl.getUserID()));
+						if (offerer != null	&& offerer.getEmail() != null) {
 							email.setToAddress(offerer.getEmail());
-							email
-									.setSubject("Car Pool booking for your offered ride");
-							email
-									.setMessage(String
-											.format(
-													"%s has booked a seat for the ride you offered from: %s, to: %s, on: %s",
-													user.getUserName(),
-													rl
-															.getStartLocation(),
-													rl.getEndLocation(),
-													rl.getRideDate()));
+							email.setSubject("Car Pool booking for your offered ride");
+							email.setMessage(String.format("%s has booked a seat for the ride you offered from: %s, to: %s, on: %s",
+													user.getUserName(),rl.getStartLocation(),rl.getEndLocation(),rl.getRideDate()));
 							SMTP.send(email);
 						}
 					} catch (SMTPException e) {
@@ -97,7 +70,14 @@
 	<%@ include file="heading.html" %>
 
 		<DIV class="Content" id="Content">
+			<h2 class="title" id="title">Ride Booked</h2>
+			<br /><br />
+			<h2>Info:</h2>
+			<div class="Box" id="Box">
 			<%=message%>
+			</div>
+			<br /> <br /> <br />
+			<p>-- <a href="welcome.jsp">Home</a> --</p>	
 		</DIV>
 
 	<%@ include file="leftMenu.html" %>

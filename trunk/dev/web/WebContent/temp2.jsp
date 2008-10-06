@@ -40,19 +40,12 @@
 				from = u.getEndLocation();
 				to = u.getStartLocation();
 
-				detailsTable += "<tr> <td>Username:</td>  <td>"
-						+ u.getUsername() + "</td></tr> ";
-				detailsTable += "<tr> <td> Start Region: </td> <td>"
-						+ from + "</td> </tr>";
-				detailsTable += "<tr> <td> Stop Region: </td> <td>"
-						+ to + "</td></tr> ";
-				detailsTable += "<tr> <td>Date: </td> <td>"
-						+ new SimpleDateFormat("dd/MM/yyyy").format(u
-								.getRideDate()) + "</td></tr> ";
-				detailsTable += "<tr> <td> Time: </td> <td>"
-						+ u.getTime() + "</td> </tr>";
-				detailsTable += "<tr> <td> Seats: </td> <td>"
-						+ u.getAvailableSeats() + "</td> </tr>";
+				detailsTable += "<tr> <td>Username:</td>  <td>"	+ u.getUsername() + "</td></tr> ";
+				detailsTable += "<tr> <td> Start Region: </td> <td>"+ from + "</td> </tr>";
+				detailsTable += "<tr> <td> Stop Region: </td> <td>"	+ to + "</td></tr> ";
+				detailsTable += "<tr> <td>Date: </td> <td>"	+ new SimpleDateFormat("dd/MM/yyyy").format(u.getRideDate()) + "</td></tr> ";
+				detailsTable += "<tr> <td> Time: </td> <td>"+ u.getTime() + "</td> </tr>";
+				detailsTable += "<tr> <td> Seats: </td> <td>"+ u.getAvailableSeats() + "</td> </tr>";
 				detailsTable += "<tr> <td> Additional Info: </td> <td></td> </tr>";
 			}
 		}
@@ -164,15 +157,21 @@
 	<%@ include file="heading.html" %>	
 
  	<DIV class="Content" id="Content">
-		<h2>The ride details appear below:</h2>
+		<h2 class="title" id="title">Ride Information</h2>
+		<br /><br />
+		<h2>Details:</h2>
+		<div class="Box" id="Box">
 		<%=detailsTable%><br>
 		<FORM name="showMap" id="map2" method="post" target="_blank" action="displayRouteMap2.jsp">
-			<INPUT type="submit" value="View Map" > 
+			<p>Click here to <INPUT type="submit" value="View Map" ></p> 
 			<INPUT type="hidden" name="mapFrom" value= "<%=from%>">
 			<INPUT type="hidden" name="mapTo"  value= "<%=to%>" >
 			<INPUT type="hidden" name="mapVia"  value= "<%=viaAddress%>" >
 		</FORM>
-		<br />
+		</div>
+		<br /><br />
+		<h2>Take Ride:</h2>
+		<div class="Box" id="Box">
 		<FORM name="ride" action="myDetails.jsp" method="post">
 			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect")%>">
 			<TABLE class='rideD'>
@@ -185,7 +184,10 @@
 				<tr> <td>&nbsp;</td> <td><INPUT type="submit" name="joinRide" value="Take Ride" size="25"></td> </tr>
 			</TABLE>
 		</FORM>
-	
+		</div>
+		<br /><br />
+		<h2>Ride Comments:</h2>
+		<div class="Box" id="Box">
 		<%=table%>
 		<FORM name = "addComment" action="addAComment.jsp" method="post">
 			<TABLE width="100%">
@@ -200,7 +202,9 @@
 				</td></tr>
 			</TABLE>
 		</FORM>
-
+		</div>
+		<br /> <br /> <br />
+		<p>-- <a href="welcome.jsp">Home</a> --</p>	
 	</DIV>
 
 	<%@ include file="leftMenu.html" %>
