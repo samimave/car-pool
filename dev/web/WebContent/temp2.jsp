@@ -1,4 +1,4 @@
-<%@page errorPage="errorPage.jsp" %>
+<%//@page errorPage="errorPage.jsp" %>
 <%@page contentType="text/html; charset=ISO-8859-1" %>
 <%@page import="org.verisign.joid.consumer.OpenIdFilter, car.pool.persistance.*, car.pool.user.*, java.util.*, java.text.*" %>
 <%
@@ -104,7 +104,7 @@ table += evenRow + col1 + "Comment #" + col2 + "User" + col3 + "Comment" + endRo
 
 //if no comments for ride then say so
 if(comments.size() < 1){
-	table += oddRow + "<td colspan=\"3\">Sorry, could not find any comments for this ride.  Please feel free to add one below</td></tr>";	
+	table += oddRow + "<td colspan=\"3\">No comments added for this ride.</td></tr>";	
 }
 
 //add comments, shading in every second row
@@ -158,10 +158,11 @@ table += "</table>";
 			<INPUT type="hidden" name="mapTo"  value= "<%=to%>" >
 			<INPUT type="hidden" name="mapVia"  value= "<%=viaAddress%>" >
 		</FORM>
+		<br />
 		<FORM name="ride" action="myDetails.jsp" method="post">
 			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect") %>">
 			<TABLE class='rideD'>
-				<tr> <td>Pick me up from:</td> </tr>
+				<tr> <th>Please pick me up from:</th> <td>&nbsp;</td> </tr>
 				<tr> <td>House Number</td> <td><INPUT type="text" name="houseNo"></td> </tr>
 				<tr> <td>Street</td> <td><SELECT name="streetTo">
            				<option selected="selected">Select a Street</option>
