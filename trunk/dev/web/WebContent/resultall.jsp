@@ -3,16 +3,14 @@
 <%@page import="org.verisign.joid.consumer.OpenIdFilter, car.pool.persistance.*, java.text.SimpleDateFormat,car.pool.user.*,java.util.*" %>
 
 <%
-CarPoolStore cps = new CarPoolStoreImpl();
-
 HttpSession s = request.getSession(true);
 
+//a user doesnt need to log in to view this page
 //a container for the users information
 User user = null;
+CarPoolStore cps = new CarPoolStoreImpl();
 if(s.getAttribute("signedin") != null ) {
 	user = (User)s.getAttribute("user");
-} else {
-	//response.sendRedirect(request.getContextPath());
 }
 int rideCount=0;
 //count the number of rides in the db

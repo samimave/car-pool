@@ -8,9 +8,6 @@ HttpSession s = request.getSession(false);
 //force the user to login to view the page
 //user a container for the users information
 User user = null;
-if (s.getAttribute("signedin") != null) {
-	user = (User) s.getAttribute("user");
-
 String takeConf = "";
 String openIDTableRow = "";
 String openIDTableForm = "";
@@ -20,6 +17,9 @@ String userTable = "<p>No rides found.</p>";
 String acceptedTable = "<p>No rides found.</p>";
 String awaitTable = "<p>No rides found.</p>";
 int socialScore=0;
+
+if (s.getAttribute("signedin") != null) {
+	user = (User) s.getAttribute("user");
 
 	//code to interact with db
 	CarPoolStore cps = new CarPoolStoreImpl();
@@ -158,7 +158,7 @@ int socialScore=0;
 } else {
 	response.sendRedirect(request.getContextPath());
 }	
-}
+
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">

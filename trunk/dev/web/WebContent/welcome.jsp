@@ -5,13 +5,14 @@
 <%
 	HttpSession s = request.getSession(true);
 
+	//a user needs to log in to view this page
 	// a container for the users information
 	User user = null;
+	CarPoolStore cps = new CarPoolStoreImpl();
+	int rideCount = 0;
+	int requestCount = 0;
 	if (s.getAttribute("signedin") != null) {
 		user = (User) s.getAttribute("user");
-
-		//code to allow interaction with db
-		CarPoolStore cps = new CarPoolStoreImpl();
 
 		//code to add user to the db
 		if (request.getParameter("newUser") != null) {
@@ -21,7 +22,6 @@
 					(String) request.getParameter("phone"));
 		}
 
-		int rideCount = 0;
 		ArrayList<Integer> rideIDs = new ArrayList<Integer>();
 		RideListing rl = cps.searchRideListing(RideListing.searchUser,
 				user.getUserName());
@@ -30,7 +30,6 @@
 			rideCount++;
 		}
 
-		int requestCount = 0;
 		for (int i = 0; i < rideIDs.size(); i++) {
 			RideDetail rd = cps.getRideDetail(rideIDs.get(i));
 			while (rd.hasNext()) {
