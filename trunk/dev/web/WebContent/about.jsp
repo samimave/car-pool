@@ -29,8 +29,18 @@ if(s.getAttribute("signedin") != null ) {
 			<p>A paragraph or two about our website</p>
 		</div>
 		<br /> <br /> <br />
-		<p>-- <a href="welcome.jsp">Home</a> --</p>
-	</DIV>
+<%
+if (user != null) { 		//depending if the user is logged in or not different link should be displayed
+%> 
+	<p>-- <a href="welcome.jsp">Home</a> --</p>	
+<%
+} else { 
+%>
+	<p>-- <a href="index.jsp">Back to Login Page</a> --</p>	
+<%
+} 
+%>
+		</DIV>
 
 <%
 if (user != null) { 		//depending if the user is logged in or not different side menus should be displayed
