@@ -47,7 +47,7 @@ for (int i=0; i<rideIDs.size(); i++){
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 	<HEAD>
-		<TITLE> Welcome to The Car Pool </TITLE>
+		<TITLE>Welcome to The Car Pool</TITLE>
 		<STYLE type="text/css" media="screen">@import "TwoColumnLayout.css";</STYLE>
 		<%@include file="include/javascriptincludes.html" %>
 	</HEAD>
@@ -56,14 +56,25 @@ for (int i=0; i<rideIDs.size(); i++){
 	<%@ include file="heading.html" %>
 
 	<DIV class="Content" id="Content">
-		<h2>Welcome to The Car Pool,
+		<h2 class="title" id="title">Welcome to The Car Pool,
 		<%if(s.getAttribute("signedin") != null ) {%>
 			<%=" "+user.getUserName()%><%//OpenIdFilter.getCurrentUser(s)%></h2>
 		<%} %>
-		<p>Your current social score is <%=cps.getScore((user.getUserId()))%></p>
-		<p>Your have offered <%=rideCount%> rides in total so far!</p>
-		<p>Your have <%=requestCount%> users awaiting approval for rides you have offered!</p>
-		<p>Click  <a href=myDetails.jsp>here</a> to access your account page and approve them or edit your details.</p>
+		<br /><br />
+		<h2>Instructions:</h2>
+		<div class="Box" id="Box">
+			<p>Make a selection from the menu on your left to explore what our site has to offer.</p>
+		</div>
+		<br /><br />
+		<h2>A Summary Of Your Details:</h2>
+		<div class="Box" id="Box">
+			<p>Your current social score is <%=cps.getScore((user.getUserId()))%></p>
+			<p>Your have offered <%=rideCount%> rides in total so far!</p>
+			<p>Your have <%=requestCount%> users awaiting approval for rides you have offered!</p>
+			<p>Click  <a href=myDetails.jsp>here</a> to access your account page and approve them or edit your details.</p>
+		</div>
+		<br /> <br /> <br />
+		<p>-- <a href="logout.jsp">Logout</a> --</p>
 	</DIV>		
 
 	<%@ include file="leftMenu.html" %>
