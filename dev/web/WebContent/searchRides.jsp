@@ -34,7 +34,7 @@ while (rl.next()){
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 	<HEAD>
-		<TITLE>Ride Search</TITLE>
+		<TITLE>Search Rides</TITLE>
 		<STYLE type="text/css" media="screen">@import "TwoColumnLayout.css"; </STYLE>
 		<SCRIPT type="text/javascript" src="CalendarPopup.js"></SCRIPT>
 		<SCRIPT type="text/javascript">
@@ -47,8 +47,13 @@ while (rl.next()){
 	<%@ include file="heading.html" %>
 
 		<DIV class="Content" id="Content">
-			<p>There are currently <%=rideCount %> rides in the database!</p>
-			<p>Please enter the search criteria in the boxes below and click search</p>
+			<h2 class="title" id="title">Find Rides</h2>
+			<br /><br />
+			<h2>Search:</h2>
+			<div class="Box" id="Box">
+			<p>There are currently <%=rideCount %> rides in the database!</p> 
+			<br />
+			<p>Please enter the search criteria in the boxes below and click search.</p>
 			<FORM NAME="searchFrm" id="search" method="post" action="result.jsp">	
 				<TABLE class="rideSearch">
 	
@@ -65,17 +70,21 @@ while (rl.next()){
 				
 					<tr> <td>OR Date (dd/MM/yyyy):</td> <td><INPUT TYPE="text" NAME="searchDate" VALUE="<%= date %>" SIZE="25"> <A HREF="#" onClick="cal.select(document.forms['searchFrm'].searchDate,'anchor1','dd/MM/yyyy'); return false;" NAME="anchor1" ID="anchor1"><img name="calIcon" border="0" src="calendar_icon.jpg" width="27" height="23"></A> </td> </tr> 
 					<tr> <td>OR User:</td> <td><INPUT TYPE="text" NAME="sUser" VALUE="" SIZE="25"></td> </tr>
-					<tr> <td>&nbsp;</td> <td><INPUT TYPE="submit" NAME="search" VALUE="Search For Rides" SIZE="25"></td> </tr>
+					<tr> <td>&nbsp;</td> <td><INPUT TYPE="submit" NAME="search" VALUE="Search" SIZE="25"></td> </tr>
 
 				</TABLE>
 			</FORM>
-		
-			 <FORM name="showAll" id="showAll" method="post" action="resultall.jsp">
+			</div>
+			<br /><br />
+			<h2>Manual Search:</h2>
+			<div class="Box" id="Box">
+			<FORM name="showAll" id="showAll" method="post" action="resultall.jsp">
 				<INPUT type="hidden" name="showAll" value="yes"/>
 				<TABLE class="rideSearch">
-					<tr> <td>OR You can click button to  </td><td><INPUT TYPE="submit" NAME="all" VALUE="Show All Rides" SIZE="25"></td></tr>
+					<tr> <td>Click here to </td><td><INPUT TYPE="submit" NAME="all" VALUE="Show All Rides" SIZE="25"></td></tr>
 				</TABLE>
 			</FORM>
+			</div>
 			<br /> <br /> <br />
 			<p>-- <a href="welcome.jsp">Home</a> --</p>	
 		</DIV>
