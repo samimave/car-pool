@@ -22,17 +22,21 @@ if(request.getAttribute("error") != null) {
 	<div class="Content" id="Content">
 	<%if(OpenIdFilter.getCurrentUser(s) != null) { 
 		if(message.length() > 0) { %><strong><%=message %></strong><%} %>
-		<h2>Register yourself by filling in your details below</h2>
+		<h2 class="title" id="title">Sign Up for The Car Pool</h2>
+		<br /><br />
+		<h2>Please Enter Your Details:</h2>
+		<div class="Box" id="Box">
 		<FORM name="register" id="register" onsubmit="return (formCookieCheck() && openidRegisterFormValidation(this) && isUserNameAvailable())" action="oadduser" method="post">
 			<TABLE class="register"> 
 				<tr> <td>UserName:</td> <td><INPUT type="text" name="userName"/></td> <td><a href="#" onclick="checkUserNameAvailable()">Check Availability</a><b id="availableoutput"></b></td>
 				<tr> <td>Email:</td> <td><INPUT type="text" name="email"/></td> </tr>
 				<tr> <td>Phone:</td> <td><INPUT type="text" name="phone"/></td> </tr>
-				<tr> <td>&nbsp;</td><td><img src="blurredimage" width="200" height="100"/></td> </tr>
-				<tr> <td>Type in the characters in the image above</td><td><input type="text" name="verifytext"/></td> </tr>
-				<tr> <td>&nbsp;</td> <td><INPUT type="submit" value="Register"/></td> </tr>
+				<tr> <td colspan="2"><img src="blurredimage" width="200" height="100"/></td> </tr>
+				<tr> <td>Enter the characters shown above:</td><td><input type="text" name="verifytext"/></td> </tr>
+				<tr> <td>When you are done click here:</td> <td><INPUT type="submit" value="Register"/></td> </tr>
 			</TABLE>
 		</FORM>
+		</div>
 	<%} else { %>
 		<h1>Please Authenticate yourself using OpenId</h1>
 			<%=HtmlUtils.generateSigninForm("openidlogin", "post") %>
