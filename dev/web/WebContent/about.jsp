@@ -27,7 +27,15 @@ if(s.getAttribute("signedin") != null ) {
 		<br /><br />
 		<h2>What We Provide:</h2>
 		<div class="Box" id="Box">
-			<p>A paragraph or two about our website</p>
+			<p>Carpooling is all about reducing congestion on the roads, making an effort to keep our  
+				environment healthy and, yes, saving money through shared petrol costs. The Car Pool has been designed 
+				to facilitate you in your carpooling efforts, and best of all it is free to use! All you need to 
+				do is  <a href="register.jsp">register</a> with our site to get started. Going somewhere? Why not add a ride as <a href="addARide.jsp">an offer</a>
+				so others going to the same place can share a ride with you! Want to go somewhere? Have a look at the 
+				<a href="resultall.jsp">rides available</a> to see if someone else is going your way so you may take a ride with them.
+
+
+			</p>
 		</div>
 		<br /> <br /> <br />
 <%
