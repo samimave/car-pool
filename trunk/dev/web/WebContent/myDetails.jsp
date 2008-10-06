@@ -118,7 +118,7 @@ if (session.isNew() || (OpenIdFilter.getCurrentUser(session) == null && session.
 		openIDTableRow = "<tr> <td>OpenId to remove:</td> <td><select multiple='multiple' NAME='openid'>"+entries+"</select></td> </tr>";
 	} 
 	if (openIDTableRow != "") {
-		openIDTableForm = "<br /><h3>Detach an OpenId from your account:</h3><FORM action='removeopenid'> <INPUT type='hidden' name='removeopenid' /> <TABLE class='updateDetails'>"+openIDTableRow+"<tr><td>&nbsp;</td> <td><INPUT type='submit' value='Detach'/></td></tr> </TABLE> <br />";
+		openIDTableForm = "<br /><h3>Detach an OpenId from your account:</h3><FORM action='removeopenid'> <INPUT type='hidden' name='removeopenid' /> <TABLE class='updateDetails'>"+openIDTableRow+"<tr><td>&nbsp;</td> <td><INPUT type='submit' value='Detach'/></td></tr> </TABLE> <br /><br />";
 	} 
 	
 	//if you have been redirected here from taking a ride print useful info
@@ -164,7 +164,7 @@ if (session.isNew() || (OpenIdFilter.getCurrentUser(session) == null && session.
 	<%@ include file="heading.html" %>
 
 	<DIV class="Content" id="Content">
-		<h2>Welcome to your Account Page</h2>
+		<h2 class="title" id="title">Your Account</h2>
 		<br />
 		<%=takeConf%>
 		<br />
@@ -182,10 +182,9 @@ if (session.isNew() || (OpenIdFilter.getCurrentUser(session) == null && session.
 		</FORM>
 		</div>
 		<br /><br />
-		<h2>Use of OpenId:</h2>
+		<h2>Your OpenId:</h2>
 		<div class="Box" id="Box">
 		<%=openIDTableForm %>
-		<br />
 		<h3>Attach an OpenId to your account:</h3>
 		<FORM action="addopenid">
 			<INPUT type="hidden" name="addopenid"/>
@@ -198,8 +197,7 @@ if (session.isNew() || (OpenIdFilter.getCurrentUser(session) == null && session.
 		<br /><br />
 		<h2>Your ride details appear below:</h2>
 		<div class="Box" id="Box">
-			<br />
-			<h3>Rides you have Offered:</h3>
+			<h3>Rides you have offered:</h3>
 			<%=userTable %>
 			<br /><br />
 			<h3>You have been approved for the following rides:</h3>	

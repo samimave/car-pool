@@ -25,6 +25,10 @@ H2
 	margin: 0px 0px 5px;
 	padding: 0px;
 }
+H2.title
+{
+	margin-left: 250px;
+}
 H3
 {
 	font: bold 11px/13px verdana, arial, helvetica, sans-serif;
