@@ -4,6 +4,7 @@
 <%
 HttpSession s = request.getSession(true);
 
+//a user doesnt need to log in to view this page
 //a container for the users information
 User user = null;
 if(s.getAttribute("signedin") != null ) {

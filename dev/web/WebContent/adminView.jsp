@@ -1,76 +1,82 @@
 <%@page errorPage="errorPage.jsp" %>
 <%@page contentType="text/html; charset=ISO-8859-1" %>
-<%@page import="java.util.*, java.text.*, org.verisign.joid.consumer.OpenIdFilter, car.pool.persistance.*,car.pool.persistance.test.*, car.pool.locations.*, car.pool.user.*, car.pool.persistance.test.AddLocations"%>
+<%@page import="java.util.*,java.text.*,org.verisign.joid.consumer.OpenIdFilter,car.pool.persistance.*,car.pool.persistance.test.*,car.pool.locations.*,car.pool.user.*,car.pool.persistance.test.AddLocations"%>
 
 <%
-HttpSession s = request.getSession(false);
+	HttpSession s = request.getSession(false);
 
-//a container for the users information
-User user = null;
-if(s.getAttribute("signedin") != null ) {
-	user = (User)s.getAttribute("user");
-} else {
-	response.sendRedirect(request.getContextPath());
-}
+	//force the user to login to view the page
+	//a container for the users information
+	User user = null;
+	String userTable = "";
+	String rideTable = "";
+	if (s.getAttribute("signedin") != null) {
+		user = (User) s.getAttribute("user");
 
-CarPoolStore cps = new CarPoolStoreImpl();
-String[] locations = LocationImporter.importLocations();
+		CarPoolStore cps = new CarPoolStoreImpl();
+		String[] locations = LocationImporter.importLocations();
 
-if (request.getParameter("locations") != null) {
-	String loc = request.getParameter("locations");	
-	System.out.println(loc);		   
-	int region = -1;
-	region = cps.addRegion("Palmerston North");	
-			 cps.addLocation(region, loc);
-			 System.out.println("street: "+loc);
-}
+		if (request.getParameter("locations") != null) {
+			String loc = request.getParameter("locations");
+			System.out.println(loc);
+			int region = -1;
+			region = cps.addRegion("Palmerston North");
+			cps.addLocation(region, loc);
+			System.out.println("street: " + loc);
+		}
 
-String uName;
-String uEmail;
-String uPhone;
-String uSignUpDate;
-UserList nList = cps.getUserName();
-UserList eList = cps.getUserEmail();
-UserList pList = cps.getUserPhone();
-UserList sList = cps.getUserSignUpDate();
+		String uName;
+		String uEmail;
+		String uPhone;
+		String uSignUpDate;
+		UserList nList = cps.getUserName();
+		UserList eList = cps.getUserEmail();
+		UserList pList = cps.getUserPhone();
+		UserList sList = cps.getUserSignUpDate();
 
-String Table = "";
-String userTable ="";
-while (nList.next()){
-	uName 	= nList.getUserName();
-	uEmail 	= nList.getUserEmail();
-	uPhone	= nList.getUserPhone();
-	uSignUpDate 	= nList.getUserSignUpDate();
-	Table += "<tr> <td>"+ uName +"</td> ";
-	Table += "<td>"+ uEmail +"</td> ";
-	Table += "<td>"+ uPhone +"</td> ";
-	Table += "<td>"+ uSignUpDate +"</td> </tr>";
-}
-userTable = "<table class='rideDetailsSearch'> <tr> <th>User Name</th> <th>Email</th> <th>Phone</th>"+
-"<th>Sign Up Date</th> </tr>"+ Table +"</table>";
+		String Table = "";
+		while (nList.next()) {
+			uName = nList.getUserName();
+			uEmail = nList.getUserEmail();
+			uPhone = nList.getUserPhone();
+			uSignUpDate = nList.getUserSignUpDate();
+			Table += "<tr> <td>" + uName + "</td> ";
+			Table += "<td>" + uEmail + "</td> ";
+			Table += "<td>" + uPhone + "</td> ";
+			Table += "<td>" + uSignUpDate + "</td> </tr>";
+		}
+		userTable = "<table class='rideDetailsSearch'> <tr> <th>User Name</th> <th>Email</th> <th>Phone</th>"
+				+ "<th>Sign Up Date</th> </tr>" + Table + "</table>";
 
-boolean rExist = false;
-String rideTable = "";
-RideListing all = cps.getRideListing();
-while (all.next()) {
-	rExist = true;
-	String from = all.getStartLocation();
-	String to = all.getEndLocation();
-	
-	rideTable += "<tr> <td>"+ all.getUsername() +"</td> ";	
-	rideTable += "<td>"+ from +"</td> ";
-	rideTable += "<td>"+ to +"</td> ";
-	rideTable += "<td>"+ new SimpleDateFormat("dd/MM/yyyy").format(all.getRideDate()) +"</td> ";
-	rideTable += "<td>"+ all.getTime() +"</td> ";
-	rideTable += "<td>"+ all.getAvailableSeats() +"</td> ";
-	rideTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ all.getRideID() +"&userselect="+all.getUsername() +"'>"+ "Link to ride page" +"</a> </td> </tr>";
-	 
-}
-if (rExist){
-	rideTable = "<table class='rideDetailsSearch'> <tr> <th>Ride Offered By</th> <th>Starting From</th> <th>Going To</th>"+
-	"<th>Departure Date</th> <th>Departure Time</th> <th>Number of Available Seats</th> <th>More Info</th> </tr>"+ rideTable +"</table>";
-}
+		boolean rExist = false;
+		RideListing all = cps.getRideListing();
+		while (all.next()) {
+			rExist = true;
+			String from = all.getStartLocation();
+			String to = all.getEndLocation();
 
+			rideTable += "<tr> <td>" + all.getUsername() + "</td> ";
+			rideTable += "<td>" + from + "</td> ";
+			rideTable += "<td>" + to + "</td> ";
+			rideTable += "<td>"
+					+ new SimpleDateFormat("dd/MM/yyyy").format(all
+							.getRideDate()) + "</td> ";
+			rideTable += "<td>" + all.getTime() + "</td> ";
+			rideTable += "<td>" + all.getAvailableSeats() + "</td> ";
+			rideTable += "<td> <a href='" + request.getContextPath()
+					+ "/temp2.jsp?rideselect=" + all.getRideID()
+					+ "&userselect=" + all.getUsername() + "'>"
+					+ "Link to ride page" + "</a> </td> </tr>";
+
+		}
+		if (rExist) {
+			rideTable = "<table class='rideDetailsSearch'> <tr> <th>Ride Offered By</th> <th>Starting From</th> <th>Going To</th>"
+					+ "<th>Departure Date</th> <th>Departure Time</th> <th>Number of Available Seats</th> <th>More Info</th> </tr>"
+					+ rideTable + "</table>";
+		}
+	} else {
+		response.sendRedirect(request.getContextPath());
+	}
 %>
 		
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -97,7 +103,9 @@ if (rExist){
 					</tr>
 				</table>
 			</FORM>
-			<%//=locations.length %>
+			<%
+				//=locations.length
+			%>
 			<FORM NAME="admin2" action="#">				
 				<table>
 					<tr><td>Add locations in database?</td>						
@@ -105,7 +113,9 @@ if (rExist){
 					</tr>
 				</table>
 			</FORM>
-			<%//=locations.length %>
+			<%
+				//=locations.length
+			%>
 			<FORM NAME="delComment" action="delAComment.jsp" method="post" >
 				<table>
 					<tr><td>Delete a comment</td>
@@ -126,7 +136,7 @@ if (rExist){
 				<br />
 				<h3>Rides:</h3>					
 				<TABLE>
-					<%=rideTable %>					
+					<%=rideTable%>					
 				</TABLE>
 			</FORM>
 			</div>
