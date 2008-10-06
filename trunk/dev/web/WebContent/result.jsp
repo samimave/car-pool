@@ -244,8 +244,8 @@ if (Sto != "no location entered") {
 	}
 	 
 	if (ridesExist) {
-		rideTable = "<table class='rideDetailsSearch'> <tr> <th>Ride Offered By</th> <th>Starting From</th> <th>Going To</th>"+
-			"<th>Departure Date</th> <th>Departure Time</th> <th>Number of Available Seats</th> <th>More Info</th> </tr>"+ rideTable +"</table>";
+		rideTable = "<table class='rideDetailsSearch'> <tr><td>&nbsp;</td></tr><tr> <th>Ride Offered By</th> <th>Starting From</th> <th>Going To</th>"+
+			"<th>Departure Date</th> <th>Departure Time</th> <th>Number of Available Seats</th> <th>More Info</th> </tr>"+ rideTable +"<tr><td>&nbsp;</td></tr><tr><td>&nbsp;</td></tr></table>";
 	}
 	else {
 		rideTable = "<tr><td>No rides were found</td></tr>";
@@ -268,13 +268,16 @@ if (Sto != "no location entered") {
 		<FORM NAME="resultFrm" id="result">	
 			<TABLE class="rideSearch">
 				<tr><td>You searched for -</td></tr>
+				<tr><td>&nbsp;</td></tr>
 				<tr><td>Location from:</td> <td><%=Sfrom%></td></tr>
 				<tr><td>Location to:</td> <td><%=Sto%></td></tr>
 				<tr><td>Date:</td> <td><%=strTmp%></td></tr>
 				<tr><td>User:</td> <td><%=username %></td>
 				<tr><td>&nbsp;</td></tr>
-				<tr><td>Search results appear below</td></tr>
-				<%=rideTable %>				
+				<tr> <th colspan='2' style='border:2px outset #333333'>Displaying search results</th></tr>
+	
+				<%=rideTable %>		
+						
 				<tr><td> <a href=searchRides.jsp>Go back to Search page</a> </td> </tr>
 			</TABLE>
 		</FORM>
