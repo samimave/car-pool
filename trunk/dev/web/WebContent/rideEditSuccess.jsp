@@ -158,6 +158,7 @@
 		<%=updateEndS%>
 		<%=updateDateConf%>
 		<%=updateUserConf%>
+	<p>-- <a href="myDetails.jsp">Back to Account page</a> --</p>	
 	</DIV>
 
 	<%@ include file="leftMenu.html" %>
