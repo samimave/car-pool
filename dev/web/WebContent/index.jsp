@@ -20,8 +20,13 @@ int timeout = s.getMaxInactiveInterval();
 	<%@ include file="heading.html" %>
 
 	<DIV id="Content" class="Content">
-		<p>To see what rides we have available without logging in <a href="searchRides.jsp">click here.</a></p>
-		<p>To find out more about our website and what we offer <a href="about.jsp">click here.</a></p>
+		<h2 class="title" id="title">Please Log In</h2>
+		<br /><br />
+		<h2>Options Available Without Logging In:</h2>
+		<div class="Box" id="Box">
+			<p>To see what rides we have available <a href="searchRides.jsp">click here</a>.</p>
+			<p>To find out more about our website and what we offer <a href="about.jsp">click here</a>.</p>
+		</div>
 	</DIV>
 
 	<%@ include file="leftMenuLogin.html" %>
