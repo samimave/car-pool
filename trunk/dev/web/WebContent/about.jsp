@@ -22,7 +22,12 @@ if(s.getAttribute("signedin") != null ) {
 	<%@ include file="heading.html" %>
 
 	<DIV class="Content" id="Content">
-		<p>A paragraph or two about our website</p>
+		<h2 class="title" id="title">About The Car Pool</h2>
+		<br /><br />
+		<h2>What We Provide:</h2>
+		<div class="Box" id="Box">
+			<p>A paragraph or two about our website</p>
+		</div>
 		<br /> <br /> <br />
 		<p>-- <a href="welcome.jsp">Home</a> --</p>
 	</DIV>

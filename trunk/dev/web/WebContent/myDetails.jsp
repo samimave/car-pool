@@ -206,7 +206,8 @@ if (session.isNew() || (OpenIdFilter.getCurrentUser(session) == null && session.
 			<h3>You are awaiting approval for the following rides:</h3>
 			<%=awaitTable %>
 		</div>
-		
+		<br /> <br /> <br />
+		<p>-- <a href="welcome.jsp">Home</a> --</p>
 	</DIV>
 
 	<%@ include file="leftMenu.html" %>
