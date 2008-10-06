@@ -111,15 +111,19 @@ if (rExist){
 					</tr>
 				</table>
 			</FORM>
-
+			<br />
 			<FORM NAME="resultFrm" id="result">	
-				<TABLE >
-					<tr><td>All users in the system</td></tr>					
-					<tr><td><%=userTable%></td></tr>					
-					<tr><td>All rides in the system</td></tr>
+				<h2>All users in the system</h2>
+				<TABLE>
+					<tr><td><%=userTable%></td></tr>
+				</TABLE>
+				<br />					
+				<h2>All rides in the system</h2>
+				<TABLE>
 					<%=rideTable %>					
 				</TABLE>
 			</FORM>
+			<br />
 			<h2>Setup Email form</h2>
 			<form id="email" action="javascript:void(0)" onsubmit="return setupemail(this)">
 				<input type="hidden" name="emailconfig" value="yes"/>

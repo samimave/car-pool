@@ -70,14 +70,14 @@ while (rl.next()){
 				</TABLE>
 			</FORM>
 		
-			 <Form name="showAll" id="showAll" method="post" action="resultall.jsp">
-				<input type="hidden" name="showAll" value="yes"/>
-				<table class="rideSearch">
+			 <FORM name="showAll" id="showAll" method="post" action="resultall.jsp">
+				<INPUT type="hidden" name="showAll" value="yes"/>
+				<TABLE class="rideSearch">
 					<tr> <td>OR You can click button to  </td><td><INPUT TYPE="submit" NAME="all" VALUE="Show All Rides" SIZE="25"></td></tr>
-				</table>
-			</Form>
-			
-		
+				</TABLE>
+			</FORM>
+			<br /> <br /> <br />
+			<p>-- <a href="welcome.jsp">Home</a> --</p>	
 		</DIV>
 
 <%
