@@ -79,6 +79,8 @@
 		boolean acceptExist = false;
 		//TODO: This is the ugliest piece of code I have ever seen in my life, and it doesnt even work! Fix it.
 		//Hmmmm I think I have fixed the issue with the tables but to make the code simpler than this, I don't know how
+		
+		//get the details of a ride
 		RideDetail rd = cps.getRideDetail(rideID);
 		while (rd.hasNext()) {
 			if (!requestExist) {
@@ -87,25 +89,33 @@
 			if (!acceptExist) {
 				acceptedTable = "";
 			}
+			//if the user in the matches table is not the driver
+			//and if the user is not confirmed for a ride
+			//then add the user to the request table with their details
+			
 			if ((rd.getUserID() != dbID) && (rd.getConfirmed() == false)) {
 				requestExist = true;
 				requestTable += "<tr><td>" + rd.getUsername() + "</td>";
+				//this is the place where the driver will have to pick them up from
 				requestTable += "<td>"+rd.getStreetNumber()+" "+rd.getLocationName()+"</td>";
+				//this is the confirm user button
 				requestTable += "<FORM action=\"rideEditSuccess.jsp\" method=\"post\">";
 				requestTable += "<INPUT type=\"hidden\" name=\"confirmUser\" value=\"yes"+"\">";
 				requestTable += "<INPUT type=\"hidden\" name=\"confirmUserID\" value=\""+rd.getUserID()+"\">";
 				requestTable += "<INPUT type=\"hidden\" name=\"confirmForRide\" value=\""+rideID+"\">";
 				requestTable += "<td><INPUT type=\"submit\" value=\"Confirm User\" /></td>";
 				requestTable += "</FORM>";
+				//this is the reject user button
 				requestTable += "<FORM action=\"rideEditSuccess.jsp\" method=\"post\">";
-				requestTable += "<INPUT type=\"hidden\" name=\"rejectUser\" value=\"yes"
-						+ "\">";
-				requestTable += "<INPUT type=\"hidden\" name=\"confirmUserID\" value=\""
-						+ rd.getUserID() + "\">";
-				requestTable += "<INPUT type=\"hidden\" name=\"confirmForRide\" value=\""
-						+ rideID + "\">";
+				requestTable += "<INPUT type=\"hidden\" name=\"rejectUser\" value=\"yes"+ "\">";
+				requestTable += "<INPUT type=\"hidden\" name=\"confirmUserID\" value=\""+ rd.getUserID() + "\">";
+				requestTable += "<INPUT type=\"hidden\" name=\"confirmForRide\" value=\""+ rideID + "\">";
 				requestTable += "<td><INPUT type=\"submit\" value=\"Reject User\" /></td></tr>";
 				requestTable += "</FORM>";
+			
+			//otherwise if in the Matches table the user is not the driver and the driver has
+			//been confirmed for a ride
+			//then add them to the accepted table
 			} else if ((rd.getUserID() != dbID)	&& (rd.getConfirmed() == true)) {
 				acceptExist = true;
 				acceptedTable += "<tr><td>"+rd.getUsername()+"</td>";
@@ -113,6 +123,7 @@
 			}
 		}
 
+		//if there exists users who are awaiting approval then this is the table heading
 		if (requestExist) {
 			requestTable = "<table class='rideDetailsSearch'> <tr> <th>Request from</th> <th>Pick Up From</th><th>Confirm</th><th>Reject</th></tr>"
 					+ requestTable + "</table>";
@@ -120,6 +131,7 @@
 			requestTable = "None.";
 		}
 
+		//if there exists users who have been approved then this is the table heading
 		if (acceptExist) {
 			acceptedTable = "<table class='rideDetailsSearch'> <tr> <th>Request from</th> <th>Pick Up From</th></tr>"
 					+ acceptedTable + "</table>";
