@@ -3,9 +3,16 @@
 <%@page import="org.verisign.joid.consumer.OpenIdFilter, car.pool.persistance.*, car.pool.user.*, java.util.ArrayList, java.text.*"%>
 
 <%
+HttpSession s = request.getSession(false);
+
+//force the user to login to view the page
+//user a container for the users information
+User user = null;
+if (s.getAttribute("signedin") != null) {
+	user = (User) s.getAttribute("user");
+
 String takeConf = "";
 String openIDTableRow = "";
-User user = null;
 String openIDTableForm = "";
 //code to get ride details
 //temp placeholder variables
@@ -13,13 +20,6 @@ String userTable = "<p>No rides found.</p>";
 String acceptedTable = "<p>No rides found.</p>";
 String awaitTable = "<p>No rides found.</p>";
 int socialScore=0;
-
-//force the user to login to view the page
-if (session.isNew() || (OpenIdFilter.getCurrentUser(session) == null && session.getAttribute("signedin") == null)) {
-	//response.sendRedirect("");
-	request.getRequestDispatcher("").forward(request, response);
-} else {
-	user = (User)session.getAttribute("user");
 
 	//code to interact with db
 	CarPoolStore cps = new CarPoolStoreImpl();
@@ -155,9 +155,9 @@ if (session.isNew() || (OpenIdFilter.getCurrentUser(session) == null && session.
 		takeConf = "<p>" + "You have requested to be picked up from " +request.getParameter("houseNo")+" "+target+" at "+tm+" on "+dt+ "</p>";
 	}
 	
-	
-	
-	
+} else {
+	response.sendRedirect(request.getContextPath());
+}	
 }
 %>
 

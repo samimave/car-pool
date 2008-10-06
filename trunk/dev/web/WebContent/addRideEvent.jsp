@@ -1,29 +1,32 @@
 <%@page errorPage="errorPage.jsp" %>
-<%@page import="car.pool.persistance.*,org.verisign.joid.consumer.OpenIdFilter, car.pool.user.*" %>
+<%@page import="car.pool.persistance.*,org.verisign.joid.consumer.OpenIdFilter,car.pool.user.*" %>
 <%
-HttpSession s = request.getSession(false);
+	HttpSession s = request.getSession(false);
 
-//a container for the users information
-User user = null;
-if(s.getAttribute("signedin") != null ) {
-	user = (User)s.getAttribute("user");
-} else {
-	response.sendRedirect(request.getContextPath());
-}
+	//force the user to log in to view the page
+	//a container for the users information
+	User user = null;
+	String from = "";
+	String to = "";
+	if (s.getAttribute("signedin") != null) {
+		user = (User) s.getAttribute("user");
 
-CarPoolStore cps = new CarPoolStoreImpl();
-LocationList allLocs = cps.getLocations();
-String from = "";
-while (allLocs.next()) {
-	if (allLocs.getID() == Integer.parseInt(request.getParameter("from")))
-		from = allLocs.getStreetName();
-}
-LocationList allLocs2 = cps.getLocations();
-String to = "";
-while (allLocs2.next()) {
-	if (allLocs2.getID() == Integer.parseInt(request.getParameter("to")))
-		to = allLocs2.getStreetName();
-}
+		CarPoolStore cps = new CarPoolStoreImpl();
+		LocationList allLocs = cps.getLocations();
+		while (allLocs.next()) {
+			if (allLocs.getID() == Integer.parseInt(request
+					.getParameter("from")))
+				from = allLocs.getStreetName();
+		}
+		LocationList allLocs2 = cps.getLocations();
+		while (allLocs2.next()) {
+			if (allLocs2.getID() == Integer.parseInt(request
+					.getParameter("to")))
+				to = allLocs2.getStreetName();
+		}
+	} else {
+		response.sendRedirect(request.getContextPath());
+	}
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">

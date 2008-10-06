@@ -1,6 +1,6 @@
-<%@ page errorPage="errorPage.jsp" %>
+<%@page errorPage="errorPage.jsp" %>
 <%@page contentType="text/html; charset=ISO-8859-1" %>
-<%@ page import="org.verisign.joid.consumer.OpenIdFilter"%>
+<%@page import="org.verisign.joid.consumer.OpenIdFilter"%>
 <%
     OpenIdFilter.logout(session);
     session.removeAttribute("user");

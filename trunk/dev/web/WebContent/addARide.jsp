@@ -1,34 +1,39 @@
 <%@page errorPage="errorPage.jsp" %>
 <%@page contentType="text/html; charset=ISO-8859-1" %>
-<%@page import="java.util.*, java.text.*, car.pool.persistance.*, org.verisign.joid.consumer.OpenIdFilter, car.pool.user.*"%>
+<%@page import="java.util.*,java.text.*,car.pool.persistance.*,org.verisign.joid.consumer.OpenIdFilter,car.pool.user.*"%>
 
 <%
-HttpSession s = request.getSession(false);
+	HttpSession s = request.getSession(false);
 
-//force the user to login to view the page
-//user a container for the users information
-User user = null;
-if(s.getAttribute("signedin") != null ) {
-	user = (User)s.getAttribute("user");
-} else {
-	response.sendRedirect(request.getContextPath());
-}
+	//force the user to login to view the page
+	//user a container for the users information
+	User user = null;
+	Date now = null;
+	String time = "";
+	String date = "";
+	CarPoolStore cps = null;
+	String options = "";
+	if (s.getAttribute("signedin") != null) {
+		user = (User) s.getAttribute("user");
 
-//simple date processing for display on page
-Date now = new Date();
-String time = new SimpleDateFormat("HH:mm").format(now);
-String date = new SimpleDateFormat("dd/MM/yyyy").format(now);
-CarPoolStore cps = new CarPoolStoreImpl();
+		//simple date processing for display on page
+		now = new Date();
+		time = new SimpleDateFormat("HH:mm").format(now);
+		date = new SimpleDateFormat("dd/MM/yyyy").format(now);
+		cps = new CarPoolStoreImpl();
 
-//make the options for the street select box
-LocationList locations = cps.getLocations();
-String options = "";
-//if (locations != null) {
-	while (locations.next()){
-		options += "<option value='"+locations.getID()+"'>"+locations.getStreetName()+"</option>";
+		//make the options for the street select box
+		LocationList locations = cps.getLocations();
+		options = "";
+		//if (locations != null) {
+		while (locations.next()) {
+			options += "<option value='" + locations.getID() + "'>"
+					+ locations.getStreetName() + "</option>";
+		}
+		//}
+	} else {
+		response.sendRedirect(request.getContextPath());
 	}
-//}
-
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -42,12 +47,8 @@ String options = "";
 		<script type="text/javascript">
 			var locations = new Array();
 			
-			<%
-			LocationList loc = cps.getLocations();
-			for(int i = 0; loc.next(); i++) {
-				%>locations[<%=i%>] = <%=loc.getStreetName()%>;<%
-			}
-			%>
+			<%LocationList loc = cps.getLocations();
+			for (int i = 0; loc.next(); i++) {%>locations[<%=i%>] = <%=loc.getStreetName()%>;<%}%>
 			 function getAddress1(addrs){
                  var from = "";
                  //LocationList loc = cps.getLocations();
@@ -157,19 +158,23 @@ String options = "";
 			<p>Please enter the relevant details and click confirm.</p>
 			<FORM NAME="offerFrm" id="offer" method="post" action="newRideConfirmation.jsp">
 				<INPUT TYPE="hidden" NAME="user" VALUE="<%=OpenIdFilter.getCurrentUser(s)%>" SIZE="25">
-					<%// Information on if ride is an offer or request. 
-					 //If Ride is a request then numSeats label should be no. of seats requested
-					 //else it should be no. of seats available.
-					//<tr> <td>Ride Type:</td> <td>	
-					//<SELECT name="rideType">
-					//	<option value="Ride Offer">Ride Offer</option>
-					//</SELECT></td> </tr>	
-					//<tr><th>&nbsp;</th></tr> %>
+					<%
+						// Information on if ride is an offer or request. 
+						//If Ride is a request then numSeats label should be no. of seats requested
+						//else it should be no. of seats available.
+						//<tr> <td>Ride Type:</td> <td>	
+						//<SELECT name="rideType">
+						//	<option value="Ride Offer">Ride Offer</option>
+						//</SELECT></td> </tr>	
+						//<tr><th>&nbsp;</th></tr>
+					%>
 
-					<% /* Location FROM, TO & VIA. 
-						Streets is a combo box so user can type or use drop down to select
-						a street. All streets boxes will need to be populated 
-						from the database table streets*/%>
+					<%
+						/* Location FROM, TO & VIA. 
+											Streets is a combo box so user can type or use drop down to select
+											a street. All streets boxes will need to be populated 
+											from the database table streets*/
+					%>
 					<br />
 					<h3>Departure:</h3>
 					<div class="Box" id="Box">
@@ -179,7 +184,7 @@ String options = "";
 					<tr> <td>Street:</td> <td>
 					<SELECT name="streetFrom"  onChange="getAddress('from')">
            		  		<option selected="selected">Select a Street</option>
-	           		 	<%=options %>
+	           		 	<%=options%>
        				</SELECT></td> </tr>
         			<tr> <td>Region:</td> <td>Palmerston North</td> </tr>
 					</table>
@@ -194,36 +199,40 @@ String options = "";
 					<tr> <td>Street:</td> <td>
 					<SELECT name="streetTo" onChange="getAddress('to')">
            		  		<option selected="selected">Select a Street</option>
-	           		  	<%=options %>
+	           		  	<%=options%>
        				 </SELECT></td> </tr>
 					<tr> <td>Region:</td>  <td>Palmerston North</td> </tr>
 					</table>
 					</div>
 
-					<%/* If one off option is chosen then user can choose date(s) of ride and if
-					regular is chosen user can choose startDate, days of ride and endDate*/%>
+					<%
+						/* If one off option is chosen then user can choose date(s) of ride and if
+						 regular is chosen user can choose startDate, days of ride and endDate*/
+					%>
 					<br /><br />
 					<h3>Timing:</h3>
 					<div class="Box" id="Box">
 					<table class="rideDetails">
-					<%/*<tr> <td>Recurrence:</td> <td>
-					<SELECT name="recurrence"  onchange="process_choice(this,document.offerFrm.depDate, document.offerFrm.depDays, document.offerFrm.calIcon, document.offerFrm.calIcon)">
-						<option value="sel">Choose One</option>
-						<option value="0">One-Off</option>
-						<option value="1">Regular</option>
-					</SELECT></td> </tr>
-					<tr><td>&nbsp;</td> <td><INPUT TYPE="text" NAME="depDate" style="display: none" VALUE="(dd/MM/yyyy)" SIZE="25"> <A HREF="#" onClick="cal.select(document.forms['offerFrm'].depDate,'anchor1','dd/MM/yyyy'); return false;" NAME="anchor1" ID="anchor1"><img name="calIcon" style="display: none" border="0" src="calendar_icon.jpg" width="27" height="23"></A> </td> </tr> 
-					<tr> <td>&nbsp;</td><td><SELECT name="depDays" multiple="multiple" style="display: none">
-						<option value=1>Monday</option>
-						<option value =2>Tuesday</option>
-						<option value =3>Wednesday</option>
-						<option value=4>Thursday</option>
-						<option value=5>Friday</option>
-						<option value=6>Saturday</option>
-						<option value=7>Sunday</option>
-					</SELECT></td> </tr>*/%>
-					<tr> <td>Departure Date (dd/MM/yyyy):</td> <td><INPUT TYPE="text" NAME="depDate" VALUE="<%=date %>" SIZE="25"> <A HREF="#" onClick="cal.select(document.forms['offerFrm'].depDate,'anchor1','dd/MM/yyyy'); return false;" NAME="anchor1" ID="anchor1"><img name="calIcon" border="0" src="calendar_icon.jpg" width="27" height="23"></A> </td> </tr>
-					<tr> <td>Departure Time (hh:mm):</td> <td><INPUT TYPE="text" NAME="depTime" VALUE="<%= time %>" SIZE="25"></td> </tr>
+					<%
+						/*<tr> <td>Recurrence:</td> <td>
+						 <SELECT name="recurrence"  onchange="process_choice(this,document.offerFrm.depDate, document.offerFrm.depDays, document.offerFrm.calIcon, document.offerFrm.calIcon)">
+						 <option value="sel">Choose One</option>
+						 <option value="0">One-Off</option>
+						 <option value="1">Regular</option>
+						 </SELECT></td> </tr>
+						 <tr><td>&nbsp;</td> <td><INPUT TYPE="text" NAME="depDate" style="display: none" VALUE="(dd/MM/yyyy)" SIZE="25"> <A HREF="#" onClick="cal.select(document.forms['offerFrm'].depDate,'anchor1','dd/MM/yyyy'); return false;" NAME="anchor1" ID="anchor1"><img name="calIcon" style="display: none" border="0" src="calendar_icon.jpg" width="27" height="23"></A> </td> </tr> 
+						 <tr> <td>&nbsp;</td><td><SELECT name="depDays" multiple="multiple" style="display: none">
+						 <option value=1>Monday</option>
+						 <option value =2>Tuesday</option>
+						 <option value =3>Wednesday</option>
+						 <option value=4>Thursday</option>
+						 <option value=5>Friday</option>
+						 <option value=6>Saturday</option>
+						 <option value=7>Sunday</option>
+						 </SELECT></td> </tr>*/
+					%>
+					<tr> <td>Departure Date (dd/MM/yyyy):</td> <td><INPUT TYPE="text" NAME="depDate" VALUE="<%=date%>" SIZE="25"> <A HREF="#" onClick="cal.select(document.forms['offerFrm'].depDate,'anchor1','dd/MM/yyyy'); return false;" NAME="anchor1" ID="anchor1"><img name="calIcon" border="0" src="calendar_icon.jpg" width="27" height="23"></A> </td> </tr>
+					<tr> <td>Departure Time (hh:mm):</td> <td><INPUT TYPE="text" NAME="depTime" VALUE="<%=time%>" SIZE="25"></td> </tr>
 					<tr> <td>Approx Trip Length (min):</td> <td><INPUT TYPE="text" NAME="tripLength" VALUE="15" SIZE="25"></td> </tr>
 					</table>
 					</div>
