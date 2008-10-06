@@ -27,6 +27,7 @@ H2
 }
 H2.title
 {
+	font: bold 13px/15px verdana, arial, helvetica, sans-serif;
 	margin-left: 250px;
 }
 H3
