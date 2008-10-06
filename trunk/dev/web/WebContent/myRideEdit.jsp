@@ -298,14 +298,11 @@
 		<div class="Box" id="Box">
 		<br />
 		<h3>Riders awaiting your approval:</h3>
-		<div class="Box" id="Box">
 		<%=requestTable%>
-		</div>
 		<br />
 		<h3>Riders you have approved:</h3>
-		<div class="Box" id="Box">
 		<%=acceptedTable%>
-		</div> </div>
+		</div>
 		<br /><br />
 		<h2>Ride Comments:</h2>
 		<div class="Box" id="Box">

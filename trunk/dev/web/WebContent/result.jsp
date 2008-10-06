@@ -261,10 +261,10 @@
 	}
 
 	if (ridesExist) {
-		rideTable = "<table class='rideDetailsSearch'> <tr><td>&nbsp;</td></tr><tr> <th>Ride Offered By</th> <th>Starting From</th> <th>Going To</th>"
+		rideTable = "<table class='rideDetailsSearch'> <tr> <th>Ride Offered By</th> <th>Starting From</th> <th>Going To</th>"
 				+ "<th>Departure Date</th> <th>Departure Time</th> <th>Number of Available Seats</th> <th>More Info</th> </tr>"
 				+ rideTable
-				+ "<tr><td>&nbsp;</td></tr><tr><td>&nbsp;</td></tr></table>";
+				+ "</table>";
 	} else {
 		rideTable = "<tr><td>No rides were found</td></tr>";
 	}
@@ -282,22 +282,28 @@
 	<%@ include file="heading.html" %>
 	
 	<DIV class="Content" id="Content">
+		<h2 class="title" id="title">Automatic Search</h2>
+		<br /><br />
+		<h2>Results:</h2>
+		<div class="Box" id="Box">
+		<br />
+		<h3>You Searched For:</h3>
+		<div class="Box" id="Box">
 		<FORM NAME="resultFrm" id="result">	
 			<TABLE class="rideSearch">
-				<tr><td>You searched for -</td></tr>
-				<tr><td>&nbsp;</td></tr>
 				<tr><td>Location from:</td> <td><%=Sfrom%></td></tr>
 				<tr><td>Location to:</td> <td><%=Sto%></td></tr>
 				<tr><td>Date:</td> <td><%=strTmp%></td></tr>
 				<tr><td>User:</td> <td><%=username%></td>
-				<tr><td>&nbsp;</td></tr>
-				<tr> <th colspan='2' style='border:2px outset #333333'>Displaying search results</th></tr>
-	
-				<%=rideTable%>		
-						
-				<tr><td> <a href=searchRides.jsp>Go back to Search page</a> </td> </tr>
 			</TABLE>
 		</FORM>
+		</div>
+		<br /><br />
+		<h3>Click 'Link to ride page' To Take A Ride:</h3>
+		<%=rideTable%>					
+		</div>
+		<br /><br /><br />
+		<p>-- <a href=searchRides.jsp>Go back to Search page</a> --</p>
 	</DIV>
 
 <%

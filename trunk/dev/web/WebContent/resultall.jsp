@@ -71,12 +71,15 @@ while (all.next()) {
 	<BODY>
 <%@ include file="heading.html" %>
 		<DIV class="Content" id="Content">
-			<h2>Displaying all rides in the database:</h2>
+			<h2 class="title" id="title">Manual Search</h2>
+			<br /><br />
+			<h2>Results:</h2>
 			<div class="Box" id="Box">
-				<p>There are currently <%=rideCount %> rides in the database!</td></tr>	
+				<p>There are currently <%=rideCount %> rides in the database!</p><br />
+				<h3>Click 'Link to ride page' To Take A Ride:</h3>
 				<%=rideTable %>
 			</div>
-			<br /><br />
+			<br /><br /><br />
 			<p>-- <a href=searchRides.jsp>Go back to Search page</a> --</p>
 		</DIV>
 
