@@ -126,21 +126,6 @@
 			</FORM>
 			</div>
 			<br /><br />
-			<h2>Users and Rides in the System:</h2>
-			<div class="Box" id="Box">
-			<FORM NAME="resultFrm" id="result">
-				<h3>Users:</h3>	
-				<TABLE>
-					<tr><td><%=userTable%></td></tr>
-				</TABLE>
-				<br />
-				<h3>Rides:</h3>					
-				<TABLE>
-					<%=rideTable%>					
-				</TABLE>
-			</FORM>
-			</div>
-			<br /><br />
 			<h2>Setup Email Functionality:</h2>
 			<div class="Box" id="Box">
 			<form id="email" action="javascript:void(0)" onsubmit="return setupemail(this)">
@@ -157,7 +142,22 @@
 				</table>
 			</form>
 			</div>
-			<br /> <br /> <br />
+			<br /> <br /> 
+			<h2>Users and Rides in the System:</h2>
+			<div class="Box" id="Box">
+			<FORM NAME="resultFrm" id="result">
+				<h3>Users:</h3>	
+				<TABLE>
+					<tr><td><%=userTable%></td></tr>
+				</TABLE>
+				<br />
+				<h3>Rides:</h3>					
+				<TABLE>
+					<%=rideTable%>					
+				</TABLE>
+			</FORM>
+			</div>
+			<br /><br /><br />
 			<p>-- <a href="welcome.jsp">Home</a> --</p>
 		</DIV>
 
