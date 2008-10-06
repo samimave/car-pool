@@ -1,4 +1,4 @@
-<%@page errorPage="errorPage.jsp" %>
+<%//@page errorPage="errorPage.jsp" %>
 <%@page contentType="text/html; charset=ISO-8859-1" %>
 <%@page import="org.verisign.joid.consumer.OpenIdFilter, car.pool.persistance.*, car.pool.user.*, java.util.ArrayList, java.text.*"%>
 
@@ -161,8 +161,10 @@ if (session.isNew() || (OpenIdFilter.getCurrentUser(session) == null && session.
 	<%@ include file="heading.html" %>
 
 	<DIV class="Content" id="Content">
-		<h2 align="center">Welcome to your Account Page</h2><br /><br />
+		<h2>Welcome to your Account Page</h2>
+		<br />
 		<%=takeConf %>
+		<br /><br />
 		<h2>Your user details appear below:</h2>
 		<p>Your current social score is: <%=socialScore%></p>
 		<FORM name="updateDetails" action="updateuser" method="post">
@@ -174,40 +176,43 @@ if (session.isNew() || (OpenIdFilter.getCurrentUser(session) == null && session.
   				<tr> <td>&nbsp;</td> <td><INPUT TYPE="submit" NAME="confirmUpdate" VALUE="Update Details" SIZE="25"></td> </tr>
 			</TABLE>
 		</FORM>
-		<h2>Detach a OpenId from your account</h2>
-		<form action="removeopenid">
-			<input type="hidden" name="removeopenid"/>
-			<table class="updateDetails">
+		<br /><br />
+		<h2>Detach an OpenId from your account</h2>
+		<FORM action="removeopenid">
+			<INPUT type="hidden" name="removeopenid"/>
+			<TABLE class="updateDetails">
 				<tr><td><%=openIDTableRow %></td></tr>
 				<tr><td><input type="submit" value="Detach"/></td></tr>
-			</table>
-		</form>
-		<h2>Detach a OpenId from your account</h2>
-		<form action="addopenid">
-			<input type="hidden" name="addopenid"/>
-			<table class="updateDetails">
-				<tr><td>OpenId to add: <input type="text" name="openid"/ size="25"/></td></tr>
-				<tr><td><input type="submit" value="Attach"/></td></tr>
-			</table>
-		</form>
+			</TABLE>
+		</FORM>
+		<br /><br />
+		<h2>Attach an OpenId to your account</h2>
+		<FORM action="addopenid">
+			<INPUT type="hidden" name="addopenid"/>
+			<TABLE class="updateDetails">
+				<tr><td>OpenId to add: <INPUT type="text" name="openid"/ size="25"/></td></tr>
+				<tr><td><INPUT type="submit" value="Attach"/></td></tr>
+			</TABLE>
+		</FORM>
+		<br /><br />
 		<h2>Your ride details appear below:</h2><br />
-		<table>
-		<tr> <th colspan='2' style='border:2px outset #333333'>Rides you have Offered</th><th>&nbsp;</th> <th>&nbsp;</th></tr>
-		<tr><th>&nbsp;</th></tr>
-		<%=userTable %>
-		</table>
+		<TABLE>
+			<tr> <th colspan='2' style='border:2px outset #333333'>Rides you have Offered</th><th>&nbsp;</th> <th>&nbsp;</th></tr>
+			<tr><th>&nbsp;</th></tr>
+			<%=userTable %>
+		</TABLE>
 		
-		<table>
-		<tr> <th colspan='2' style='border:2px outset #333333'>You have been approved for the following rides</th><th>&nbsp;</th> <th>&nbsp;</th></tr>
-		<tr><th>&nbsp;</th></tr>
-		<%=acceptedTable %>
-		</table>
+		<TABLE>
+			<tr> <th colspan='2' style='border:2px outset #333333'>You have been approved for the following rides</th><th>&nbsp;</th> <th>&nbsp;</th></tr>
+			<tr><th>&nbsp;</th></tr>
+			<%=acceptedTable %>
+		</TABLE>
 
-		<table>
-		<tr> <th colspan='2' style='border:2px outset #333333'>You are awaiting approval for the following rides</th><th>&nbsp;</th> <th>&nbsp;</th></tr>
-		<tr><th>&nbsp;</th></tr>
-		<%=awaitTable %>
-		</table>
+		<TABLE>
+			<tr> <th colspan='2' style='border:2px outset #333333'>You are awaiting approval for the following rides</th><th>&nbsp;</th> <th>&nbsp;</th></tr>
+			<tr><th>&nbsp;</th></tr>
+			<%=awaitTable %>
+		</TABLE>
 		
 	</DIV>
 

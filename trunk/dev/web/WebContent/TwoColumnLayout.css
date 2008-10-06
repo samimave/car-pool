@@ -36,6 +36,17 @@ TABLE
 	border: 0;
 	font: 11px verdana, arial, helvetica, sans-serif;
 }
+TABLE.rideDetailsSearch {
+	border: 1px solid #666666;
+	width:600px; 	   
+	border-collapse: collapse;	
+}
+TABLE.rideDetailsSearch TD {
+	border: 1px solid #666666;
+}
+TABLE.rideDetailsSearch TH {
+	border: 1px solid #666666;
+} 
 A
 {
 	color: #09C;

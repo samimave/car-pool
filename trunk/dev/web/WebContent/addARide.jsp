@@ -228,7 +228,7 @@ String options = "";
 				</TABLE>
 
 			</FORM>
-
+			<br />
 			<FORM name="showMap" id="map" method="post" target="_blank" action="displayRouteMap.jsp">
 					<INPUT type="submit" value="View Map" onClick="getAddress()"/> 
 					<INPUT type="hidden" name="mapFrom" >
