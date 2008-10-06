@@ -74,25 +74,25 @@ public class StressTest implements Runnable{
 				
 				Date date = new Date(System.currentTimeMillis());
 				//addRide(int user, int availableSeats, String startDate, int startLocation, int endLocation, int streetNumber, int reoccur, String time, String comment)			
-				int ride1 = cps.addRide(a, 4, date.toString(), idLocation, idLocation, 0, 0, "5:22 PM", "be on time");
-				int ride2 = cps.addRide(b, 4, date.toString(), idLocation, idLocation,1, 0, "6:22 AM", "no latecomers please");
-				int ride3 = cps.addRide(c, 4, date.toString(), idLocation, idLocation,2, 0, "3:22 PM", "I might be a few minutes late");
-				int ride4 = cps.addRide(d, 4, date.toString(), idLocation, idLocation,3, 0, "9:22 PM", "be on time");
+				int ride1 = cps.addRide(a, 4, date.toString(), idLocation, idLocation, 0,1 , 0, "5:22 PM", "be on time");
+				int ride2 = cps.addRide(b, 4, date.toString(), idLocation, idLocation,1,1 , 0, "6:22 AM", "no latecomers please");
+				int ride3 = cps.addRide(c, 4, date.toString(), idLocation, idLocation,2,1 , 0, "3:22 PM", "I might be a few minutes late");
+				int ride4 = cps.addRide(d, 4, date.toString(), idLocation, idLocation,3,1 , 0, "9:22 PM", "be on time");
 	//			int ride5 = cps.addRide(e, 4, date.toString(), "asgadfg", "adfgadfgafd home");
 				cps.findLocation(stringR());
-				cps.takeRide(e, ride1, idLocation,0);
-				cps.takeRide(f, ride1, idLocation,0);
-				cps.takeRide(g, ride1, idLocation,0);
-				cps.takeRide(h, ride1, idLocation,0);
+				cps.takeRide(e, ride1, idLocation,0,1);
+				cps.takeRide(f, ride1, idLocation,0,1);
+				cps.takeRide(g, ride1, idLocation,0,1);
+				cps.takeRide(h, ride1, idLocation,0,1);
 				cps.addUser(names[r.nextInt(names.length)], stringR());
-				cps.takeRide(i, ride2, idLocation,0);
-				cps.takeRide(j, ride2, idLocation,0);
+				cps.takeRide(i, ride2, idLocation,0,1);
+				cps.takeRide(j, ride2, idLocation,0,1);
 				
-				cps.takeRide(g, ride3, idLocation,0);
-				cps.takeRide(h, ride3, idLocation,0);
+				cps.takeRide(g, ride3, idLocation,0,1);
+				cps.takeRide(h, ride3, idLocation,0,1);
 				cps.findLocation(stringR());
-				cps.takeRide(k, ride3, idLocation,0);
-				cps.takeRide(l, ride4, idLocation,0);
+				cps.takeRide(k, ride3, idLocation,0,1);
+				cps.takeRide(l, ride4, idLocation,0,1);
 				cps.addUser(names[r.nextInt(names.length)], stringR());
 			} catch (Exception eee) {
 				// TODO Auto-generated catch block
@@ -121,7 +121,7 @@ public class StressTest implements Runnable{
 				int los = cps.addLocation(re, stringR());
 				int loe = cps.addLocation(re, stringR());
 				cps.attachOpenID(stringR(), a);
-				int c = cps.addRide(a, 4, date.toString(), los, loe, r.nextInt(), 0, stringR(), stringR());
+				int c = cps.addRide(a, 4, date.toString(), los, loe, r.nextInt(), 0,1 , stringR(), stringR());
 				cps.attachOpenID(stringR(), b);
 			}else if(r.nextFloat()<0.4){
 				int a = cps.addUser(stringR(),stringR());
@@ -129,7 +129,7 @@ public class StressTest implements Runnable{
 				int re = cps.addRegion(stringR());
 				int los = cps.addLocation(re, stringR());
 				int loe = cps.addLocation(re, stringR());
-				int c = cps.addRide(a, 4, date.toString(), los, loe, r.nextInt(), 0, stringR(), stringR());
+				int c = cps.addRide(a, 4, date.toString(), los, loe, r.nextInt(), 0,1 , stringR(), stringR());
 			}else if(r.nextFloat()<0.6){
 				int a = cps.addUser(stringR(),stringR());
 				int b = cps.addUser(stringR(),stringR());
@@ -137,14 +137,14 @@ public class StressTest implements Runnable{
 				int los = cps.addLocation(re, stringR());
 				cps.findLocation(stringR());
 				int loe = cps.addLocation(re, stringR());
-				int c = cps.addRide(a, 4, date.toString(), los, loe, r.nextInt(), 0, stringR(), stringR());
+				int c = cps.addRide(a, 4, date.toString(), los, loe, r.nextInt(), 0,1 , stringR(), stringR());
 			}else if(r.nextFloat()<0.8){
 				int a = cps.addUser(stringR(),stringR());
 				int b = cps.addUser(stringR(),stringR());
 				int re = cps.addRegion(stringR());
 				int los = cps.addLocation(re, stringR());
 				int loe = cps.addLocation(re, stringR());
-				int c = cps.addRide(a, 4, date.toString(), los, loe, r.nextInt(), 0, stringR(), stringR());
+				int c = cps.addRide(a, 4, date.toString(), los, loe, r.nextInt(), 0,1 , stringR(), stringR());
 			}else{
 				cps.findLocation(stringR());
 				cps.findLocation(stringR());

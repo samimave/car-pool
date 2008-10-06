@@ -14,6 +14,9 @@ public interface RideListing {
 	public String getStartLocation() throws SQLException;
 	public String getEndLocation() throws SQLException;
 	
+	public int getStreetStart() throws SQLException;
+	public int getStreetEnd() throws SQLException;
+	
 	public RideListing getAll();
 	public RideListing search(int searchType, String searchField);
 	

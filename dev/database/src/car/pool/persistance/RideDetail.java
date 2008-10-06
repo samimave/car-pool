@@ -46,4 +46,10 @@ public class RideDetail {
 	public int getStreetNumber() throws SQLException{
 		return rs.getInt("streetNumber");
 	}
+	public int getStreetNumberEnd() throws SQLException{
+		return rs.getInt("streetNumberEnd");
+	}
+	public String getGeoLocation() throws SQLException{
+		return rs.getString("geoLocation");
+	}
 }

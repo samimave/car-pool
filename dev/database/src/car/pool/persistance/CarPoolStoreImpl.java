@@ -201,7 +201,7 @@ public class CarPoolStoreImpl implements CarPoolStore {
 	}
 	
 	
-	public int takeRide(int user, int ride, int idLocation, int streetNumber, String geoLocation) throws RideException{
+	public int takeRide(int user, int ride, int idLocation, int streetNumber, int streetNumberEnd, String geoLocation) throws RideException{
 		boolean success = false;
 		int maxSeat = getMaxSeats(ride);
 		int seatNum = 0;
@@ -210,7 +210,7 @@ public class CarPoolStoreImpl implements CarPoolStore {
 			success = true;
 			
 			
-			idTrip = takeRide(user, ride, seatNum, idLocation, streetNumber, geoLocation);
+			idTrip = takeRide(user, ride, seatNum, idLocation, streetNumber, streetNumberEnd, geoLocation);
 			
 			seatNum++;
 		}
@@ -222,16 +222,16 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		}
 	}
 	
-	public int takeRide(int user, int ride, int idLocation, int streetNumber) throws RideException{
-		return takeRide(user, ride, idLocation, streetNumber, "noLocation");
+	public int takeRide(int user, int ride, int idLocation, int streetNumber, int streetNumberEnd) throws RideException{
+		return takeRide(user, ride, idLocation, streetNumber, streetNumberEnd, "noLocation");
 	}
 	
-	public int takeRide(int user, int ride, int seatNum, int idLocation, int streetNumber, String geoLocation) throws RideException {
+	public int takeRide(int user, int ride, int seatNum, int idLocation, int streetNumber, int streetNumberEnd, String geoLocation) throws RideException {
 		Statement statement = db.getStatement();
 		int id = FAILED;
 		String sql = "INSERT INTO Matches "
-				+ "(idUser,idRide, seatNum, idLocation, streetNumber, geoLocation) "
-				+ "VALUES ('" + user + "','" + ride + "','" + seatNum + "','" + idLocation + "','" + streetNumber + "','" + geoLocation + "');";
+				+ "(idUser,idRide, seatNum, idLocation, streetNumber, streetNumberEnd, geoLocation) "
+				+ "VALUES ('" + user + "','" + ride + "','" + seatNum + "','" + idLocation + "','" + streetNumber + "','" + streetNumberEnd + "','" + geoLocation + "');";
 		
 		try {	
 			statement.executeUpdate(sql);
@@ -261,12 +261,12 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		}
 	}
 
-	public int addRide(int user, int availableSeats, String startDate, int startLocation, int endLocation, int streetNumber, int reoccur, String time, String comment) throws RideException {
-		return addRide(user, availableSeats, startDate, startLocation, endLocation, streetNumber, reoccur, time, comment, "noLocation");
+	public int addRide(int user, int availableSeats, String startDate, int startLocation, int endLocation, int streetNumber,int streetNumberEnd, int reoccur, String time, String comment) throws RideException {
+		return addRide(user, availableSeats, startDate, startLocation, endLocation, streetNumber, streetNumberEnd, reoccur, time, comment, "noLocation");
 	}
 	
 	
-	public int addRide(int user, int availableSeats, String startDate, int startLocation, int endLocation, int streetNumber, int reoccur, String time, String comment, String geoLocation) throws RideException {
+	public int addRide(int user, int availableSeats, String startDate, int startLocation, int endLocation, int streetNumber, int streetNumberEnd, int reoccur, String time, String comment, String geoLocation) throws RideException {
 		
 		Statement statement = db.getStatement();
 		int id = FAILED;
@@ -299,7 +299,7 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		}
 		
 		if(id!= FAILED){
-			takeRide(user,id, endLocation, streetNumber);
+			takeRide(user,id, endLocation, streetNumber, streetNumberEnd);
 		}else{
 			try {
 				removeRide(id);
@@ -895,5 +895,4 @@ public class CarPoolStoreImpl implements CarPoolStore {
 	public TakenRides getTakenRides(int idUser) {	 
 		return new TakenRides(idUser,db.getStatement());
 	}
-
 }
