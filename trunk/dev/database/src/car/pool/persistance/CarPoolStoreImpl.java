@@ -847,7 +847,7 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		String sql = 	"SELECT SUM(score) as total " +
 						"FROM Matches,Ride,social " +
 						"WHERE Ride.idUser ='"+idUser+"' "+
-						"AND Matches.idRide = ride.idRide " +
+						"AND Matches.idRide = Ride.idRide " +
 						"AND Matches.idTrip = social.idTrip;";
 		try {
 			statement = db.getStatement();
