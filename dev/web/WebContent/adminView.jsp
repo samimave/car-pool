@@ -64,7 +64,7 @@
 			rideTable += "<td>" + all.getTime() + "</td> ";
 			rideTable += "<td>" + all.getAvailableSeats() + "</td> ";
 			rideTable += "<td> <a href='" + request.getContextPath()
-					+ "/temp2.jsp?rideselect=" + all.getRideID()
+					+ "/rideDetails.jsp?rideselect=" + all.getRideID()
 					+ "&userselect=" + all.getUsername() + "'>"
 					+ "Link to ride page" + "</a> </td> </tr>";
 
