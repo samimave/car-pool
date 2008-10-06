@@ -45,6 +45,14 @@ private ResultSet rs;
 	public String getStopLocation() throws SQLException{
 		return rs.getString("end");
 	}
+	
+	public String getStartID() throws SQLException{
+		return rs.getString("rideStartLocation");
+	}
+	
+	public String getStopID() throws SQLException{
+		return rs.getString("rideStopLocation");
+	}
 
 	public int getStreetNumber() throws SQLException{
 		return rs.getInt("streetNumber");
