@@ -52,10 +52,10 @@ while (all.next()) {
 	String rideTable = allTable; 
 	if (rExist) {
 		rideTable = "<table class='rideDetailsSearch'> <tr> <th>Ride Offered By</th> <th>Starting From</th> <th>Going To</th>"+
-			"<th>Departure Date</th> <th>Departure Time</th> <th>Number of Available Seats</th> <th>More Info</th> </tr>"+ rideTable +"<tr><td>&nbsp;</td></tr><tr><td>&nbsp;</td></tr></table>";
+			"<th>Departure Date</th> <th>Departure Time</th> <th>Number of Available Seats</th> <th>More Info</th> </tr>"+ rideTable +"</tr></table>";
 	}
 	else {
-		rideTable = "<tr><td>No rides were found</td></tr>";
+		rideTable = "<table><tr><td>No rides were found.</td></tr></table>";
 	}
 //-------------------------------------------------------------------
 
@@ -73,15 +73,13 @@ while (all.next()) {
 	<BODY>
 <%@ include file="heading.html" %>
 		<DIV class="Content" id="Content">
-			<table>
-			<tr> <th colspan='2' style='border:2px outset #333333'>Displaying all rides in the database</th><tr>
-			<tr><th>&nbsp;</th> <th>&nbsp;</th></tr>
-			<tr><td>There are currently <%=rideCount %> rides in the database!</td></tr>
-			<tr><td>&nbsp;</td></tr>
-			</table>
-			<%=rideTable %>
-
-			<tr><td> <a href=searchRides.jsp>Go back to Search page</a> </td> </tr>
+			<h2>Displaying all rides in the database:</h2>
+			<div class="Box" id="Box">
+				<p>There are currently <%=rideCount %> rides in the database!</td></tr>	
+				<%=rideTable %>
+			</div>
+			<br /><br />
+			<p>-- <a href=searchRides.jsp>Go back to Search page</a> --</p>
 		</DIV>
 
 <%
