@@ -45,7 +45,7 @@ if (session.isNew() || (OpenIdFilter.getCurrentUser(session) == null && session.
 			userTable += "<td>"+ new SimpleDateFormat("dd/MM/yyyy").format(rl.getRideDate()) +"</td> ";
 			userTable += "<td>"+ rl.getTime() +"</td> ";
 			userTable += "<td>"+ rl.getAvailableSeats() +"</td> ";
-			userTable += "<td> <a href='"+ request.getContextPath() +"/myRideEdit.jsp?rideselect="+ rl.getRideID() +"&userselect="+rl.getUsername()+"'>"+ "Click to edit" +"</a> </td> </tr>";
+			userTable += "<td> <a href='"+ request.getContextPath() +"/myRideEdit.jsp?rideselect="+ rl.getRideID() +"&userselect="+rl.getUsername()+"'>"+ "Click to manage ride & riders" +"</a> </td> </tr>";
 
 			
 	}
