@@ -708,6 +708,8 @@ public class CarPoolStoreImplTest extends TestCase {
 		}
 		
 	}
+	
+	@SuppressWarnings("unused")
 	public void testGetTripID(){
 		int region = 0;
 		int idLocation = 0;

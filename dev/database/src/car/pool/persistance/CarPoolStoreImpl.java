@@ -407,7 +407,7 @@ public class CarPoolStoreImpl implements CarPoolStore {
 			e.printStackTrace();
 		}
 		
-		return true;
+		return countr > 0;
 	}
 	public boolean acceptUser(int user, int ride, int conf) throws StoreException{
 		Statement statement = null;
@@ -445,7 +445,6 @@ public class CarPoolStoreImpl implements CarPoolStore {
 	@Override
 	public boolean removeRide(int ride) throws StoreException {
 		Statement statement = null;
-		@SuppressWarnings("unused")
 		int countm = 0;
 		int countr = 0;
 
@@ -459,7 +458,7 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		}
 		
 		//TODO check user was removed
-		return true;
+		return countr > 0 && countm > 0;
 	}
 	
 	public int getUserIdByURL(String openidurl) throws InvaildUserNamePassword{
@@ -748,7 +747,7 @@ public class CarPoolStoreImpl implements CarPoolStore {
 	public String getComment(int idComment) throws SQLException{
 		//return a single comment
 		String comment = "";
-		int i=0;
+		//int i=0;
 		
 		Statement statement = db.getStatement();
 		String sql = "SELECT * FROM Comments WHERE idComment='"+idComment+"';";
@@ -827,6 +826,7 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		return new RideDetail(rideId, db.getStatement());
 	}
 	
+	@SuppressWarnings("unused")
 	public void addScore(int idTrip, int idUser, int score) throws SQLException{
 		//add a comment
 		Statement statement = null;
@@ -845,10 +845,10 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		int score = 0;
 		Statement statement = db.getStatement();
 		String sql = 	"SELECT SUM(score) as total " +
-						"FROM matches,ride,social " +
-						"WHERE ride.idUser ='"+idUser+"' "+
-						"AND matches.idRide = ride.idRide " +
-						"AND matches.idTrip = social.idTrip;";
+						"FROM Matches,Ride,social " +
+						"WHERE Ride.idUser ='"+idUser+"' "+
+						"AND Matches.idRide = ride.idRide " +
+						"AND Matches.idTrip = social.idTrip;";
 		try {
 			statement = db.getStatement();
 			ResultSet rs = statement.executeQuery(sql);
@@ -868,10 +868,10 @@ public class CarPoolStoreImpl implements CarPoolStore {
 	public int getTripID(int idRide, int idPassenger) throws StoreException{
 		int id = FAILED;
 		Statement statement = db.getStatement();
-		String sql = 	"SELECT matches.idTrip as tripID " +
-						"FROM matches,ride " +
-						"WHERE matches.idUser ='"+idPassenger+"' "+
-						"AND matches.idRide ='"+idRide+"';";
+		String sql = 	"SELECT Matches.idTrip as tripID " +
+						"FROM Matches,Ride " +
+						"WHERE Matches.idUser ='"+idPassenger+"' "+
+						"AND Matches.idRide ='"+idRide+"';";
 		try {
 			statement = db.getStatement();
 			ResultSet rs = statement.executeQuery(sql);

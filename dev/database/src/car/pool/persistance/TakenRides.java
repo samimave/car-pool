@@ -11,7 +11,7 @@ private ResultSet rs;
 	public TakenRides(int idUser, Statement statement){
 		rs = null;
 		String sql = 	"SELECT*, l.street as start, ll.street as end, lll.street as pickUp "+
-						"FROM Matches, User, Ride, Locations as l, Locations as ll, Locations as lll "+
+						"FROM Matches, User, Ride, locations as l, locations as ll, locations as lll "+
 						"WHERE User.idUser=" +idUser+
 						" AND User.idUser = Matches.idUser "+
 						" AND Matches.idRide = Ride.idRide "+
@@ -27,7 +27,7 @@ private ResultSet rs;
 	}
 	
 	public boolean hasNext() throws SQLException{
-		return rs.next();
+		return rs != null && rs.next();
 	}
 	
 	public String getUsername() throws SQLException{
