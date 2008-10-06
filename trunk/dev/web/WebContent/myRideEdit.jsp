@@ -77,27 +77,23 @@
 
 		boolean requestExist = false;
 		boolean acceptExist = false;
-		RideDetail rd = cps.getRideDetail(rideID);
+		//TODO: This is the ugliest piece of code I have ever seen in my life, and it doesnt even work! Fix it.
+		/*RideDetail rd = cps.getRideDetail(rideID);
 		while (rd.hasNext()) {
 			if (!requestExist) {
-				requestTable = "<tr><td>no users found</td></tr><tr><td>&nbsp;</td></tr>";
+				requestTable = "<tr><td>No users found.</td></tr>";
 			}
 			if (!acceptExist) {
-				acceptedTable = "<tr><td>no users found</td></tr><tr><td>&nbsp;</td></tr><tr><td>&nbsp;</td></tr>";
+				acceptedTable = "<tr><td>No users found.</td></tr>";
 			}
-			if ((rd.getUserID() != dbID)
-					&& (rd.getConfirmed() == false)) {
+			if ((rd.getUserID() != dbID) && (rd.getConfirmed() == false)) {
 				requestExist = true;
 				requestTable += "<tr><td>" + rd.getUsername() + "</td>";
-				requestTable += "<td>" + rd.getStreetNumber()
-						+ "&nbsp;" + rd.getLocationName() + "</td>";
+				requestTable += "<td>"+rd.getStreetNumber()+" "+rd.getLocationName()+"</td>";
 				requestTable += "<FORM action=\"rideEditSuccess.jsp\" method=\"post\">";
-				requestTable += "<INPUT type=\"hidden\" name=\"confirmUser\" value=\"yes"
-						+ "\">";
-				requestTable += "<INPUT type=\"hidden\" name=\"confirmUserID\" value=\""
-						+ rd.getUserID() + "\">";
-				requestTable += "<INPUT type=\"hidden\" name=\"confirmForRide\" value=\""
-						+ rideID + "\">";
+				requestTable += "<INPUT type=\"hidden\" name=\"confirmUser\" value=\"yes"+"\">";
+				requestTable += "<INPUT type=\"hidden\" name=\"confirmUserID\" value=\""+rd.getUserID()+"\">";
+				requestTable += "<INPUT type=\"hidden\" name=\"confirmForRide\" value=\""+rideID+"\">";
 				requestTable += "<td><INPUT type=\"submit\" value=\"Confirm User\" /></td>";
 				requestTable += "</FORM>";
 				requestTable += "<FORM action=\"rideEditSuccess.jsp\" method=\"post\">";
@@ -109,30 +105,26 @@
 						+ rideID + "\">";
 				requestTable += "<td><INPUT type=\"submit\" value=\"Reject User\" /></td>";
 				requestTable += "</FORM></tr>";
-			} else if ((rd.getUserID() != dbID)
-					&& (rd.getConfirmed() == true)) {
+			} else if ((rd.getUserID() != dbID)	&& (rd.getConfirmed() == true)) {
 				acceptExist = true;
-				acceptedTable += "<tr><td>" + rd.getUsername()
-						+ "</td>";
-				acceptedTable += "<td>" + rd.getStreetNumber()
-						+ "&nbsp;" + rd.getLocationName()
-						+ "</td></tr>";
-				//TODO: get the house number too
+				acceptedTable += "<tr><td>"+rd.getUsername()+"</td>";
+				acceptedTable += "<td>" + rd.getStreetNumber()+"&nbsp;"+rd.getLocationName()+"</td></tr>";
 			}
-		}
+		}*/
 
 		if (requestExist) {
 			requestTable = "<table class='rideDetailsSearch'> <tr> <th>Request from</th> <th>Pick Up From</th><th>Confirm</th><th>Reject</th></tr>"
 					+ requestTable + "</table>";
+		} else {
+			requestTable = "None.";
 		}
-		requestTable += "<tr><td>&nbsp;</td></tr>";
 
 		if (acceptExist) {
 			acceptedTable = "<table class='rideDetailsSearch'> <tr> <th>Request from</th> <th>Pick Up From</th></tr>"
 					+ acceptedTable + "</table>";
+		} else {
+			acceptedTable = "None.";
 		}
-
-		acceptedTable += "<tr><td>&nbsp;</td></tr>";
 %>
 
 
@@ -164,7 +156,7 @@
 		//if no comments for ride then say so
 		if (comments.size() < 1) {
 			table += oddRow
-					+ "<td colspan=\"3\">Sorry, could not find any comments for this ride.  Please feel free to add one below</td></tr>";
+					+ "<td colspan=\"3\">No comments added for this ride.</td></tr>";
 		}
 
 		//add comments, shading in every second row
@@ -221,18 +213,23 @@
 	<%@ include file="heading.html" %>	
 
 	<DIV class="Content" id="Content">
-		<h2>The ride details appear below:</h2>
-
+		<h2 class="title" id="title">Ride Information</h2>
+		<br /><br />
+		<h2>Edit Ride Information:</h2>
+		<div class="Box" id="Box">
+		<br />
+		<h3>Location:</h3>
+		<div class="Box" id="Box">
 		<FORM name="updateStartS" action="rideEditSuccess.jsp" method="post">
-			<input type="hidden" name="updateRide" value="yes"/>
+			<INPUT type="hidden" name="updateRide" value="yes"/>
 			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect")%>">
 			<TABLE>
-				<tr> <td> Start Street: <%=from%></td></tr>
-				<tr><td><SELECT name="startFrom"><option selected="selected">Select a Street</option><%=options%></SELECT></td><td><INPUT type="submit" name="startFrom" value="Update Street" size="25"></td></tr>
+				<tr> <td> Start Street: <%=from%></td> <td>&nbsp;</td></tr>
+				<tr> <td><SELECT name="startFrom"><option selected="selected">Select a Street</option><%=options%></SELECT></td><td><INPUT type="submit" name="startFrom" value="Update Street" size="25"></td></tr>
 			</TABLE>
 		</FORM>
 		<FORM name="updateEndS" action="rideEditSuccess.jsp" method="post">
-			<input type="hidden" name="updateRide" value="yes"/>
+			<INPUT type="hidden" name="updateRide" value="yes"/>
 			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect")%>">
 			<TABLE>
 				<tr> <td>End Street: <%=to%></td></tr>
@@ -241,51 +238,64 @@
 		</FORM>
 
 		<FORM name="showMap" id="map3" method="post" target="_blank" action="displayRouteMap2.jsp">
-			<INPUT type="submit" value="View Map" > 
-			<INPUT type="hidden" name="mapFrom" value= "<%=from%>">
-			<INPUT type="hidden" name="mapTo"  value= "<%=to%>" >
-			<INPUT type="hidden" name="mapVia"  value= "<%=viaAddress%>" >
+			<p>Click here to <INPUT type="submit" value="View Map" ></p>
+			<INPUT type="hidden" name="mapFrom" value="<%=from%>">
+			<INPUT type="hidden" name="mapTo"  value="<%=to%>" >
+			<INPUT type="hidden" name="mapVia"  value="<%=viaAddress%>" >
 		</FORM>
-
+		</div>
+		<br /><br />
+		<h3>Timing:</h3>
+		<div class="Box" id="Box">
 		<FORM name="updateDate" action="rideEditSuccess.jsp" method="post">
-			<input type="hidden" name="updateRide" value="yes"/>
+			<INPUT type="hidden" name="updateRide" value="yes">
 			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect")%>">
 			<TABLE>
 				<tr> <td>Date: </td> <td><INPUT TYPE="text" NAME="Rdate" SIZE="25" value=<%=dateR%>><A HREF="#" onClick="cal.select(document.forms['updateDate'].Rdate,'anchor1','dd/MM/yyyy'); return false;" NAME="anchor1" ID="anchor1"><img name="calIcon" border="0" src="calendar_icon.jpg" width="27" height="23"></A></td><td><INPUT type="submit" name="updateDate" value="Update Date" size="25"></td></tr>
-			</TABLE>
+			
 		</FORM>
 		<FORM name="updateTime" action="rideEditSuccess.jsp" method="post">
-		<!-- <FORM name="updateTime" action="test.jsp" method="post">-->
-			<input type="hidden" name="updateRide" value="yes"/>
+			<INPUT type="hidden" name="updateRide" value="yes"/>
 			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect")%>">
-			<TABLE>
+			
 				<tr> <td> Time: </td><td><INPUT TYPE="text" NAME="Rtime" SIZE="25" value=<%=timeR%>></td><td><INPUT type="submit" name="updateTime" value="Update Time" size="25"></td></tr>
 			</TABLE>
 		</FORM>
+		</div>
+		<br /><br />
+		<h3>Additional Information:</h3>
+		<div class="Box" id="Box">
 		<FORM name="updateSeats" action="rideEditSuccess.jsp" method="post">
-			<input type="hidden" name="updateRide" value="yes"/>
+			<INPUT type="hidden" name="updateRide" value="yes"/>
 			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect")%>">
 			<TABLE>
 				<tr><td>Seats: </td><td><INPUT TYPE="text" NAME="numSeats" value=<%=seats%> SIZE="25"></td><td><INPUT type="submit" name="updateSeats" value="Update Seats" size="25"></td></tr>
 			</TABLE>
 		</FORM>
+		</div>
 		<FORM name="withdraw" action="rideEditSuccess.jsp" method="post">
 			<input type="hidden" name="remRide"/>
 			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect")%>">
-			<TABLE class='rideWithdraw'>
-				<tr> <td><INPUT type="submit" name="removeRide" value="Withdraw Ride" size="25"></td> </tr>
-			</TABLE>
+			<p>Click here to <INPUT type="submit" name="removeRide" value="Withdraw Ride" size="25"></p>
+			<p>Warning: social score penalty.</p>
 		</FORM>
-	<table>
-		<tr> <th colspan='2' style='border:2px outset #333333'>Riders awaiting your approval</th><th>&nbsp;</th> <th>&nbsp;</th></tr>
-		<tr><th>&nbsp;</th></tr>
+		</div>
+		<br /><br />
+		<h2>Other Users:</h2>
+		<div class="Box" id="Box">
+		<br />
+		<h3>Riders awaiting your approval:</h3>
+		<div class="Box" id="Box">
 		<%=requestTable%>
-	</table>
-	<table>
-		<tr> <th colspan='2' style='border:2px outset #333333'>Riders you have approved</th><th>&nbsp;</th> <th>&nbsp;</th></tr>
-		<tr><th>&nbsp;</th></tr>
+		</div>
+		<br />
+		<h3>Riders you have approved:</h3>
+		<div class="Box" id="Box">
 		<%=acceptedTable%>
-	</table>
+		</div> </div>
+		<br /><br />
+		<h2>Ride Comments:</h2>
+		<div class="Box" id="Box">
 		<%=table%>
 		<FORM name = "addComment" action="addAComment.jsp" method="post">
 			<TABLE width="100%">
@@ -300,6 +310,7 @@
 				</td></tr>
 			</TABLE>
 		</FORM>
+		</div>
 	</DIV>
 
 	<%@ include file="leftMenu.html" %>
