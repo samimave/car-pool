@@ -23,7 +23,8 @@ if(s.getAttribute("signedin") != null ) {
 
 	<DIV class="Content" id="Content">
 		<p>A paragraph or two about our website</p>
-		<p><a href="welcome.jsp">Home</a></p>
+		<br /> <br /> <br />
+		<p>-- <a href="welcome.jsp">Home</a> --</p>
 	</DIV>
 
 <%
