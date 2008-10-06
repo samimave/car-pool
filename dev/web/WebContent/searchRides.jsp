@@ -49,10 +49,20 @@ while (rl.next()){
 		<DIV class="Content" id="Content">
 			<h2 class="title" id="title">Find Rides</h2>
 			<br /><br />
-			<h2>Search:</h2>
+			<h2>Manual Search:</h2>
 			<div class="Box" id="Box">
 			<p>There are currently <%=rideCount %> rides in the database!</p> 
 			<br />
+			<FORM name="showAll" id="showAll" method="post" action="resultall.jsp">
+				<INPUT type="hidden" name="showAll" value="yes"/>
+				<TABLE class="rideSearch">
+					<tr> <td>Click here to </td><td><INPUT TYPE="submit" NAME="all" VALUE="Show All Rides" SIZE="25"></td></tr>
+				</TABLE>
+			</FORM>
+			</div>
+			<br /><br />
+			<h2>Automatic Search:</h2>
+			<div class="Box" id="Box">
 			<p>Please enter the search criteria in the boxes below and click search.</p>
 			<FORM NAME="searchFrm" id="search" method="post" action="result.jsp">	
 				<TABLE class="rideSearch">
@@ -72,16 +82,6 @@ while (rl.next()){
 					<tr> <td>OR User:</td> <td><INPUT TYPE="text" NAME="sUser" VALUE="" SIZE="25"></td> </tr>
 					<tr> <td>&nbsp;</td> <td><INPUT TYPE="submit" NAME="search" VALUE="Search" SIZE="25"></td> </tr>
 
-				</TABLE>
-			</FORM>
-			</div>
-			<br /><br />
-			<h2>Manual Search:</h2>
-			<div class="Box" id="Box">
-			<FORM name="showAll" id="showAll" method="post" action="resultall.jsp">
-				<INPUT type="hidden" name="showAll" value="yes"/>
-				<TABLE class="rideSearch">
-					<tr> <td>Click here to </td><td><INPUT TYPE="submit" NAME="all" VALUE="Show All Rides" SIZE="25"></td></tr>
 				</TABLE>
 			</FORM>
 			</div>
