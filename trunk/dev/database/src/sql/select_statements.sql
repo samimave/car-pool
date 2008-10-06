@@ -96,3 +96,13 @@ FROM matches,ride,social
 WHERE ride.idUser = 450
 AND matches.idRide = ride.idRide
 AND matches.idTrip = social.idTrip;
+
+
+SELECT l.street as start, ll.street as end
+FROM User, Matches, Ride, Locations as l, Locations as ll
+WHERE User.idUser = 10 
+AND Matches.idUser = User.idUser
+AND Matches.idRide = Ride.idRide
+AND Matches.idUser <> Ride.idUser 
+AND Ride.rideStartLocation = l.idlocations
+AND Ride.rideStopLocation = ll.idlocations;

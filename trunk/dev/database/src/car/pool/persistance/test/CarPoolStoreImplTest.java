@@ -229,7 +229,7 @@ public class CarPoolStoreImplTest extends TestCase {
 		int ride = 0;
 		try {
 			Date date = new Date(System.currentTimeMillis());
-			ride = cps.addRide(id, 4, date.toString(), idLocation, idLocation, 0, 0, "5:22 PM", "be on time");
+			ride = cps.addRide(id, 4, date.toString(), idLocation, idLocation, 0,1 , 0, "5:22 PM", "be on time");
 		} catch (RideException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -247,7 +247,7 @@ public class CarPoolStoreImplTest extends TestCase {
 		}
 		
 		try {
-			cps.takeRide(u, ride, idLocation, 0);
+			cps.takeRide(u, ride, idLocation, 0,1);
 		} catch (RideException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -336,9 +336,9 @@ public class CarPoolStoreImplTest extends TestCase {
 		
 		try {
 			int idUser = cps.addUser("jordan", "jordan.d.carter@gmail.com", "0274681876", "thisismypassword");
-			int idRide = cps.addRide(idUser, 4, date.toString(), idLocation, idLocation, 0, 0, "5:22 PM", "be on time");
+			int idRide = cps.addRide(idUser, 4, date.toString(), idLocation, idLocation, 0,1 , 0, "5:22 PM", "be on time");
 			cps.attachOpenID("www.google.com", idUser);
-			cps.takeRide(idUser, idRide, idLocation, 0);
+			cps.takeRide(idUser, idRide, idLocation, 0,1);
 		
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -380,9 +380,9 @@ public class CarPoolStoreImplTest extends TestCase {
 		}
 		try {
 			int idUser = cps.addUser("thisismypassword","jordan", "jordan.d.carter@gmail.com", "0274681876");
-			int idRide = cps.addRide(idUser, 4, date.toString(), idLocation, idLocation2, 0, 0, "noon", "this is a comment");
+			int idRide = cps.addRide(idUser, 4, date.toString(), idLocation, idLocation2, 0,1 , 0, "noon", "this is a comment");
 			cps.attachOpenID("www.google.com", idUser);
-			cps.takeRide(idUser, idRide, idLocation2, 0);
+			cps.takeRide(idUser, idRide, idLocation2, 0,1);
 		
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -467,13 +467,15 @@ public class CarPoolStoreImplTest extends TestCase {
 		try {
 			int idUser = cps.addUser("jordan", "jordan.d.carter@gmail.com", "0274681876", "thisismypassword");
 			int idUser2 = cps.addUser("jordanda", "jordan.d.caasdfrter@gmail.com", "027468187adsfasdf6", "thisismypassword");
-			int idRide = cps.addRide(idUser, 4, date.toString(), idLocation, idLocation, 0, 0, "5:22 PM", "be on time");
+			int idRide = cps.addRide(idUser, 4, date.toString(), idLocation, idLocation, 0,1 , 0, "5:22 PM", "be on time");
 			cps.attachOpenID("www.google.com", idUser);
 			assertEquals(4, cps.getAvailableSeats(idRide));
 			assertEquals(4, cps.getMaxSeats(idRide));
-			cps.takeRide(idUser2, idRide, idLocation, 0);
+			cps.takeRide(idUser2, idRide, idLocation, 0,1);
 			assertEquals(3, cps.getAvailableSeats(idRide));
 			assertEquals(4, cps.getMaxSeats(idRide));
+			cps.acceptUser(idUser2, idRide, 0);
+			assertEquals(3, cps.getAvailableSeats(idRide));
 			
 		
 		} catch (Exception e) {
@@ -594,47 +596,47 @@ public class CarPoolStoreImplTest extends TestCase {
 */			
 			Date date = new Date(System.currentTimeMillis());
 			//addRide(int user, int availableSeats, String startDate, int startLocation, int endLocation, int streetNumber, int reoccur, String time, String comment)			
-			int ride1 = cps.addRide(a, 4, date.toString(), idLocation, idLocation, 0, 0, "5:22 PM", "be on time");
-			int ride2 = cps.addRide(b, 4, date.toString(), idLocation, idLocation,1, 0, "6:22 AM", "no latecomers please");
-			int ride3 = cps.addRide(c, 4, date.toString(), idLocation, idLocation,2, 0, "3:22 PM", "I might be a few minutes late");
-			int ride4 = cps.addRide(d, 4, date.toString(), idLocation, idLocation,3, 0, "9:22 PM", "be on time");
+			int ride1 = cps.addRide(a, 4, date.toString(), idLocation, idLocation, 0,1 , 0, "5:22 PM", "be on time");
+			int ride2 = cps.addRide(b, 4, date.toString(), idLocation, idLocation,1,1 , 0, "6:22 AM", "no latecomers please");
+			int ride3 = cps.addRide(c, 4, date.toString(), idLocation, idLocation,2,1 , 0, "3:22 PM", "I might be a few minutes late");
+			int ride4 = cps.addRide(d, 4, date.toString(), idLocation, idLocation,3,1 , 0, "9:22 PM", "be on time");
 //			int ride5 = cps.addRide(e, 4, date.toString(), "asgadfg", "adfgadfgafd home");
 			
-			cps.takeRide(e, ride1, idLocation,0);
-			cps.takeRide(f, ride1, idLocation,0);
-			cps.takeRide(g, ride1, idLocation,0);
-			cps.takeRide(h, ride1, idLocation,0);
+			cps.takeRide(e, ride1, idLocation,0,1);
+			cps.takeRide(f, ride1, idLocation,0,1);
+			cps.takeRide(g, ride1, idLocation,0,1);
+			cps.takeRide(h, ride1, idLocation,0,1);
 			
-			cps.takeRide(i, ride2, idLocation,0);
-			cps.takeRide(j, ride2, idLocation,0);
+			cps.takeRide(i, ride2, idLocation,0,1);
+			cps.takeRide(j, ride2, idLocation,0,1);
 			
-			cps.takeRide(g, ride3, idLocation,0);
-			cps.takeRide(h, ride3, idLocation,0);
+			cps.takeRide(g, ride3, idLocation,0,1);
+			cps.takeRide(h, ride3, idLocation,0,1);
 			
-			cps.takeRide(k, ride3, idLocation,0);
-			cps.takeRide(l, ride4, idLocation,0);
+			cps.takeRide(k, ride3, idLocation,0,1);
+			cps.takeRide(l, ride4, idLocation,0,1);
 			
 			
 			RideDetail rd = cps.getRideDetail(ride1);
 			
 			while(rd.hasNext()){
-				System.out.println("userid: " + rd.getUserID() + ", username: " + rd.getUsername() + ", street number: " + rd.getStreetNumber());
+				System.out.println("userid: " + rd.getUserID() + ", username: " + rd.getUsername() + ", street number: " + rd.getStreetNumber() + "," + rd.getStreetNumberEnd()+ ", geoLocation: " + rd.getGeoLocation());
 			}
 			
 			rd = cps.getRideDetail(ride2);
 			
 			while(rd.hasNext()){
-				System.out.println("userid: " + rd.getUserID() + ", username: " + rd.getUsername() + ", street number: " + rd.getStreetNumber());
+				System.out.println("userid: " + rd.getUserID() + ", username: " + rd.getUsername() + ", street number: " + rd.getStreetNumber() + "," + rd.getStreetNumberEnd()+ ", geoLocation: " + rd.getGeoLocation());
 			}
 			rd = cps.getRideDetail(ride3);
 			
 			while(rd.hasNext()){
-				System.out.println("userid: " + rd.getUserID() + ", username: " + rd.getUsername() + ", street number: " + rd.getStreetNumber());
+				System.out.println("userid: " + rd.getUserID() + ", username: " + rd.getUsername() + ", street number: " + rd.getStreetNumber() + "," + rd.getStreetNumberEnd()+ ", geoLocation: " + rd.getGeoLocation());
 			}
 			rd = cps.getRideDetail(ride4);
 			
 			while(rd.hasNext()){
-				System.out.println("userid: " + rd.getUserID() + ", username: " + rd.getUsername() + ", street number: " + rd.getStreetNumber());
+				System.out.println("userid: " + rd.getUserID() + ", username: " + rd.getUsername() + ", street number: " + rd.getStreetNumber() + "," + rd.getStreetNumberEnd()+ ", geoLocation: " + rd.getGeoLocation());
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -676,25 +678,25 @@ public class CarPoolStoreImplTest extends TestCase {
 */			
 			Date date = new Date(System.currentTimeMillis());
 			//addRide(int user, int availableSeats, String startDate, int startLocation, int endLocation, int streetNumber, int reoccur, String time, String comment)			
-			int ride1 = cps.addRide(a, 4, date.toString(), idLocation, idLocation, 0, 0, "5:22 PM", "be on time");
-			int ride2 = cps.addRide(b, 4, date.toString(), idLocation, idLocation,1, 0, "6:22 AM", "no latecomers please");
-			int ride3 = cps.addRide(c, 4, date.toString(), idLocation, idLocation,2, 0, "3:22 PM", "I might be a few minutes late");
-			int ride4 = cps.addRide(d, 4, date.toString(), idLocation, idLocation,3, 0, "9:22 PM", "be on time");
+			int ride1 = cps.addRide(a, 4, date.toString(), idLocation, idLocation, 0,1 , 0, "5:22 PM", "be on time");
+			int ride2 = cps.addRide(b, 4, date.toString(), idLocation, idLocation,1,1 , 0, "6:22 AM", "no latecomers please");
+			int ride3 = cps.addRide(c, 4, date.toString(), idLocation, idLocation,2,1 , 0, "3:22 PM", "I might be a few minutes late");
+			int ride4 = cps.addRide(d, 4, date.toString(), idLocation, idLocation,3,1 , 0, "9:22 PM", "be on time");
 //			int ride5 = cps.addRide(e, 4, date.toString(), "asgadfg", "adfgadfgafd home");
 			
-			cps.takeRide(e, ride1, idLocation,0);
-			cps.takeRide(f, ride1, idLocation,0);
-			cps.takeRide(g, ride1, idLocation,0);
-			cps.takeRide(h, ride1, idLocation,0);
+			cps.takeRide(e, ride1, idLocation,0,1);
+			cps.takeRide(f, ride1, idLocation,0,1);
+			cps.takeRide(g, ride1, idLocation,0,1);
+			cps.takeRide(h, ride1, idLocation,0,1);
 			
-			cps.takeRide(i, ride2, idLocation,0);
-			cps.takeRide(j, ride2, idLocation,0);
+			cps.takeRide(i, ride2, idLocation,0,1);
+			cps.takeRide(j, ride2, idLocation,0,1);
 			
-			cps.takeRide(g, ride3, idLocation,0);
-			cps.takeRide(h, ride3, idLocation,0);
+			cps.takeRide(g, ride3, idLocation,0,1);
+			cps.takeRide(h, ride3, idLocation,0,1);
 			
-			cps.takeRide(k, ride3, idLocation,0);
-			int trip1 = cps.takeRide(l, ride4, idLocation,0);
+			cps.takeRide(k, ride3, idLocation,0,1);
+			int trip1 = cps.takeRide(l, ride4, idLocation,0,1);
 			
 			
 			cps.addScore(trip1, g, 3);
@@ -736,16 +738,16 @@ public class CarPoolStoreImplTest extends TestCase {
 	
 			Date date = new Date(System.currentTimeMillis());
 			//addRide(int user, int availableSeats, String startDate, int startLocation, int endLocation, int streetNumber, int reoccur, String time, String comment)			
-			int ride1 = cps.addRide(a, 4, date.toString(), idLocation, idLocation, 0, 0, "5:22 PM", "be on time");
-			int ride2 = cps.addRide(b, 4, date.toString(), idLocation, idLocation,1, 0, "6:22 AM", "no latecomers please");
-			int ride3 = cps.addRide(c, 4, date.toString(), idLocation, idLocation,2, 0, "3:22 PM", "I might be a few minutes late");
-			int ride4 = cps.addRide(d, 4, date.toString(), idLocation, idLocation,3, 0, "9:22 PM", "be on time");
+			int ride1 = cps.addRide(a, 4, date.toString(), idLocation, idLocation, 0,1 , 0, "5:22 PM", "be on time");
+			int ride2 = cps.addRide(b, 4, date.toString(), idLocation, idLocation,1,1 , 0, "6:22 AM", "no latecomers please");
+			int ride3 = cps.addRide(c, 4, date.toString(), idLocation, idLocation,2,1 , 0, "3:22 PM", "I might be a few minutes late");
+			int ride4 = cps.addRide(d, 4, date.toString(), idLocation, idLocation,3,1 , 0, "9:22 PM", "be on time");
 //			int ride5 = cps.addRide(e, 4, date.toString(), "asgadfg", "adfgadfgafd home");
 			
-			assertEquals(cps.takeRide(e, ride1, idLocation,0),cps.getTripID(ride1, e));
-			assertEquals(cps.takeRide(f, ride1, idLocation,0),cps.getTripID(ride1, f));
-			assertEquals(cps.takeRide(g, ride1, idLocation,0),cps.getTripID(ride1, g));
-			assertEquals(cps.takeRide(h, ride1, idLocation,0),cps.getTripID(ride1, h));
+			assertEquals(cps.takeRide(e, ride1, idLocation,0,1),cps.getTripID(ride1, e));
+			assertEquals(cps.takeRide(f, ride1, idLocation,0,1),cps.getTripID(ride1, f));
+			assertEquals(cps.takeRide(g, ride1, idLocation,0,1),cps.getTripID(ride1, g));
+			assertEquals(cps.takeRide(h, ride1, idLocation,0,1),cps.getTripID(ride1, h));
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
