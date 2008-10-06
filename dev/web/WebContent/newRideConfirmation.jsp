@@ -31,7 +31,8 @@
 				.getParameter("numSeats")), strOutDt, Integer
 				.parseInt(request.getParameter("streetFrom")), Integer
 				.parseInt(request.getParameter("streetTo")), Integer
-				.parseInt(request.getParameter("houseFrom")), 0,
+				.parseInt(request.getParameter("houseFrom")), Integer
+				.parseInt(request.getParameter("houseTo")) , 0,
 				request.getParameter("depTime"), request
 						.getParameter("xtraInfo"));
 		//add social score

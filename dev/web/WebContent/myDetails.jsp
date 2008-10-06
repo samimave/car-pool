@@ -146,7 +146,7 @@ if (s.getAttribute("signedin") != null) {
 	//if you have been redirected here from taking a ride print useful info
 	if (request.getParameter("rideSelect") != null && request.getParameter("streetTo") != null && request.getParameter("houseNo") != null) {
 		cps.takeRide(currentUser,Integer.parseInt(request.getParameter("rideSelect")),Integer.parseInt(request.getParameter("streetTo")),
-			Integer.parseInt(request.getParameter("houseNo")));
+			Integer.parseInt(request.getParameter("houseNo")),Integer.parseInt(request.getParameter("houseNo"))); //TODO: house end number?
 		LocationList locations = cps.getLocations();
 		String target = "";
 		while (locations.next()){
