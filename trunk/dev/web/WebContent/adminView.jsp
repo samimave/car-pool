@@ -85,7 +85,10 @@ if (rExist){
 		<%@ include file="heading.html" %>
 
 		<DIV class="Content" id="Content">
-			<h2>Administrative functions below</h2>
+			<h2 class="title" id="title">Administrative Options</h2>
+			<br /><br />
+			<h2>Database:</h2>
+			<div class="Box" id="Box">
 			<FORM NAME="admin" action="#" method="post" >				
 				<table>
 					<tr><td>Add new locations to database?</td>
@@ -111,20 +114,25 @@ if (rExist){
 					</tr>
 				</table>
 			</FORM>
-			<br />
-			<FORM NAME="resultFrm" id="result">	
-				<h2>All users in the system</h2>
+			</div>
+			<br /><br />
+			<h2>Users and Rides in the System:</h2>
+			<div class="Box" id="Box">
+			<FORM NAME="resultFrm" id="result">
+				<h3>Users:</h3>	
 				<TABLE>
 					<tr><td><%=userTable%></td></tr>
 				</TABLE>
-				<br />					
-				<h2>All rides in the system</h2>
+				<br />
+				<h3>Rides:</h3>					
 				<TABLE>
 					<%=rideTable %>					
 				</TABLE>
 			</FORM>
-			<br />
-			<h2>Setup Email form</h2>
+			</div>
+			<br /><br />
+			<h2>Setup Email Functionality:</h2>
+			<div class="Box" id="Box">
 			<form id="email" action="javascript:void(0)" onsubmit="return setupemail(this)">
 				<input type="hidden" name="emailconfig" value="yes"/>
 				<table class="email">
@@ -138,7 +146,11 @@ if (rExist){
 					<tr><td>&nbsp;</td><td><input type="submit"/> </td></tr>
 				</table>
 			</form>
+			</div>
+			<br /> <br /> <br />
+			<p>-- <a href="welcome.jsp">Home</a> --</p>
 		</DIV>
+
 	<%@ include file="leftMenu.html" %>
 
 	</BODY>

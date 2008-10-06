@@ -123,4 +123,8 @@ BODY #Header
 	padding: 10px;
 	width: 600px;
 }
+#Box #Box
+{
+	width: 580px;	
+}
 /*BlueRobot used here - http://www.bluerobot.com/web/layouts/*/
