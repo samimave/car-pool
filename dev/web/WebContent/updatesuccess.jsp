@@ -4,6 +4,7 @@
 <%
 HttpSession s = request.getSession(false);
 
+//force the user to login to view the page
 //a container for the users information
 User user = null;
 if(s.getAttribute("signedin") != null ) {
