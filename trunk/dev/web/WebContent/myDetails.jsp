@@ -73,8 +73,10 @@ if (session.isNew() || (OpenIdFilter.getCurrentUser(session) == null && session.
 		
 		if((tr.getConfirmed()==true)){
 			rideExist = true;
-			acceptedTable += "<tr><FORM action=\"myDetails.jsp\" method=\"post\">";	
-			acceptedTable += "<INPUT type=\"hidden\" name=\"withdrawRide\" value=\"yes" + "\">";
+			acceptedTable += "<tr><FORM action=\"rideEditSuccess.jsp\" method=\"post\">";	
+			acceptedTable += "<INPUT type=\"hidden\" name=\"withdrawConfirmedRide\" value=\"yes" + "\">";			
+			acceptedTable += "<INPUT type=\"hidden\" name=\"withdrawUserID\" value=\""+currentUser + "\">";
+			acceptedTable += "<INPUT type=\"hidden\" name=\"withdrawRideID\" value=\""+tr.getRideID() + "\">";			
 			//acceptedTable += "<td>"+ tr.getUsername() +"</td> ";	
 			acceptedTable += "<td>"+ from +"</td> ";
 			acceptedTable += "<td>"+ to +"</td> ";
@@ -88,12 +90,18 @@ if (session.isNew() || (OpenIdFilter.getCurrentUser(session) == null && session.
 		}
 		else if (tr.getConfirmed()!=true){
 			awaitExist = true;
-			awaitTable += "<tr><td>"+from+"</td>";
+			awaitTable += "<tr><FORM action=\"rideEditSuccess.jsp\" method=\"post\">";
+			awaitTable += "<INPUT type=\"hidden\" name=\"withdrawNotConfirmedRide\" value=\"yes" + "\">";
+			awaitTable += "<INPUT type=\"hidden\" name=\"withdrawUserID\" value=\""+currentUser + "\">";
+			awaitTable += "<INPUT type=\"hidden\" name=\"withdrawRideID\" value=\""+tr.getRideID() + "\">";
+			awaitTable += "<td>"+from+"</td>";
 			awaitTable += "<td>"+ to+"</td>";
 			awaitTable += "<td>"+ new SimpleDateFormat("dd/MM/yyyy").format(tr.getRideDate()) +"</td> ";
 			awaitTable += "<td>"+ tr.getTime() +"</td> ";
+			awaitTable += "<td>"+ tr.getStreetNumber()+" "+ tr.getPickUp() +"</td>";
+			awaitTable += "<td><INPUT type=\"submit\" value=\"Withdraw\" /></td>";
 			awaitTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ tr.getRideID() +"&userselect="+tr.getUsername() +"'>"+ "Link to ride page" +"</a> </td>";
-			
+			awaitTable += "</FORM></tr>";
 		}
 	}
 
@@ -104,7 +112,7 @@ if (session.isNew() || (OpenIdFilter.getCurrentUser(session) == null && session.
 		
 	if (awaitExist) {
 		awaitTable = "<table class='rideDetailsSearch'> <tr><th>Starting From</th> <th>Going To</th>"+
-		"<th>Departure Date</th> <th>Departure Time</th> <th>Link</th> </tr>"+ awaitTable +"</table>";
+		"<th>Departure Date</th> <th>Departure Time</th> <th>Your Pick Up Point</th> <th>Withdraw from Ride</th> <th>Link</th> </tr>"+ awaitTable +"</table>";
 	}
 	
 

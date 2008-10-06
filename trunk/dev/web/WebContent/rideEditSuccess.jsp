@@ -83,6 +83,17 @@ if (session.isNew() || (OpenIdFilter.getCurrentUser(session) == null && session.
 	 	updateUserConf = "<p>" + "You have removed the user you wanted to" + "</p>";
 	}
 	
+	//if you have been redirected here from withdraw the user from ride print useful info
+	//IF YOU WITHDRAW YOURSELF FROM THE RIDE YOU HAVE TAKEN OR THE RIDE YOU HAVE REQUESTED UPDATE DATABASE
+	if (request.getParameter("withdrawConfirmedRide")!= null){
+	 	cps.removeRide(Integer.parseInt(request.getParameter("withdrawUserID")),Integer.parseInt(request.getParameter("withdrawRideID")));
+	 	updateUserConf = "<p>" + "You have withdraw from the ride you wanted to" + "</p>";
+	}
+	if (request.getParameter("withdrawNotConfirmedRide")!= null){
+	 	cps.removeRide(Integer.parseInt(request.getParameter("withdrawUserID")),Integer.parseInt(request.getParameter("withdrawRideID")));
+	 	updateUserConf = "<p>" + "You have withdraw from the ride you wanted to" + "</p>";
+	}
+	
 	
 
 }
