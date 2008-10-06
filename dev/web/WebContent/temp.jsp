@@ -13,7 +13,7 @@
 		user = (User) s.getAttribute("user");
 
 		Formatter formatter = new Formatter();
-		//code to allow interaction with db
+		//code to allow interaction with dbs
 		CarPoolStore cps = new CarPoolStoreImpl();
 		RideListing rl = cps.getRideListing();
 		int currentUser = cps.getUserIdByURL(OpenIdFilter.getCurrentUser(s));
