@@ -170,7 +170,7 @@ String options = "";
 						Streets is a combo box so user can type or use drop down to select
 						a street. All streets boxes will need to be populated 
 						from the database table streets*/%>
-					<br /><br />
+					<br />
 					<h3>Departure:</h3>
 					<div class="Box" id="Box">
 					<TABLE class="rideDetails">
@@ -206,7 +206,7 @@ String options = "";
 					<h3>Timing:</h3>
 					<div class="Box" id="Box">
 					<table class="rideDetails">
-					<tr> <td>Recurrence:</td> <td>
+					<%/*<tr> <td>Recurrence:</td> <td>
 					<SELECT name="recurrence"  onchange="process_choice(this,document.offerFrm.depDate, document.offerFrm.depDays, document.offerFrm.calIcon, document.offerFrm.calIcon)">
 						<option value="sel">Choose One</option>
 						<option value="0">One-Off</option>
@@ -221,9 +221,10 @@ String options = "";
 						<option value=5>Friday</option>
 						<option value=6>Saturday</option>
 						<option value=7>Sunday</option>
-					</SELECT></td> </tr>
-					<tr> <td>Departure Time(hh:mm):</td> <td><INPUT TYPE="text" NAME="depTime" VALUE="<%= time %>" SIZE="25"></td> </tr>
-					<tr> <td>Approx Trip Length(min):</td> <td><INPUT TYPE="text" NAME="tripLength" VALUE="15" SIZE="25"></td> </tr>
+					</SELECT></td> </tr>*/%>
+					<tr> <td>Departure Date (dd/MM/yyyy):</td> <td><INPUT TYPE="text" NAME="depDate" VALUE="<%=date %>" SIZE="25"> <A HREF="#" onClick="cal.select(document.forms['offerFrm'].depDate,'anchor1','dd/MM/yyyy'); return false;" NAME="anchor1" ID="anchor1"><img name="calIcon" border="0" src="calendar_icon.jpg" width="27" height="23"></A> </td> </tr>
+					<tr> <td>Departure Time (hh:mm):</td> <td><INPUT TYPE="text" NAME="depTime" VALUE="<%= time %>" SIZE="25"></td> </tr>
+					<tr> <td>Approx Trip Length (min):</td> <td><INPUT TYPE="text" NAME="tripLength" VALUE="15" SIZE="25"></td> </tr>
 					</table>
 					</div>
 					
