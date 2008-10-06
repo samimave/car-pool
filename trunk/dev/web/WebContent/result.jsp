@@ -151,7 +151,7 @@
 				if (user != null) {
 					dateTable += "<td> <a href='"
 							+ request.getContextPath()
-							+ "/temp2.jsp?rideselect="
+							+ "/rideDetails.jsp?rideselect="
 							+ daTbl.getRideID() + "&userselect="
 							+ daTbl.getUsername() + "'>"
 							+ "Link to ride page" + "</a> </td> </tr>";
@@ -196,7 +196,7 @@
 				if (user != null) {
 					fromTable += "<td> <a href='"
 							+ request.getContextPath()
-							+ "/temp2.jsp?rideselect=" + f.getRideID()
+							+ "/rideDetails.jsp?rideselect=" + f.getRideID()
 							+ "&userselect=" + f.getUsername() + "'>"
 							+ "Link to ride page" + "</a> </td> </tr>";
 				} else {
@@ -240,7 +240,7 @@
 				if (user != null) {
 					toTable += "<td> <a href='"
 							+ request.getContextPath()
-							+ "/temp2.jsp?rideselect=" + t.getRideID()
+							+ "/rideDetails.jsp?rideselect=" + t.getRideID()
 							+ "&userselect=" + t.getUsername() + "'>"
 							+ "Link to ride page" + "</a> </td> </tr>";
 				} else {

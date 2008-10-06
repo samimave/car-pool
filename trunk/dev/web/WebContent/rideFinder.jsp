@@ -73,7 +73,7 @@ if (strTmp != "")	{
 			dateTable += "<td>"+ daTbl.getAvailableSeats() +"</td> ";
 			daTbl
 			if (user != null) {	
-				dateTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ daTbl.getRideID() +"&userselect="+daTbl.getUsername()+"'>"+ "Link to ride page" +"</a> </td> </tr>";
+				dateTable += "<td> <a href='"+ request.getContextPath() +"/rideDetails.jsp?rideselect="+ daTbl.getRideID() +"&userselect="+daTbl.getUsername()+"'>"+ "Link to ride page" +"</a> </td> </tr>";
 			} else {
 				dateTable += "<td>login to view more</td> </tr>";
 			}

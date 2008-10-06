@@ -97,7 +97,7 @@ if (s.getAttribute("signedin") != null) {
 			acceptedTable += "<INPUT type=\"hidden\" name=\"withdrawRideID\" value=\""+tr.getRideID() + "\">";			
 			//acceptedTable += "<td>"+ tr.getUsername() +"</td> ";	
 			acceptedTable += "<td><INPUT type=\"submit\" value=\"Withdraw\" /></td>";
-			acceptedTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ tr.getRideID() +"&userselect="+tr.getUsername() +"'>"+ "Link to ride page" +"</a> </td>";
+			acceptedTable += "<td> <a href='"+ request.getContextPath() +"/rideDetails.jsp?rideselect="+ tr.getRideID() +"&userselect="+tr.getUsername() +"'>"+ "Link to ride page" +"</a> </td>";
 			acceptedTable += "</FORM></tr>";
 			
 		}
@@ -114,7 +114,7 @@ if (s.getAttribute("signedin") != null) {
 			awaitTable += "<td>"+ tr.getTime() +"</td> ";
 			awaitTable += "<td>"+ tr.getStreetNumber()+" "+ tr.getPickUp() +"</td>";
 			awaitTable += "<td><INPUT type=\"submit\" value=\"Withdraw\" /></td>";
-			awaitTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ tr.getRideID() +"&userselect="+tr.getUsername() +"'>"+ "Link to ride page" +"</a> </td>";
+			awaitTable += "<td> <a href='"+ request.getContextPath() +"/rideDetails.jsp?rideselect="+ tr.getRideID() +"&userselect="+tr.getUsername() +"'>"+ "Link to ride page" +"</a> </td>";
 			awaitTable += "</FORM></tr>";
 		}
 	}

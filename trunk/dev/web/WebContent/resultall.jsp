@@ -38,7 +38,7 @@ while (all.next()) {
 	allTable += "<td>"+ all.getTime() +"</td> ";
 	allTable += "<td>"+ all.getAvailableSeats() +"</td> ";
 	if (user != null) {
-		allTable += "<td> <a href='"+ request.getContextPath() +"/temp2.jsp?rideselect="+ all.getRideID() +"&userselect="+all.getUsername() +"'>"+ "Link to ride page" +"</a> </td> </tr>";
+		allTable += "<td> <a href='"+ request.getContextPath() +"/rideDetails.jsp?rideselect="+ all.getRideID() +"&userselect="+all.getUsername() +"'>"+ "Link to ride page" +"</a> </td> </tr>";
 	} else {
 		allTable += "<td>login to view more</td> </tr>";
 	}
