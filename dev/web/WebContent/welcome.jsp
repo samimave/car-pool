@@ -63,7 +63,7 @@ for (int i=0; i<rideIDs.size(); i++){
 		<p>Your current social score is <%=cps.getScore((user.getUserId()))%></p>
 		<p>Your have offered <%=rideCount%> rides in total so far!</p>
 		<p>Your have <%=requestCount%> users awaiting approval for rides you have offered!</p>
-		<p>Click  <a href=myDetails.jsp>here</a> to access your account page and approve them or edit your details</p>
+		<p>Click  <a href=myDetails.jsp>here</a> to access your account page and approve them or edit your details.</p>
 	</DIV>		
 
 	<%@ include file="leftMenu.html" %>
