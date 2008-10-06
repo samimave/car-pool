@@ -52,7 +52,7 @@ while (all.next()) {
 	String rideTable = allTable; 
 	if (rExist) {
 		rideTable = "<table class='rideDetailsSearch'> <tr> <th>Ride Offered By</th> <th>Starting From</th> <th>Going To</th>"+
-			"<th>Departure Date</th> <th>Departure Time</th> <th>Number of Available Seats</th> <th>More Info</th> </tr>"+ rideTable +"</table>";
+			"<th>Departure Date</th> <th>Departure Time</th> <th>Number of Available Seats</th> <th>More Info</th> </tr>"+ rideTable +"<tr><td>&nbsp;</td></tr><tr><td>&nbsp;</td></tr></table>";
 	}
 	else {
 		rideTable = "<tr><td>No rides were found</td></tr>";
@@ -81,7 +81,7 @@ while (all.next()) {
 			</table>
 			<%=rideTable %>
 
-
+			<tr><td> <a href=searchRides.jsp>Go back to Search page</a> </td> </tr>
 		</DIV>
 
 <%
