@@ -86,6 +86,8 @@ BODY #Header
 	text-align: left;
 	float: left;
 	margin: -40px 20px 20px;
+	position: absolute;
+	top: 150px;
 }
 #Menu P
 {
