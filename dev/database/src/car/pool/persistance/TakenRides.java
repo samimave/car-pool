@@ -10,12 +10,13 @@ private ResultSet rs;
 	
 	public TakenRides(int idUser, Statement statement){
 		rs = null;
-		String sql = 	"SELECT*, l.street as start, ll.street as end "+
-						"FROM Matches, User, Ride, Locations as l, Locations as ll "+
+		String sql = 	"SELECT*, l.street as start, ll.street as end, lll.street as pickUp "+
+						"FROM Matches, User, Ride, Locations as l, Locations as ll, Locations as lll "+
 						"WHERE User.idUser=" +idUser+
 						" AND User.idUser = Matches.idUser "+
 						" AND Matches.idRide = Ride.idRide "+
 						" AND Matches.idUser <> Ride.idUser "+
+						" AND Matches.idLocation = lll.idLocations "+
 						" AND Ride.rideStartLocation = l.idLocations"+
 						" AND Ride.rideStopLocation = ll.idLocations;";
 		try {
@@ -63,5 +64,9 @@ private ResultSet rs;
 	
 	public int getRideID() throws SQLException {
 		return rs.getInt("idRide");
+	}
+	
+	public String getPickUp() throws SQLException{
+		return rs.getString("pickUp");
 	}
 }
