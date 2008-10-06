@@ -78,13 +78,14 @@
 		boolean requestExist = false;
 		boolean acceptExist = false;
 		//TODO: This is the ugliest piece of code I have ever seen in my life, and it doesnt even work! Fix it.
-		/*RideDetail rd = cps.getRideDetail(rideID);
+		//Hmmmm I think I have fixed the issue with the tables but to make the code simpler than this, I don't know how
+		RideDetail rd = cps.getRideDetail(rideID);
 		while (rd.hasNext()) {
 			if (!requestExist) {
-				requestTable = "<tr><td>No users found.</td></tr>";
+				requestTable = "";
 			}
 			if (!acceptExist) {
-				acceptedTable = "<tr><td>No users found.</td></tr>";
+				acceptedTable = "";
 			}
 			if ((rd.getUserID() != dbID) && (rd.getConfirmed() == false)) {
 				requestExist = true;
@@ -103,14 +104,14 @@
 						+ rd.getUserID() + "\">";
 				requestTable += "<INPUT type=\"hidden\" name=\"confirmForRide\" value=\""
 						+ rideID + "\">";
-				requestTable += "<td><INPUT type=\"submit\" value=\"Reject User\" /></td>";
-				requestTable += "</FORM></tr>";
+				requestTable += "<td><INPUT type=\"submit\" value=\"Reject User\" /></td></tr>";
+				requestTable += "</FORM>";
 			} else if ((rd.getUserID() != dbID)	&& (rd.getConfirmed() == true)) {
 				acceptExist = true;
 				acceptedTable += "<tr><td>"+rd.getUsername()+"</td>";
 				acceptedTable += "<td>" + rd.getStreetNumber()+"&nbsp;"+rd.getLocationName()+"</td></tr>";
 			}
-		}*/
+		}
 
 		if (requestExist) {
 			requestTable = "<table class='rideDetailsSearch'> <tr> <th>Request from</th> <th>Pick Up From</th><th>Confirm</th><th>Reject</th></tr>"
