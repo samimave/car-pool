@@ -392,7 +392,7 @@ public class CarPoolStoreImplTest extends TestCase {
 		RideListing rl = cps.searchRideListing(RideListing.searchUser, "jordan");
 		try {
 			while(rl.next()){
-				System.out.println(rl.getRideID()+", "+rl.getUserID()+", "+rl.getUsername()+", "+rl.getAvailableSeats()+", "+rl.getRideDate().toString()+", "+rl.getTime()+", "+rl.getStartLocation()+", "+rl.getEndLocation());
+				System.out.println(rl.getRideID()+", "+rl.getUserID()+", "+rl.getUsername()+", "+rl.getAvailableSeats()+", "+rl.getRideDate().toString()+", "+rl.getTime()+", "+rl.getStartLocation()+", "+rl.getEndLocation()+" geoLocation:" + rl.getGeoLocation());
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -402,7 +402,7 @@ public class CarPoolStoreImplTest extends TestCase {
 		rl = cps.searchRideListing(RideListing.searchDate, date.toString());
 		try {
 			while(rl.next()){
-				System.out.println(rl.getRideID()+", "+rl.getUserID()+", "+rl.getUsername()+", "+rl.getAvailableSeats()+", "+rl.getRideDate().toString()+", "+rl.getTime()+", "+rl.getStartLocation()+", "+rl.getEndLocation());
+				System.out.println(rl.getRideID()+", "+rl.getUserID()+", "+rl.getUsername()+", "+rl.getAvailableSeats()+", "+rl.getRideDate().toString()+", "+rl.getTime()+", "+rl.getStartLocation()+", "+rl.getEndLocation()+" geoLocation:" + rl.getGeoLocation());
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -412,7 +412,7 @@ public class CarPoolStoreImplTest extends TestCase {
 		rl = cps.searchRideListing(RideListing.searchLocationBoth, "Blair St");
 		try {
 			while(rl.next()){
-				System.out.println(rl.getRideID()+", "+rl.getUserID()+", "+rl.getUsername()+", "+rl.getAvailableSeats()+", "+rl.getRideDate().toString()+", "+rl.getTime()+", "+rl.getStartLocation()+", "+rl.getEndLocation());
+				System.out.println(rl.getRideID()+", "+rl.getUserID()+", "+rl.getUsername()+", "+rl.getAvailableSeats()+", "+rl.getRideDate().toString()+", "+rl.getTime()+", "+rl.getStartLocation()+", "+rl.getEndLocation()+" geoLocation:" + rl.getGeoLocation());
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -422,7 +422,7 @@ public class CarPoolStoreImplTest extends TestCase {
 		rl = cps.searchRideListing(RideListing.searchLocationStart, "Blair St");
 		try {
 			while(rl.next()){
-				System.out.println(rl.getRideID()+", "+rl.getUserID()+", "+rl.getUsername()+", "+rl.getAvailableSeats()+", "+rl.getRideDate().toString()+", "+rl.getTime()+", "+rl.getStartLocation()+", "+rl.getEndLocation());
+				System.out.println(rl.getRideID()+", "+rl.getUserID()+", "+rl.getUsername()+", "+rl.getAvailableSeats()+", "+rl.getRideDate().toString()+", "+rl.getTime()+", "+rl.getStartLocation()+", "+rl.getEndLocation()+" geoLocation:" + rl.getGeoLocation());
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -432,7 +432,7 @@ public class CarPoolStoreImplTest extends TestCase {
 		rl = cps.searchRideListing(RideListing.searchLocationEnd, "Massey");
 		try {
 			while(rl.next()){
-				System.out.println(rl.getRideID()+", "+rl.getUserID()+", "+rl.getUsername()+", "+rl.getAvailableSeats()+", "+rl.getRideDate().toString()+", "+rl.getTime()+", "+rl.getStartLocation()+", "+rl.getEndLocation());
+				System.out.println(rl.getRideID()+", "+rl.getUserID()+", "+rl.getUsername()+", "+rl.getAvailableSeats()+", "+rl.getRideDate().toString()+", "+rl.getTime()+", "+rl.getStartLocation()+", "+rl.getEndLocation()+" geoLocation:" + rl.getGeoLocation());
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -442,7 +442,7 @@ public class CarPoolStoreImplTest extends TestCase {
 		rl = cps.getRideListing();
 		try {
 			while(rl.next()){
-				System.out.println(rl.getRideID()+", "+rl.getUserID()+", "+rl.getUsername()+", "+rl.getAvailableSeats()+", "+rl.getRideDate().toString()+", "+rl.getTime()+", "+rl.getStartLocation()+", "+rl.getEndLocation());
+				System.out.println(rl.getRideID()+", "+rl.getUserID()+", "+rl.getUsername()+", "+rl.getAvailableSeats()+", "+rl.getRideDate().toString()+", "+rl.getTime()+", "+rl.getStartLocation()+", "+rl.getEndLocation()+" geoLocation:" + rl.getGeoLocation());
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
