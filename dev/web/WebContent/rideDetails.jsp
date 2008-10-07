@@ -174,15 +174,16 @@
 		<div class="Box" id="Box">
 		<FORM name="ride" action="myDetails.jsp" method="post">
 			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect")%>">
+			<h3>Please Pick Me Up From:</h3>
 			<TABLE class='rideD'>
-				<tr> <th>Please pick me up from:</th> <td>&nbsp;</td> </tr>
-				<tr> <td>House Number</td> <td><INPUT type="text" name="houseNo"></td> </tr>
-				<tr> <td>Street</td> <td><SELECT name="streetTo">
+				<tr> <td>House Number:</td> <td><INPUT type="text" name="houseNo"></td> </tr>
+				<tr> <td>Street:</td> <td><SELECT name="streetTo">
            				<option selected="selected">Select a Street</option>
 	                	<%=options%>
        				</SELECT></td> </tr>
-				<tr> <td>&nbsp;</td> <td><INPUT type="submit" name="joinRide" value="Take Ride" size="25"></td> </tr>
 			</TABLE>
+			<br />
+			<p>Click here to <INPUT type="submit" name="joinRide" value="Take Ride" size="25"></p>
 		</FORM>
 		</div>
 		<br /><br />
@@ -197,10 +198,9 @@
 					<INPUT type="hidden" name="reDirURL" value="<%=reDirURL%>"/>
 					<TEXTAREA cols="50" rows="4" name="comment"></TEXTAREA>
 				</td></tr>
-				<tr><td>
-					<INPUT type="submit" value="Add Comment" />
-				</td></tr>
 			</TABLE>
+			<br />
+			<p>Click here to <INPUT type="submit" value="Add Comment" /></p>
 		</FORM>
 		</div>
 		<br /> <br /> <br />

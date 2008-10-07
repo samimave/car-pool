@@ -148,7 +148,7 @@ if (s.getAttribute("signedin") != null) {
 		openIDTableRow = "<tr> <td>OpenId to remove:</td> <td><select multiple='multiple' NAME='openid'>"+entries+"</select></td> </tr>";
 	} 
 	if (openIDTableRow != "") {
-		openIDTableForm = "<br /><h3>Detach an OpenId from your account:</h3><FORM action='removeopenid'> <INPUT type='hidden' name='removeopenid' /> <TABLE class='updateDetails'>"+openIDTableRow+"<tr><td>&nbsp;</td> <td><INPUT type='submit' value='Detach'/></td></tr> </TABLE> <br /><br />";
+		openIDTableForm = "<br /><h3>Detach an OpenId from your account:</h3><FORM action='removeopenid'> <INPUT type='hidden' name='removeopenid' /> <TABLE class='updateDetails'>"+openIDTableRow+"<tr></TABLE> <br /><p>Click here to <INPUT type='submit' value='Detach OpenId'/></p><br /><br />";
 	} 
 	
 	//if you have been redirected here from taking a ride print useful info
@@ -207,8 +207,9 @@ if (s.getAttribute("signedin") != null) {
 				<tr> <td>Username:</td> <td><%=user != null ? user.getUserName():""%><!-- <INPUT TYPE="text" NAME="userName" SIZE="25" value="<%=user != null ? user.getUserName() : ""%>">--></td> </tr> 
 				<tr> <td>Email Address:</td> <td><INPUT TYPE="text" NAME="email" SIZE="25" value="<%=user != null ? user.getEmail() : ""%>"></td> </tr> 
 				<tr> <td>Phone Number:</td> <td><INPUT TYPE="text" NAME="phone" SIZE="25" value="<%=user != null ? user.getPhoneNumber() : ""%>"></td> </tr>
-  				<tr> <td>&nbsp;</td> <td><INPUT TYPE="submit" NAME="confirmUpdate" VALUE="Update Details" SIZE="25"></td> </tr>
 			</TABLE>
+			<br />
+			<p>Click here to <INPUT TYPE="submit" NAME="confirmUpdate" VALUE="Update Details" SIZE="25"></p>
 		</FORM>
 		</div>
 		<br /><br />
@@ -220,8 +221,8 @@ if (s.getAttribute("signedin") != null) {
 			<INPUT type="hidden" name="addopenid"/>
 			<TABLE class="updateDetails">
 				<tr><td>OpenId to add:</td> <td><INPUT type="text" name="openid"/ size="25"/></td></tr>
-				<tr><td>&nbsp;</td> <td><INPUT type="submit" value="Attach"/></td></tr>
 			</TABLE>
+			<p>Click here to <INPUT type="submit" value="Attach OpenId"/></p>
 		</FORM>
 		</div>
 		<br /><br />

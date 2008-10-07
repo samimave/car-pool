@@ -84,12 +84,12 @@
 			if (!userExist) {
 				userTable = ""; //first time round get rid of unwanted text
 			}
-			userExist = true;
 
 			String from = u.getStartLocation();
 			String to = u.getEndLocation();
 
-			if (!avoidDuplicates.contains(u.getRideID())) {
+			if (!avoidDuplicates.contains(u.getRideID()) && u.getRideDate().after(new Date())) {
+				userExist = true;
 				avoidDuplicates.add(u.getRideID());
 
 				userTable += "<tr> <td>" + u.getUsername() + "</td> ";
@@ -122,32 +122,27 @@
 
 	if (strTmp != "") {
 
-		RideListing daTbl = cps.searchRideListing(
-				RideListing.searchDate, strOutDt);
+		RideListing daTbl = cps.searchRideListing(RideListing.searchDate, strOutDt);
 
 		while (daTbl.next()) {
 			if (!dateExist) {
 				dateTable = ""; //first time round get rid of unwanted text
 			}
-			dateExist = true;
 
 			//code to get the name associated with the street id
 			String from = daTbl.getStartLocation();
 			String to = daTbl.getEndLocation();
 
-			if (!avoidDuplicates.contains(daTbl.getRideID())) {
+			if (!avoidDuplicates.contains(daTbl.getRideID()) && daTbl.getRideDate().after(new Date())) {
+				dateExist = true;
 				avoidDuplicates.add(daTbl.getRideID());
 
-				dateTable += "<tr> <td>" + daTbl.getUsername()
-						+ "</td> ";
+				dateTable += "<tr> <td>" + daTbl.getUsername()+ "</td> ";
 				dateTable += "<td>" + from + "</td> ";
 				dateTable += "<td>" + to + "</td> ";
-				dateTable += "<td>"
-						+ new SimpleDateFormat("dd/MM/yyyy")
-								.format(daTbl.getRideDate()) + "</td> ";
+				dateTable += "<td>"+ new SimpleDateFormat("dd/MM/yyyy").format(daTbl.getRideDate()) + "</td> ";
 				dateTable += "<td>" + daTbl.getTime() + "</td> ";
-				dateTable += "<td>" + daTbl.getAvailableSeats()
-						+ "</td> ";
+				dateTable += "<td>" + daTbl.getAvailableSeats()+ "</td> ";
 				if (user != null) {
 					dateTable += "<td> <a href='"
 							+ request.getContextPath()
@@ -177,12 +172,12 @@
 			if (!fromExist) {
 				fromTable = ""; //first time round get rid of unwanted text
 			}
-			fromExist = true;
 
 			String from = f.getStartLocation();
 			String to = f.getEndLocation();
 
-			if (!avoidDuplicates.contains(f.getRideID())) {
+			if (!avoidDuplicates.contains(f.getRideID()) && f.getRideDate().after(new Date())) {
+				fromExist = true;
 				avoidDuplicates.add(f.getRideID());
 
 				fromTable += "<tr> <td>" + f.getUsername() + "</td> ";
@@ -221,12 +216,12 @@
 			if (!toExist) {
 				toTable = ""; //first time round get rid of unwanted text
 			}
-			toExist = true;
 
 			String from = t.getStartLocation();
 			String to = t.getEndLocation();
 
-			if (!avoidDuplicates.contains(t.getRideID())) {
+			if (!avoidDuplicates.contains(t.getRideID()) && t.getRideDate().after(new Date())) {
+				toExist = true;
 				avoidDuplicates.add(t.getRideID());
 
 				toTable += "<tr> <td>" + t.getUsername() + "</td> ";

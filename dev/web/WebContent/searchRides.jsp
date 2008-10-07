@@ -29,7 +29,9 @@
 	//count the number of rides in the db
 	RideListing rl = cps.getRideListing();
 	while (rl.next()) {
-		rideCount++;
+		if (rl.getRideDate().after(new Date())) {
+			rideCount++;
+		}
 	}
 %>
 
@@ -65,7 +67,7 @@
 			<br /><br />
 			<h2>Automatic Search:</h2>
 			<div class="Box" id="Box">
-			<p>Please enter the search criteria in the boxes below and click search.</p>
+			<p>Please enter the search criteria in the boxes below and click search. Rides matching any of the entered information will be displayed.</p>
 			<FORM NAME="searchFrm" id="search" method="post" action="result.jsp">	
 				<TABLE class="rideSearch">
 	
@@ -74,17 +76,16 @@
            		  		<option selected="selected">Select a Street</option>
 	           		 	<%=options%>
        				</SELECT></td> </tr>
-					<tr> <td> OR Street To:</td> <td>
+					<tr> <td>Street To:</td> <td>
 					<SELECT name="searchTo">
            		  		<option selected="selected">Select a Street</option>
 	           		  	<%=options%>
        				 </SELECT></td> </tr>
 				
-					<tr> <td>OR Date (dd/MM/yyyy):</td> <td><INPUT TYPE="text" NAME="searchDate" VALUE="<%=date%>" SIZE="25"> <A HREF="#" onClick="cal.select(document.forms['searchFrm'].searchDate,'anchor1','dd/MM/yyyy'); return false;" NAME="anchor1" ID="anchor1"><img name="calIcon" border="0" src="calendar_icon.jpg" width="27" height="23"></A> </td> </tr> 
-					<tr> <td>OR User:</td> <td><INPUT TYPE="text" NAME="sUser" VALUE="" SIZE="25"></td> </tr>
-					<tr> <td>&nbsp;</td> <td><INPUT TYPE="submit" NAME="search" VALUE="Search" SIZE="25"></td> </tr>
-
+					<tr> <td>Date (dd/MM/yyyy):</td> <td><INPUT TYPE="text" NAME="searchDate" VALUE="<%=date%>" SIZE="25"> <A HREF="#" onClick="cal.select(document.forms['searchFrm'].searchDate,'anchor1','dd/MM/yyyy'); return false;" NAME="anchor1" ID="anchor1"><img name="calIcon" border="0" src="calendar_icon.jpg" width="27" height="23"></A> </td> </tr> 
+					<tr> <td>User:</td> <td><INPUT TYPE="text" NAME="sUser" VALUE="" SIZE="25"></td> </tr>
 				</TABLE>
+				<br /><p>Click here to <INPUT TYPE="submit" NAME="search" VALUE="Search Rides" SIZE="25"></p>
 			</FORM>
 			</div>
 			<br /> <br /> <br />
