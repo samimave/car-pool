@@ -24,13 +24,13 @@
 		//if you have been redirected here from deleting a ride print useful info
 		if (request.getParameter("rideSelect") != null
 				&& request.getParameter("remRide") != null) {
-			cps.removeRide(Integer.parseInt(request
+			boolean yes = cps.removeRide(Integer.parseInt(request
 					.getParameter("rideSelect")));
 			cps.addScore(cps.getTripID(Integer.parseInt(request
 					.getParameter("rideSelect")), dbID), dbID, -3);
 			delConf = "<p>"
 					+ "You have successfully deleted the ride you wanted to"
-					+ "</p>";
+					+ yes+"</p>";
 		}
 
 		//if you have been redirected here from editing a ride print useful info
@@ -59,10 +59,12 @@
 
 		//if you have been redirected here from editing a ride print useful info && request.getParameter("Rseats") != null
 		if (request.getParameter("rideSelect") != null
+				&& request.getParameter("startFromHN") != null
 				&& request.getParameter("startFrom") != null) {
 			cps.updateStartLoc(Integer.parseInt(request
 					.getParameter("rideSelect")), Integer
-					.parseInt(request.getParameter("startFrom")));
+					.parseInt(request.getParameter("startFromHN")),Integer
+					.parseInt(request.getParameter("startFrom")),dbID);
 			updateStartS = "<p>"
 					+ "You have successfully updated the ride you wanted to"
 					+ "</p>";
@@ -70,10 +72,12 @@
 
 		//if you have been redirected here from editing a ride print useful info && request.getParameter("Rseats") != null
 		if (request.getParameter("rideSelect") != null
+				&& request.getParameter("endToHN") != null
 				&& request.getParameter("endTo") != null) {
 			cps.updateEndLoc(Integer.parseInt(request
 					.getParameter("rideSelect")), Integer
-					.parseInt(request.getParameter("endTo")));
+					.parseInt(request.getParameter("endToHN")),Integer
+					.parseInt(request.getParameter("endTo")),dbID);
 			updateEndS = "<p>"
 					+ "You have successfully updated the ride you wanted to"
 					+ "</p>";

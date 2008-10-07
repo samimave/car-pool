@@ -10,7 +10,9 @@
 	String date = "";
 	String options = "";
 	String from = "";
+	int fromHouseNo = 0;
 	String to = "";
+	int toHouseNo = 0;
 	String uname = "";
 	int seats = 0;
 	String dateR = null;
@@ -52,8 +54,10 @@
 					detailsTable = ""; //first time round get rid of unwanted text
 				}
 				ridesExist = true;
+				fromHouseNo = u.getStreetStart();
 				from = u.getStartLocation();
 				to = u.getEndLocation();
+				toHouseNo = u.getStreetEnd();
 				uname = u.getUsername();
 				seats = u.getAvailableSeats();
 				dateR = new SimpleDateFormat("dd/MM/yyyy").format(u
@@ -237,7 +241,8 @@
 			<INPUT type="hidden" name="updateRide" value="yes"/>
 			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect")%>">
 			<TABLE>
-				<tr> <td> Start Street: <%=from%></td> <td>&nbsp;</td></tr>
+				<tr> <td> Start Street:  <%=fromHouseNo%> <%=from%></td> <td>&nbsp;</td></tr>
+				<tr><td><INPUT TYPE="text" NAME="startFromHN" SIZE="25" value=<%=fromHouseNo%>></td></tr>
 				<tr> <td><SELECT name="startFrom"><option selected="selected">Select a Street</option><%=options%></SELECT></td><td><INPUT type="submit" name="startFrom" value="Update Street" size="25"></td></tr>
 			</TABLE>
 		</FORM>
@@ -245,7 +250,8 @@
 			<INPUT type="hidden" name="updateRide" value="yes"/>
 			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect")%>">
 			<TABLE>
-				<tr> <td>End Street: <%=to%></td></tr>
+				<tr> <td>End Street:  <%=toHouseNo%> <%=to%></td></tr>
+ 				<tr><td><INPUT TYPE="text" NAME="endToHN" SIZE="25" value=<%=toHouseNo%>></td></tr>
 				<tr> <td><SELECT name="endTo"><option selected="selected">Select a Street</option><%=options%></SELECT></td><td><INPUT type="submit" name="endTo" value="Update Street" size="25"></td></tr>
 			</TABLE>
 		</FORM>
