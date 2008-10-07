@@ -39,16 +39,27 @@
 			}
 			userExist = true;
 			rideIDs.add(rl.getRideID());
+			//to know if there are users awaiting approval
+			RideDetail rd = cps.getRideDetail(rl.getRideID());
+			String requestExistA = "no";
+			while (rd.hasNext()) {
+				if ((rd.getUserID() != currentUser) && (rd.getConfirmed() == false)) {
+					requestExistA = "yes";
+				}
+			}
+			
+			//getting the ride info
 			String from = rl.getStartLocation();
 			String to = rl.getEndLocation();
 			userTable += "<tr> <td>" + rl.getUsername() + "</td> ";
-			userTable += "<td>" + from + "</td> ";
-			userTable += "<td>" + to + "</td> ";
+			userTable += "<td>" + rl.getStreetStart()+" "+from + "</td> ";
+			userTable += "<td>" + rl.getStreetEnd()+" "+to + "</td> ";
 			userTable += "<td>"
 					+ new SimpleDateFormat("dd/MM/yyyy").format(rl
 							.getRideDate()) + "</td> ";
 			userTable += "<td>" + rl.getTime() + "</td> ";
 			userTable += "<td>" + rl.getAvailableSeats() + "</td> ";
+			userTable += "<td>" + requestExistA + "</td> ";
 			userTable += "<td> <a href='" + request.getContextPath()
 					+ "/myRideEdit.jsp?rideselect=" + rl.getRideID()
 					+ "&userselect=" + rl.getUsername() + "'>"
@@ -59,7 +70,7 @@
 
 		if (userExist) {
 			userTable = "<table class='rideDetailsSearch'> <tr> <th>Ride Offered By</th> <th>Starting From</th> <th>Going To</th>"
-					+ "<th>Departure Date</th> <th>Departure Time</th> <th>Number of Available Seats</th><th>Edit Ride Details</th> </tr>"
+					+ "<th>Departure Date</th> <th>Departure Time</th> <th>Number of Available Seats</th><th>Users Awaiting Approval</th><th>Edit Ride Details</th> </tr>"
 					+ userTable + "</table>";
 		}
 
