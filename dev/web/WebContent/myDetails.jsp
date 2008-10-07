@@ -64,7 +64,7 @@ if (s.getAttribute("signedin") != null) {
 			acceptedTable = "";		//first time round get rid of unwanted text
 		}
 		if (!awaitExist) {
-			awaitTable = "";		//first time round get rid of unwanted text
+			awaitTable = ""; 		//first time round get rid of unwanted text
 		}
 		
 		//rideIDs.add(rl.getRideID());
