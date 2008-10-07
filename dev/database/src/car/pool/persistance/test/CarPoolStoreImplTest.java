@@ -804,6 +804,27 @@ public class CarPoolStoreImplTest extends TestCase {
 				assertEquals("this is as geolocation", rl.getGeoLocation());
 			}
 			
+			rl = cps.searchRideListing(RideListing.searchDate, date.toString());
+			while(rl.next()){
+				assertEquals("this is as geolocation", rl.getGeoLocation());
+			}
+			rl = cps.searchRideListing(RideListing.searchLocationBoth, "Blair St");
+			while(rl.next()){
+				assertEquals("this is as geolocation", rl.getGeoLocation());
+			}
+			rl = cps.searchRideListing(RideListing.searchLocationEnd, "Blair St");
+			while(rl.next()){
+				assertEquals("this is as geolocation", rl.getGeoLocation());
+			}
+			rl = cps.searchRideListing(RideListing.searchLocationStart, "Blair St");
+			while(rl.next()){
+				assertEquals("this is as geolocation", rl.getGeoLocation());
+			}
+			rl = cps.searchRideListing(RideListing.searchUser, Integer.toString(f));
+			while(rl.next()){
+				assertEquals("this is as geolocation", rl.getGeoLocation());
+			}
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
