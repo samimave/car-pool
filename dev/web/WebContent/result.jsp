@@ -95,9 +95,7 @@
 				userTable += "<tr> <td>" + u.getUsername() + "</td> ";
 				userTable += "<td>" + from + "</td> ";
 				userTable += "<td>" + to + "</td> ";
-				userTable += "<td>"
-						+ new SimpleDateFormat("dd/MM/yyyy").format(u
-								.getRideDate()) + "</td> ";
+				userTable += "<td>"	+ new SimpleDateFormat("dd/MM/yyyy").format(u.getRideDate()) + "</td> ";
 				userTable += "<td>" + u.getTime() + "</td> ";
 				userTable += "<td>" + u.getAvailableSeats() + "</td> ";
 				if (user != null) {
@@ -183,9 +181,7 @@
 				fromTable += "<tr> <td>" + f.getUsername() + "</td> ";
 				fromTable += "<td>" + from + "</td> ";
 				fromTable += "<td>" + to + "</td> ";
-				fromTable += "<td>"
-						+ new SimpleDateFormat("dd/MM/yyyy").format(f
-								.getRideDate()) + "</td> ";
+				fromTable += "<td>"	+ new SimpleDateFormat("dd/MM/yyyy").format(f.getRideDate()) + "</td> ";
 				fromTable += "<td>" + f.getTime() + "</td> ";
 				fromTable += "<td>" + f.getAvailableSeats() + "</td> ";
 				if (user != null) {
@@ -227,9 +223,7 @@
 				toTable += "<tr> <td>" + t.getUsername() + "</td> ";
 				toTable += "<td>" + from + "</td> ";
 				toTable += "<td>" + to + "</td> ";
-				toTable += "<td>"
-						+ new SimpleDateFormat("dd/MM/yyyy").format(t
-								.getRideDate()) + "</td> ";
+				toTable += "<td>"+ new SimpleDateFormat("dd/MM/yyyy").format(t.getRideDate()) + "</td> ";
 				toTable += "<td>" + t.getTime() + "</td> ";
 				toTable += "<td>" + t.getAvailableSeats() + "</td> ";
 				if (user != null) {
@@ -261,7 +255,7 @@
 				+ rideTable
 				+ "</table>";
 	} else {
-		rideTable = "<tr><td>No rides were found</td></tr>";
+		rideTable = "<p>Sorry, no rides were found that match your criteria.</p>";
 	}
 	//-------------------------------------------------------------------
 %>
