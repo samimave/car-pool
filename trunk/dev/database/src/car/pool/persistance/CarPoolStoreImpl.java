@@ -429,9 +429,10 @@ public class CarPoolStoreImpl implements CarPoolStore {
 	public boolean removeRide(int user, int ride) throws StoreException {
 		Statement statement = null;
 		int count = 0;
-
+		int counts = 0;
 		try {
 			statement = db.getStatement();
+			counts = statement.executeUpdate("DELETE FROM social WHERE idTrip in (SELECT idTrip FROM Matches WHERE idRide='"+ride+"' AND idUser='"+user+"');");
 			count = statement.executeUpdate("DELETE FROM Matches WHERE idUser='"+user+"' " +
 													"AND idRide='"+ride+"';");
 			statement.close();
@@ -449,9 +450,10 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		Statement statement = null;
 		int countm = 0;
 		int countr = 0;
-
+		int counts = 0;
 		try {
 			statement = db.getStatement();
+			counts = statement.executeUpdate("DELETE FROM social WHERE idTrip in (SELECT idTrip FROM Matches WHERE idRide='"+ride+"');");
 			countm = statement.executeUpdate("DELETE FROM Matches WHERE idRide='"+ride+"';");
 			countr = statement.executeUpdate("DELETE FROM Ride WHERE idRide='"+ride+"';");
 			statement.close();
@@ -887,7 +889,7 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		}
 		
 		if (id == FAILED){
-			throw new StoreException("invalid region name");
+			throw new StoreException("invalid idRide and idPassenger");
 		} else {
 			return id;
 		}
