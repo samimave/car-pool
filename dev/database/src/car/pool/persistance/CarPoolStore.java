@@ -40,9 +40,8 @@ public interface CarPoolStore {
 	
 	boolean updateSeats(int ride, int availableSeats) throws RideException;
 	boolean updateStartDate(int ride, String startDate) throws RideException;
-	boolean updateStartLoc(int ride, int startLoc) throws RideException;
-	boolean updateEndLoc(int ride, int endLoc) throws RideException;
-//	boolean updateStreetNum(int ride, int streetNum) throws RideException;
+	boolean updateStartLoc(int ride, int houseNo, int startLoc, int idUser) throws RideException;
+	boolean updateEndLoc(int ride, int houseNoEnd, int endLoc, int idUser) throws RideException;
 	boolean updateStartTime(int ride, String startTime) throws RideException;
 	
 	public boolean acceptUser(int user, int ride, int conf) throws StoreException;

@@ -365,34 +365,36 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		return countr > 0;
 	}
 	
-	public boolean updateStartLoc(int ride, int startLoc) throws RideException{
+	public boolean updateStartLoc(int ride, int houseNo, int startLoc, int idUser) throws RideException{
 		Statement statement = null;
 		int countr = 0;
-		
+		int countm = 0;
 		try {
 			statement = db.getStatement();
 			countr = statement.executeUpdate("UPDATE Ride SET Ride.rideStartLocation='"+startLoc+"' "+"WHERE idRide='"+ride+"';");
+			countm = statement.executeUpdate("UPDATE Matches SET Matches.streetNumber='"+houseNo+"' "+"WHERE idUser='"+idUser+"' " +"AND idRide='"+ride+"';");
 			statement.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		return countr > 0;
+		return countr > 0 && countm > 0;
 	}
 	
-	public boolean updateEndLoc(int ride, int endLoc) throws RideException{
+	public boolean updateEndLoc(int ride, int houseNoEnd, int endLoc, int idUser) throws RideException{
 		Statement statement = null;
 		int countr = 0;
-		
+		int countm = 0;
 		try {
 			statement = db.getStatement();
-			countr = statement.executeUpdate("UPDATE Ride SET Ride.rideStopLocation='"+endLoc+"' "+"WHERE idRide='"+ride+"';");
+			countr = statement.executeUpdate("UPDATE Ride SET Ride.rideStartLocation='"+endLoc+"' "+"WHERE idRide='"+ride+"';");
+			countm = statement.executeUpdate("UPDATE Matches SET Matches.streetNumberEnd='"+houseNoEnd+"' "+"WHERE idUser='"+idUser+"' " +"AND idRide='"+ride+"';");
 			statement.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		return countr > 0;
+		return countr > 0 && countm > 0;
 	}
 
 	public boolean updateStartTime(int ride, String startTime) throws RideException{
