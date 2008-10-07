@@ -25,16 +25,16 @@
 		Date dtTmp = new SimpleDateFormat("dd/MM/yyyy").parse(strTmp);
 		strOutDt = new SimpleDateFormat("yyyy-MM-dd")
 				.format(dtTmp);
+		
+		String coords = request.getParameter("fromCoord") + "/" + request.getParameter("toCoord");
 
 		//Integer.parseInt(request.getParameter("streetTo"))
 		int rideID = cps.addRide(dbID, Integer.parseInt(request
 				.getParameter("numSeats")), strOutDt, Integer
 				.parseInt(request.getParameter("streetFrom")), Integer
 				.parseInt(request.getParameter("streetTo")), Integer
-				.parseInt(request.getParameter("houseFrom")), Integer
-				.parseInt(request.getParameter("houseTo")) , 0,
-				request.getParameter("depTime"), request
-						.getParameter("xtraInfo"));
+				.parseInt(request.getParameter("houseFrom")), Integer.parseInt(request.getParameter("houseTo")), 0,
+				request.getParameter("depTime"), request.getParameter("xtraInfo"), coords);
 		//add social score
 		cps.addScore(cps.getTripID(rideID, dbID), dbID, 5);
 
