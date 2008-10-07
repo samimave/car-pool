@@ -299,7 +299,7 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		}
 		
 		if(id!= FAILED){
-			takeRide(user,id, endLocation, streetNumber, streetNumberEnd);
+			takeRide(user,id, endLocation, streetNumber, streetNumberEnd, geoLocation);
 		}else{
 			try {
 				removeRide(id);

@@ -749,6 +749,61 @@ public class CarPoolStoreImplTest extends TestCase {
 			assertEquals(cps.takeRide(g, ride1, idLocation,0,1),cps.getTripID(ride1, g));
 			assertEquals(cps.takeRide(h, ride1, idLocation,0,1),cps.getTripID(ride1, h));
 			
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void testGetGeoLocation(){
+		int region = 0;
+		int idLocation = 0;
+		try {
+			region = cps.addRegion("Palmy");
+			idLocation = cps.addLocation(region,"Blair St");
+		}
+		catch (SQLException e) {
+			// TODO: handle exception
+		}
+		try {
+			int a = cps.addUser("a", "a");
+			int b = cps.addUser("b", "b");
+			int c = cps.addUser("c", "c");
+			int d = cps.addUser("d", "d");
+			int e = cps.addUser("e", "a");
+			int f = cps.addUser("f", "b");
+			int g = cps.addUser("g", "c");
+			int h = cps.addUser("h", "d");
+			int i = cps.addUser("i", "a");
+			int j = cps.addUser("j", "b");
+			int k = cps.addUser("k", "c");
+			int l = cps.addUser("l", "d");
+	
+			Date date = new Date(System.currentTimeMillis());
+			//addRide(int user, int availableSeats, String startDate, int startLocation, int endLocation, int streetNumber, int reoccur, String time, String comment)			
+			int ride1 = cps.addRide(a, 4, date.toString(), idLocation, idLocation, 0,1 , 0, "5:22 PM", "be on time", "this is as geolocation");
+			int ride2 = cps.addRide(b, 4, date.toString(), idLocation, idLocation,1,1 , 0, "6:22 AM", "no latecomers please", "this is as geolocation");
+			int ride3 = cps.addRide(c, 4, date.toString(), idLocation, idLocation,2,1 , 0, "3:22 PM", "I might be a few minutes late", "this is as geolocation");
+			int ride4 = cps.addRide(d, 4, date.toString(), idLocation, idLocation,3,1 , 0, "9:22 PM", "be on time", "this is as geolocation");
+//			int ride5 = cps.addRide(e, 4, date.toString(), "asgadfg", "adfgadfgafd home");
+			int ride5 = cps.addRide(d, 4, date.toString(), idLocation, idLocation, 0, 1, 0, "5:34 PM", "blah comment", "this is as geolocation");
+			
+			assertEquals(cps.takeRide(e, ride1, idLocation,0,1),cps.getTripID(ride1, e));
+			assertEquals(cps.takeRide(f, ride1, idLocation,0,1),cps.getTripID(ride1, f));
+			assertEquals(cps.takeRide(g, ride1, idLocation,0,1),cps.getTripID(ride1, g));
+			assertEquals(cps.takeRide(h, ride1, idLocation,0,1),cps.getTripID(ride1, h));
+			
+			RideDetail rd = cps.getRideDetail(ride5);
+			assertEquals(true, rd.hasNext());
+			assertEquals(rd.getGeoLocation(),"this is as geolocation");
+			
+			RideListing rl = cps.getRideListing();
+			while(rl.next()){
+				assertEquals("this is as geolocation", rl.getGeoLocation());
+			}
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
