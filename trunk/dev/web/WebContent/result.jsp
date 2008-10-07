@@ -101,7 +101,7 @@
 				if (user != null) {
 					userTable += "<td> <a href='"
 							+ request.getContextPath()
-							+ "/temp2.jsp?rideselect=" + u.getRideID()
+							+ "/rideDetails.jsp?rideselect=" + u.getRideID()
 							+ "&userselect=" + u.getUsername() + "'>"
 							+ "Link to ride page" + "</a> </td> </tr>";
 				} else {
