@@ -387,7 +387,7 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		int countm = 0;
 		try {
 			statement = db.getStatement();
-			countr = statement.executeUpdate("UPDATE Ride SET Ride.rideStartLocation='"+endLoc+"' "+"WHERE idRide='"+ride+"';");
+			countr = statement.executeUpdate("UPDATE Ride SET Ride.rideEndLocation='"+endLoc+"' "+"WHERE idRide='"+ride+"';");
 			countm = statement.executeUpdate("UPDATE Matches SET Matches.streetNumberEnd='"+houseNoEnd+"' "+"WHERE idUser='"+idUser+"' " +"AND idRide='"+ride+"';");
 			statement.close();
 		} catch (SQLException e) {
