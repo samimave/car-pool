@@ -1,6 +1,6 @@
 <%@page errorPage="errorPage.jsp" %>
 <%@page contentType="text/html; charset=ISO-8859-1" %>
-<%@page import="org.verisign.joid.consumer.OpenIdFilter, car.pool.persistance.*, java.text.SimpleDateFormat,car.pool.user.*,java.util.*" %>
+<%@page import="org.verisign.joid.consumer.OpenIdFilter,car.pool.persistance.*,java.text.SimpleDateFormat,car.pool.user.*,java.util.*" %>
 
 <%
 HttpSession s = request.getSession(true);
@@ -16,7 +16,9 @@ int rideCount=0;
 //count the number of rides in the db
 RideListing rl = cps.getRideListing();		
 while (rl.next()){
-	rideCount++;
+	if (rl.getRideDate().after(new Date())) {
+		rideCount++;
+	}
 }
 
 
@@ -27,6 +29,7 @@ boolean rExist = false;
 String allTable = "";
 RideListing all = cps.getRideListing();
 while (all.next()) {
+	if (all.getRideDate().after(new Date())) {
 	rExist = true;
 	String from = all.getStartLocation();
 	String to = all.getEndLocation();
@@ -41,6 +44,7 @@ while (all.next()) {
 		allTable += "<td> <a href='"+ request.getContextPath() +"/rideDetails.jsp?rideselect="+ all.getRideID() +"&userselect="+all.getUsername() +"'>"+ "Link to ride page" +"</a> </td> </tr>";
 	} else {
 		allTable += "<td>login to view more</td> </tr>";
+	}
 	}
 }
 //##############################SEARCH RIDE TABLE##############################
