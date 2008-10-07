@@ -232,7 +232,7 @@
 						 </SELECT></td> </tr>*/
 					%>
 					<tr> <td>Departure Date (dd/MM/yyyy):</td> <td><INPUT TYPE="text" NAME="depDate" VALUE="<%=date%>" SIZE="25"> <A HREF="#" onClick="cal.select(document.forms['offerFrm'].depDate,'anchor1','dd/MM/yyyy'); return false;" NAME="anchor1" ID="anchor1"><img name="calIcon" border="0" src="calendar_icon.jpg" width="27" height="23"></A> </td> </tr>
-					<tr> <td>Departure Time (hh:mm):</td> <td><INPUT TYPE="text" NAME="depTime" VALUE="<%=time%>" SIZE="25"></td> </tr>
+					<tr> <td>Departure Time 24hr (hh:mm):</td> <td><INPUT TYPE="text" NAME="depTime" VALUE="<%=time%>" SIZE="25"></td> </tr>
 					<tr> <td>Approx Trip Length (min):</td> <td><INPUT TYPE="text" NAME="tripLength" VALUE="15" SIZE="25"></td> </tr>
 					</table>
 					</div>
