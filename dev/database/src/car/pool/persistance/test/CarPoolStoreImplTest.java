@@ -831,4 +831,96 @@ public class CarPoolStoreImplTest extends TestCase {
 		}
 		
 	}
+	
+	@SuppressWarnings("unused")
+	public void testRemoveRide(){
+		int region = 0;
+		int idLocation = 0;
+		
+		int ride2=0;
+		int e=0;
+		try {
+			region = cps.addRegion("Palmy");
+			idLocation = cps.addLocation(region,"Blair St");
+		}
+		catch (SQLException ee) {
+			// TODO: handle exception
+		}
+		try {
+			int a = cps.addUser("a", "a");
+			int b = cps.addUser("b", "b");
+			int c = cps.addUser("c", "c");
+			int d = cps.addUser("d", "d");
+			e = cps.addUser("e", "a");
+			int f = cps.addUser("f", "b");
+			int g = cps.addUser("g", "c");
+			int h = cps.addUser("h", "d");
+			int i = cps.addUser("i", "a");
+			int j = cps.addUser("j", "b");
+			int k = cps.addUser("k", "c");
+			int l = cps.addUser("l", "d");
+	
+			Date date = new Date(System.currentTimeMillis());
+			//addRide(int user, int availableSeats, String startDate, int startLocation, int endLocation, int streetNumber, int reoccur, String time, String comment)			
+			int ride1 = cps.addRide(a, 4, date.toString(), idLocation, idLocation, 0,1 , 0, "5:22 PM", "be on time");
+			ride2 = cps.addRide(b, 4, date.toString(), idLocation, idLocation,1,1 , 0, "6:22 AM", "no latecomers please");
+			int ride3 = cps.addRide(c, 4, date.toString(), idLocation, idLocation,2,1 , 0, "3:22 PM", "I might be a few minutes late");
+			int ride4 = cps.addRide(d, 4, date.toString(), idLocation, idLocation,3,1 , 0, "9:22 PM", "be on time");
+//			int ride5 = cps.addRide(e, 4, date.toString(), "asgadfg", "adfgadfgafd home");
+			
+			assertEquals(cps.takeRide(e, ride1, idLocation,0,1),cps.getTripID(ride1, e));
+			assertEquals(cps.takeRide(f, ride1, idLocation,0,1),cps.getTripID(ride1, f));
+			assertEquals(cps.takeRide(g, ride1, idLocation,0,1),cps.getTripID(ride1, g));
+			assertEquals(cps.takeRide(h, ride1, idLocation,0,1),cps.getTripID(ride1, h));
+			
+			cps.addComment(e, ride1, "hope this works..");
+			cps.addComment(f, ride1, "hope this works..");
+			cps.addComment(e, ride1, "hope this works..");
+			cps.addScore(cps.getTripID(ride1, e), a, 3);
+			cps.addScore(cps.getTripID(ride1, f), a, 3);
+			
+			
+			
+			RideDetail rd = cps.getRideDetail(ride1);
+			assertEquals(true, rd.hasNext());
+			
+			assertEquals(true,cps.removeRide(ride1));
+			
+			rd = cps.getRideDetail(ride1);
+			assertEquals(false, rd.hasNext());
+			
+			assertEquals(cps.takeRide(e, ride2, idLocation,0,1),cps.getTripID(ride2, e));
+			assertEquals(cps.takeRide(f, ride2, idLocation,0,1),cps.getTripID(ride2, f));
+			assertEquals(cps.takeRide(g, ride2, idLocation,0,1),cps.getTripID(ride2, g));
+			assertEquals(cps.takeRide(h, ride2, idLocation,0,1),cps.getTripID(ride2, h));
+			
+			cps.addComment(e, ride2, "hope this works..");
+			cps.addComment(f, ride2, "hope this works..");
+			cps.addComment(e, ride2, "hope this works..");
+			cps.addScore(cps.getTripID(ride2, e), a, 3);
+			cps.addScore(cps.getTripID(ride2, f), a, 3);
+			
+			
+			
+			rd = cps.getRideDetail(ride2);
+			assertEquals(true, rd.hasNext());
+			
+			assertEquals(true,cps.removeRide(e,ride2));
+			
+			rd = cps.getRideDetail(ride2);
+			assertEquals(true, rd.hasNext());
+			
+			try{
+				cps.getTripID(ride2, e);
+				assertEquals(true, false);//should not get to this line
+			}catch(StoreException se){
+			}
+			
+			
+			
+		} catch (Exception ee) {
+			ee.printStackTrace();
+		}
+		
+	}
 }

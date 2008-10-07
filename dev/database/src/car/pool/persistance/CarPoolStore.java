@@ -29,7 +29,7 @@ public interface CarPoolStore {
 	LocationList findLocation(String name);
 	LocationList getLocations();
 	
-	RideDetail getRideDetail(int rideID);
+	RideDetail getRideDetail(int rideID) throws StoreException;
 	
 	boolean checkUserExists(String username);
 	
