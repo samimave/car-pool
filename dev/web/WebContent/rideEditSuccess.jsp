@@ -1,4 +1,4 @@
-<%@page errorPage="errorPage.jsp" %>
+
 <%@page contentType="text/html; charset=ISO-8859-1" %>
 <%@page import="org.verisign.joid.consumer.OpenIdFilter,car.pool.persistance.*,car.pool.user.*,java.util.*,java.text.SimpleDateFormat" %>
 
@@ -26,8 +26,6 @@
 				&& request.getParameter("remRide") != null) {
 			boolean yes = cps.removeRide(Integer.parseInt(request
 					.getParameter("rideSelect")));
-			cps.addScore(cps.getTripID(Integer.parseInt(request
-					.getParameter("rideSelect")), dbID), dbID, -3);
 			delConf = "<p>"
 					+ "You have successfully deleted the ride you wanted to"
 					+ yes+"</p>";
