@@ -132,7 +132,7 @@
 			requestTable = "<table class='rideDetailsSearch'> <tr> <th>Request from</th> <th>Pick Up From</th><th>Confirm</th><th>Reject</th></tr>"
 					+ requestTable + "</table>";
 		} else {
-			requestTable = "None.";
+			requestTable = "<div class='Box' id='Box'><p>None.</p></div><br />";
 		}
 
 		//if there exists users who have been approved then this is the table heading
@@ -140,7 +140,7 @@
 			acceptedTable = "<table class='rideDetailsSearch'> <tr> <th>Request from</th> <th>Pick Up From</th></tr>"
 					+ acceptedTable + "</table>";
 		} else {
-			acceptedTable = "None.";
+			acceptedTable = "<div class='Box' id='Box'><p>None.</p></div>";
 		}
 %>
 
