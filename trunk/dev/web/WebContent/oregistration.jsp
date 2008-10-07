@@ -33,8 +33,9 @@ if(request.getAttribute("error") != null) {
 				<tr> <td>Phone:</td> <td><INPUT type="text" name="phone"/></td> </tr>
 				<tr> <td colspan="2"><img src="blurredimage" width="200" height="100"/></td> </tr>
 				<tr> <td>Enter the characters shown above:</td><td><input type="text" name="verifytext"/></td> </tr>
-				<tr> <td>When you are done click here:</td> <td><INPUT type="submit" value="Register"/></td> </tr>
 			</TABLE>
+			<br />
+			<p>Click here to <INPUT type="submit" value="Register"/></p>
 		</FORM>
 		</div>
 	<%} else { %>
