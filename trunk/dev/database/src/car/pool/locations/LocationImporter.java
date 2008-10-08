@@ -2,9 +2,36 @@ package car.pool.locations;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Formatter;
 import java.util.Vector;
 
 public class LocationImporter {
+	protected LocationImporter() {
+		
+	}
+	
+	private Vector<String> getStreetsFromResource() {
+		Vector<String> locations = new Vector<String>(200);
+		InputStream inStream = this.getClass().getClassLoader().getResourceAsStream("streets.txt");
+		int b = 0;
+		StringBuilder text = new StringBuilder();
+		try {
+			while((b = inStream.read()) != -1) {
+				char c = (char)b;
+				text.append(c);
+			}
+			String[] streets = text.toString().split(",");
+			for(String name: streets) {
+				locations.add(name.trim());
+			}
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		return locations;
+	}
+	
 	public static String[] importLocations(){
 		Vector<String> locations = new Vector<String>(200);
 		
@@ -23,8 +50,7 @@ public class LocationImporter {
 				}
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			locations = new LocationImporter().getStreetsFromResource();
 		}
 		
 		
