@@ -81,3 +81,47 @@ function setupemail(form) {
     
 	return false;
 }
+
+
+function setupproxy(button) {
+	alert(button.form.name)
+	var ipaddress = button.form.ipaddress.value;
+	var port = button.form.port.value;
+	var ptypes = button.form.ptypes.value;
+	
+	var url = "setupproxy";
+	var contentType = "application/x-www-form-urlencoded; charset=UTF-8";
+	var query = "proxysetup=yes&ipaddress=" + ipaddress + "&port=" + port + "&ptypes=" + ptypes;
+	request.open("POST", url, false);
+	request.setRequestHeader("Content-Type", contentType);
+	request.send(query);
+	var response = request.responseText;
+    if(response == "true") {
+    	alert("You have successfully updated the Proxy Address table");
+    } else {
+    	alert("You failed to update the Proxy Address table");
+    }
+    
+	return false;
+}
+
+function deleteproxy(button) {
+	var ipaddress = button.form.ipaddress.value;
+	var port = button.form.port.value;
+	var ptypes = button.form.ptypes.value;
+	
+	var url = "setupproxy";
+	var contentType = "application/x-www-form-urlencoded; charset=UTF-8";
+	var query = "proxydelete=yes&ipaddress=" + ipaddress + "&port=" + port + "&ptypes=" + ptypes;
+	request.open("POST", url, false);
+	request.setRequestHeader("Content-Type", contentType);
+	request.send(query);
+	var response = request.responseText;
+    if(response == "true") {
+    	alert("You have successfully deleted a row in the Proxy Address table");
+    } else {
+    	alert("You failed to deleted a row in the Proxy Address table");
+    }
+    
+	return false;
+}

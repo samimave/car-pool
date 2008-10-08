@@ -23,7 +23,7 @@
 			int rideID = Integer.parseInt(request.getParameter("rideselect"));
 			while (rl.next()) {
 				if (rideID == rl.getRideID()) {
-					cps.takeRide(currentUser, rideID, Integer.parseInt(rl.getStartLocation()), Integer.parseInt(rl.getEndLocation()));
+					cps.takeRide(currentUser, rideID, Integer.parseInt(rl.getStartLocation()), Integer.parseInt(rl.getEndLocation()),0);
 					formatter.format(String.format("<p>You have successfully booked a ride from: %s, to: %s, on: %s</p>",
 											rl.getStartLocation(), rl.getEndLocation(),rl.getRideDate()));
 					message = formatter.toString();

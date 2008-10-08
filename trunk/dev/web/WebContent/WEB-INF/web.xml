@@ -118,4 +118,13 @@
   	<servlet-name>SetupEmail</servlet-name>
   	<url-pattern>/setupemail</url-pattern>
   </servlet-mapping>
+  <servlet>
+  	<display-name>ProxySetup</display-name>
+  	<servlet-name>ProxySetup</servlet-name>
+  	<servlet-class>car.pool.proxy.servlet.ProxySetup</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ProxySetup</servlet-name>
+  	<url-pattern>/setupproxy</url-pattern>
+  </servlet-mapping>
 </web-app>
