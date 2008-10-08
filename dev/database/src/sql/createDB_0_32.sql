@@ -174,6 +174,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `carpool`.`social`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `carpool`.`social` ;
+
 CREATE  TABLE IF NOT EXISTS `carpool`.`social` (
   `idSocial` INT NOT NULL AUTO_INCREMENT ,
   `idTrip` INT NOT NULL ,
