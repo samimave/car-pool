@@ -1,6 +1,7 @@
 package car.pool.user.registration.servlet;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -37,6 +38,8 @@ public class BlurredImage extends HttpServlet {
 		g2d.setColor(Color.white);
 		g2d.fillRoundRect(0, 0, 200, 100, 10, 10);
 		g2d.setColor(Color.black);
+		Font font = new Font("Sans", Font.ITALIC, 20);
+		g2d.setFont(font);
 		RandomTextGenerator generator = new RandomTextGenerator();
 		Random r = new Random();
 		Integer pos = r.nextInt(generator.size());
