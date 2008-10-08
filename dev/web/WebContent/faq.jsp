@@ -29,52 +29,69 @@ if(s.getAttribute("signedin") != null ) {
 		<div class="Box" id="Box">
 			<p>
 
-Que: How can I register with this site?
-Ans: There are two ways you can do this -
-1. OpenId Registration
-You may use an any OpenId account to register with our site. To do this simply enter your OpenId account
-in the text box with the OpenId sign beside it in the left menu and you will be taken to the appropriate OpenId provider's 
+<h2>How can I register with this site?</h2>
+1. OpenId Registration<br/>
+You may use an any OpenId account to register with our site. To do this enter your OpenId account
+in the text box with the OpenId sign beside it (located in the left menu) and you will be taken to the appropriate OpenId provider's 
 website where you can validate your account by entering your password. Once  you are signed in there you will be 
-redirected to our website. If you have not previously registered with use you will be taken to the registration form where 
+redirected to our website. If you have not previously registered with us you will be taken to the registration form where 
 you can choose your username, enter an email address and other details required.
-<br/><br/>
-You can also register with our site using a username and password. For that just click on the "Register here" link, enter the relevant details and
+<br/>
+2. Username & Password<br/>
+You can also register with our site using a username and password. For that just click on the --Register here-- link located in the left menu, enter the relevant details and
 you are ready to go! An email will be sent to you informing you of the success of your registration.
 <br/><br/>
-How can I change my email address or other details?
-Click on the Edit Details link in the menu on the left. you will be taken to your account page. Here you can change the details you want
-to such as email address and phone number. 
+<h2>How can I change my email address or other details?</h2>
+When you are logged in click on the --Edit Details-- link in the menu on the left. You will be taken to your account page. Here you can change the details you want
+to such as email address and phone number. You can attach an OpenID with your account. You can attach another OpenID if you already have an existing one. 
 <br/><br/>
-How can I offer a ride?
-Once you are logged into the site you can click on the Offer a Ride link on the menu in the left. There you can specify the departure and 
-arrival address, the departure time and date, the numbre of seats that are available and anything else that needs to be mentioned.
-Clicking View Map will open up a Google Mao in a new window and clicking on Confirm will add the ride to the system. Once you ahve
-clicked Confirm you will be taken to a page that asks you if you want to add the ride as an event in your Google Calendar.
-Clicking on Add to Google Calendar a new window will open where you can log into your Gmail account and add the ride to your
-Google Calendar.
+<h2>How can I offer a ride?</h2>
+Once you are logged into the site you can click on the --Offer a Ride-- link on the menu in the left. You will be taken to the appropriate page where you can specify 
+the departure and arrival addresses, the departure date, time and approximate time you think the trip will take, the number of seats you have available and anything else that needs to be mentioned.
+Clicking --View Map-- will open up a Google Map in a new window. This map will show you a route between the arrival and departure points. Clicking on --Confirm Ride Offer-- will add the ride to the system. 
+Once you have clicked --Confirm Ride Offer-- you will be taken to a page that gives you the option of adding the ride as an event in your Google Calendar.
+Clicking on Add to Google Calendar. If you click on --Add to your Google Calendar-- a new window will open where you can log into your Gmail account and add the ride to your
+Google Calendar. 
 <br/><br/>
-How can I find rides?
-You can click on the Find A Ride link. Clicking on Show All Rides will show you all tje current rides on offer. 
-When you search for a ride all your parameters will be searched for on an  OR basis to maximise search results. So 
-specifyinh a street from and user will mean rides that match either criteria will get displayed. Additionally when you 
-select a street to search all rides near that street are displayed as well.
+<h2>Some users have registered interest in my ride. What should I do?</h2>
+When a member is interested in your ride they will mention the place they will like to be 
+picked up from. You can see a list of the users interested in your ride through your account page
+by click on the --Manage Ride & Riders-- link for a particular ride. On the ride's page you will be able to see a table of
+the users who are awaiting your approval. Depending on if you can pick them up from the location they have mentioned
+and if you trust them you can confirm or reject a user. If you confirm a user then this user will move to the list 
+of users approved for that ride.<br/><br/>
+<h2>How can I find rides?</h2>
+You can click on the --Find a Ride-- link in the menu on the left. Clicking on --Show All Rides-- will show you all the current rides on offer. 
+---other info to be added here after Ben's search nearby rides is done---
 <br/><br/>
-Why won't the Google Map display correctly for me?
+<h2>How do I accept a ride?</h2>
+After you have searched for rides. Click on the link that leads to more details of a ride that you are interested in.
+There you can accept a ride by clicking on Take Ride after you have added details about where you would like to be picked up from.
+It is then up to the person who offered you the ride to decide if they can indeed pick you up from that location. It is best to discuss
+details on the ride page through comments before taking a ride. You will receive an email when you are accepted by the driver of the ride or
+rejected.<br/><br/>
+<h2>Why is this site restricted to only Palmerston North streets?</h2>
+Currently we have restricted the scope of this site to within Palmerston North only. If this site is successful in Palmerston North
+then we will consider expanding it first to all regions in Manawatu and then perhaps throughout New Zealand. 
 <br/><br/>
-Why won't the site log me in?
--cookies stuff?
+<h2>I can't find the street I want...</h2>
+We aim to ensure that our information about the streets is up to date. However if you know a street exists that we
+do not have in our database please email us at --what email?-- and we will add it to the database as soon as we can.
 <br/><br/>
-What browsers is this site compaitibe with?
+<h2>How does the Social Scoring system work?</h2>
+Your social score enables other members in the community to find out how reliable you are.
+It depends on how many rides you have offered and how many people have taken your rides.
 <br/><br/>
-Why is this site restricted to only Palmerston North streets?
-Currently we are testing oue site within PN only. If this site is successful in PN theren we will
-consider expanding it forst to regions in Manawati and then perhaps throughout NZ.
+<h2>Why won't the Google Map display correctly for me?</h2>
+This could be because your browser does not support Google Maps. Currently Google Maps should display fine on Firefox 3.0.1, Opera 9.52 and Internet Explorer 8.
 <br/><br/>
-What is the social score for?
-To help the community recognise how much a member contributes and if they are trustworthy enough,
+<h2>Why won't the site let me log in?</h2>
+Are you sure you have cookies enabled? This site requires cookies to be enabled.
 <br/><br/>
-
-How do I accept a ride? What os with the whole waiting for an acceptance thing?
+<h2>What browsers is this site compatible with?</h2>
+This site should work well on Firefox 3.0.1, Opera 9.52 and Internet Explorer 8. You can also use this site through other browsers
+such as Internet Explorer 7 however Google Maps may not work well with them.
+<br/><br/>
 </p>
 		</div>
 		<br /> <br /> <br />
