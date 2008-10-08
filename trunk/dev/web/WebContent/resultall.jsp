@@ -17,7 +17,7 @@
 	RideListing rl = cps.getRideListing();
 	while (rl.next()) {
 		String d = new SimpleDateFormat("dd/MM/yyyy").format(rl.getRideDate())+" "+rl.getTime();
-		Date dt = new SimpleDateFormat().parse(d);
+		Date dt = new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(d);
 		if (dt.after(new Date())) {
 			rideCount++;
 		}
@@ -30,7 +30,7 @@
 	RideListing all = cps.getRideListing();
 	while (all.next()) {
 		String d = new SimpleDateFormat("dd/MM/yyyy").format(all.getRideDate())+" "+all.getTime();
-		Date dt = new SimpleDateFormat().parse(d);
+		Date dt = new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(d);
 		if (dt.after(new Date())) {
 			rExist = true;
 			String from = all.getStartLocation();
