@@ -26,7 +26,7 @@
     //<![CDATA[
     
 	window.onload = function() {
-    	showLocation(); 
+    	drawRoute(); 
     
     }
 	window.unload = GUnload();
@@ -74,44 +74,7 @@
                           fromAddress,
                           toAddress,                        
                           ];
-	  
-      // ===== Start with an empty GLatLngBounds object =====     
-      var bounds = new GLatLngBounds();
-                     
-      // addAddressToMap() is called when the geocoder returns an
-      // answer.  It adds a marker to the map with an open info window
-      // showing the nicely formatted version of the address        	
-      function addAddressToMap(response) {
-
-          if (!response || response.Status.code != 200) {
-            alert("Sorry, the address is unable to display. Some map function is not campatible with IE 7. ");
-           // alert(response + " " + response.Status.code);
-          } else {
-            place = response.Placemark[0];
-            point = new GLatLng(place.Point.coordinates[1],
-                                place.Point.coordinates[0]);
-            var marker = new GMarker(point);
-            // ==== Each time a point is found, extent the bounds ato include it =====
-            bounds.extend(point);
-            var html = place.address;
-            GEvent.addListener(marker, "click", function() {
-                marker.openInfoWindowHtml(html);
-              });
-            map.addOverlay(marker); 
-            return marker;   
-                  
-          }
-          
-        }     
-                
-      // It geocodes the address in the database associate with the ride
-      // and adds a marker to the map at that location.
-      function showLocation() {
-        		for (var i=0; i< addressArray.length; i++){
-        		geocoder.getLocations(addressArray[i], addAddressToMap); 
-        		}
-        		drawRoute();
-      }
+	               
 
       //draw route on map
       function drawRoute(){
