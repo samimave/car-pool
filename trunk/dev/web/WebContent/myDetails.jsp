@@ -1,6 +1,6 @@
 <%@page errorPage="errorPage.jsp" %>
 <%@page contentType="text/html; charset=ISO-8859-1" %>
-<%@page import="org.verisign.joid.consumer.OpenIdFilter,car.pool.persistance.*,car.pool.user.*,java.util.ArrayList,java.text.*"%>
+<%@page import="org.verisign.joid.consumer.OpenIdFilter,car.pool.persistance.*,car.pool.user.*,java.util.ArrayList,java.text.*,java.util.*"%>
 
 <%
 	HttpSession s = request.getSession(false);
@@ -43,29 +43,41 @@
 			RideDetail rd = cps.getRideDetail(rl.getRideID());
 			String requestExistA = "no";
 			while (rd.hasNext()) {
-				if ((rd.getUserID() != currentUser) && (rd.getConfirmed() == false)) {
+				if ((rd.getUserID() != currentUser)
+						&& (rd.getConfirmed() == false)) {
 					requestExistA = "yes";
 				}
 			}
-			
+
 			//getting the ride info
 			String from = rl.getStartLocation();
 			String to = rl.getEndLocation();
 			userTable += "<tr> <td>" + rl.getUsername() + "</td> ";
-			userTable += "<td>" + rl.getStreetStart()+" "+from + "</td> ";
-			userTable += "<td>" + rl.getStreetEnd()+" "+to + "</td> ";
+			userTable += "<td>" + rl.getStreetStart() + " " + from
+					+ "</td> ";
+			userTable += "<td>" + rl.getStreetEnd() + " " + to
+					+ "</td> ";
 			userTable += "<td>"
 					+ new SimpleDateFormat("dd/MM/yyyy").format(rl
 							.getRideDate()) + "</td> ";
 			userTable += "<td>" + rl.getTime() + "</td> ";
 			userTable += "<td>" + rl.getAvailableSeats() + "</td> ";
 			userTable += "<td>" + requestExistA + "</td> ";
-			userTable += "<td> <a href='" + request.getContextPath()
-					+ "/myRideEdit.jsp?rideselect=" + rl.getRideID()
-					+ "&userselect=" + rl.getUsername() + "'>"
-					+ "Click to manage ride & riders"
-					+ "</a> </td> </tr>";
-
+			String d = new SimpleDateFormat("dd/MM/yyyy").format(rl
+					.getRideDate())
+					+ " " + rl.getTime();
+			Date dt = new SimpleDateFormat().parse(d);
+			if (dt.after(new Date())) {
+				userTable += "<td> <a href='"
+						+ request.getContextPath()
+						+ "/myRideEdit.jsp?rideselect="
+						+ rl.getRideID() + "&userselect="
+						+ rl.getUsername() + "'>"
+						+ "Manage ride & riders."
+						+ "</a> </td> </tr>";
+			} else {
+				userTable += "<td>Old ride.</td></tr>";
+			}
 		}
 
 		if (userExist) {
@@ -172,7 +184,7 @@
 					+ "<th>Departure Date</th> <th>Departure Time</th><th>Your Pick Up Point</th><th>Add Ride to Google Calendar</th> <th>Withdraw from Ride</th> <th>Link</th> </tr>"
 					+ acceptedTable + "</table>";
 		} else {
-			acceptedTable = "<table><tr><td>No users were found.</td></tr></table>";
+			acceptedTable = "<p>No users were found.</p>";
 		}
 
 		if (awaitExist) {
@@ -180,7 +192,7 @@
 					+ "<th>Departure Date</th> <th>Departure Time</th> <th>Your Pick Up Point</th> <th>Withdraw from Ride</th> <th>Link</th> </tr>"
 					+ awaitTable + "</table>";
 		} else {
-			awaitTable = "<table><tr><td>No users were found.</td></tr></table>";
+			awaitTable = "<p>No users were found.</p>";
 		}
 
 		//input openids to the table
@@ -204,7 +216,9 @@
 			}
 		} else {
 			if (idcount == 1) {
-				openIDTableForm = "<br /><h3>Current OpenId associated with your account:</h3><div class='Box' id='Box'><TABLE class='updateDetails'><tr><td>&nbsp;</td><td>"+lastid+"</td></tr></table></div><br /><br />";
+				openIDTableForm = "<br /><h3>Current OpenId associated with your account:</h3><div class='Box' id='Box'><TABLE class='updateDetails'><tr><td>&nbsp;</td><td>"
+						+ lastid
+						+ "</td></tr></table></div><br /><br />";
 			}
 		}
 

@@ -29,8 +29,11 @@
 	//count the number of rides in the db
 	RideListing rl = cps.getRideListing();
 	while (rl.next()) {
-		if (rl.getRideDate().after(new Date())) {
+		String d = new SimpleDateFormat("dd/MM/yyyy").format(rl.getRideDate())+" "+rl.getTime();
+		Date dt = new SimpleDateFormat().parse(d);
+		if (dt.after(now)) {
 			rideCount++;
+			
 		}
 	}
 %>

@@ -87,8 +87,11 @@
 
 			String from = u.getStartLocation();
 			String to = u.getEndLocation();
+			
+			String d = new SimpleDateFormat("dd/MM/yyyy").format(u.getRideDate())+" "+u.getTime();
+			Date dt = new SimpleDateFormat().parse(d);
 
-			if (!avoidDuplicates.contains(u.getRideID()) && u.getRideDate().after(new Date())) {
+			if (!avoidDuplicates.contains(u.getRideID()) && dt.after(new Date())) {
 				userExist = true;
 				avoidDuplicates.add(u.getRideID());
 
@@ -131,7 +134,10 @@
 			String from = daTbl.getStartLocation();
 			String to = daTbl.getEndLocation();
 
-			if (!avoidDuplicates.contains(daTbl.getRideID()) && daTbl.getRideDate().after(new Date())) {
+			String d = new SimpleDateFormat("dd/MM/yyyy").format(daTbl.getRideDate())+" "+daTbl.getTime();
+			Date dt = new SimpleDateFormat().parse(d);
+			
+			if (!avoidDuplicates.contains(daTbl.getRideID()) && dt.after(new Date())) {
 				dateExist = true;
 				avoidDuplicates.add(daTbl.getRideID());
 
@@ -173,8 +179,11 @@
 
 			String from = f.getStartLocation();
 			String to = f.getEndLocation();
+			
+			String d = new SimpleDateFormat("dd/MM/yyyy").format(f.getRideDate())+" "+f.getTime();
+			Date dt = new SimpleDateFormat().parse(d);
 
-			if (!avoidDuplicates.contains(f.getRideID()) && f.getRideDate().after(new Date())) {
+			if (!avoidDuplicates.contains(f.getRideID()) && dt.after(new Date())) {
 				fromExist = true;
 				avoidDuplicates.add(f.getRideID());
 
@@ -215,8 +224,11 @@
 
 			String from = t.getStartLocation();
 			String to = t.getEndLocation();
-
-			if (!avoidDuplicates.contains(t.getRideID()) && t.getRideDate().after(new Date())) {
+			
+			String d = new SimpleDateFormat("dd/MM/yyyy").format(t.getRideDate())+" "+t.getTime();
+			Date dt = new SimpleDateFormat().parse(d);
+			
+			if (!avoidDuplicates.contains(t.getRideID()) && dt.after(new Date())) {
 				toExist = true;
 				avoidDuplicates.add(t.getRideID());
 
