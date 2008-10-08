@@ -1,5 +1,6 @@
 package car.pool.user.registration.servlet;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
@@ -37,6 +38,12 @@ public class BlurredImage extends HttpServlet {
 		Graphics2D g2d = image.createGraphics();
 		g2d.setColor(Color.white);
 		g2d.fillRoundRect(0, 0, 200, 100, 10, 10);
+		g2d.setStroke(new BasicStroke(3, BasicStroke.CAP_ROUND, BasicStroke.JOIN_MITER));
+		g2d.setColor(Color.blue);
+		int[] arr = {5,25,35,45,55,65,75,85};
+		for(int i: arr) {
+			g2d.drawOval(i, 5, 100, 100);
+		}
 		g2d.setColor(Color.black);
 		Font font = new Font("Sans", Font.ITALIC, 20);
 		g2d.setFont(font);
@@ -44,8 +51,10 @@ public class BlurredImage extends HttpServlet {
 		Random r = new Random();
 		Integer pos = r.nextInt(generator.size());
 		String verifierText = generator.get(pos);
-		g2d.drawString(verifierText, 10, 50);
+		g2d.scale(1.5, 1.5);
+		g2d.drawString(verifierText, 20, 50);
 		session.setAttribute("quote_pos", pos);
+		
 		try {
 			ImageIO.write(image, "png", out);		
 		} catch(IllegalArgumentException iaEx) {
