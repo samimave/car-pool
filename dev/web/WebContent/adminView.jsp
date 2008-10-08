@@ -108,6 +108,7 @@
 			</FORM>
 
 			<FORM NAME="delComment" action="delAComment.jsp" method="post" >
+				<INPUT type="hidden" name="reDirURL" value="adminView.jsp">
 				<table>
 					<tr><td>Delete a comment</td>
 						<td><INPUT type="text" name="idComment" value="Enter comment number here..." size="30"></td>
