@@ -10,6 +10,17 @@ User user = null;
 if(s.getAttribute("signedin") != null ) {
 	user = (User)s.getAttribute("user");
 }
+
+//enable links depending on whether the user is logged in
+String addMsg = "";
+String regMsg = "";
+if (user != null) {
+	addMsg = "<a href='addARide.jsp'>offer a ride</a>";
+	regMsg = "register";
+} else {
+	addMsg = "offer a ride";
+	regMsg = "<a href='register.jsp'>register</a>";
+}
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -30,11 +41,9 @@ if(s.getAttribute("signedin") != null ) {
 			<p>Carpooling is all about reducing congestion on the roads, making an effort to keep our  
 				environment healthy and, yes, saving money through shared petrol costs. The Car Pool has been designed 
 				to facilitate you in your carpooling efforts, and best of all it is free to use! All you need to 
-				do is  <a href="register.jsp">register</a> with our site to get started. Going somewhere? Why not add a ride as <a href="addARide.jsp">an offer</a>
+				do is <%=regMsg %> with our site to get started. Going somewhere? Why not <%=addMsg %>
 				so others going to the same place can share a ride with you! Want to go somewhere? Have a look at the 
-				<a href="resultall.jsp">rides available</a> to see if someone else is going your way so you may take a ride with them.
-
-
+				<a href="searchRides.jsp">rides available</a> to see if someone else is going your way so you can take a ride with them.
 			</p>
 		</div>
 		<br /> <br /> <br />
