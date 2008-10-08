@@ -16,7 +16,9 @@
 	//count the number of rides in the db
 	RideListing rl = cps.getRideListing();
 	while (rl.next()) {
-		if (rl.getRideDate().after(new Date())) {
+		String d = new SimpleDateFormat("dd/MM/yyyy").format(rl.getRideDate())+" "+rl.getTime();
+		Date dt = new SimpleDateFormat().parse(d);
+		if (dt.after(new Date())) {
 			rideCount++;
 		}
 	}
@@ -27,7 +29,9 @@
 	String allTable = "";
 	RideListing all = cps.getRideListing();
 	while (all.next()) {
-		if (all.getRideDate().after(new Date())) {
+		String d = new SimpleDateFormat("dd/MM/yyyy").format(all.getRideDate())+" "+all.getTime();
+		Date dt = new SimpleDateFormat().parse(d);
+		if (dt.after(new Date())) {
 			rExist = true;
 			String from = all.getStartLocation();
 			String to = all.getEndLocation();
