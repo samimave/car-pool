@@ -17,12 +17,15 @@
 		String[] locations = LocationImporter.importLocations();
 
 		if (request.getParameter("locations") != null) {
-			String loc = request.getParameter("locations");
-			System.out.println(loc);
+			
+			String[] locList = request.getParameter("locations").split(", ");
+			//System.out.println(locList);
+			for (int i=0; i<locList.length; i++){			
 			int region = -1;
 			region = cps.addRegion("Palmerston North");
-			cps.addLocation(region, loc);
-			System.out.println("street: " + loc);
+			cps.addLocation(region, locList[i]);
+			//System.out.println("street: " + locList[i]);
+			}
 		}
 
 		String uName;
@@ -97,25 +100,13 @@
 			<div class="Box" id="Box">
 			<FORM NAME="admin" action="#" method="post" >				
 				<table>
-					<tr><td>Add new locations to database?</td>
-						<td><INPUT type="text" name="locations" value="Enter location here..." size="30"></td>
+					<tr><td>Enter a comma and space separated list of streets below</td></tr>
+						<tr><td><TEXTAREA cols="50" rows="4" name="locations"></TEXTAREA></td>
 						<td>&nbsp;</td> <td><INPUT type="submit" value="Add Locations" size="25" onClick="<%AddLocations.addFromFile();%>" ></td>
 					</tr>
 				</table>
 			</FORM>
-			<%
-				//=locations.length
-			%>
-			<FORM NAME="admin2" action="#">				
-				<table>
-					<tr><td>Add locations in database?</td>						
-						<td>&nbsp;</td> <td><INPUT type="submit" value="Add Locations" size="25" onClick="<%AddLocations.addFromFile();%>"></td>
-					</tr>
-				</table>
-			</FORM>
-			<%
-				//=locations.length
-			%>
+
 			<FORM NAME="delComment" action="delAComment.jsp" method="post" >
 				<table>
 					<tr><td>Delete a comment</td>
