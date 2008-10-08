@@ -33,6 +33,62 @@
 		RideListing rl = cps.searchRideListing(RideListing.searchUser,
 				nameOfUser);
 
+		
+		
+		//if you have been redirected here from taking a ride print useful info
+		if (request.getParameter("rideSelect") != null
+				&& request.getParameter("streetTo") != null
+				&& request.getParameter("houseNo") != null) {
+			cps.takeRide(currentUser, Integer.parseInt(request
+					.getParameter("rideSelect")), Integer
+					.parseInt(request.getParameter("streetTo")),
+					Integer.parseInt(request.getParameter("houseNo")),
+					Integer.parseInt(request.getParameter("houseNo"))); //TODO: house end number?
+			LocationList locations = cps.getLocations();
+			String target = "";
+			while (locations.next()) {
+				if (locations.getID() == Integer.parseInt(request
+						.getParameter("streetTo"))) {
+					target = locations.getStreetName();
+				}
+			}
+			RideListing rl2 = cps.getRideListing();
+			String el = "";
+			String dt = "";
+			String tm = "";
+			while (rl2.next()) {
+				//System.out.println(rl2.getRideID()+", "+request.getParameter("rideSelect"));
+				if (rl2.getRideID() == Integer.parseInt(request
+						.getParameter("rideSelect"))) {
+					el = rl2.getEndLocation();
+					dt = new SimpleDateFormat("dd/MM/yyyy").format(rl2
+							.getRideDate());
+					tm = rl2.getTime();
+				}
+			}
+			takeConf = "<p>"
+					+ "You have requested to be picked up from "
+					+ request.getParameter("houseNo") + " " + target
+					+ " at " + tm + " on " + dt + "</p>";
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		while (rl.next()) {
 			if (!userExist) {
 				userTable = ""; //first time round get rid of unwanted text
@@ -90,6 +146,7 @@
 		boolean awaitExist = false;
 		TakenRides tr = cps.getTakenRides(currentUser);
 		while (tr.hasNext()) {
+			System.out.println("tr");
 			if (!rideExist) {
 				acceptedTable = ""; //first time round get rid of unwanted text
 			}
@@ -220,43 +277,6 @@
 						+ lastid
 						+ "</td></tr></table></div><br /><br />";
 			}
-		}
-
-		//if you have been redirected here from taking a ride print useful info
-		if (request.getParameter("rideSelect") != null
-				&& request.getParameter("streetTo") != null
-				&& request.getParameter("houseNo") != null) {
-			cps.takeRide(currentUser, Integer.parseInt(request
-					.getParameter("rideSelect")), Integer
-					.parseInt(request.getParameter("streetTo")),
-					Integer.parseInt(request.getParameter("houseNo")),
-					Integer.parseInt(request.getParameter("houseNo"))); //TODO: house end number?
-			LocationList locations = cps.getLocations();
-			String target = "";
-			while (locations.next()) {
-				if (locations.getID() == Integer.parseInt(request
-						.getParameter("streetTo"))) {
-					target = locations.getStreetName();
-				}
-			}
-			RideListing rl2 = cps.getRideListing();
-			String el = "";
-			String dt = "";
-			String tm = "";
-			while (rl2.next()) {
-				//System.out.println(rl2.getRideID()+", "+request.getParameter("rideSelect"));
-				if (rl2.getRideID() == Integer.parseInt(request
-						.getParameter("rideSelect"))) {
-					el = rl2.getEndLocation();
-					dt = new SimpleDateFormat("dd/MM/yyyy").format(rl2
-							.getRideDate());
-					tm = rl2.getTime();
-				}
-			}
-			takeConf = "<p>"
-					+ "You have requested to be picked up from "
-					+ request.getParameter("houseNo") + " " + target
-					+ " at " + tm + " on " + dt + "</p>";
 		}
 
 	} else {
