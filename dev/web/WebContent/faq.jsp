@@ -29,21 +29,21 @@ if(s.getAttribute("signedin") != null ) {
 		<div class="Box" id="Box">
 			
 
-<a href="#register">How can I register with this site?</a><br/>
-<a href="#editUser">How can I change my email address or other details?</a><br/>
-<a href="#offerRide">How can I offer a ride?</a><br/>
-<a href="#interestRide">Some users have registered interest in my ride. What should I do?</a><br/>
-<a href="#findRide">How can I find rides?</a><br/>
-<a href="#acceptRide">How do I accept a ride?</a><br/>
-<a href="#pn">Why is this site restricted to only Palmerston North streets?</a><br/>
-<a href="#noStreet">I can't find the street I want...</a><br/>
-<a href="#social">How does the Social Scoring system work?</a>
-<a href="#map">Why won't the Google Map display correctly for me?</a><br/>
-<a href="#site">Why won't the site let me log in?</a><br/>
-<a href="#browser">What browsers is this site compatible with?</a><br/><br/><br/>
+-<a href="#register">How can I register with this site?</a><br/>
+-<a href="#editUser">How can I change my email address or other details?</a><br/>
+-<a href="#offerRide">How can I offer a ride?</a><br/>
+-<a href="#interestRide">Some users have registered interest in my ride. What should I do?</a><br/>
+-<a href="#findRide">How can I find rides?</a><br/>
+-<a href="#acceptRide">How do I accept a ride?</a><br/>
+-<a href="#pn">Why is this site restricted to only Palmerston North streets?</a><br/>
+-<a href="#noStreet">I can't find the street I want...</a><br/>
+-<a href="#social">How does the Social Scoring system work?</a>
+-<a href="#map">Why won't the Google Map display correctly for me?</a><br/>
+-<a href="#site">Why won't the site let me log in?</a><br/>
+-<a href="#browser">What browsers is this site compatible with?</a><br/><br/>
 
-
-
+-----------------------------------------------------------------------------------------------------------------------
+<br/><br/>
 <h2><a name="register"> How can I register with this site?</a></h2>
 1. OpenId Registration<br/>
 You may use an any OpenId account to register with our site. To do this enter your OpenId account
