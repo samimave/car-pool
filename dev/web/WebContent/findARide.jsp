@@ -79,7 +79,7 @@ while (rl.next()){
 			<p>Please enter the search criteria in the boxes below and click search</p>
 			<FORM NAME="searchFrm" id="search" method="post" action="rideFinder.jsp">	
 				<TABLE class="rideSearch">
-	
+
 					<tr> <td>From:</td><td><INPUT type="text" name="numFrom" size="5" onkeypress="getAddress('from')" /></td> <td>
 					<SELECT name="streetFrom" onChange="getAddress('from')" >
            		  		<option selected="selected">Select a Street</option>
@@ -97,7 +97,7 @@ while (rl.next()){
 						<INPUT TYPE="text" NAME="stuff" SIZE="25">
 
 					</td></tr>
-					<tr> <td>&nbsp;</td> <td><INPUT TYPE="submit" NAME="search" VALUE="Search" SIZE="25"></td> </tr>
+					<tr> <td>&nbsp;					</td> <td><INPUT TYPE="submit" NAME="search" VALUE="Search" SIZE="25"></td> </tr>
 
 				</TABLE>
 			</FORM>
