@@ -31,12 +31,8 @@
 		boolean userExist = false;
 		ArrayList<Integer> rideIDs = new ArrayList<Integer>();
 
-		RideListing rl = cps.searchRideListing(RideListing.searchUser,
-				nameOfUser);
-
 		
-		
-		//if you have been redirected here from taking a ride print useful info
+		//USER JUST TOOK A RIDE
 		if (request.getParameter("rideSelect") != null
 				&& request.getParameter("streetTo") != null
 				&& request.getParameter("houseNo") != null) {
@@ -74,8 +70,13 @@
 		}
 		
 		
+		//PROVIDING FEEDBACK TO SOME DRIVER
+		if ((request.getParameter("feedbackRide")!=null) && (request.getParameter("rideRate")!=null)){
+			cps.addScore(cps.getTripID(Integer.parseInt(request.getParameter("FdbckForRide")), Integer.parseInt(request.getParameter("DriverUserID"))), Integer.parseInt(request.getParameter("DriverUserID")), Integer.parseInt(request.getParameter("rideRate")));
+		}
 		
 		
+		RideListing rl = cps.searchRideListing(RideListing.searchUser,nameOfUser);
 	
 		while (rl.next()) {
 			if (!userExist) {
@@ -252,9 +253,17 @@
 			String toF = tr2.getStopLocation();
 			String fromIDF = tr2.getStartID();
 			String toIDF = tr2.getStopID();
-
+			int driverID = 0;
 			// This feedbackTable shows the rides that the uesr is in so they can provide feedback after the ride
 			if ((tr2.getConfirmed() == true)) {
+				RideListing rl2 = cps.getRideListing();
+				while (rl2.next()){
+					if (rl2.getRideID() == tr2.getRideID()){
+						driverID = rl2.getUserID();
+					}
+				}
+				
+				
 				feedExist = true;
 				feedbackTable += "<td>" + fromF + "</td> ";
 				feedbackTable += "<td>" + toF + "</td> ";
@@ -262,9 +271,14 @@
 						+ new SimpleDateFormat("dd/MM/yyyy").format(tr2
 								.getRideDate()) + "</td> ";
 				feedbackTable += "<td>" + tr2.getTime() + "</td> ";
+				feedbackTable += "<FORM action=\"myDetails.jsp\" method=\"post\">";
+				feedbackTable += "<INPUT type=\"hidden\" name=\"feedbackRide\" value=\"yes"+ "\">";
+				feedbackTable += "<INPUT type=\"hidden\" name=\"DriverUserID\" value=\""+ driverID + "\">";
+				feedbackTable += "<INPUT type=\"hidden\" name=\"FdbckForRide\" value=\""+ tr2.getRideID() + "\">";
 				feedbackTable += "<td><INPUT TYPE=\"text\" NAME=\"rideC\" SIZE=\"10\"></td> ";
 				feedbackTable += "<td><INPUT TYPE=\"text\" NAME=\"rideRate\" SIZE=\"10\"></td> ";
 				feedbackTable += "<td><INPUT type=\"submit\" value=\"Rate Ride\" /></td>";
+				feedbackTable += "</FORM>";
 			}
 		}
 			if (feedExist) {
