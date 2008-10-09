@@ -125,6 +125,7 @@
 			cps.removeRide(Integer.parseInt(request.getParameter("withdrawUserID")), Integer.parseInt(request.getParameter("withdrawRideID")));
 			updateUserConf = "<p>" + "You have withdraw from the ride you wanted to" + "</p>";
 		}
+
 		if (request.getParameter("withdrawNotConfirmedRide") != null) {
 			cps.removeRide(Integer.parseInt(request.getParameter("withdrawUserID")), Integer.parseInt(request.getParameter("withdrawRideID")));
 			updateUserConf = "<p>" + "You have withdraw from the ride you wanted to" + "</p>";
@@ -152,6 +153,7 @@
 		<%=updateEndS%>
 		<%=updateDateConf%>
 		<%=updateUserConf%>
+	
 	<p>-- <a href="myDetails.jsp">Back to Account page</a> --</p>	
 	</DIV>
 
