@@ -180,7 +180,7 @@
 					<div class="Box" id="Box">
 					<TABLE class="rideDetails">
 					<tr> <td>House number:</td> 
-					<td><INPUT TYPE="text" NAME="houseFrom" SIZE="25"></td> </tr>
+					<td><INPUT TYPE="text" NAME="houseFrom" SIZE="25" onkeypress="getAddress('from')"></td> </tr>
 					<tr> <td>Street:</td> <td>
 					<SELECT name="streetFrom"  onChange="getAddress('from')">
            		  		<option selected="selected">Select a Street</option>
@@ -195,7 +195,7 @@
 					<div class="Box" id="Box">
 					<table class="rideDetails">
 					<tr> <td>House number:</td> 
-					<td><INPUT TYPE="text" NAME="houseTo" SIZE="25"></td> </tr>
+					<td><INPUT TYPE="text" NAME="houseTo" SIZE="25" onkeypress="getAddress('to')"></td> </tr>
 					<tr> <td>Street:</td> <td>
 					<SELECT name="streetTo" onChange="getAddress('to')">
            		  		<option selected="selected">Select a Street</option>
