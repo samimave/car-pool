@@ -5,8 +5,8 @@
 <%
 HttpSession s = request.getSession(true);
 String message = "";
-if(request.getAttribute("error") != null) {
-	message = (String)request.getAttribute("error");
+if(request.getParameter("error") != null) {
+	message = request.getParameter("error");
 }
 %>
 

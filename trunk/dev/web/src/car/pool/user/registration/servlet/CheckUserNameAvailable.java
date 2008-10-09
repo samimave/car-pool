@@ -24,7 +24,7 @@ public class CheckUserNameAvailable extends HttpServlet {
 		String username = request.getParameter("username");
 		if(username != null) {
 			CarPoolStore store = new CarPoolStoreImpl();
-			if(store.checkUserExists(username)) {
+			if(store.checkUserExists(username) || username.toLowerCase().startsWith("admin")) {
 				out.print("false");
 			} else {
 				out.print("true");
