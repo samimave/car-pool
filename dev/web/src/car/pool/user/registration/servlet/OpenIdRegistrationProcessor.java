@@ -19,6 +19,7 @@ import car.pool.persistance.exception.UserException;
 import car.pool.user.User;
 import car.pool.user.UserFactory;
 import car.pool.user.UserManager;
+import car.pool.user.authentication.servlet.HtmlUtils;
 import car.pool.user.registration.RandomTextGenerator;
 
 public class OpenIdRegistrationProcessor extends HttpServlet {
@@ -43,21 +44,27 @@ public class OpenIdRegistrationProcessor extends HttpServlet {
 			String userName = request.getParameter("userName");
 			
 			if(email == null || userName == null || email.length() == 0 || userName.length() == 0) {
-				request.setAttribute("error", "Please input a username and a email address");
-				request.getRequestDispatcher("/oregistration.jsp").forward(request, response);
+				String param = HtmlUtils.createParameterString("error", "Please input a username and a email address");
+				response.sendRedirect(String.format("oregistration.jsp?%s", param));
 				return;
 			}
 			
 			String verifyText = request.getParameter("verifytext");
 			if(verifyText == null || verifyText.length() == 0) {
-				request.setAttribute("error", "Please input the verifiction text displayed in the image");
-				request.getRequestDispatcher("/oregistration.jsp").forward(request, response);
+				String param = HtmlUtils.createParameterString("error", "Please input the verifiction text displayed in the image");
+				response.sendRedirect(String.format("oregistration.jsp?%s", param));
 				return;
 			}
 			
 			if(!verifyText.equals(new RandomTextGenerator().get((Integer) session.getAttribute("quote_pos")))) {
-				request.setAttribute("error", "Please input the correct verifiction text displayed in the image");
-				request.getRequestDispatcher("/oregistration.jsp").forward(request, response);
+				String param = HtmlUtils.createParameterString("error", "Please input the correct verifiction text displayed in the image");
+				response.sendRedirect(String.format("oregistration.jsp?%s", param));
+				return;
+			}
+			
+			if(userName.toLowerCase().startsWith("admin")) {
+				String param = HtmlUtils.createParameterString("error", "Username already in use, please use another");
+				response.sendRedirect(String.format("oregistration.jsp?%s", param));
 				return;
 			}
 			
@@ -85,17 +92,16 @@ public class OpenIdRegistrationProcessor extends HttpServlet {
 				response.sendRedirect(s);
 				return;
 			} catch (DuplicateUserNameException e) {
-				// TODO make sure a error message is shown for this user telling them why they couldn't be registered
-				String s = String.format("%s/register.jsp", request.getContextPath());
-				response.sendRedirect(s);
+				String param = HtmlUtils.createParameterString("error", "Username already in use, please use another");
+				response.sendRedirect(String.format("oregistration.jsp?%s", param));
 				return;
 			} catch (UserException e) {
-				// TODO make sure a error message is shown for this user telling them why they couldn't be registered
-				response.sendRedirect(String.format("%s/register.jsp", request.getContextPath()));
+				String param = HtmlUtils.createParameterString("error", e.getMessage());
+				response.sendRedirect(String.format("oregistration.jsp?%s", param));
 				return;
 			} catch (SQLException e) {
-				// TODO make sure a error message is shown for this user telling them why they couldn't be registered
-				response.sendRedirect(String.format("%s/register.jsp", request.getContextPath()));
+				String param = HtmlUtils.createParameterString("error", "There is a problem with the database, Please inform the site administrator.");
+				response.sendRedirect(String.format("oregistration.jsp?%s", param));
 				return;
 			}
 		}

@@ -17,6 +17,7 @@ import car.pool.persistance.exception.UserException;
 import car.pool.user.User;
 import car.pool.user.UserFactory;
 import car.pool.user.UserManager;
+import car.pool.user.authentication.servlet.HtmlUtils;
 import car.pool.user.registration.RandomTextGenerator;
 
 
@@ -41,31 +42,36 @@ public class RegistrationProcessing extends HttpServlet {
 		String userName = request.getParameter("userName");
 		
 		if(userName == null || email == null || userName.length() == 0 || email.length() == 0) {
-			request.setAttribute("error", "Please input a username and a email address");
-			request.getRequestDispatcher("/register.jsp").forward(request, response);
+			response.sendRedirect("register.jsp?error=Please%20input%20a%20username%20and%20a%20email%20address");
 			return;
-		}else if(password1 == null || password2 == null || password1.length() > 0 || password2.length() > 0) {
+		}else if((password1 != null && password2 != null) && (password1.length() > 0 || password2.length() > 0)) {
 			if(!password1.equals(password2)) {
 				// TODO make sure they get a error message and the form is prefilled with the previous values they entered 
-				response.sendRedirect(String.format("%s/register.jsp", request.getContextPath()));
+				response.sendRedirect("register.jsp?error=passwords%20must%20match");
 				return;
 			}
 		} else {
-			request.setAttribute("error", "Please input a password");
-			request.getRequestDispatcher("/register.jsp").forward(request, response);
+			response.sendRedirect("register.jsp?error=Please%20input%20a%20password");
+			return;
+		}
+		
+		if(userName.toLowerCase().startsWith("admin")) {
+			String param = HtmlUtils.createParameterString("error", "Username already in use, please use another");
+			String s = String.format("register.jsp?%s", param);
+			response.sendRedirect(s);
 			return;
 		}
 		
 		String verifyText = request.getParameter("verifytext");
 		if(verifyText == null || verifyText.length() == 0) {
-			request.setAttribute("error", "Please input the verifiction text displayed in the image");
-			request.getRequestDispatcher("/register.jsp").forward(request, response);
+			String param = HtmlUtils.createParameterString("error", "Please input the verifiction text displayed in the image");
+			response.sendRedirect(String.format("register.jsp?%s", param));
 			return;
 		}
 		
 		if(!verifyText.equals(new RandomTextGenerator().get((Integer) session.getAttribute("quote_pos")))) {
-			request.setAttribute("error", "Please input the correct verifiction text displayed in the image");
-			request.getRequestDispatcher("/register.jsp").forward(request, response);
+			String param = HtmlUtils.createParameterString("error", "Please input the correct verifiction text displayed in the image");
+			response.sendRedirect(String.format("register.jsp?%s", param));
 			return;
 		}
 		
@@ -95,17 +101,19 @@ public class RegistrationProcessing extends HttpServlet {
 			response.sendRedirect(s);
 			return;
 		} catch (DuplicateUserNameException e) {
-			// TODO make sure a error message is shown for this user telling them why they couldn't be registered
-			String s = String.format("%s/register.jsp", request.getContextPath());
+			String param = HtmlUtils.createParameterString("error", "Username already in use, please use another");
+			String s = String.format("register.jsp?%s", param);
 			response.sendRedirect(s);
 			return;
 		} catch (UserException e) {
-			// TODO make sure a error message is shown for this user telling them why they couldn't be registered
-			response.sendRedirect(String.format("%s/register.jsp", request.getContextPath()));
+			String param = HtmlUtils.createParameterString("error", e.getMessage());
+			String s = String.format("register.jsp?%s", param);
+			response.sendRedirect(s);
 			return;
 		} catch (SQLException e) {
-			// TODO make sure a error message is shown for this user telling them why they couldn't be registered
-			response.sendRedirect(String.format("%s/register.jsp", request.getContextPath()));
+			String param = HtmlUtils.createParameterString("error", "There is a problem with the database, Please inform the site administrator.");
+			String s = String.format("register.jsp?%s", param);
+			response.sendRedirect(s);
 			return;
 		}
 	}

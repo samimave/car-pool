@@ -23,5 +23,11 @@ public class HtmlUtils {
 		
 		return buff.toString();
 	}
+	
+	
+	public static String createParameterString(String key, String entry) {
+		entry = entry.replace(" ", "%20");
+		return String.format("%s=%s", key, entry);
+	}
 
 }
