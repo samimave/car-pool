@@ -83,7 +83,7 @@
 		///////////////////////////
 		Vector<String> comments = cps.getRideComment(rideID);
 		String[] the_comment;
-		reDirURL = "temp2.jsp?rideselect=" + rideID
+		reDirURL = "rideDetails.jsp?rideselect=" + rideID
 				+ "&userselect=" + request.getParameter("userselect");
 
 		//table builder
