@@ -63,6 +63,9 @@ public interface CarPoolStore {
 	public UserList getUserPhone();
 	public UserList getUserSignUpDate();
 	
+	public boolean hasUserAddedScore(int tripID);
+	public boolean hasUserAddedScore(int rideID, int userID) throws StoreException;
+	
 	public void addScore(int idTrip, int idUser, int score) throws SQLException;
 	public int getScore(int idUser) throws SQLException;
 	

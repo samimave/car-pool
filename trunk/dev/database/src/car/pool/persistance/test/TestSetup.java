@@ -74,7 +74,12 @@ public class TestSetup {
 			cps.takeRide(k, ride3, idLocation,0,1);
 			cps.takeRide(l, ride4, idLocation,0,1);
 			
-		} catch (StoreException e) {
+			cps.addScore(cps.getTripID(ride1, e), a, 3);
+			cps.addScore(cps.getTripID(ride1, f), a, 3);
+			cps.addScore(cps.getTripID(ride1, g), a, 3);
+			cps.addScore(cps.getTripID(ride1, h), a, 3);
+			
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
