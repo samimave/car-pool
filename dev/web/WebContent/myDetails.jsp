@@ -1,6 +1,6 @@
 <%@page errorPage="errorPage.jsp" %>
 <%@page contentType="text/html; charset=ISO-8859-1" %>
-<%@page import="org.verisign.joid.consumer.OpenIdFilter,car.pool.persistance.*,car.pool.user.*,java.util.ArrayList,java.text.*,java.util.*"%>
+<%@page import="org.verisign.joid.consumer.OpenIdFilter,car.pool.persistance.*,car.pool.user.*,java.util.ArrayList,java.text.*,java.util.*, car.pool.email.*"%>
 
 <%
 	HttpSession s = request.getSession(false);
@@ -213,6 +213,19 @@ if (s.getAttribute("signedin") != null) {
 					+ "You have requested to be picked up from "
 					+ request.getParameter("houseNo") + " " + target
 					+ " at " + tm + " on " + dt + "</p>";
+			try {
+				String message = "Thank you for registering your interest in this ride. Depending on if the driver can pick you up from the location you requested they will confirm you for the ride or reject you. Please make sure you both discuss information like the sharing of petrol costs beforehand in order to avoid confusion on the day.";
+				String address = user.getEmail();
+				String subject = "Car Pool Ride request";
+				Email email = new Email();
+				email.setMessage(message);
+				email.setSubject(subject);
+				email.setToAddress(address);
+				SMTP.send(email);
+			} catch(SMTPException e ) {
+				//just let it slide here, but print message to stdout
+				System.out.format("SMTP failed to send.  Error is:\n%s", e.getMessage());
+			}
 		}
 		
 		

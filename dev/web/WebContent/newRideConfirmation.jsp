@@ -1,6 +1,6 @@
 <%@page errorPage="errorPage.jsp" %>
 <%@page contentType="text/html; charset=ISO-8859-1" %>
-<%@page import="org.verisign.joid.consumer.OpenIdFilter,car.pool.persistance.*,java.text.SimpleDateFormat,car.pool.user.*,java.util.Date" %>
+<%@page import="org.verisign.joid.consumer.OpenIdFilter,car.pool.persistance.*,java.text.SimpleDateFormat,car.pool.user.*,java.util.*, car.pool.email.*" %>
 
 <%
 	HttpSession s = request.getSession(false);
@@ -52,6 +52,20 @@
 			if (allLocs2.getID() == Integer.parseInt(request
 					.getParameter("streetTo")))
 				to = allLocs2.getStreetName();
+		}
+
+		try {
+			String message = "Thank you for adding a ride offer to our website. You can update any details of your ride by logging into our site and clicking Edit Details. There you shall find a list of the rides you have offered, the details of which you can edit at any point. This is also where you can withdraw your offer though please be aware that a social score penalty will be involved. When users register interest in your ride they will show up in the \"Riders awaiting approval\" table of your ride page. Depending on if you can pick them up from the location they requested and if you feel like you can trust them you can either confirm the rider for that ride or reject them. Please make sure you both discuss information like the sharing of petrol costs beforehand in order to avoid confusion on the day.";
+			String address = user.getEmail();
+			String subject = String.format("Car Pool Ride offer from %s %s to %s %s on the date of %s and time of %s", request.getParameter("houseFrom"), from, request.getParameter("houseTo"), to, strOutDt, request.getParameter("depTime"));
+			Email email = new Email();
+			email.setMessage(message);
+			email.setSubject(subject);
+			email.setToAddress(address);
+			SMTP.send(email);
+		} catch(SMTPException e ) {
+			//just let it slide here, but print message to stdout
+			System.out.format("SMTP failed to send.  Error is:\n%s", e.getMessage());
 		}
 	} else {
 		response.sendRedirect(request.getContextPath());

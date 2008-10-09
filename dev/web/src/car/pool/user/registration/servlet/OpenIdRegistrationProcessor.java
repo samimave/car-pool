@@ -80,7 +80,8 @@ public class OpenIdRegistrationProcessor extends HttpServlet {
 				Email mail = new Email();
 				mail.setToAddress(user.getEmail());
 				mail.setSubject("Registration for the Car Pool Service");
-				mail.setMessage(String.format("Congradulations %s\n\nYou have been sucessfully registered to the Car Pool Site.  We hope you make extensive use of it, and find your experience a good one.\n\nThe Car Pool Team\n", user.getUserName()));
+				String message = String.format("Hello %s, thank you for registering with The Car Pool. We hope you find our site useful. To find out about the various things you can	do with our site have a look at the FAQ page (link here). And then log in and car pool away!", user.getUserName());
+				mail.setMessage(message);
 				try {
 					SMTP.send(mail);
 				} catch (SMTPException e) {
