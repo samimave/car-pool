@@ -28,38 +28,40 @@ if(s.getAttribute("signedin") != null ) {
 		<h2>and their answers:</h2>
 		<div class="Box" id="Box">
 			
-
--<a href="#register">How can I register with this site?</a><br/>
--<a href="#editUser">How can I change my email address or other details?</a><br/>
--<a href="#offerRide">How can I offer a ride?</a><br/>
--<a href="#interestRide">Some users have registered interest in my ride. What should I do?</a><br/>
--<a href="#findRide">How can I find rides?</a><br/>
--<a href="#acceptRide">How do I accept a ride?</a><br/>
--<a href="#pn">Why is this site restricted to only Palmerston North streets?</a><br/>
--<a href="#noStreet">I can't find the street I want...</a><br/>
--<a href="#social">How does the Social Scoring system work?</a>
--<a href="#map">Why won't the Google Map display correctly for me?</a><br/>
--<a href="#site">Why won't the site let me log in?</a><br/>
--<a href="#browser">What browsers is this site compatible with?</a><br/><br/>
-
+<ul>
+<li><a href="#register">How can I register with this site?</a></li>
+<li><a href="#editUser">How can I change my email address or other details?</a></li>
+<li><a href="#offerRide">How can I offer a ride?</a></li>
+<li><a href="#interestRide">Some users have registered interest in my ride. What should I do?</a></li>
+<li><a href="#findRide">How can I find rides?</a></li>
+<li><a href="#acceptRide">How do I accept a ride?</a></li>
+<li><a href="#pn">Why is this site restricted to only Palmerston North streets?</a></li>
+<li><a href="#noStreet">I can't find the street I want...</a></li>
+<li><a href="#social">How does the Social Scoring system work?</a></li>
+<li><a href="#map">Why won't the Google Map display correctly for me?</a></li>
+<li><a href="#site">Why won't the site let me log in?</a></li>
+<li><a href="#browser">What browsers is this site compatible with?</a></li>
+</ul>
 -----------------------------------------------------------------------------------------------------------------------
 <br/><br/>
 <h2><a name="register"> How can I register with this site?</a></h2>
-1. OpenId Registration<br/>
+<ol>
+<li> OpenId Registration</li>
 You may use an any OpenId account to register with our site. To do this enter your OpenId account
 in the text box with the OpenId sign beside it (located in the left menu) and you will be taken to the appropriate OpenId provider's 
 website where you can validate your account by entering your password. Once  you are signed in there you will be 
 redirected to our website. If you have not previously registered with us you will be taken to the registration form where 
 you can choose your username, enter an email address and other details required.
-<br/>
-2. Username & Password<br/>
+<li> Username & Password</li>
 You can also register with our site using a username and password. For that just click on the --Register here-- link located in the left menu, enter the relevant details and
 you are ready to go! An email will be sent to you informing you of the success of your registration.
-<br/><br/>
+</ol>
+
 <h2><a name="editUser">How can I change my email address or other details?</a></h2>
 When you are logged in click on the --Edit Details-- link in the menu on the left. You will be taken to your account page. Here you can change the details you want
 to such as email address and phone number. You can attach an OpenID with your account. You can attach another OpenID if you already have an existing one. 
 <br/><br/>
+
 <h2><a name="offerRide">How can I offer a ride?</a></h2>
 Once you are logged into the site you can click on the --Offer a Ride-- link on the menu in the left. You will be taken to the appropriate page where you can specify 
 the departure and arrival addresses, the departure date, time and approximate time you think the trip will take, the number of seats you have available and anything else that needs to be mentioned.
@@ -68,6 +70,7 @@ Once you have clicked --Confirm Ride Offer-- you will be taken to a page that gi
 Clicking on Add to Google Calendar. If you click on --Add to your Google Calendar-- a new window will open where you can log into your Gmail account and add the ride to your
 Google Calendar. 
 <br/><br/>
+
 <h2><a name="interestRide">Some users have registered interest in my ride. What should I do?</a></h2>
 When a member is interested in your ride they will mention the place they will like to be 
 picked up from. You can see a list of the users interested in your ride through your account page
