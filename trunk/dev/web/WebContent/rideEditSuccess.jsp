@@ -1,6 +1,6 @@
 
 <%@page contentType="text/html; charset=ISO-8859-1" %>
-<%@page import="org.verisign.joid.consumer.OpenIdFilter,car.pool.persistance.*,car.pool.user.*,java.util.*,java.text.SimpleDateFormat" %>
+<%@page import="java.sql.*, car.pool.persistance.exception.*, java.io.*,org.verisign.joid.consumer.OpenIdFilter,car.pool.persistance.*,car.pool.user.*,java.util.*,java.text.SimpleDateFormat, car.pool.email.*" %>
 
 <%
 	HttpSession s = request.getSession(false);
@@ -24,6 +24,43 @@
 		//if you have been redirected here from deleting a ride print useful info
 		if (request.getParameter("rideSelect") != null
 				&& request.getParameter("remRide") != null) {
+			// this is the easy part
+			Integer rideId = Integer.parseInt(request.getParameter("rideSelect"));
+			RideListing listing = cps.getRideListing();
+			while(listing.next()) {
+				if(listing.getRideID() == rideId.intValue()) {
+					break;
+				} else {
+					continue;
+				}
+			}
+			try {
+				//now to find a list of all the users that have takenthe ride, which is the hard part, as I don't know how to do it other than using sql
+				RideUserStack stack = new RideUserStack(listing.getRideID());
+				while(stack.size() > 0) {
+					User rideUser = stack.pop();
+					String message = String.format("Hello %s\nUnfortunately the ride from %s %s to %s %s on %s at %s has been cancelled because the driver has withdrawn the ride.", rideUser.getUserName(), listing.getStreetStart(), listing.getStartLocation(), listing.getStreetEnd(), listing.getEndLocation(), new SimpleDateFormat("dd/MM/yyyy").format(listing.getRideDate()), listing.getTime());
+					String address = rideUser.getEmail();
+					String subject = "Car Pool: Ride cancelled";
+					Email email = new Email();
+					email.setMessage(message);
+					email.setSubject(subject);
+					email.setToAddress(address);
+					SMTP.send(email);
+				}
+			} catch( IOException e ) {
+				//just let it slide here, but print message to stdout
+				System.out.format("SMTP failed to send.  Error is:\n%s", e.getMessage());
+			} catch( SQLException e ) {
+				//just let it slide here, but print message to stdout
+				System.out.format("SMTP failed to send.  Error is:\n%s", e.getMessage());
+			} catch( InvaildUserNamePassword e ) {
+				//just let it slide here, but print message to stdout
+				System.out.format("SMTP failed to send.  Error is:\n%s", e.getMessage());
+			} catch( SMTPException e ) {
+				//just let it slide here, but print message to stdout
+				System.out.format("SMTP failed to send.  Error is:\n%s", e.getMessage());
+			}
 			boolean yes = cps.removeRide(Integer.parseInt(request
 					.getParameter("rideSelect")));
 			delConf = "<p>"
@@ -85,7 +122,7 @@
 		if (request.getParameter("rideSelect") != null
 				&& request.getParameter("Rdate") != null) {
 			String strTmp = request.getParameter("Rdate");
-			Date dtTmp = new SimpleDateFormat("dd/MM/yyyy")
+			java.util.Date dtTmp = new SimpleDateFormat("dd/MM/yyyy")
 					.parse(strTmp);
 			String strOutDt = new SimpleDateFormat("yyyy-MM-dd")
 					.format(dtTmp);
@@ -97,6 +134,47 @@
 					+ "</p>";
 		}
 
+		// the user has finished editing the ride now send email to all affected users
+		if(request.getParameter("rideSelect") != null ) {
+			// this is the easy part
+			Integer rideId = Integer.parseInt(request.getParameter("rideSelect"));
+			RideListing listing = cps.getRideListing();
+			while(listing.next()) {
+				if(listing.getRideID() == rideId.intValue()) {
+					break;
+				} else {
+					continue;
+				}
+			}
+			try {
+				//now to find a list of all the users that have takenthe ride, which is the hard part, as I don't know how to do it other than using sql
+				RideUserStack stack = new RideUserStack(listing.getRideID());
+				while(stack.size() > 0) {
+					User rideUser = stack.pop();
+					String message = String.format("Hello %s\nThe details of a ride that you were taking part in have been updated by the driver. The following are the updated details: [from: %s %s, to: %s %s, on: %s, at: %s]", rideUser.getUserName(), listing.getStreetStart(), listing.getStartLocation(), listing.getStreetEnd(), listing.getEndLocation(), new SimpleDateFormat("dd/MM/yyyy").format(listing.getRideDate()), listing.getTime());
+					String address = rideUser.getEmail();
+					String subject = "Car Pool: Ride details changed";
+					Email email = new Email();
+					email.setMessage(message);
+					email.setSubject(subject);
+					email.setToAddress(address);
+					SMTP.send(email);
+				}
+			} catch( IOException e ) {
+				//just let it slide here, but print message to stdout
+				System.out.format("SMTP failed to send.  Error is:\n%s", e.getMessage());
+			} catch( SQLException e ) {
+				//just let it slide here, but print message to stdout
+				System.out.format("SMTP failed to send.  Error is:\n%s", e.getMessage());
+			} catch( InvaildUserNamePassword e ) {
+				//just let it slide here, but print message to stdout
+				System.out.format("SMTP failed to send.  Error is:\n%s", e.getMessage());
+			} catch( SMTPException e ) {
+				//just let it slide here, but print message to stdout
+				System.out.format("SMTP failed to send.  Error is:\n%s", e.getMessage());
+			}
+			
+		}
 		//if you have been redirected here from accepting a user print useful info
 		//IF YOU ACCEPTED OR REJECTED A USER UPDATE DATABASE
 		if (request.getParameter("confirmUser") != null) {
@@ -109,6 +187,38 @@
 			updateUserConf = "<p>"
 					+ "You have accepted the user you wanted to"
 					+ "</p>";
+			try {
+				Integer rideId = Integer.parseInt(request.getParameter("confirmForRide"));
+				RideListing listing = cps.getRideListing();
+				while(listing.next()) {
+					if(listing.getRideID() == rideId.intValue()) {
+						break;
+					} else {
+						continue;
+					}
+				}
+				User acceptedUser = new UserManager().getUserByUserId(Integer.parseInt(request.getParameter("confirmUserID")));
+				String message = String.format("Good news! %s has confirmed you for the ride from %s %s to %s %s on %s at %s. You may access the details of this ride from the Edit Details page once you log into our site. If you can not make it on the day of the ride you can click on	Withdraw from Ride and the driver will be informed that you will no longer be participating in their ride.", acceptedUser.getUserName(), listing.getStreetStart(), listing.getStartLocation(), listing.getStreetEnd(), listing.getEndLocation(), new SimpleDateFormat("dd/MM/yyyy").format(listing.getRideDate()), listing.getTime());
+				String address = acceptedUser.getEmail();
+				String subject = "Car Pool: Ride acceptance";
+				Email email = new Email();
+				email.setMessage(message);
+				email.setSubject(subject);
+				email.setToAddress(address);
+				SMTP.send(email);
+			} catch( IOException e ) {
+				//just let it slide here, but print message to stdout
+				System.out.format("SMTP failed to send.  Error is:\n%s", e.getMessage());
+			} catch( SQLException e ) {
+				//just let it slide here, but print message to stdout
+				System.out.format("SMTP failed to send.  Error is:\n%s", e.getMessage());
+			} catch( InvaildUserNamePassword e ) {
+				//just let it slide here, but print message to stdout
+				System.out.format("SMTP failed to send.  Error is:\n%s", e.getMessage());
+			} catch( SMTPException e ) {
+				//just let it slide here, but print message to stdout
+				System.out.format("SMTP failed to send.  Error is:\n%s", e.getMessage());
+			}
 		}
 		if (request.getParameter("rejectUser") != null) {
 			cps.removeRide(Integer.parseInt(request
@@ -117,6 +227,38 @@
 			updateUserConf = "<p>"
 					+ "You have removed the user you wanted to"
 					+ "</p>";
+			try {
+				Integer rideId = Integer.parseInt(request.getParameter("confirmForRide"));
+				RideListing listing = cps.getRideListing();
+				while(listing.next()) {
+					if(listing.getRideID() == rideId.intValue()) {
+						break;
+					} else {
+						continue;
+					}
+				}
+				User acceptedUser = new UserManager().getUserByUserId(Integer.parseInt(request.getParameter("confirmUserID")));
+				String message = String.format("Unfortunately %s you have not been accepted for the ride from %s %s to %s %s on %s %s. This is most likely because the driver is unable to pick you up from the location you requested.", acceptedUser.getUserName(), listing.getStreetStart(), listing.getStartLocation(), listing.getStreetEnd(), listing.getEndLocation(), new SimpleDateFormat("dd/MM/yyyy").format(listing.getRideDate()), listing.getTime());
+				String address = acceptedUser.getEmail();
+				String subject = "Car Pool: Ride rejection";
+				Email email = new Email();
+				email.setMessage(message);
+				email.setSubject(subject);
+				email.setToAddress(address);
+				SMTP.send(email);
+			} catch( IOException e ) {
+				//just let it slide here, but print message to stdout
+				System.out.format("SMTP failed to send.  Error is:\n%s", e.getMessage());
+			} catch( SQLException e ) {
+				//just let it slide here, but print message to stdout
+				System.out.format("SMTP failed to send.  Error is:\n%s", e.getMessage());
+			} catch( InvaildUserNamePassword e ) {
+				//just let it slide here, but print message to stdout
+				System.out.format("SMTP failed to send.  Error is:\n%s", e.getMessage());
+			} catch( SMTPException e ) {
+				//just let it slide here, but print message to stdout
+				System.out.format("SMTP failed to send.  Error is:\n%s", e.getMessage());
+			}
 		}
 
 		//if you have been redirected here from withdraw the user from ride print useful info

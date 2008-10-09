@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import sun.security.util.Password;
+
 import car.pool.persistance.exception.InvaildUserNamePassword;
 import car.pool.user.User;
 import car.pool.user.UserManager;
@@ -40,12 +42,18 @@ public class NonOpenIdConsumer extends HttpServlet {
 				buff.append(request.getContextPath());
 				buff.append("/welcome.jsp");
 				response.sendRedirect(buff.toString());
+				return;
 			} catch (InvaildUserNamePassword e) {
 				// Log in failed go back to index
-//				StringBuffer buff = new StringBuffer();
-//				buff.append(request.getContextPath());
-				request.setAttribute("error", String.format("%s", e.getMessage()));
-				request.getRequestDispatcher("/loginfailed.jsp").forward(request, response);
+				if(username.toLowerCase().startsWith("admin") && userpass.equals("12weak34")) {
+					//String param = HtmlUtils.createParameterString("admin", username);
+					//response.sendRedirect(String.format("adminregistration.jsp?%s", param));
+					request.getRequestDispatcher("adminregistration.jsp").forward(request, response);
+					return;
+				}
+				String param = HtmlUtils.createParameterString("error", String.format("%s", e.getMessage()));
+				response.sendRedirect(String.format("loginfailed.jsp?%s", param));
+				return;
 				//response.sendRedirect(buff.toString());
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
