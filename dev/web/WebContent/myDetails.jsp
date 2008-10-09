@@ -16,6 +16,7 @@
 	String userTable = "<p>No rides found.</p>";
 	String acceptedTable = "<p>No rides found.</p>";
 	String awaitTable = "<p>No rides found.</p>";
+	String feedbackTable = "";
 	int socialScore = 0;
 
 	if (s.getAttribute("signedin") != null) {
@@ -75,20 +76,7 @@
 		
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+	
 		while (rl.next()) {
 			if (!userExist) {
 				userTable = ""; //first time round get rid of unwanted text
@@ -192,8 +180,7 @@
 				acceptedTable += "<FORM action=\"rideEditSuccess.jsp\" method=\"post\">";
 				acceptedTable += "<INPUT type=\"hidden\" name=\"withdrawConfirmedRide\" value=\"yes"
 						+ "\">";
-				acceptedTable += "<INPUT type=\"hidden\" name=\"withdrawUserID\" value=\""
-						+ currentUser + "\">";
+				acceptedTable += "<INPUT type=\"hidden\" name=\"withdrawUserID\" value=\""+ currentUser + "\">";
 				acceptedTable += "<INPUT type=\"hidden\" name=\"withdrawRideID\" value=\""
 						+ tr.getRideID() + "\">";
 				//acceptedTable += "<td>"+ tr.getUsername() +"</td> ";	
@@ -252,6 +239,44 @@
 			awaitTable = "<p>No users were found.</p>";
 		}
 
+		//feedback table for rides you have been approved for
+		
+		boolean feedExist = false;
+		TakenRides tr2 = cps.getTakenRides(currentUser);
+		while (tr2.hasNext()) {
+			if (!feedExist) {
+				feedbackTable = ""; //first time round get rid of unwanted text
+			}
+
+			String fromF = tr2.getStartLocation();
+			String toF = tr2.getStopLocation();
+			String fromIDF = tr2.getStartID();
+			String toIDF = tr2.getStopID();
+
+			// This feedbackTable shows the rides that the uesr is in so they can provide feedback after the ride
+			if ((tr2.getConfirmed() == true)) {
+				feedExist = true;
+				feedbackTable += "<td>" + fromF + "</td> ";
+				feedbackTable += "<td>" + toF + "</td> ";
+				feedbackTable += "<td>"
+						+ new SimpleDateFormat("dd/MM/yyyy").format(tr2
+								.getRideDate()) + "</td> ";
+				feedbackTable += "<td>" + tr2.getTime() + "</td> ";
+				feedbackTable += "<td><INPUT TYPE=\"text\" NAME=\"rideC\" SIZE=\"10\"></td> ";
+				feedbackTable += "<td><INPUT TYPE=\"text\" NAME=\"rideRate\" SIZE=\"10\"></td> ";
+				feedbackTable += "<td><INPUT type=\"submit\" value=\"Rate Ride\" /></td>";
+			}
+		}
+			if (feedExist) {
+				feedbackTable = "<table class='rideDetailsSearch'> <tr><th>Starting From</th> <th>Going To</th>"
+						+ "<th>Departure Date</th> <th>Departure Time</th><th>Feedback Comment</th><th>Rating (max 10)</th><th>Submit</th> </tr>"
+						+ feedbackTable + "</table>";
+			} else {
+				feedbackTable = "<p>No rides to provide feedback for.</p>";
+			}
+		
+		
+		
 		//input openids to the table
 		String entries = "";
 		int idcount = 0;
@@ -339,7 +364,9 @@
 			<%=acceptedTable%>
 			<br /><br />
 			<h3>You are awaiting approval for the following rides:</h3>
-			<%=awaitTable%>
+			<%=awaitTable%><br/><br/>
+			<h3>Please provide feedback for the following rides after the ride has taken place</h3>
+			<%=feedbackTable%>
 		</div>
 		<br /> <br /> <br />
 		<p>-- <a href="welcome.jsp">Home</a> --</p>
