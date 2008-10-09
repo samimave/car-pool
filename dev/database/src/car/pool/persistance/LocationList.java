@@ -41,7 +41,8 @@ public class LocationList {
 			String searchable = "%" + name.replace(' ', '%') + "%";
 			sql = "Select idLocations, street "+
 							"FROM locations "+
-							"WHERE street LIKE '"+searchable+"';";
+							"WHERE street LIKE '"+searchable+"'" +
+							"GROUP by street;";
 		}
 		try {
 			rs = statement.executeQuery(sql);

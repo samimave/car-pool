@@ -899,4 +899,29 @@ public class CarPoolStoreImpl implements CarPoolStore {
 	public TakenRides getTakenRides(int idUser) {	 
 		return new TakenRides(idUser,db.getStatement());
 	}
+	
+	public boolean hasUserAddedScore(int rideID, int userID) throws StoreException{
+		return hasUserAddedScore(getTripID(rideID, userID));
+	}
+
+	public boolean hasUserAddedScore(int tripID) {
+		boolean has = false;
+		Statement statement = db.getStatement();
+		String sql = 	"SELECT * " +
+						"FROM social " +
+						"WHERE social.idTrip ='"+tripID+"';";
+		try {
+			statement = db.getStatement();
+			ResultSet rs = statement.executeQuery(sql);
+			has = rs.next();
+			rs.close();
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return has;
+	}
+	
+	
 }
