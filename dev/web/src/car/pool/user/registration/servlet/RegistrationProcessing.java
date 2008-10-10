@@ -64,14 +64,14 @@ public class RegistrationProcessing extends HttpServlet {
 			return;
 		}
 		
-		String verifyText = request.getParameter("verifytext");
+		String verifyText = request.getParameter("verifytext").toLowerCase();
 		if(verifyText == null || verifyText.length() == 0) {
 			String param = HtmlUtils.createParameterString("error", "Please input the verifiction text displayed in the image");
 			response.sendRedirect(String.format("register.jsp?%s", param));
 			return;
 		}
 		
-		if(!verifyText.equals(new RandomTextGenerator().get((Integer) sessionVar.getAttribute("quote_pos")))) {
+		if(!verifyText.equals((new RandomTextGenerator().get((Integer) sessionVar.getAttribute("quote_pos")).toLowerCase()))) {
 			String param = HtmlUtils.createParameterString("error", "Please input the correct verifiction text displayed in the image");
 			response.sendRedirect(String.format("register.jsp?%s", param));
 			return;
