@@ -81,7 +81,7 @@
 
 		boolean requestExist = false;
 		boolean acceptExist = false;
-		//TODO: This is the ugliest piece of code I have ever seen in my life, and it doesnt even work! Fix it.
+		
 		//Hmmmm I think I have fixed the issue with the tables but to make the code simpler than this, I don't know how
 
 		//get the details of a ride
@@ -89,7 +89,7 @@
 		boolean whatever = true;
 		while (rd.hasNext() && whatever == true) {
 			whatever = true;
-			System.out.println("something1");
+			//System.out.println("something1");
 			if (!requestExist) {
 				requestTable = "";
 			}
@@ -101,14 +101,14 @@
 			//then add the user to the request table with their details
 
 			if ((rd.getUserID() != dbID) && (rd.getConfirmed() == false)) {
-				System.out.println("request exists");
+				//System.out.println("request exists");
 				requestExist = true;
 				requestTable += "<tr><td>" + rd.getUsername() + "</td>";
 				//this is the place where the driver will have to pick them up from
 				requestTable += "<td>" + rd.getStreetNumber() + " "
 						+ rd.getLocationName() + "</td>";
 				//this is the confirm user button
-				requestTable += "<FORM action=\"rideEditSuccess.jsp\" method=\"post\">";
+				requestTable += "<FORM action="+response.encodeURL("rideEditSuccess.jsp")+" method=\"post\">";
 				requestTable += "<INPUT type=\"hidden\" name=\"confirmUser\" value=\"yes"
 						+ "\">";
 				requestTable += "<INPUT type=\"hidden\" name=\"confirmUserID\" value=\""
@@ -169,8 +169,8 @@
 		///////////////////////////
 		Vector<String> comments = cps.getRideComment(rideID);
 		String[] the_comment;
-		reDirURL = "myRideEdit.jsp?rideselect=" + rideID
-				+ "&userselect=" + request.getParameter("userselect");
+		reDirURL = response.encodeURL("myRideEdit.jsp?rideselect=" + rideID
+				+ "&userselect=" + request.getParameter("userselect"));
 
 		//table builder
 		String evenRow = "<tr bgcolor=\"#EEEEEE\">";
@@ -204,7 +204,7 @@
 			}
 			try {
 				if (Integer.parseInt(the_comment[1]) == dbID) {
-					delButton = "<FORM action=\"delAComment.jsp\" method=\"post\">";
+					delButton = "<FORM action="+response.encodeURL("delAComment.jsp")+" method=\"post\">";
 					delButton += "<INPUT type=\"hidden\" name=\"idComment\" value=\""
 							+ the_comment[0] + "\">";
 					delButton += "<INPUT type=\"hidden\" name=\"reDirURL\" value=\""
@@ -255,7 +255,7 @@
 		<br />
 		<h3>Location:</h3>
 		<div class="Box" id="Box">
-		<FORM name="updateStartS" action="rideEditSuccess.jsp" method="post">
+		<FORM name="updateStartS" action="<%=response.encodeURL("rideEditSuccess.jsp") %>" method="post">
 			<INPUT type="hidden" name="updateRide" value="yes"/>
 			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect")%>">
 			<TABLE>
@@ -264,7 +264,7 @@
 				<tr> <td><SELECT name="startFrom"><option selected="selected">Select a Street</option><%=options%></SELECT></td><td><INPUT type="submit" name="startFrom" value="Update Street" size="25"></td></tr>
 			</TABLE>
 		</FORM>
-		<FORM name="updateEndS" action="rideEditSuccess.jsp" method="post">
+		<FORM name="updateEndS" action="<%=response.encodeURL("rideEditSuccess.jsp") %>" method="post">
 			<INPUT type="hidden" name="updateRide" value="yes"/>
 			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect")%>">
 			<TABLE>
@@ -284,14 +284,14 @@
 		<br /><br />
 		<h3>Timing:</h3>
 		<div class="Box" id="Box">
-		<FORM name="updateDate" action="rideEditSuccess.jsp" method="post">
+		<FORM name="updateDate" action="<%=response.encodeURL("rideEditSuccess.jsp") %>" method="post">
 			<INPUT type="hidden" name="updateRide" value="yes">
 			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect")%>">
 			<TABLE>
 				<tr> <td>Date: </td> <td><INPUT TYPE="text" NAME="Rdate" SIZE="25" value=<%=dateR%>><A HREF="#" onClick="cal.select(document.forms['updateDate'].Rdate,'anchor1','dd/MM/yyyy'); return false;" NAME="anchor1" ID="anchor1"><img name="calIcon" border="0" src="calendar_icon.jpg" width="27" height="23"></A></td><td><INPUT type="submit" name="updateDate" value="Update Date" size="25"></td></tr>
 			
 		</FORM>
-		<FORM name="updateTime" action="rideEditSuccess.jsp" method="post">
+		<FORM name="updateTime" action="<%=response.encodeURL("rideEditSuccess.jsp") %>" method="post">
 			<INPUT type="hidden" name="updateRide" value="yes"/>
 			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect")%>">
 			
@@ -302,7 +302,7 @@
 		<br /><br />
 		<h3>Additional Information:</h3>
 		<div class="Box" id="Box">
-		<FORM name="updateSeats" action="rideEditSuccess.jsp" method="post">
+		<FORM name="updateSeats" action="<%=response.encodeURL("rideEditSuccess.jsp") %>" method="post">
 			<INPUT type="hidden" name="updateRide" value="yes"/>
 			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect")%>">
 			<TABLE>
@@ -310,7 +310,7 @@
 			</TABLE>
 		</FORM>
 		</div>
-		<FORM name="withdraw" action="rideEditSuccess.jsp" method="post">
+		<FORM name="withdraw" action="<%=response.encodeURL("rideEditSuccess.jsp") %>" method="post">
 			<input type="hidden" name="remRide"/>
 			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect")%>">
 			<p>Click here to <INPUT type="submit" name="removeRide" value="Withdraw Ride" size="25"></p>
@@ -331,7 +331,7 @@
 		<h2>Ride Comments:</h2>
 		<div class="Box" id="Box">
 		<%=table%>
-		<FORM name = "addComment" action="addAComment.jsp" method="post">
+		<FORM name = "addComment" action="<%=response.encodeURL("addAComment.jsp") %>" method="post">
 			<TABLE width="100%">
 				<tr><td >
 					<INPUT type="hidden" name="idRide" value="<%=rideID%>">
@@ -346,10 +346,10 @@
 		</FORM>
 		</div>
 		<br /> <br /> <br />
-		<p>-- <a href="welcome.jsp">Home</a> --</p>	
+		<p>-- <a href="<%=response.encodeURL("welcome.jsp") %>">Home</a> --</p>	
 	</DIV>
 
-	<%@ include file="leftMenu.html" %>
+	<%@ include file="leftMenu.jsp" %>
 
 	</BODY>
 </HTML>

@@ -15,7 +15,7 @@ int timeout = s.getMaxInactiveInterval();
 		<STYLE type="text/css" media="screen">@import "TwoColumnLayout.css";</STYLE>
 		<%@include file="include/javascriptincludes.html" %>
 	</HEAD>
-	<BODY onload="formCookieCheck()">
+	<BODY>
 
 	<%@ include file="heading.html" %>
 
@@ -24,12 +24,12 @@ int timeout = s.getMaxInactiveInterval();
 		<br /><br />
 		<h2>Options Available Without Logging In:</h2>
 		<div class="Box" id="Box">
-			<p>To see what rides we have available <a href="searchRides.jsp">click here</a>.</p>
-			<p>To find out more about our website and what we offer <a href="about.jsp">click here</a>.</p>
+			<p>To see what rides we have available <a href="<%=response.encodeURL("searchRides.jsp") %>">click here</a>.</p>
+			<p>To find out more about our website and what we offer <a href=<%=response.encodeURL("about.jsp")%>>click here</a>.</p>
 		</div>
 	</DIV>
 
-	<%@ include file="leftMenuLogin.html" %>
+	<%@ include file="leftMenuLogin.jsp" %>
 
 	</BODY>
 </HTML>

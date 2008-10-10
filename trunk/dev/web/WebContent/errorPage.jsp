@@ -34,11 +34,11 @@ if(s.getAttribute("signedin") != null ) {
 <%
 if (user != null) { 		//depending if the user is logged in or not different link should be displayed
 %> 
-	<p>-- <a href="welcome.jsp">Home</a> --</p>	
+	<p>-- <a href="<%=response.encodeURL("welcome.jsp")%>">Home</a> --</p>	
 <%
 } else { 
 %>
-	<p>-- <a href="index.jsp">Back to Login Page</a> --</p>	
+	<p>-- <a href="<%=response.encodeURL("index.jsp")%>">Back to Login Page</a> --</p>	
 <%
 } 
 %>
@@ -47,11 +47,11 @@ if (user != null) { 		//depending if the user is logged in or not different link
 <%
 if (user != null) { 		//depending if the user is logged in or not different side menus should be displayed
 %> 
-	<jsp:include page="leftMenu.html" flush="false" />
+	<jsp:include page="leftMenu.jsp" flush="false" />
 <%
 } else { 
 %>
-	<jsp:include page="leftMenuLogin.html" flush="false" />
+	<jsp:include page="leftMenuLogin.jsp" flush="false" />
 <%
 } 
 %>

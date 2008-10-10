@@ -60,7 +60,7 @@
 			<div class="Box" id="Box">
 			<p>There are currently <%=rideCount%> rides in the database!</p> 
 			<br />
-			<FORM name="showAll" id="showAll" method="post" action="resultall.jsp">
+			<FORM name="showAll" id="showAll" method="post" action="<%=response.encodeURL("resultall.jsp") %>">
 				<INPUT type="hidden" name="showAll" value="yes"/>
 				<TABLE class="rideSearch">
 					<tr> <td>Click here to </td><td><INPUT TYPE="submit" NAME="all" VALUE="Show All Rides" SIZE="25"></td></tr>
@@ -71,7 +71,7 @@
 			<h2>Automatic Search:</h2>
 			<div class="Box" id="Box">
 			<p>Please enter the search criteria in the boxes below and click search. Rides matching any of the entered information will be displayed.</p>
-			<FORM NAME="searchFrm" id="search" method="post" action="result.jsp">	
+			<FORM NAME="searchFrm" id="search" method="post" action="<%=response.encodeURL("result.jsp") %>">	
 				<TABLE class="rideSearch">
 	
 					<tr> <td>Street From:</td> <td>
@@ -95,11 +95,11 @@
 <%
 	if (user != null) { //depending if the user is logged in or not different link should be displayed
 %> 
-	<p>-- <a href="welcome.jsp">Home</a> --</p>	
+	<p>-- <a href="<%=response.encodeURL("welcome.jsp") %>">Home</a> --</p>	
 <%
 		} else {
 	%>
-	<p>-- <a href="index.jsp">Back to Login Page</a> --</p>	
+	<p>-- <a href="<%=response.encodeURL("index.jsp") %>">Back to Login Page</a> --</p>	
 <%
 		}
 	%>
@@ -108,11 +108,11 @@
 <%
 	if (user != null) { //depending if the user is logged in or not different side menus should be displayed
 %> 
-	<jsp:include page="leftMenu.html" flush="false" />
+	<jsp:include page="leftMenu.jsp" flush="false" />
 <%
 	} else {
 %>
-	<jsp:include page="leftMenuLogin.html" flush="false" />
+	<jsp:include page="leftMenuLogin.jsp" flush="false" />
 <%
 	}
 %>

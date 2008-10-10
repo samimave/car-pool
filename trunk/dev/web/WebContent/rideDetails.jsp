@@ -83,8 +83,8 @@
 		///////////////////////////
 		Vector<String> comments = cps.getRideComment(rideID);
 		String[] the_comment;
-		reDirURL = "rideDetails.jsp?rideselect=" + rideID
-				+ "&userselect=" + request.getParameter("userselect");
+		reDirURL = response.encodeURL("rideDetails.jsp?rideselect=" + rideID
+				+ "&userselect=" + request.getParameter("userselect"));
 
 		//table builder
 		String evenRow = "<tr bgcolor=\"#EEEEEE\">";
@@ -118,7 +118,7 @@
 			}
 			try {
 				if (Integer.parseInt(the_comment[1]) == dbID) {
-					delButton = "<FORM action=\"delAComment.jsp\" method=\"post\">";
+					delButton = "<FORM action='"+response.encodeURL("delAComment.jsp")+"' method=\"post\">";
 					delButton += "<INPUT type=\"hidden\" name=\"idComment\" value=\""
 							+ the_comment[0] + "\">";
 					delButton += "<INPUT type=\"hidden\" name=\"reDirURL\" value=\""
@@ -172,7 +172,7 @@
 		<br /><br />
 		<h2>Take Ride:</h2>
 		<div class="Box" id="Box">
-		<FORM name="ride" action="myDetails.jsp" method="post">
+		<FORM name="ride" action="<%=response.encodeURL("myDetails.jsp") %>" method="post">
 			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect")%>">
 			<h3>Please Pick Me Up From:</h3>
 			<TABLE class='rideD'>
@@ -190,7 +190,7 @@
 		<h2>Ride Comments:</h2>
 		<div class="Box" id="Box">
 		<%=table%>
-		<FORM name = "addComment" action="addAComment.jsp" method="post">
+		<FORM name = "addComment" action="<%=response.encodeURL("addAComment.jsp") %>" method="post">
 			<TABLE width="100%">
 				<tr><td>
 					<INPUT type="hidden" name="idRide" value="<%=rideID%>">
@@ -204,10 +204,10 @@
 		</FORM>
 		</div>
 		<br /> <br /> <br />
-		<p>-- <a href="welcome.jsp">Home</a> --</p>	
+		<p>-- <a href="<%=response.encodeURL("welcome.jsp") %>">Home</a> --</p>	
 	</DIV>
 
-	<%@ include file="leftMenu.html" %>
+	<%@ include file="leftMenu.jsp" %>
 
 	</BODY>
 </HTML>

@@ -273,10 +273,10 @@ if (s.getAttribute("signedin") != null) {
 			Date dt = new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(d);
 			if (dt.after(new Date())) {
 				userTable += "<td> <a href='"
-						+ request.getContextPath()
+						+ response.encodeURL(request.getContextPath()
 						+ "/myRideEdit.jsp?rideselect="
 						+ rl.getRideID() + "&userselect="
-						+ rl.getUsername() + "'>"
+						+ rl.getUsername()) + "'>"
 						+ "Manage ride & riders."
 						+ "</a> </td> </tr>";
 			} else {
@@ -294,7 +294,7 @@ if (s.getAttribute("signedin") != null) {
 		boolean awaitExist = false;
 		TakenRides tr = cps.getTakenRides(currentUser);
 		while (tr.hasNext()) {
-			System.out.println("tr");
+			//System.out.println("tr");
 			if (!rideExist) {
 				acceptedTable = ""; //first time round get rid of unwanted text
 			}
@@ -313,7 +313,7 @@ if (s.getAttribute("signedin") != null) {
 			if ((tr.getConfirmed() == true)) {
 				rideExist = true;
 				takeAction = true;
-				acceptedTable += "<tr><FORM action=\"addRideEvent.jsp\" method=\"post\" target=\"_blank\" >";
+				acceptedTable += "<tr><FORM action='"+response.encodeURL("addRideEvent.jsp")+"' method=\"post\" target=\"_blank\" >";
 				acceptedTable += "<INPUT type=\"hidden\" name=\"withdrawConfirmedRide\" value=\"yes"
 						+ "\">";
 				acceptedTable += "<td>" + from + "</td> ";
@@ -338,7 +338,7 @@ if (s.getAttribute("signedin") != null) {
 				acceptedTable += "<td><INPUT type=\"submit\" value=\"Add\" /></td>";
 				acceptedTable += "</FORM>";
 
-				acceptedTable += "<FORM action=\"myDetails.jsp\" method=\"post\">";
+				acceptedTable += "<FORM action='"+response.encodeURL("myDetails.jsp")+" method=\"post\">";
 				acceptedTable += "<INPUT type=\"hidden\" name=\"withdrawConfirmedRide\" value=\"yes"
 						+ "\">";
 				acceptedTable += "<INPUT type=\"hidden\" name=\"withdrawUserID\" value=\""+ currentUser + "\">";
@@ -347,10 +347,10 @@ if (s.getAttribute("signedin") != null) {
 				//acceptedTable += "<td>"+ tr.getUsername() +"</td> ";	
 				acceptedTable += "<td><INPUT type=\"submit\" value=\"Withdraw\" /></td>";
 				acceptedTable += "<td> <a href='"
-						+ request.getContextPath()
+						+ response.encodeURL(request.getContextPath()
 						+ "/rideDetails.jsp?rideselect="
 						+ tr.getRideID() + "&userselect="
-						+ tr.getUsername() + "'>" + "Link to ride page"
+						+ tr.getUsername()) + "'>" + "Link to ride page"
 						+ "</a> </td>";
 				acceptedTable += "</FORM></tr>";
 
@@ -359,7 +359,7 @@ if (s.getAttribute("signedin") != null) {
 			else if (tr.getConfirmed() != true) {
 				awaitExist = true;
 				takeAction = true;
-				awaitTable += "<tr><FORM action=\"myDetails.jsp\" method=\"post\">";
+				awaitTable += "<tr><FORM action='"+response.encodeURL("myDetails.jsp")+" method=\"post\">";
 				awaitTable += "<INPUT type=\"hidden\" name=\"withdrawNotConfirmedRide\" value=\"yes"
 						+ "\">";
 				awaitTable += "<INPUT type=\"hidden\" name=\"withdrawUserID\" value=\""
@@ -376,10 +376,10 @@ if (s.getAttribute("signedin") != null) {
 						+ tr.getPickUp() + "</td>";
 				awaitTable += "<td><INPUT type=\"submit\" value=\"Withdraw\" /></td>";
 				awaitTable += "<td> <a href='"
-						+ request.getContextPath()
+						+ response.encodeURL(request.getContextPath()
 						+ "/rideDetails.jsp?rideselect="
 						+ tr.getRideID() + "&userselect="
-						+ tr.getUsername() + "'>" + "Link to ride page"
+						+ tr.getUsername()) + "'>" + "Link to ride page"
 						+ "</a> </td>";
 				awaitTable += "</FORM></tr>";
 			}
@@ -436,7 +436,7 @@ if (s.getAttribute("signedin") != null) {
 							+ new SimpleDateFormat("dd/MM/yyyy").format(tr2
 									.getRideDate()) + "</td> ";
 					feedbackTable += "<td>" + tr2.getTime() + "</td> ";
-					feedbackTable += "<FORM action=\"myDetails.jsp\" method=\"post\">";
+					feedbackTable += "<FORM action='"+response.encodeURL("myDetails.jsp")+" method=\"post\">";
 					feedbackTable += "<INPUT type=\"hidden\" name=\"feedbackRide\" value=\"yes"+ "\">";
 					feedbackTable += "<INPUT type=\"hidden\" name=\"DriverUserID\" value=\""+ driverID + "\">";
 					feedbackTable += "<INPUT type=\"hidden\" name=\"FdbckForRide\" value=\""+ tr2.getRideID() + "\">";
@@ -471,7 +471,7 @@ if (s.getAttribute("signedin") != null) {
 						+ entries + "</select></td> </tr>";
 			}
 			if (openIDTableRow != "") {
-				openIDTableForm = "<br /><h3>Current OpenIds associated with your account:</h3><div class='Box' id='Box'><FORM action='removeopenid'> <INPUT type='hidden' name='removeopenid' /> <TABLE class='updateDetails'>"
+				openIDTableForm = "<br /><h3>Current OpenIds associated with your account:</h3><div class='Box' id='Box'><FORM action='"+response.encodeURL("removeopenid")+"'> <INPUT type='hidden' name='removeopenid' /> <TABLE class='updateDetails'>"
 						+ openIDTableRow
 						+ "<tr></TABLE> <br /><p>Click here to <INPUT type='submit' value='Detach OpenId'/></p></div><br /><br />";
 			}
@@ -508,7 +508,7 @@ if (s.getAttribute("signedin") != null) {
 		<h2>Your user details appear below:</h2>
 		<div class="Box" id="Box">
 		<p>Your current social score is: <%=socialScore%></p>
-		<FORM name="updateDetails" action="updateuser" method="post">
+		<FORM name="updateDetails" action="<%=response.encodeURL("updateuser") %>" method="post">
 			<INPUT type="hidden" name="updateDetails" value="yes">
 			<TABLE class='userDetails'>
 				<tr> <td>Username:</td> <td><%=user != null ? user.getUserName() : ""%><!-- <INPUT TYPE="text" NAME="userName" SIZE="25" value="<%=user != null ? user.getUserName() : ""%>">--></td> </tr> 
@@ -525,7 +525,7 @@ if (s.getAttribute("signedin") != null) {
 		<%=openIDTableForm%>
 		<h3>Attach an OpenId to your account:</h3>
 		<div class="Box" id="Box">
-		<FORM action="addopenid">
+		<FORM action="<%=response.encodeURL("addopenid") %>">
 			<INPUT type="hidden" name="addopenid"/>
 			<TABLE class="updateDetails">
 				<tr><td>OpenId to add:</td> <td><INPUT type="text" name="openid"/ size="25"/></td></tr>
@@ -550,10 +550,10 @@ if (s.getAttribute("signedin") != null) {
 			<%=feedbackTable%>
 		</div>
 		<br /> <br /> <br />
-		<p>-- <a href="welcome.jsp">Home</a> --</p>
+		<p>-- <a href="<%=response.encodeURL("welcome.jsp") %>">Home</a> --</p>
 	</DIV>
 
-	<%@ include file="leftMenu.html" %>
+	<%@ include file="leftMenu.jsp" %>
 
 	</BODY>
 </HTML>

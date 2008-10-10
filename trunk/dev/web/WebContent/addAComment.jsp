@@ -20,10 +20,10 @@
 			cps.addComment(idUser, idRide, comment);
 		}
 		html = "Comment added!";
-		response.sendRedirect(request.getParameter("reDirURL"));
+		response.sendRedirect(response.encodeURL(request.getParameter("reDirURL")));
 
 	} else {
-		response.sendRedirect(request.getContextPath());
+		response.sendRedirect(response.encodeURL(request.getContextPath()));
 	}
 %>
 

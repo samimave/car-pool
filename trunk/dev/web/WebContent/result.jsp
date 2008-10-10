@@ -103,9 +103,9 @@
 				userTable += "<td>" + u.getAvailableSeats() + "</td> ";
 				if (user != null) {
 					userTable += "<td> <a href='"
-							+ request.getContextPath()
+							+ response.encodeURL(request.getContextPath()
 							+ "/rideDetails.jsp?rideselect=" + u.getRideID()
-							+ "&userselect=" + u.getUsername() + "'>"
+							+ "&userselect=" + u.getUsername()) + "'>"
 							+ "Link to ride page" + "</a> </td> </tr>";
 				} else {
 					userTable += "<td>login to view more</td> </tr>";
@@ -149,10 +149,10 @@
 				dateTable += "<td>" + daTbl.getAvailableSeats()+ "</td> ";
 				if (user != null) {
 					dateTable += "<td> <a href='"
-							+ request.getContextPath()
+							+ response.encodeURL(request.getContextPath()
 							+ "/rideDetails.jsp?rideselect="
 							+ daTbl.getRideID() + "&userselect="
-							+ daTbl.getUsername() + "'>"
+							+ daTbl.getUsername()) + "'>"
 							+ "Link to ride page" + "</a> </td> </tr>";
 				} else {
 					dateTable += "<td>login to view more</td> </tr>";
@@ -195,9 +195,9 @@
 				fromTable += "<td>" + f.getAvailableSeats() + "</td> ";
 				if (user != null) {
 					fromTable += "<td> <a href='"
-							+ request.getContextPath()
+							+ response.encodeURL(request.getContextPath()
 							+ "/rideDetails.jsp?rideselect=" + f.getRideID()
-							+ "&userselect=" + f.getUsername() + "'>"
+							+ "&userselect=" + f.getUsername()) + "'>"
 							+ "Link to ride page" + "</a> </td> </tr>";
 				} else {
 					fromTable += "<td>login to view more</td> </tr>";
@@ -240,9 +240,9 @@
 				toTable += "<td>" + t.getAvailableSeats() + "</td> ";
 				if (user != null) {
 					toTable += "<td> <a href='"
-							+ request.getContextPath()
+							+ response.encodeURL(request.getContextPath()
 							+ "/rideDetails.jsp?rideselect=" + t.getRideID()
-							+ "&userselect=" + t.getUsername() + "'>"
+							+ "&userselect=" + t.getUsername()) + "'>"
 							+ "Link to ride page" + "</a> </td> </tr>";
 				} else {
 					toTable += "<td>login to view more</td> </tr>";
@@ -290,31 +290,29 @@
 		<br />
 		<h3>You Searched For:</h3>
 		<div class="Box" id="Box">
-		<FORM NAME="resultFrm" id="result">	
-			<TABLE class="rideSearch">
-				<tr><td>Location from:</td> <td><%=Sfrom%></td></tr>
-				<tr><td>Location to:</td> <td><%=Sto%></td></tr>
-				<tr><td>Date:</td> <td><%=strTmp%></td></tr>
-				<tr><td>User:</td> <td><%=username%></td>
-			</TABLE>
-		</FORM>
+		<TABLE class="rideSearch">
+			<tr><td>Location from:</td> <td><%=Sfrom%></td></tr>
+			<tr><td>Location to:</td> <td><%=Sto%></td></tr>
+			<tr><td>Date:</td> <td><%=strTmp%></td></tr>
+			<tr><td>User:</td> <td><%=username%></td>
+		</TABLE>
 		</div>
 		<br /><br />
 		<h3>Click 'Link to ride page' To Take A Ride:</h3>
 		<%=rideTable%>					
 		</div>
 		<br /><br /><br />
-		<p>-- <a href=searchRides.jsp>Go back to Search page</a> --</p>
+		<p>-- <a href="<%=response.encodeURL("searchRides.jsp") %>">Go back to Search page</a> --</p>
 	</DIV>
 
 <%
 	if (user != null) { //depending if the user is logged in or not different side menus should be displayed
 %> 
-	<jsp:include page="leftMenu.html" flush="false" />
+	<jsp:include page="leftMenu.jsp" flush="false" />
 <%
 	} else {
 %>
-	<jsp:include page="leftMenuLogin.html" flush="false" />
+	<jsp:include page="leftMenuLogin.jsp" flush="false" />
 <%
 	}
 %>
