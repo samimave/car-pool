@@ -18,8 +18,10 @@ public class Email {
 			Database db = new DatabaseImpl();
 			String sql = "select * from Email";
 			ResultSet results = db.getStatement().executeQuery(sql);
-			if(results.next()) {
+			if(results != null && results.next()) {
 				setFromAddress(results.getString(2));
+			}else{
+				setFromAddress("anonymous@localhost");
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
