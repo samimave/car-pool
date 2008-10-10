@@ -95,7 +95,7 @@
 				userExist = true;
 				avoidDuplicates.add(u.getRideID());
 
-				userTable += "<tr> <td>" + u.getUsername() + "</td> ";
+				userTable += "<tr> <td>" + "<a href='"+response.encodeURL(request.getContextPath()+"/profile.jsp?profileId="+ u.getUserID())+"'>"+u.getUsername()+ "</a></td>";
 				userTable += "<td>" + from + "</td> ";
 				userTable += "<td>" + to + "</td> ";
 				userTable += "<td>"	+ new SimpleDateFormat("dd/MM/yyyy").format(u.getRideDate()) + "</td> ";
@@ -141,7 +141,7 @@
 				dateExist = true;
 				avoidDuplicates.add(daTbl.getRideID());
 
-				dateTable += "<tr> <td>" + daTbl.getUsername()+ "</td> ";
+				dateTable += "<tr> <td>" + "<a href='"+response.encodeURL(request.getContextPath()+"/profile.jsp?profileId="+ daTbl.getUserID())+"'>"+daTbl.getUsername()+ "</a></td>";
 				dateTable += "<td>" + from + "</td> ";
 				dateTable += "<td>" + to + "</td> ";
 				dateTable += "<td>"+ new SimpleDateFormat("dd/MM/yyyy").format(daTbl.getRideDate()) + "</td> ";
@@ -187,7 +187,7 @@
 				fromExist = true;
 				avoidDuplicates.add(f.getRideID());
 
-				fromTable += "<tr> <td>" + f.getUsername() + "</td> ";
+				fromTable += "<tr> <td>" + "<a href='"+response.encodeURL(request.getContextPath()+"/profile.jsp?profileId="+ f.getUserID())+"'>"+f.getUsername()+ "</a></td>";
 				fromTable += "<td>" + from + "</td> ";
 				fromTable += "<td>" + to + "</td> ";
 				fromTable += "<td>"	+ new SimpleDateFormat("dd/MM/yyyy").format(f.getRideDate()) + "</td> ";
@@ -232,7 +232,7 @@
 				toExist = true;
 				avoidDuplicates.add(t.getRideID());
 
-				toTable += "<tr> <td>" + t.getUsername() + "</td> ";
+				toTable += "<tr> <td>" + "<a href='"+response.encodeURL(request.getContextPath()+"/profile.jsp?profileId="+ t.getUserID())+"'>"+t.getUsername()+ "</a></td>";
 				toTable += "<td>" + from + "</td> ";
 				toTable += "<td>" + to + "</td> ";
 				toTable += "<td>"+ new SimpleDateFormat("dd/MM/yyyy").format(t.getRideDate()) + "</td> ";
