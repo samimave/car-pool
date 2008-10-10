@@ -46,11 +46,11 @@ TABLE
 {
 	border: 0;
 	font: 11px verdana, arial, helvetica, sans-serif;
+	width: 640;
 }
 TABLE.rideDetailsSearch
 {
 	border: 1px solid #666666;
-	width: 600px;
 	border-collapse: collapse;
 }
 TABLE.rideDetailsSearch TD
@@ -80,6 +80,10 @@ A:visited
 A:hover
 {
 	background-color: #EEE;
+}
+SPAN 
+{
+	color: red;
 }
 #Header
 {
@@ -122,10 +126,10 @@ BODY #Header
 {
 	border: 1px solid #999;
 	padding: 10px;
-	width: 600px;
+	width: 640px;
 }
 #Box #Box
 {
-	width: 580px;	
+	width: 620px;	
 }
 /*BlueRobot used here - http://www.bluerobot.com/web/layouts/*/

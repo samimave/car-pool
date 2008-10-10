@@ -29,13 +29,15 @@ public class RegistrationProcessing extends HttpServlet {
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("here");
 		register(request, response);
 	}
 	
 	private void register(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		HttpSession session = request.getSession(true);
+		HttpSession sessionVar = request.getSession(true);
 		//String loggedInAs = OpenIdFilter.getCurrentUser(request.getSession());
-		String password1 = request.getParameter("password1");
+		String password1 = "";
+		password1 = request.getParameter("password");
 		String password2 = request.getParameter("password2");
 		String phone = request.getParameter("phone");
 		String email = request.getParameter("email");
@@ -69,7 +71,7 @@ public class RegistrationProcessing extends HttpServlet {
 			return;
 		}
 		
-		if(!verifyText.equals(new RandomTextGenerator().get((Integer) session.getAttribute("quote_pos")))) {
+		if(!verifyText.equals(new RandomTextGenerator().get((Integer) sessionVar.getAttribute("quote_pos")))) {
 			String param = HtmlUtils.createParameterString("error", "Please input the correct verifiction text displayed in the image");
 			response.sendRedirect(String.format("register.jsp?%s", param));
 			return;
@@ -83,8 +85,8 @@ public class RegistrationProcessing extends HttpServlet {
 		noidUser.setPhoneNumber(phone);
 		try {
 			User user = manager.registerUser(noidUser);
-			session.setAttribute("user", user);
-			session.setAttribute("signedin", Boolean.TRUE);
+			sessionVar.setAttribute("user", user);
+			sessionVar.setAttribute("signedin", Boolean.TRUE);
 			// now to email the user with the success
 			Email mail = new Email();
 			mail.setToAddress(user.getEmail());

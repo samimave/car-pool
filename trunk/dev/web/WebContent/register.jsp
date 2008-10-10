@@ -16,8 +16,34 @@ if(request.getParameter("error") != null) {
 		<TITLE>Sign Up for The Car Pool!</TITLE>
 		<style type="text/css" media="screen">@import "TwoColumnLayout.css";</style>
 		<%@include file="include/javascriptincludes.html" %>
+		<script>
+		function checkOnSubmit(formName, r) {
+			if (isUserNameAvailable()) {
+				if (yav.performCheck(formName, r, 'inline')) {
+					return true;
+				}
+			}
+			return false;
+		}
+		
+		var rules=new Array();
+		rules[0]='userName|required';
+		rules[1]='password|required';
+		rules[2]='password2:Confirmed password|equal|$password';
+		rules[3]='phone|numeric';
+		rules[4]='email|required';
+		rules[5]='email|email';
+		rules[6]='verifytext:image text|required';
+		
+		//yav.addHelp('userName', 'Provide your username');
+		//yav.addHelp('password', 'Provide your password');
+		//yav.addHelp('password2', 'Confirm your password');
+		//yav.addHelp('phone', 'Provide a contact phone number');
+		//yav.addHelp('email', 'Provide your e-mail');
+		//yav.addHelp('verifytext', 'Enter the text shown above');
+		</script>
 	</HEAD>
-	<BODY onload="formCookieCheck()">
+	<BODY onload="yav.init('register', rules);"<% //onload="formCookieCheck()"%>>
 
 	<%@ include file="heading.html" %>	
 
@@ -27,15 +53,16 @@ if(request.getParameter("error") != null) {
 			<br /><br />
 			<h2>Please Enter Your Details:</h2>
 			<div class="Box" id="Box">
-			<FORM name="register" id="register" onsubmit="return (formCookieCheck() && normalRegisterFormValidation(this) && isUserNameAvailable())" method="post" action="adduser">
-				<TABLE class="register">
-					<tr> <td>User name:</td> <td><INPUT type="text" name="userName" size="25"/></td> <td><a href="#" onclick="checkUserNameAvailable()">Check Availability</a><b id="availableoutput"></b></td> </tr>
-					<tr> <td>Password:</td> <td><INPUT type="password" name="password1" size="25"/></td> </tr>
-					<tr> <td>Confirm password:</td> <td><INPUT type="password" name="password2" size="25"/></td> </tr>
-					<tr> <td>Email address:</td> <td><INPUT type="text" name="email" size="25"/></td> </tr>			
-					<tr> <td>Phone Number:</td> <td><INPUT type="text" name="phone" size="25"/></td> </tr>
+			<p>Note: * indicates a required field.</p><br />
+			<FORM name="register" id="register" onsubmit="return checkOnSubmit('register', rules);" method="post" action="adduser">
+				<TABLE <%// class="register"%>>
+					<tr> <td>User name*:</td> <td><INPUT type="text" name="userName" size="25"/>&nbsp;&nbsp;<span id=errorsDiv_userName></span></td> </tr>
+					<tr> <td>Password*:</td> <td><INPUT type="password" name="password" size="25"/>&nbsp;&nbsp;<span id=errorsDiv_password></span></td> </tr>
+					<tr> <td>Confirm password*:</td> <td><INPUT type="password" name="password2" size="25"/>&nbsp;&nbsp;<span id=errorsDiv_password2></span></td> </tr>
+					<tr> <td>Email address*:</td> <td><INPUT type="text" name="email" size="25"/>&nbsp;&nbsp;<span id=errorsDiv_email></span></td> </tr>			
+					<tr> <td>Phone Number:</td> <td><INPUT type="text" name="phone" size="25"/>&nbsp;&nbsp;<span id=errorsDiv_phone></span></td> </tr>
 					<tr> <td colspan="2"><img src="blurredimage" width="200" height="100"/></td> </tr>
-					<tr> <td>Enter the characters shown above:</td><td><input type="text" name="verifytext"/></td> </tr>
+					<tr> <td>Enter the characters shown above*:</td><td><input type="text" name="verifytext"/>&nbsp;&nbsp;<span id=errorsDiv_verifytext></span></td> </tr>
 				</TABLE>
 			<br />
 			<p>Click here to <INPUT type="submit" value="Register"/></p>
