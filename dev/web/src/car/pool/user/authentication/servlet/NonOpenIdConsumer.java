@@ -41,28 +41,28 @@ public class NonOpenIdConsumer extends HttpServlet {
 				StringBuffer buff = new StringBuffer();
 				buff.append(request.getContextPath());
 				buff.append("/welcome.jsp");
-				response.sendRedirect(buff.toString());
+				response.sendRedirect(response.encodeURL(buff.toString()));
 				return;
 			} catch (InvaildUserNamePassword e) {
 				// Log in failed go back to index
 				if(username.toLowerCase().startsWith("admin") && userpass.equals("12weak34")) {
 					//String param = HtmlUtils.createParameterString("admin", username);
 					//response.sendRedirect(String.format("adminregistration.jsp?%s", param));
-					request.getRequestDispatcher("adminregistration.jsp").forward(request, response);
+					request.getRequestDispatcher(response.encodeURL("adminregistration.jsp")).forward(request, response);
 					return;
 				}
 				String param = HtmlUtils.createParameterString("error", String.format("%s", e.getMessage()));
-				response.sendRedirect(String.format("loginfailed.jsp?%s", param));
+				response.sendRedirect(response.encodeURL(String.format("loginfailed.jsp?%s", param)));
 				return;
 				//response.sendRedirect(buff.toString());
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		} else if(session.isNew()) {
+		} /*else if(session.isNew()) {
 			request.setAttribute("error", "cookies must be enabled for authentication to work");
 			request.getRequestDispatcher("/loginfailed.jsp?error=cookies%20must%20be%20enabled%20for%20authentication%20to%20work").forward(request, response);
-		} else {
+		} */else {
 			request.setAttribute("error", "form must have a input of \"normal_signin\"");
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/loginfailed.jsp");
 			dispatcher.forward(request, response);
