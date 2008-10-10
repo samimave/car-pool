@@ -24,8 +24,6 @@
 	int dbID = 0;
 	int rideID = 0;
 	String reDirURL = "";
-	String reDirURL2 = "myDetails.jsp";
-	reDirURL2 = "";
 	if (s.getAttribute("signedin") != null) {
 		user = (User) s.getAttribute("user");
 
@@ -46,8 +44,8 @@
 		rideID = Integer.parseInt(request.getParameter("rideselect"));
 		RideListing u = cps.getRideListing();
 		
-		reDirURL = "myRideEdit.jsp?rideselect=" + rideID
-		+ "&userselect=" + request.getParameter("userselect");
+		reDirURL = response.encodeURL("myRideEdit.jsp?rideselect=" + rideID
+		+ "&userselect=" + request.getParameter("userselect"));
 		
 		String detailsTable = "<p>No info found.</p>";
 		boolean ridesExist = false;
@@ -326,7 +324,8 @@
 		<FORM name="withdraw" action="<%=response.encodeURL("rideEditSuccess.jsp") %>" method="post">
 			<input type="hidden" name="remRide"/>
 			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect")%>">
-			<INPUT type="hidden" name="reDirURL" value="<%=reDirURL2%>"/>
+			<INPUT type="hidden" name="reDirURL" value="<%=response.encodeURL("myDetails.jsp")%>"/>
+			<br />
 			<p>Click here to <INPUT type="submit" name="removeRide" value="Withdraw Ride" size="25"></p>
 			<p>Warning: social score penalty.</p>
 		</FORM>
