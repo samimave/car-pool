@@ -61,7 +61,7 @@ if(request.getParameter("error") != null) {
 					<tr> <td>Confirm password*:</td> <td><INPUT type="password" name="password2" size="25"/>&nbsp;&nbsp;<span id=errorsDiv_password2></span></td> </tr>
 					<tr> <td>Email address*:</td> <td><INPUT type="text" name="email" size="25"/>&nbsp;&nbsp;<span id=errorsDiv_email></span></td> </tr>			
 					<tr> <td>Phone Number:</td> <td><INPUT type="text" name="phone" size="25"/>&nbsp;&nbsp;<span id=errorsDiv_phone></span></td> </tr>
-					<tr> <td colspan="2"><img src="blurredimage" width="200" height="100"/></td> </tr>
+					<tr> <td colspan="2"><img src="<%=response.encodeURL("blurredimage") %>" width="200" height="100"/></td> </tr>
 					<tr> <td>Enter the characters shown above*:</td><td><input type="text" name="verifytext"/>&nbsp;&nbsp;<span id=errorsDiv_verifytext></span></td> </tr>
 				</TABLE>
 			<br />
