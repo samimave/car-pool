@@ -326,7 +326,7 @@
 		<FORM name="withdraw" action="<%=response.encodeURL("rideEditSuccess.jsp") %>" method="post">
 			<input type="hidden" name="remRide"/>
 			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect")%>">
-			
+			<INPUT type="hidden" name="reDirURL" value="<%=reDirURL2%>"/>
 			<p>Click here to <INPUT type="submit" name="removeRide" value="Withdraw Ride" size="25"></p>
 			<p>Warning: social score penalty.</p>
 		</FORM>
