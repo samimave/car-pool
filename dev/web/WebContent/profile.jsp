@@ -7,15 +7,18 @@
 	//force the user to login to view the page
 	// a container for the users information
 	User user = null;
+	String name = null;
+	String email = null;
 	if (s.getAttribute("signedin") != null) {
 		user = (User) s.getAttribute("user");
 	
 		UserManager manager = null;
 		manager = new UserManager(); 
 		User driver = manager.getUserByUserId(Integer.parseInt(request.getParameter("profileId")));
+		
 		//DO ALL STUFF HERE
-		String name = driver.getUserName();
-		String email = driver.getEmail();
+		name = driver.getUserName();
+		email = driver.getEmail();
 		
 
 	} else {
@@ -40,8 +43,10 @@
 		<br /><br />
 		<h2>User Profile:</h2>
 		<div class="Box" id="Box">
+			<% %>
 		<table>
-		<tr><td>Username: </td><td><%=request.getParameter("driver") %></td>
+		<tr><td>Username: </td><td><%=name %></td>
+		<tr><td>Email: </td><td><%=email %></td>
 		</table>
 		<br />
 		</div>

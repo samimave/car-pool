@@ -27,7 +27,7 @@ if(request.getParameter("username") == null || request.getParameter("userpass") 
 		<%@ include file="heading.html" %>
 		
 		<div class="Content" id="Content">
-			
+			<form action="adminregister"></form>
 		</div>
 		
 		<div class="Menu" id="Menu">
