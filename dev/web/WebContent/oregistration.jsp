@@ -15,8 +15,32 @@ if(request.getParameter("error") != null) {
 		<TITLE>Sign Up for The Car Pool!</TITLE>
 		<style type="text/css" media="screen">@import "TwoColumnLayout.css";</style>
 		<%@include file="include/javascriptincludes.html" %>
+		<script>
+		function checkOnSubmit(formName, r) {
+			if (isUserNameAvailable()) {
+				if (yav.performCheck(formName, r, 'inline')) {
+					return true;
+				}
+			} else {
+				alert('Username already taken, please enter another');
+			}
+			return false;
+		}
+		
+		var rules=new Array();
+		rules[0]='userName|required';
+		rules[1]='phone|numeric';
+		rules[2]='email|required';
+		rules[3]='email|email';
+		rules[4]='verifytext:image text|required';
+		
+		//yav.addHelp('userName', 'Provide your username');
+		//yav.addHelp('phone', 'Provide a contact phone number');
+		//yav.addHelp('email', 'Provide your e-mail');
+		//yav.addHelp('verifytext', 'Enter the text shown above');
+		</script>
 	</HEAD>
-	<BODY>
+	<BODY onload="yav.init('register', rules);">
 		<%@ include file="heading.html" %>
 	
 		<div class="Content" id="Content">
@@ -26,13 +50,14 @@ if(request.getParameter("error") != null) {
 			<br /><br />
 			<h2>Please Enter Your Details:</h2>
 			<div class="Box" id="Box">
-				<FORM name="register" id="register" onsubmit="return (formCookieCheck() && openidRegisterFormValidation(this) && isUserNameAvailable())" action="oadduser" method="post">
+				<p>Note: * indicates a required field.</p><br />
+				<FORM name="register" id="register" onsubmit="return checkOnSubmit('register', rules);" action="oadduser" method="post">
 					<TABLE class="register"> 
-						<tr> <td>UserName:</td> <td><INPUT type="text" name="userName"/></td> <td><a href="#" onclick="checkUserNameAvailable()">Check Availability</a><b id="availableoutput"></b></td>
-						<tr> <td>Email:</td> <td><INPUT type="text" name="email"/></td> </tr>
-						<tr> <td>Phone:</td> <td><INPUT type="text" name="phone"/></td> </tr>
+						<tr> <td>UserName*:</td> <td><INPUT type="text" name="userName"/>&nbsp;&nbsp;<span id=errorsDiv_userName></span></td> </tr>
+						<tr> <td>Email*:</td> <td><INPUT type="text" name="email"/>&nbsp;&nbsp;<span id=errorsDiv_email></span></td> </tr>
+						<tr> <td>Phone*:</td> <td><INPUT type="text" name="phone"/>&nbsp;&nbsp;<span id=errorsDiv_phone></span></td> </tr>
 						<tr> <td colspan="2"><img src="blurredimage" width="200" height="100"/></td> </tr>
-					<tr> <td>Enter the characters shown above:</td><td><input type="text" name="verifytext"/></td> </tr>
+					<tr> <td>Enter the characters shown above:</td><td><input type="text" name="verifytext"/>&nbsp;&nbsp;<span id=errorsDiv_verifytext></span></td> </tr>
 				</TABLE>
 				<br />
 				<p>Click here to <INPUT type="submit" value="Register"/></p>
