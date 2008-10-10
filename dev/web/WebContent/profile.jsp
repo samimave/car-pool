@@ -14,7 +14,8 @@
 		manager = new UserManager(); 
 		User driver = manager.getUserByUserId(Integer.parseInt(request.getParameter("profileId")));
 		//DO ALL STUFF HERE
-
+		String name = driver.getUserName();
+		String email = driver.getEmail();
 		
 
 	} else {
@@ -40,7 +41,7 @@
 		<h2>User Profile:</h2>
 		<div class="Box" id="Box">
 		<table>
-		
+		<tr><td>Username: </td><td><%=request.getParameter("driver") %></td>
 		</table>
 		<br />
 		</div>
