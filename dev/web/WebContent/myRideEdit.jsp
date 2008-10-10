@@ -24,6 +24,8 @@
 	int dbID = 0;
 	int rideID = 0;
 	String reDirURL = "";
+	String reDirURL2 = "myDetails.jsp";
+	reDirURL2 = "";
 	if (s.getAttribute("signedin") != null) {
 		user = (User) s.getAttribute("user");
 
@@ -43,7 +45,10 @@
 		dbID = user.getUserId();
 		rideID = Integer.parseInt(request.getParameter("rideselect"));
 		RideListing u = cps.getRideListing();
-
+		
+		reDirURL = "myRideEdit.jsp?rideselect=" + rideID
+		+ "&userselect=" + request.getParameter("userselect");
+		
 		String detailsTable = "<p>No info found.</p>";
 		boolean ridesExist = false;
 
@@ -116,6 +121,8 @@
 				requestTable += "<INPUT type=\"hidden\" name=\"confirmForRide\" value=\""
 						+ rideID + "\">";
 				requestTable += "<td><INPUT type=\"submit\" value=\"Confirm User\" /></td>";
+				requestTable += "<INPUT type=\"hidden\" name=\"reDirURL\" value=\""
+					+ reDirURL + "\">";
 				requestTable += "</FORM>";
 				//this is the reject user button
 				requestTable += "<FORM action=\"rideEditSuccess.jsp\" method=\"post\">";
@@ -125,6 +132,8 @@
 						+ rd.getUserID() + "\">";
 				requestTable += "<INPUT type=\"hidden\" name=\"confirmForRide\" value=\""
 						+ rideID + "\">";
+				requestTable += "<INPUT type=\"hidden\" name=\"reDirURL\" value=\""
+						+ reDirURL + "\">";
 				requestTable += "<td><INPUT type=\"submit\" value=\"Reject User\" /></td></tr>";
 				requestTable += "</FORM>";
 
@@ -258,6 +267,7 @@
 		<FORM name="updateStartS" action="<%=response.encodeURL("rideEditSuccess.jsp") %>" method="post">
 			<INPUT type="hidden" name="updateRide" value="yes"/>
 			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect")%>">
+			<INPUT type="hidden" name="reDirURL" value="<%=reDirURL%>"/>
 			<TABLE>
 				<tr> <td> Start Street:  <%=fromHouseNo%> <%=from%></td> <td>&nbsp;</td></tr>
 				<tr><td><INPUT TYPE="text" NAME="startFromHN" SIZE="25" value=<%=fromHouseNo%>></td></tr>
@@ -267,6 +277,7 @@
 		<FORM name="updateEndS" action="<%=response.encodeURL("rideEditSuccess.jsp") %>" method="post">
 			<INPUT type="hidden" name="updateRide" value="yes"/>
 			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect")%>">
+			<INPUT type="hidden" name="reDirURL" value="<%=reDirURL%>"/>
 			<TABLE>
 				<tr> <td>End Street:  <%=toHouseNo%> <%=to%></td></tr>
  				<tr><td><INPUT TYPE="text" NAME="endToHN" SIZE="25" value=<%=toHouseNo%>></td></tr>
@@ -287,6 +298,7 @@
 		<FORM name="updateDate" action="<%=response.encodeURL("rideEditSuccess.jsp") %>" method="post">
 			<INPUT type="hidden" name="updateRide" value="yes">
 			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect")%>">
+			<INPUT type="hidden" name="reDirURL" value="<%=reDirURL%>"/>
 			<TABLE>
 				<tr> <td>Date: </td> <td><INPUT TYPE="text" NAME="Rdate" SIZE="25" value=<%=dateR%>><A HREF="#" onClick="cal.select(document.forms['updateDate'].Rdate,'anchor1','dd/MM/yyyy'); return false;" NAME="anchor1" ID="anchor1"><img name="calIcon" border="0" src="calendar_icon.jpg" width="27" height="23"></A></td><td><INPUT type="submit" name="updateDate" value="Update Date" size="25"></td></tr>
 			
@@ -294,7 +306,7 @@
 		<FORM name="updateTime" action="<%=response.encodeURL("rideEditSuccess.jsp") %>" method="post">
 			<INPUT type="hidden" name="updateRide" value="yes"/>
 			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect")%>">
-			
+			<INPUT type="hidden" name="reDirURL" value="<%=reDirURL%>"/>
 				<tr> <td> Time: </td><td><INPUT TYPE="text" NAME="Rtime" SIZE="25" value=<%=timeR%>></td><td><INPUT type="submit" name="updateTime" value="Update Time" size="25"></td></tr>
 			</TABLE>
 		</FORM>
@@ -305,6 +317,7 @@
 		<FORM name="updateSeats" action="<%=response.encodeURL("rideEditSuccess.jsp") %>" method="post">
 			<INPUT type="hidden" name="updateRide" value="yes"/>
 			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect")%>">
+			<INPUT type="hidden" name="reDirURL" value="<%=reDirURL%>"/>
 			<TABLE>
 				<tr><td>Seats: </td><td><INPUT TYPE="text" NAME="numSeats" value=<%=seats%> SIZE="25"></td><td><INPUT type="submit" name="updateSeats" value="Update Seats" size="25"></td></tr>
 			</TABLE>
@@ -313,6 +326,7 @@
 		<FORM name="withdraw" action="<%=response.encodeURL("rideEditSuccess.jsp") %>" method="post">
 			<input type="hidden" name="remRide"/>
 			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect")%>">
+			
 			<p>Click here to <INPUT type="submit" name="removeRide" value="Withdraw Ride" size="25"></p>
 			<p>Warning: social score penalty.</p>
 		</FORM>

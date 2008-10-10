@@ -295,7 +295,7 @@
 		<%=updateEndS%>
 		<%=updateDateConf%>
 		<%=updateUserConf%>
-	
+		<% response.sendRedirect(request.getParameter("reDirURL"));%>
 	<p>-- <a href="<%=response.encodeURL("myDetails.jsp") %>">Back to Account page</a> --</p>	
 	</DIV>
 
