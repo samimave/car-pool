@@ -14,8 +14,14 @@
 		user = (User) s.getAttribute("user");
 
 		CarPoolStore cps = new CarPoolStoreImpl();
-		String[] locations = LocationImporter.importLocations();
-
+		if ((request.getParameter("locationsText"))!= null){
+			String[] locationsFile = LocationImporter.importLocations();
+			for (int i=0; i<locationsFile.length; i++){			
+				int region = -1;
+				region = cps.addRegion("Palmerston North");
+				cps.addLocation(region, locationsFile[i]);
+			}
+		}
 		if (request.getParameter("locations") != null) {
 			
 			String[] locList = request.getParameter("locations").split(", ");
@@ -103,6 +109,13 @@
 					<tr><td>Enter a comma and space separated list of streets below</td></tr>
 						<tr><td><TEXTAREA cols="50" rows="4" name="locations"></TEXTAREA></td>
 						<td>&nbsp;</td> <td><INPUT type="submit" value="Add Locations" size="25" onClick="<%AddLocations.addFromFile();%>" ></td>
+					</tr>
+				</table>
+			</FORM>
+			<FORM NAME="adminFile" action="#" method="post" >				
+				<table>
+					<tr><td>Click to add locations specified in the text file</td></tr>
+						<tr><td>&nbsp;</td> <td><INPUT type="submit" value="Add Locations" size="25" onClick="<%AddLocations.addFromFile();%>" ></td>
 					</tr>
 				</table>
 			</FORM>
