@@ -7,20 +7,60 @@
 	//force the user to login to view the page
 	// a container for the users information
 	User user = null;
-	String name = null;
-	String email = null;
+	User driver = null;
+	CarPoolStore cps = null;
+	String userTable = "";
 	if (s.getAttribute("signedin") != null) {
 		user = (User) s.getAttribute("user");
 	
 		UserManager manager = null;
 		manager = new UserManager(); 
-		User driver = manager.getUserByUserId(Integer.parseInt(request.getParameter("profileId")));
-		
-		//DO ALL STUFF HERE
-		name = driver.getUserName();
-		email = driver.getEmail();
+		driver = manager.getUserByUserId(Integer.parseInt(request.getParameter("profileId")));
+		cps = new CarPoolStoreImpl();
 		
 
+		
+		RideListing rl = cps.searchRideListing(RideListing.searchUser,driver.getUserName());
+		boolean userExist = false;
+		while (rl.next()) {
+			if (!userExist) {
+				userTable = ""; //first time round get rid of unwanted text
+			}
+			userExist = true;
+
+			//getting the ride info
+			String from = rl.getStartLocation();
+			String to = rl.getEndLocation();
+			//userTable += "<tr> <td>" + rl.getUsername() + "</td> ";
+			userTable += "<tr><td>" + rl.getStreetStart() + " " + from
+					+ "</td> ";
+			userTable += "<td>" + rl.getStreetEnd() + " " + to
+					+ "</td> ";
+			userTable += "<td>"
+					+ new SimpleDateFormat("dd/MM/yyyy").format(rl
+							.getRideDate()) + "</td> ";
+			userTable += "<td>" + rl.getTime() + "</td> ";
+			String d = new SimpleDateFormat("dd/MM/yyyy").format(rl
+					.getRideDate())
+					+ " " + rl.getTime();
+			Date dt = new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(d);
+			if (dt.after(new Date())) {
+				userTable += "<td> <a href='"
+						+ response.encodeURL(request.getContextPath()
+						+ "/rideDetails.jsp?rideselect="
+						+ rl.getRideID()) + "'>"
+						+ "Link to Ride Page"
+						+ "</a> </td> </tr>";
+			} else {
+				userTable += "<td>Old ride.</td></tr>";
+			}
+		}
+
+		if (userExist) {
+			userTable = "<table class='rideDetailsSearch'> <tr> <th>Starting From</th> <th>Going To</th>"
+					+ "<th>Departure Date</th> <th>Departure Time</th><th>Link to Ride Page</th> </tr>"
+					+ userTable + "</table>";
+		}
 	} else {
 		response.sendRedirect(request.getContextPath());
 	}
@@ -45,14 +85,17 @@
 		<div class="Box" id="Box">
 			<% %>
 		<table>
-		<tr><td>Username: </td><td><%=name %></td>
-		<tr><td>Email: </td><td><%=email %></td>
+		<tr><td>Username: </td><td><%=driver.getUserName()%></td></tr>
+		<tr><td>Email: </td><td><%=driver.getEmail() %></td></tr>
+		<tr><td>Social Score: </td><td><%=cps.getScore(driver.getUserId()) %>
+	
 		</table>
 		<br />
 		</div>
 		<br /><br />
 		<h2>Rides User Has Offered:</h2>
 		<div class="Box" id="Box">
+		<%=userTable %>
 		</div>
 		<br /> <br /> <br />
 		<p>-- <a href="welcome.jsp">Home</a> --</p>	
