@@ -27,6 +27,9 @@ public class BlurredImage extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		HttpSession s = request.getSession(false);
+		if (s == null) {
+			System.out.println("session is null");
+		}
 		response.setContentType("image/png");
 		ServletOutputStream out = response.getOutputStream();
 		createImage(out, s);

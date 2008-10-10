@@ -2,6 +2,7 @@ package car.pool.user.registration.servlet;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Random;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -34,7 +35,7 @@ public class RegistrationProcessing extends HttpServlet {
 	}
 	
 	private void register(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		HttpSession sessionVar = request.getSession(false);
+		HttpSession sessionVar = request.getSession(true);
 		//String loggedInAs = OpenIdFilter.getCurrentUser(request.getSession());
 		String password1 = "";
 		password1 = request.getParameter("password");
