@@ -43,22 +43,22 @@ public class SMTP {
 		}
 		URLName urlname = null;
 		try {
-			String url = "";
-			Integer port = new Integer(-1);
+			String url = "localhost";
+			Integer port = new Integer(25);  // default smtp port
 			//boolean ttls = false;
 			String username = "";
 			String password = "";
 			Database db = new DatabaseImpl();
 			String sql = "select * from SMTP";
 			ResultSet result = db.getStatement().executeQuery(sql);
-			if(result.next()) {
+			if(result != null && result.next()) {
 				url = result.getString(1);
 				port = new Integer(result.getInt(2));
 				usettls = result.getInt(3) > 0;
 			}
 			sql = "select * from Email";
 			result = db.getStatement().executeQuery(sql);
-			if(result.next()) {
+			if(result != null && result.next()) {
 				username = result.getString(1);
 				password = result.getString(3);
 			}
@@ -86,16 +86,18 @@ public class SMTP {
 			message.setText(email.getMessage());
 			message.setReplyTo(InternetAddress.parse(email.getFromAddress()));
 			//SMTPTransport.send(message);
-			transport.setStartTLS(usettls);
+			if(usettls) {
+				transport.setStartTLS(usettls);
+			}
 			transport.connect();
 			transport.sendMessage(message, InternetAddress.parse(email.getToAddress()));
 			transport.close();
 		} catch (AddressException e) {
 			//e.printStackTrace();
-			throw new SMTPException(e.toString());
+			throw new SMTPException(e.getMessage());
 		} catch (MessagingException e) {
 			//e.printStackTrace();
-			throw new SMTPException(e.toString());
+			throw new SMTPException(e.getMessage());
 		}
 	}
 }
