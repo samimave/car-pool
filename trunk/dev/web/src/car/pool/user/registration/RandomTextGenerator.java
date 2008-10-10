@@ -7,7 +7,7 @@ import java.util.List;
 public class RandomTextGenerator {
 	private List<String> list = Collections.synchronizedList(new ArrayList<String>()); 
 	public RandomTextGenerator() {
-		String[] quotes = {"BLUE2", "4GREEN2D", "FROG5O", "G2BNICE", "OGLE4U"};
+		String[] quotes = {"BLUE2", "4GREEN2D", "FROG5O", "G2BNICE", "OGLE4U", "FL4W3D", "5HARPT"};
 		for(String quote : quotes) {
 			list.add(quote);
 		}
