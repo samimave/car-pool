@@ -148,7 +148,7 @@
 		<img src="google.jpg">
 	</div>
 
-	<%@ include file="leftMenu.html" %>
+	<%@ include file="leftMenu.jsp" %>
 
   </body>
 </html>

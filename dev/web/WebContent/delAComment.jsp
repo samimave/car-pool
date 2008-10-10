@@ -14,7 +14,7 @@
 		int idRide = Integer
 				.parseInt(request.getParameter("idComment"));
 		cps.delComment(idRide);
-		response.sendRedirect(request.getParameter("reDirURL"));
+		response.sendRedirect(response.encodeURL(request.getParameter("reDirURL")));
 	} else {
 		response.sendRedirect(request.getContextPath());
 	}

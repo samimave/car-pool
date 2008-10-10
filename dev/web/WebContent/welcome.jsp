@@ -51,7 +51,7 @@
 		<STYLE type="text/css" media="screen">@import "TwoColumnLayout.css";</STYLE>
 		<%@include file="include/javascriptincludes.html" %>
 	</HEAD>
-	<BODY onload="runBrowserTests()">
+	<BODY>
 
 	<%@ include file="heading.html" %>
 
@@ -77,13 +77,13 @@
 			<p>Your current social score is <%=cps.getScore((user.getUserId()))%></p>
 			<p>Your have offered <%=rideCount%> rides in total so far!</p>
 			<p>Your have <%=requestCount%> users awaiting approval for rides you have offered!</p>
-			<p>Click  <a href=myDetails.jsp>here</a> to access your account page and approve them or edit your details.</p>
+			<p>Click  <a href="<%=response.encodeURL("myDetails.jsp") %>">here</a> to access your account page and approve them or edit your details.</p>
 		</div>
 		<br /> <br /> <br />
-		<p>-- <a href="logout.jsp">Logout</a> --</p>
+		<p>-- <a href="<%=response.encodeURL("logout.jsp") %>">Logout</a> --</p>
 	</DIV>		
 
-	<%@ include file="leftMenu.html" %>
+	<%@ include file="leftMenu.jsp" %>
 
 	</BODY>
 </HTML>

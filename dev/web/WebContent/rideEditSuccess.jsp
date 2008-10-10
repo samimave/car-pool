@@ -296,10 +296,10 @@
 		<%=updateDateConf%>
 		<%=updateUserConf%>
 	
-	<p>-- <a href="myDetails.jsp">Back to Account page</a> --</p>	
+	<p>-- <a href="<%=response.encodeURL("myDetails.jsp") %>">Back to Account page</a> --</p>	
 	</DIV>
 
-	<%@ include file="leftMenu.html" %>
+	<%@ include file="leftMenu.jsp" %>
 
 	</BODY>
 </HTML>

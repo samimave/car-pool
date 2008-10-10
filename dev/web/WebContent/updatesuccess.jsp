@@ -26,7 +26,7 @@ if(s.getAttribute("signedin") != null ) {
 			Your details have been updated successfully, thank you.
 		</div>
 
-	<%@ include file="leftMenu.html" %>
+	<%@ include file="leftMenu.jsp" %>
 
 	</body>
 </html>

@@ -45,26 +45,26 @@ public class OpenIdRegistrationProcessor extends HttpServlet {
 			
 			if(email == null || userName == null || email.length() == 0 || userName.length() == 0) {
 				String param = HtmlUtils.createParameterString("error", "Please input a username and a email address");
-				response.sendRedirect(String.format("oregistration.jsp?%s", param));
+				response.sendRedirect(response.encodeURL(String.format("oregistration.jsp?%s", param)));
 				return;
 			}
 			
 			String verifyText = request.getParameter("verifytext").toLowerCase();
 			if(verifyText == null || verifyText.length() == 0) {
 				String param = HtmlUtils.createParameterString("error", "Please input the verifiction text displayed in the image");
-				response.sendRedirect(String.format("oregistration.jsp?%s", param));
+				response.sendRedirect(response.encodeURL(String.format("oregistration.jsp?%s", param)));
 				return;
 			}
 			
 			if(!verifyText.equals((new RandomTextGenerator().get((Integer) session.getAttribute("quote_pos")).toLowerCase()))) {
 				String param = HtmlUtils.createParameterString("error", "Please input the correct verifiction text displayed in the image");
-				response.sendRedirect(String.format("oregistration.jsp?%s", param));
+				response.sendRedirect(response.encodeURL(String.format("oregistration.jsp?%s", param)));
 				return;
 			}
 			
 			if(userName.toLowerCase().startsWith("admin")) {
 				String param = HtmlUtils.createParameterString("error", "Username already in use, please use another");
-				response.sendRedirect(String.format("oregistration.jsp?%s", param));
+				response.sendRedirect(response.encodeURL(String.format("oregistration.jsp?%s", param)));
 				return;
 			}
 			
@@ -90,19 +90,19 @@ public class OpenIdRegistrationProcessor extends HttpServlet {
 				}
 				// now to redirect
 				String s = String.format("%s/welcome.jsp", request.getContextPath());
-				response.sendRedirect(s);
+				response.sendRedirect(response.encodeURL(s));
 				return;
 			} catch (DuplicateUserNameException e) {
 				String param = HtmlUtils.createParameterString("error", "Username already in use, please use another");
-				response.sendRedirect(String.format("oregistration.jsp?%s", param));
+				response.sendRedirect(response.encodeURL(String.format("oregistration.jsp?%s", param)));
 				return;
 			} catch (UserException e) {
 				String param = HtmlUtils.createParameterString("error", e.getMessage());
-				response.sendRedirect(String.format("oregistration.jsp?%s", param));
+				response.sendRedirect(response.encodeURL(String.format("oregistration.jsp?%s", param)));
 				return;
 			} catch (SQLException e) {
 				String param = HtmlUtils.createParameterString("error", "There is a problem with the database, Please inform the site administrator.");
-				response.sendRedirect(String.format("oregistration.jsp?%s", param));
+				response.sendRedirect(response.encodeURL(String.format("oregistration.jsp?%s", param)));
 				return;
 			}
 		}

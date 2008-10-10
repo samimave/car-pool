@@ -67,9 +67,9 @@
 							.getRideDate()) + "</td> ";
 			rideTable += "<td>" + all.getTime() + "</td> ";
 			rideTable += "<td>" + all.getAvailableSeats() + "</td> ";
-			rideTable += "<td> <a href='" + request.getContextPath()
+			rideTable += "<td> <a href='" + response.encodeURL(request.getContextPath()
 					+ "/rideDetails.jsp?rideselect=" + all.getRideID()
-					+ "&userselect=" + all.getUsername() + "'>"
+					+ "&userselect=" + all.getUsername()) + "'>"
 					+ "Link to ride page" + "</a> </td> </tr>";
 
 		}
@@ -99,7 +99,7 @@
 			<br /><br />
 			<h2>Database:</h2>
 			<div class="Box" id="Box">
-			<FORM NAME="admin" action="#" method="post" >				
+			<FORM NAME="admin" action="<%=response.encodeURL("#")%>" method="post" >				
 				<table>
 					<tr><td>Enter a comma and space separated list of streets below</td></tr>
 						<tr><td><TEXTAREA cols="50" rows="4" name="locations"></TEXTAREA></td>
@@ -107,7 +107,7 @@
 					</tr>
 				</table>
 			</FORM>
-			<FORM NAME="adminFile" action="adminView.jsp" method="post" >	
+			<FORM NAME="adminFile" action="<%=response.encodeURL("adminView.jsp") %>" method="post" >	
 			<INPUT type="hidden" name="addAllLoc" value="yes">			
 				<table>
 					<tr><td>Click to add locations specified in the text file</td>
@@ -116,7 +116,7 @@
 				</table>
 			</FORM>
 
-			<FORM NAME="delComment" action="delAComment.jsp" method="post" >
+			<FORM NAME="delComment" action="<%=response.encodeURL("delAComment.jsp")%>" method="post" >
 				<INPUT type="hidden" name="reDirURL" value="adminView.jsp">
 				<table>
 					<tr><td>Delete a comment</td>
@@ -146,23 +146,21 @@
 			<br /> <br /> 
 			<h2>Users and Rides in the System:</h2>
 			<div class="Box" id="Box">
-			<FORM NAME="resultFrm" id="result">
-				<h3>Users:</h3>	
-				<TABLE>
-					<tr><td><%=userTable%></td></tr>
-				</TABLE>
-				<br />
-				<h3>Rides:</h3>					
-				<TABLE>
-					<%=rideTable%>					
-				</TABLE>
-			</FORM>
+			<h3>Users:</h3>	
+			<TABLE>
+				<tr><td><%=userTable%></td></tr>
+			</TABLE>
+			<br />
+			<h3>Rides:</h3>					
+			<TABLE>
+				<%=rideTable%>					
+			</TABLE>
 			</div>
 			<br /><br /><br />
-			<p>-- <a href="welcome.jsp">Home</a> --</p>
+			<p>-- <a href="<%=response.encodeURL("welcome.jsp")%>">Home</a> --</p>
 		</DIV>
 
-	<%@ include file="leftMenu.html" %>
+	<%@ include file="leftMenu.jsp" %>
 
 	</BODY>
 </HTML>

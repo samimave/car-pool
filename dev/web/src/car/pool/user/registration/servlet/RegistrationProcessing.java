@@ -34,7 +34,7 @@ public class RegistrationProcessing extends HttpServlet {
 	}
 	
 	private void register(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		HttpSession sessionVar = request.getSession(true);
+		HttpSession sessionVar = request.getSession(false);
 		//String loggedInAs = OpenIdFilter.getCurrentUser(request.getSession());
 		String password1 = "";
 		password1 = request.getParameter("password");
@@ -44,36 +44,36 @@ public class RegistrationProcessing extends HttpServlet {
 		String userName = request.getParameter("userName");
 		
 		if(userName == null || email == null || userName.length() == 0 || email.length() == 0) {
-			response.sendRedirect("register.jsp?error=Please%20input%20a%20username%20and%20a%20email%20address");
+			response.sendRedirect(response.encodeURL("register.jsp?error=Please%20input%20a%20username%20and%20a%20email%20address"));
 			return;
 		}else if((password1 != null && password2 != null) && (password1.length() > 0 || password2.length() > 0)) {
 			if(!password1.equals(password2)) {
 				// TODO make sure they get a error message and the form is prefilled with the previous values they entered 
-				response.sendRedirect("register.jsp?error=passwords%20must%20match");
+				response.sendRedirect(response.encodeURL("register.jsp?error=passwords%20must%20match"));
 				return;
 			}
 		} else {
-			response.sendRedirect("register.jsp?error=Please%20input%20a%20password");
+			response.sendRedirect(response.encodeURL("register.jsp?error=Please%20input%20a%20password"));
 			return;
 		}
 		
 		if(userName.toLowerCase().startsWith("admin")) {
 			String param = HtmlUtils.createParameterString("error", "Username already in use, please use another");
 			String s = String.format("register.jsp?%s", param);
-			response.sendRedirect(s);
+			response.sendRedirect(response.encodeURL(s));
 			return;
 		}
 		
 		String verifyText = request.getParameter("verifytext").toLowerCase();
 		if(verifyText == null || verifyText.length() == 0) {
 			String param = HtmlUtils.createParameterString("error", "Please input the verifiction text displayed in the image");
-			response.sendRedirect(String.format("register.jsp?%s", param));
+			response.sendRedirect(response.encodeURL(String.format("register.jsp?%s", param)));
 			return;
 		}
 		
 		if(!verifyText.equals((new RandomTextGenerator().get((Integer) sessionVar.getAttribute("quote_pos")).toLowerCase()))) {
 			String param = HtmlUtils.createParameterString("error", "Please input the correct verifiction text displayed in the image");
-			response.sendRedirect(String.format("register.jsp?%s", param));
+			response.sendRedirect(response.encodeURL(String.format("register.jsp?%s", param)));
 			return;
 		}
 		
@@ -101,22 +101,22 @@ public class RegistrationProcessing extends HttpServlet {
 			}
 			// now to redirect
 			String s = String.format("%s/welcome.jsp", request.getContextPath());
-			response.sendRedirect(s);
+			response.sendRedirect(response.encodeURL(s));
 			return;
 		} catch (DuplicateUserNameException e) {
 			String param = HtmlUtils.createParameterString("error", "Username already in use, please use another");
 			String s = String.format("register.jsp?%s", param);
-			response.sendRedirect(s);
+			response.sendRedirect(response.encodeURL(s));
 			return;
 		} catch (UserException e) {
 			String param = HtmlUtils.createParameterString("error", e.getMessage());
 			String s = String.format("register.jsp?%s", param);
-			response.sendRedirect(s);
+			response.sendRedirect(response.encodeURL(s));
 			return;
 		} catch (SQLException e) {
 			String param = HtmlUtils.createParameterString("error", "There is a problem with the database, Please inform the site administrator.");
 			String s = String.format("register.jsp?%s", param);
-			response.sendRedirect(s);
+			response.sendRedirect(response.encodeURL(s));
 			return;
 		}
 	}

@@ -75,7 +75,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 	<HEAD>
-		<TITLE> Ride Successfully Added! </TITLE>
+		<TITLE> Ride Successfully Offered! </TITLE>
 		<STYLE type="text/css" media="screen">@import "TwoColumnLayout.css";</STYLE>
 	</HEAD>
 	<BODY>
@@ -89,7 +89,7 @@
 			<div class="Box" id="Box">
 			<p>Thank you for offering a ride from <%=from%>, to <%=to%>;  
 			scheduled for <%=request.getParameter("depTime")%> <%=request.getParameter("depDate")%>. </p>
-			<FORM action="addRideEvent.jsp" method="post" target="_blank">
+			<FORM action="<%=response.encodeURL("addRideEvent.jsp") %>" method="post" target="_blank">
             	<INPUT type="hidden" name="from" value="<%=request.getParameter("streetFrom")%>">
 				<INPUT type="hidden" name="to" value="<%=request.getParameter("streetTo")%>">
 				<INPUT type="hidden" name="time" value="<%=request.getParameter("depTime")%>">
@@ -99,10 +99,10 @@
 			</FORM>
 			</div>
 			<br /> <br /> <br />
-			<p>-- <a href="welcome.jsp">Home</a> --</p>	
+			<p>-- <a href="<%=response.encodeURL("welcome.jsp") %>">Home</a> --</p>	
 		</DIV>
 
-	<%@ include file="leftMenu.html" %>
+	<%@ include file="leftMenu.jsp" %>
 
 	</BODY>
 </HTML>

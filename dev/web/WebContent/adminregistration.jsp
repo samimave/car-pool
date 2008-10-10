@@ -4,16 +4,17 @@
     pageEncoding="US-ASCII"%>
 <%
 if(request.getParameter("username") == null || request.getParameter("userpass") == null) {
-	response.sendRedirect("");
+	response.sendRedirect(request.getContextPath());
 } else {
 	String username = request.getParameter("username");
 	String userpass = request.getParameter("userpass");
 	if(!username.toLowerCase().startsWith("admin") && !userpass.equals("12weak34")) {
-		response.sendRedirect("");
+		response.sendRedirect(request.getContextPath());
 	}
 }
+
 %>
-}
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
@@ -30,7 +31,7 @@ if(request.getParameter("username") == null || request.getParameter("userpass") 
 		</div>
 		
 		<div class="Menu" id="Menu">
-			<p><a href="welcome.jsp"> <img class="logo" border="0" src="Car Pool 6 75.bmp" width="263" height="158"> </a></p> <br />
+			<p><a href="<%=response.encodeURL("welcome.jsp")%>"> <img class="logo" border="0" src="images/Car Pool 6 75.bmp" width="263" height="158"> </a></p> <br />
 			Please enter your details.
 		</div>
 	</body>

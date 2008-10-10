@@ -45,10 +45,10 @@
 			allTable += "<td>" + all.getTime() + "</td> ";
 			allTable += "<td>" + all.getAvailableSeats() + "</td> ";
 			if (user != null) {
-				allTable += "<td> <a href='" + request.getContextPath()
+				allTable += "<td> <a href='" + response.encodeURL(request.getContextPath()
 						+ "/rideDetails.jsp?rideselect="
 						+ all.getRideID() + "&userselect="
-						+ all.getUsername() + "'>"
+						+ all.getUsername()) + "'>"
 						+ "Link to ride page" + "</a> </td> </tr>";
 			} else {
 				allTable += "<td>login to view more</td> </tr>";
@@ -88,17 +88,17 @@
 				<%=rideTable%>
 			</div>
 			<br /><br /><br />
-			<p>-- <a href=searchRides.jsp>Go back to Search page</a> --</p>
+			<p>-- <a href="<%=response.encodeURL("searchRides.jsp") %>">Go back to Search page</a> --</p>
 		</DIV>
 
 <%
 	if (user != null) { //depending if the user is logged in or not different side menus should be displayed
 %> 
-	<jsp:include page="leftMenu.html" flush="false" />
+	<jsp:include page="leftMenu.jsp" flush="false" />
 <%
 	} else {
 %>
-	<jsp:include page="leftMenuLogin.html" flush="false" />
+	<jsp:include page="leftMenuLogin.jsp" flush="false" />
 <%
 	}
 %>

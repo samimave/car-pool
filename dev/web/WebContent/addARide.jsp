@@ -32,7 +32,7 @@
 		}
 		//}
 	} else {
-		response.sendRedirect(request.getContextPath());
+		response.sendRedirect(response.encodeURL(request.getContextPath()));
 	}
 %>
 
@@ -156,7 +156,7 @@
 			<h2>Ride Details:</h2>
 			<div class="Box" id="Box">
 			<p>Please enter the relevant details and click confirm.</p>
-			<FORM NAME="offerFrm" id="offer" method="post" action="newRideConfirmation.jsp">
+			<FORM NAME="offerFrm" id="offer" method="post" action="<%=response.encodeURL("newRideConfirmation.jsp")%>">
 				<INPUT TYPE="hidden" NAME="user" VALUE="<%=OpenIdFilter.getCurrentUser(s)%>" SIZE="25">
 					<%
 						// Information on if ride is an offer or request. 
@@ -264,10 +264,10 @@
 			</FORM>
 			</div>
 			<br /> <br /> <br />
-			<p>-- <a href="welcome.jsp">Home</a> --</p>
+			<p>-- <a href="<%=response.encodeURL("welcome.jsp")%>">Home</a> --</p>
 		</DIV>
 		
-	<%@ include file="leftMenu.html" %>
+	<%@ include file="leftMenu.jsp" %>
 
 	</BODY>
 </HTML>
