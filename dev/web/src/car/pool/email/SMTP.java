@@ -80,18 +80,22 @@ public class SMTP {
 		setup();
 		SMTPMessage message = new SMTPMessage(Session.getDefaultInstance(properties));
 		try {
-			message.addFrom(InternetAddress.parse(email.getFromAddress()));
-			message.addRecipients(Message.RecipientType.TO, email.getToAddress());
-			message.setSubject(email.getSubject());
-			message.setText(email.getMessage());
-			message.setReplyTo(InternetAddress.parse(email.getFromAddress()));
-			//SMTPTransport.send(message);
-			if(usettls) {
-				transport.setStartTLS(usettls);
+			if(email.getFromAddress() != null) {
+				message.addFrom(InternetAddress.parse(email.getFromAddress()));
+				message.addRecipients(Message.RecipientType.TO, email.getToAddress());
+				message.setSubject(email.getSubject());
+				message.setText(email.getMessage());
+				message.setReplyTo(InternetAddress.parse(email.getFromAddress()));
+				//SMTPTransport.send(message);
+				if(usettls) {
+					transport.setStartTLS(usettls);
+				}
+				transport.connect();
+				transport.sendMessage(message, InternetAddress.parse(email.getToAddress()));
+				transport.close();
+			}else {
+				throw new SMTPException("No From Address found");
 			}
-			transport.connect();
-			transport.sendMessage(message, InternetAddress.parse(email.getToAddress()));
-			transport.close();
 		} catch (AddressException e) {
 			//e.printStackTrace();
 			throw new SMTPException(e.getMessage());
