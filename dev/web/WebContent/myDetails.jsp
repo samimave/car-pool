@@ -231,7 +231,7 @@ if (s.getAttribute("signedin") != null) {
 		
 		//PROVIDING FEEDBACK TO SOME DRIVER
 		if ((request.getParameter("feedbackRide")!=null) && (request.getParameter("rideRate")!=null)){
-			cps.addScore(cps.getTripID(Integer.parseInt(request.getParameter("FdbckForRide")), Integer.parseInt(request.getParameter("DriverUserID"))), Integer.parseInt(request.getParameter("DriverUserID")), Integer.parseInt(request.getParameter("rideRate")));
+			cps.addScore(cps.getTripID(Integer.parseInt(request.getParameter("FdbckForRide")), currentUser), Integer.parseInt(request.getParameter("DriverUserID")), Integer.parseInt(request.getParameter("rideRate")));
 		}
 		
 		
@@ -256,8 +256,8 @@ if (s.getAttribute("signedin") != null) {
 			//getting the ride info
 			String from = rl.getStartLocation();
 			String to = rl.getEndLocation();
-			userTable += "<tr> <td>" + rl.getUsername() + "</td> ";
-			userTable += "<td>" + rl.getStreetStart() + " " + from
+			//userTable += "<tr> <td>" + rl.getUsername() + "</td> ";
+			userTable += "<tr><td>" + rl.getStreetStart() + " " + from
 					+ "</td> ";
 			userTable += "<td>" + rl.getStreetEnd() + " " + to
 					+ "</td> ";
@@ -285,7 +285,7 @@ if (s.getAttribute("signedin") != null) {
 		}
 
 		if (userExist) {
-			userTable = "<table class='rideDetailsSearch'> <tr> <th>Ride Offered By</th> <th>Starting From</th> <th>Going To</th>"
+			userTable = "<table class='rideDetailsSearch'> <tr> <th>Starting From</th> <th>Going To</th>"
 					+ "<th>Departure Date</th> <th>Departure Time</th> <th>Number of Available Seats</th><th>Users Awaiting Approval</th><th>Edit Ride Details</th> </tr>"
 					+ userTable + "</table>";
 		}
@@ -404,47 +404,51 @@ if (s.getAttribute("signedin") != null) {
 		//feedback table for rides you have been approved for
 		
 		boolean feedExist = false;
+		boolean scoreDone = false;
 		TakenRides tr2 = cps.getTakenRides(currentUser);
 		while (tr2.hasNext()) {
 			if (!feedExist) {
 				feedbackTable = ""; //first time round get rid of unwanted text
 			}
-
-			String fromF = tr2.getStartLocation();
-			String toF = tr2.getStopLocation();
-			String fromIDF = tr2.getStartID();
-			String toIDF = tr2.getStopID();
-			int driverID = 0;
-			// This feedbackTable shows the rides that the uesr is in so they can provide feedback after the ride
-			if ((tr2.getConfirmed() == true)) {
-				RideListing rl2 = cps.getRideListing();
-				while (rl2.next()){
-					if (rl2.getRideID() == tr2.getRideID()){
-						driverID = rl2.getUserID();
+			
+				String fromF = tr2.getStartLocation();
+				String toF = tr2.getStopLocation();
+				String fromIDF = tr2.getStartID();
+				String toIDF = tr2.getStopID();
+				int driverID = 0;
+				// This feedbackTable shows the rides that the uesr is in so they can provide feedback after the ride
+				if ((tr2.getConfirmed() == true)) {
+					RideListing rl2 = cps.getRideListing();
+					while (rl2.next()){
+						if (rl2.getRideID() == tr2.getRideID()){
+							driverID = rl2.getUserID();
+						}
 					}
+					
+					
+					feedExist = true;
+					
+					scoreDone = cps.hasUserAddedScore(tr2.getRideID(), currentUser);
+					
+					feedbackTable += "<td>" + fromF + "</td> ";
+					feedbackTable += "<td>" + toF + "</td> ";
+					feedbackTable += "<td>"
+							+ new SimpleDateFormat("dd/MM/yyyy").format(tr2
+									.getRideDate()) + "</td> ";
+					feedbackTable += "<td>" + tr2.getTime() + "</td> ";
+					feedbackTable += "<FORM action=\"myDetails.jsp\" method=\"post\">";
+					feedbackTable += "<INPUT type=\"hidden\" name=\"feedbackRide\" value=\"yes"+ "\">";
+					feedbackTable += "<INPUT type=\"hidden\" name=\"DriverUserID\" value=\""+ driverID + "\">";
+					feedbackTable += "<INPUT type=\"hidden\" name=\"FdbckForRide\" value=\""+ tr2.getRideID() + "\">";
+					feedbackTable += "<td><INPUT TYPE=\"text\" NAME=\"rideRate\" SIZE=\"10\"></td> ";
+					feedbackTable += "<td><INPUT type=\"submit\" value=\"Rate Ride\" /></td></tr>";
+					feedbackTable += "</FORM>";
 				}
-				
-				
-				feedExist = true;
-				feedbackTable += "<td>" + fromF + "</td> ";
-				feedbackTable += "<td>" + toF + "</td> ";
-				feedbackTable += "<td>"
-						+ new SimpleDateFormat("dd/MM/yyyy").format(tr2
-								.getRideDate()) + "</td> ";
-				feedbackTable += "<td>" + tr2.getTime() + "</td> ";
-				feedbackTable += "<FORM action=\"myDetails.jsp\" method=\"post\">";
-				feedbackTable += "<INPUT type=\"hidden\" name=\"feedbackRide\" value=\"yes"+ "\">";
-				feedbackTable += "<INPUT type=\"hidden\" name=\"DriverUserID\" value=\""+ driverID + "\">";
-				feedbackTable += "<INPUT type=\"hidden\" name=\"FdbckForRide\" value=\""+ tr2.getRideID() + "\">";
-				feedbackTable += "<td><INPUT TYPE=\"text\" NAME=\"rideC\" SIZE=\"10\"></td> ";
-				feedbackTable += "<td><INPUT TYPE=\"text\" NAME=\"rideRate\" SIZE=\"10\"></td> ";
-				feedbackTable += "<td><INPUT type=\"submit\" value=\"Rate Ride\" /></td>";
-				feedbackTable += "</FORM>";
-			}
+			
 		}
-			if (feedExist) {
+			if ((feedExist) && (!scoreDone)) {
 				feedbackTable = "<table class='rideDetailsSearch'> <tr><th>Starting From</th> <th>Going To</th>"
-						+ "<th>Departure Date</th> <th>Departure Time</th><th>Feedback Comment</th><th>Rating (max 10)</th><th>Submit</th> </tr>"
+						+ "<th>Departure Date</th> <th>Departure Time</th><th>Rating (between -10 & 10)</th><th>Submit</th> </tr>"
 						+ feedbackTable + "</table>";
 			} else {
 				feedbackTable = "<p>No rides to provide feedback for.</p>";
