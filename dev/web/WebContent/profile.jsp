@@ -9,9 +9,12 @@
 	User user = null;
 	if (s.getAttribute("signedin") != null) {
 		user = (User) s.getAttribute("user");
-
+	
+		UserManager manager = null;
+		manager = new UserManager(); 
+		User driver = manager.getUserByUserId(Integer.parseInt(request.getParameter("profileId")));
 		//DO ALL STUFF HERE
-		int profileId = Integer.parseInt(request.getParameter("profileId"));
+
 		
 
 	} else {
@@ -26,11 +29,6 @@
 
 		<TITLE>User Profile</TITLE>
 		<STYLE type="text/css" media="screen">@import "TwoColumnLayout.css";</STYLE>
-		<SCRIPT type="text/javascript" src="CalendarPopup.js"></SCRIPT>
-		<SCRIPT type="text/javascript">
-			var cal = new CalendarPopup();
-		</script>
-
 	</HEAD>
 	<BODY>
 
@@ -54,7 +52,7 @@
 		<p>-- <a href="welcome.jsp">Home</a> --</p>	
 	</DIV>
 
-	<%@ include file="leftMenu.html" %>
+	<%@ include file="leftMenu.jsp" %>
 
 	</BODY>
 </HTML>
