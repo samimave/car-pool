@@ -147,10 +147,6 @@ if (s.getAttribute("signedin") != null) {
 
 
 
-
-
-
-
 	//force the user to login to view the page
 	//user a container for the users information
 	User user = null;
