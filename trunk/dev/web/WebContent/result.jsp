@@ -515,15 +515,9 @@
 		<br /><br />
 		<p>-- <a href="<%=response.encodeURL("searchRides.jsp")%>">Go back to Search page</a> --</p>
 	</DIV>
-	<FORM NAME="resultFrm" id="result">
-	<TABLE border=1>
-		<tr>
-			<td>
-			<div id="map" style="width: 550px; height: 450px"></div>
-			</td>
-	
-		</tr>
-	</TABLE>
+	<FORM NAME="resultFrm" id="result"  method="post" action="displayResultsMap.jsp">
+	<input type="hidden" name="mapCoords" value="<%=mapCoords %>"/>
+	<input type="submit" value="View Map"/>
 	</FORM>
 	</DIV>
 
