@@ -43,6 +43,7 @@ public class DisplayProxies extends HttpServlet {
 			out.print("            alert(\"Failed to add proxy to list\");");
 			out.print("        }");
 			out.print("        window.location.reload();\n");
+			out.print(         "return false;\n");
 			out.print("     }\n");
 			out.print("//-->");
 			out.print("</script>\n");
