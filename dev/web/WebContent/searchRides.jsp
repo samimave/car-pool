@@ -152,9 +152,9 @@
 </DIV>
 <%
 	if (user != null) { //depending if the user is logged in or not different side menus should be displayed
-%> <%@ include file="leftMenu.html"%> <%
+%> <jsp:include page="leftMenu.jsp" flush="false" /> <%
  	} else {
- %> <%@ include file="leftMenuLogin.html"%> <%
+ %> <jsp:include page="leftMenuLogin.jsp" flush="false" /> <%
  	}
  %>
 
