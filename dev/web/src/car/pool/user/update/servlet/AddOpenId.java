@@ -32,7 +32,7 @@ public class AddOpenId extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			response.sendRedirect(response.encodeURL("updatesuccess.jsp"));
+			response.sendRedirect(response.encodeURL("myDetails.jsp"));
 		} else {
 			response.sendRedirect(response.encodeURL(request.getContextPath()));
 		}

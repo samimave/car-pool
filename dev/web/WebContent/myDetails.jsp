@@ -499,8 +499,18 @@ String updateUserConf = "";
 	<HEAD>
 		<TITLE>User Account Page</TITLE>
 		<STYLE type="text/css" media="screen">@import "TwoColumnLayout.css";</STYLE>
+		<script type="text/javascript" src="javascript/yav.js"></script>
+		<script type="text/javascript" src="javascript/yav-config.js"></script>
+		<script>
+		var u_rules=new Array();
+		u_rules[0]='email|required';
+		u_rules[1]='email|email';
+		u_rules[2]='phone|numeric';
+		var ad_rules=new Array();
+		ad_rules[0]='openid|required';
+		</script>
 	</HEAD>
-	<BODY>
+	<BODY onload="yav.init('updateDtls', u_rules); yav.init('addoid', ad_rules);">
 
 	<%@ include file="heading.html" %>
 
@@ -512,12 +522,12 @@ String updateUserConf = "";
 		<h2>Your user details appear below:</h2>
 		<div class="Box" id="Box">
 		<p>Your current social score is: <%=socialScore%></p>
-		<FORM name="updateDetails" action="<%=response.encodeURL("updateuser") %>" method="post">
+		<FORM id="updateDtls" name="updateDtls" onsubmit="return yav.performCheck('updateDtls', u_rules, 'inline');" action="<%=response.encodeURL("updateuser") %>" method="post">
 			<INPUT type="hidden" name="updateDetails" value="yes">
-			<TABLE class='userDetails'>
-				<tr> <td>Username:</td> <td><%=user != null ? user.getUserName() : ""%><!-- <INPUT TYPE="text" NAME="userName" SIZE="25" value="<%=user != null ? user.getUserName() : ""%>">--></td> </tr> 
-				<tr> <td>Email Address:</td> <td><INPUT TYPE="text" NAME="email" SIZE="25" value="<%=user != null ? user.getEmail() : ""%>"></td> </tr> 
-				<tr> <td>Phone Number:</td> <td><INPUT TYPE="text" NAME="phone" SIZE="25" value="<%=user != null ? user.getPhoneNumber() : ""%>"></td> </tr>
+			<TABLE> 
+				<tr> <td>Username:</td> <td><%=user != null ? user.getUserName() : ""%></td> </tr> 
+				<tr> <td>Email Address:</td> <td><INPUT TYPE="text" NAME="email" SIZE="25" value="<%=user != null ? user.getEmail() : ""%>">&nbsp;&nbsp;<span id=errorsDiv_email></span></td> </tr> 
+				<tr> <td>Phone Number:</td> <td><INPUT TYPE="text" NAME="phone" SIZE="25" value="<%=user != null ? user.getPhoneNumber() : ""%>">&nbsp;&nbsp;<span id=errorsDiv_phone></span></td> </tr>
 			</TABLE>
 			<br />
 			<p>Click here to <INPUT TYPE="submit" NAME="confirmUpdate" VALUE="Update Details" SIZE="25"></p>
@@ -529,10 +539,10 @@ String updateUserConf = "";
 		<%=openIDTableForm%>
 		<h3>Attach an OpenId to your account:</h3>
 		<div class="Box" id="Box">
-		<FORM action="<%=response.encodeURL("addopenid") %>">
+		<FORM id="addoid" name="addoid" onsubmit="return yav.performCheck('addoid', ad_rules, 'inline');" action="<%=response.encodeURL("addopenid") %>" method="post">
 			<INPUT type="hidden" name="addopenid"/>
-			<TABLE class="updateDetails">
-				<tr><td>OpenId to add:</td> <td><INPUT type="text" name="openid"/ size="25"/></td></tr>
+			<TABLE>
+				<tr><td>OpenId to add:</td> <td><INPUT type="text" name="openid" size="25"/>&nbsp;&nbsp;<span id=errorsDiv_openid></span></td></tr>
 			</TABLE>
 			<br />
 			<p>Click here to <INPUT type="submit" value="Attach OpenId"/></p>
