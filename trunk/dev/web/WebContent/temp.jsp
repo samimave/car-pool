@@ -80,7 +80,7 @@
 			<p>-- <a href="welcome.jsp">Home</a> --</p>	
 		</DIV>
 
-	<%@ include file="leftMenu.html" %>
+	<%@ include file="leftMenu.jsp" %>
 
 	</BODY>
 </HTML>
