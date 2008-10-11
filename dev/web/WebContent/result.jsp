@@ -488,9 +488,7 @@
 <TITLE>Ride Search Results</TITLE>
 <STYLE type="text/css" media="screen">@import "TwoColumnLayout.css";</STYLE>
 <%@include file="include/javascriptincludes.html"%>
-<script
-	src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAA7rDxBnSa8ztdEea-bXHUqRRKOMZEnoyerBNNN7XbrW5T80f1pxRxpg7l2VcFxiQk2L5RouYsGk3NqQ"
-	type="text/javascript"></script>
+
 </HEAD>
 <BODY>
 
@@ -515,67 +513,11 @@
 		<br /><br />
 		<p>-- <a href="<%=response.encodeURL("searchRides.jsp")%>">Go back to Search page</a> --</p>
 	</DIV>
-	<FORM NAME="resultFrm" id="result"  method="post" action="displayResultsMap.jsp">
+	<FORM NAME="resultFrm" id="result"  method="post" action="displayResultsMap.jsp" target = "_blank">
 	<input type="hidden" name="mapCoords" value="<%=mapCoords %>"/>
 	<input type="submit" value="View Map"/>
 	</FORM>
 	</DIV>
-
-<script type="text/javascript">
-
-    //localhost key - ABQIAAAA7rDxBnSa8ztdEea-bXHUqRRKOMZEnoyerBNNN7XbrW5T80f1pxRxpg7l2VcFxiQk2L5RouYsGk3NqQ
- 	//massey key - ABQIAAAA7rDxBnSa8ztdEea-bXHUqRRlE5ut_msTCy_drvRxhL-5WV5Z9RRgsjp91RhaFgOcfLwhiUE-yftYsA 
-   
-    //<![CDATA[
-    
-	window.onload = function() {
-    	showLocation(); 
-    
-    }
-	window.unload = GUnload();
-
-   
-	if (GBrowserIsCompatible()) {
-
-		// Display the map, with some controls and set the initial location 
-		var map = new GMap2(document.getElementById("map"));
-		var geocoder = new GClientGeocoder();
-
-		//get all the rides to map
-		var rides = "<%=mapCoords%>".split(":");
-		
-		//route mapping code
-		var directionsPanel = document.getElementById("my_textual_div");
-		var routes = new Array();
-
-		//create array of route objects
-		for(var i=0; i<rides.length;i++){
-			routes[i] = new GDirections(map, directionsPanel);
-		}
-
-		///	  
-		map.addControl(new GLargeMapControl());
-		map.addControl(new GMapTypeControl());
-		map.setCenter(new GLatLng(-40.35814342293522, 175.6267547607422), 13);
-
-		// It geocodes the address in the database associate with the ride
-		// and adds a marker to the map at that location.
-		function showLocation() {
-
-			for(var i=0; i<rides.length;i++){
-				routes[i].loadFromWaypoints(rides[i].split("/"));
-			}
-
-		}
-	}
-
-	// display a warning if the browser was not compatible
-	else {
-		alert("Sorry, displaying route map is not compatible with this browser");
-	}
-
-	//]]>
-</script>
 
 <%
 	if (user != null) { //depending if the user is logged in or not different side menus should be displayed
