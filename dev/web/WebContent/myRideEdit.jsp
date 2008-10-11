@@ -255,6 +255,17 @@
 			var cal = new CalendarPopup();
 		</script>
 		<script>
+		function checkTime() {
+		    var msg;
+		    var reg = new RegExp("^[0-9][0-9]:[0-9][0-9]$");
+		    if ( reg.test(document.forms['updateTime'].Rtime.value) ) {
+				msg = null;
+			} else {
+			    msg = 'Enter 24 hour departure time.';
+			}
+			return msg;
+		}
+		
 		var sl_rules=new Array();
 		sl_rules[0]='startFromHN:origin house number|required';
 		sl_rules[1]='startFromHN:origin house number|numeric';
@@ -271,13 +282,14 @@
 		
 		var t_rules=new Array();
 		t_rules[0]='Rtime:departure time|required';
+		t_rules[1]='Rtime|custom|checkTime()';
 		
 		var s_rules=new Array();
 		s_rules[0]='numSeats:number of seats|required';
 		s_rules[1]='numSeats:number of seats|numeric';
 		</script>
 	</HEAD>
-	<BODY onload="yav.init('updateStartS', sl_rules); yav.init('updateEndS', el_rules); yav.init('updateDate', d_rules); yav.init('updateTime', t_rules); yav.init('updateSeats', s_rules);">
+	<BODY ><%//onload="yav.init('updateStartS', sl_rules); yav.init('updateEndS', el_rules); yav.init('updateDate', d_rules); yav.init('updateTime', t_rules); yav.init('updateSeats', s_rules);">%>
 
 	<%@ include file="heading.html" %>	
 
@@ -321,19 +333,19 @@
 		<br /><br />
 		<h3>Timing:</h3>
 		<div class="Box" id="Box">
-		<FORM name="updateDate" onsubmit="return yav.performCheck('updateDate', d_rules, 'inline');" action="<%=response.encodeURL("rideEditSuccess.jsp") %>" method="post">
+		<FORM name="updateDate" id="updateDate" onsubmit="return yav.performCheck('updateDate', d_rules, 'inline');" action="<%=response.encodeURL("rideEditSuccess.jsp") %>" method="post">
 			<INPUT type="hidden" name="updateRide" value="yes">
 			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect")%>">
 			<INPUT type="hidden" name="reDirURL" value="<%=reDirURL%>"/>
 			<TABLE>
-				<tr> <td>Date: </td> <td><INPUT TYPE="text" NAME="Rdate" SIZE="25" value=<%=dateR%>><A HREF="#" onClick="cal.select(document.forms['updateDate'].Rdate,'anchor1','dd/MM/yyyy'); return false;" NAME="anchor1" ID="anchor1"><img name="calIcon" border="0" src="calendar_icon.jpg" width="27" height="23"></A></td><td><INPUT type="submit" name="updateDate" value="Update Date" size="25">&nbsp;&nbsp;<span id=errorsDiv_Rdate></span></td></tr>
+				<tr> <td>Date (dd/MM/yyyy): </td> <td><INPUT TYPE="text" NAME="Rdate" SIZE="25" value=<%=dateR%>><A HREF="#" onClick="cal.select(document.forms['updateDate'].Rdate,'anchor1','dd/MM/yyyy'); return false;" NAME="anchor1" ID="anchor1"><img name="calIcon" border="0" src="calendar_icon.jpg" width="27" height="23"></A></td><td><INPUT type="submit" name="updateDate" value="Update Date" size="25">&nbsp;&nbsp;<span id=errorsDiv_Rdate></span></td></tr>
 			
 		</FORM>
-		<FORM name="updateTime" onsubmit="return yav.performCheck('updateTime', t_rules, 'inline');" action="<%=response.encodeURL("rideEditSuccess.jsp") %>" method="post">
+		<FORM name="updateTime" id="updateTime" onsubmit="return yav.performCheck('updateTime', t_rules, 'inline');" action="<%=response.encodeURL("rideEditSuccess.jsp") %>" method="post">
 			<INPUT type="hidden" name="updateRide" value="yes"/>
 			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect")%>">
 			<INPUT type="hidden" name="reDirURL" value="<%=reDirURL%>"/>
-				<tr> <td> Time: </td><td><INPUT TYPE="text" NAME="Rtime" SIZE="25" value=<%=timeR%>></td><td><INPUT type="submit" name="updateTime" value="Update Time" size="25">&nbsp;&nbsp;<span id=errorsDiv_Rtime></span></td></tr>
+				<tr> <td> Time (hh:mm): </td><td><INPUT TYPE="text" NAME="Rtime" SIZE="25" value=<%=timeR%>></td><td><INPUT type="submit" name="updateTime" value="Update Time" size="25">&nbsp;&nbsp;<span id=errorsDiv_Rtime></span></td></tr>
 			</TABLE>
 		</FORM>
 		</div>
