@@ -38,8 +38,8 @@ public interface CarPoolStore {
 	int takeRide(int user, int ride, int idLocation, int streetNumberStart, int streetNumberEnd, String geoLocation) throws RideException;
 	int takeRide(int user, int ride, int idLocation, int streetNumberStart, int streetNumberEnd) throws RideException;
 	
-	void updateGeoLocationStart(int ride, String start);
-	void updateGeoLocationEnd(int ride, String end);
+	boolean updateGeoLocationStart(int ride, String start) throws SQLException, StoreException;
+	boolean updateGeoLocationEnd(int ride, String end) throws SQLException, StoreException;
 	
 	boolean updateSeats(int ride, int availableSeats) throws RideException;
 	boolean updateStartDate(int ride, String startDate) throws RideException;
