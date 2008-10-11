@@ -49,7 +49,7 @@
 				detailsTable += "<tr> <td>Date: </td> <td>"	+ new SimpleDateFormat("dd/MM/yyyy").format(u.getRideDate()) + "</td></tr> ";
 				detailsTable += "<tr> <td> Time: </td> <td>"+ u.getTime() + "</td> </tr>";
 				detailsTable += "<tr> <td> Seats: </td> <td>"+ u.getAvailableSeats() + "</td> </tr>";
-				detailsTable += "<tr> <td> Additional Info: </td> <td>"/*+ u.getComment()*/+"</td> </tr>";
+				detailsTable += "<tr> <td> Additional Info: </td> <td>"+ u.getComment()+"</td> </tr>";
 			}
 		}
 
