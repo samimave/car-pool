@@ -3,6 +3,7 @@ package car.pool.persistance;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
 
 import car.pool.persistance.exception.StoreException;
 
@@ -19,13 +20,11 @@ public class RideDetail {
 						"AND Matches.idLocation = locations.idLocations;";
 		try {
 			rs = statement.executeQuery(sql);
+			rs.next();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	public boolean hasNext() throws SQLException{
-		return rs.next();
+		
 	}
 	
 	public String getUsername() throws SQLException{

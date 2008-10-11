@@ -411,6 +411,7 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		
 		return countr > 0;
 	}
+	
 	public boolean acceptUser(int user, int ride, int conf) throws StoreException{
 		Statement statement = null;
 		int countr = 0;
@@ -969,13 +970,57 @@ public class CarPoolStoreImpl implements CarPoolStore {
 	}
 	
 	@Override
-	public void updateGeoLocationEnd(int ride, String end) {
+	public boolean updateGeoLocationEnd(int ride, String end) throws SQLException, StoreException {
+		int[] rows = null;
+		Statement statement = db.getStatement();
+		String sql1 = 	"UPDATE ride " +
+						"SET ride.geoLocation ='" +
+						getRideDetail(ride).getGeoLocation().split("/")[1] + "/" + end + "' " +
+						"WHERE ride.idRide ='"+ride+"';";
 		
+		String sql2 = 	"UPDATE matches " +
+		"SET matches.geoLocation ='" +
+		getRideDetail(ride).getGeoLocation().split("/")[0] + "/" + end + "' " +
+		"WHERE matches.idRide ='"+ride+"';";
+		try {
+			statement = db.getStatement();
+			statement.addBatch(sql1);
+			statement.addBatch(sql2);
+			//rows = statement.executeUpdate(sql);
+			rows = statement.executeBatch();
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return rows[0]>0 && rows[1]>0;
 	}
 
 	@Override
-	public void updateGeoLocationStart(int ride, String start) {
+	public boolean updateGeoLocationStart(int ride, String start) throws SQLException, StoreException {
+		int[] rows = null;
+		Statement statement = db.getStatement();
+		String sql1 = 	"UPDATE ride " +
+						"SET ride.geoLocation ='" +
+						start + "/" + getRideDetail(ride).getGeoLocation().split("/")[1] + "' " +
+						"WHERE ride.idRide ='"+ride+"';";
 		
+		String sql2 = 	"UPDATE matches " +
+		"SET matches.geoLocation ='" +
+		start + "/" + getRideDetail(ride).getGeoLocation().split("/")[1] + "' " +
+		"WHERE matches.idRide ='"+ride+"';";
+		try {
+			statement = db.getStatement();
+			statement.addBatch(sql1);
+			statement.addBatch(sql2);
+			//rows = statement.executeUpdate(sql);
+			rows = statement.executeBatch();
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return rows[0]>0 && rows[1]>0;
 	}
 	
 	
