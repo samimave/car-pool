@@ -40,7 +40,7 @@
 				from = u.getEndLocation();
 				to = u.getStartLocation();
 
-				detailsTable += "<tr> <td>Username:</td>  <td>"	+ u.getUsername() + "</td></tr> ";
+				detailsTable += "<tr> <td>Ride Offered By:</td>  <td>"	+ u.getUsername() + "</td></tr> ";
 				detailsTable += "<tr> <td> Start Region: </td> <td>"+ u.getStreetStart()+" "+ from + "</td> </tr>";
 				detailsTable += "<tr> <td> Stop Region: </td> <td>"	+ u.getStreetEnd()+" "+ to + "</td></tr> ";
 				detailsTable += "<tr> <td>Date: </td> <td>"	+ new SimpleDateFormat("dd/MM/yyyy").format(u.getRideDate()) + "</td></tr> ";
