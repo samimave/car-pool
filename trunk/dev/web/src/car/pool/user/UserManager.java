@@ -251,7 +251,6 @@ public class UserManager {
  			String updateSql = String.format("update User set %s%s%s where idUser = %d;", password, email, phone, user.getUserId());
  			Database db = new DatabaseImpl();
  			Statement statement = db.getStatement();
- 			System.out.println(updateSql);
  			//shouldn't need to check if it affected more than one row as the user should exist and if they don't it shouldn't have got this far
  			statement.executeUpdate(updateSql);
  		}

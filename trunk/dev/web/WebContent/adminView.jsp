@@ -147,7 +147,7 @@
 			</form>
 			<h2>Setup Proxy Configuration</h2>
 			<h3>Current settings</h3>
-			<object data="displayproxies" type="text/html"/>
+			<object data="displayproxies" type="text/html" width="1000"/>
 			</div>
 			<br /> <br /> 
 			<h2>Users and Rides in the System:</h2>

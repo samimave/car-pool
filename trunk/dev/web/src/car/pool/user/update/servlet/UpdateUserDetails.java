@@ -31,9 +31,8 @@ public class UpdateUserDetails extends HttpServlet {
 			user.setPhoneNumber(request.getParameter("phone"));
 			CarPoolStore cps = new CarPoolStoreImpl();
 			if(request.getParameter("changePassword") != null && request.getParameter("changePassword").equalsIgnoreCase("on")) {
-				if(OpenIdFilter.getCurrentUser(session) == null ) {
+				if(OpenIdFilter.getCurrentUser(session) == null) {
 					String oldpass = request.getParameter("oldpassword");
-					System.out.format("%s %s", user.getUserName(), oldpass);
 					try {
 						if(cps.checkUser(user.getUserName(), oldpass) == user.getUserId()) {
 							String password1 = request.getParameter("newPassword1");

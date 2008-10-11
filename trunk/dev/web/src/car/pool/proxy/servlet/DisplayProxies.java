@@ -33,6 +33,19 @@ public class DisplayProxies extends HttpServlet {
 			while(results.next()) {
 				displayRow(out, results);
 			}
+			out.print("<script type=\"text/javascript\">\n<!--\n");
+			out.print("    function setupproxy(form) {\n");
+			out.print("        var url = \"setupproxy?proxysetup=yes&ipaddress=\"+form.ipaddr.value+\"&port=\"+form.port.value+\"&ptypes=\"+form.ptypes.value;\n");
+			out.print("        request.open(\"GET\", url, false);\n");
+			out.print("        request.send( null );\n");
+			out.print("        var response = request.responseText;\n");
+			out.print("        if(response == \"false\") {\n");
+			out.print("            alert(\"Failed to add proxy to list\");");
+			out.print("        }");
+			out.print("        window.location.reload();\n");
+			out.print("     }\n");
+			out.print("</script>\n");
+			out.print("<form action=\"javascript:void(0)\" onsubmit=\"return setupproxy(this)\"><tr><td><input type=\"text\" name=\"ipaddr\" size=\"10\"/></td><td><input type=\"text\" name=\"port\" size=\"10\"/></td><td><input type=\"text\" name=\"ptypes\" size=\"10\"/></td><td><input value=\"Add\" type=\"submit\"/></td></tr>");
 			out.println("</table>");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -87,4 +100,6 @@ public class DisplayProxies extends HttpServlet {
 		
 		return builder.toString();
 	}
+	
+	
 }
