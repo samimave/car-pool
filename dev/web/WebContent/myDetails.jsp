@@ -278,7 +278,7 @@ String updateUserConf = "";
 		boolean awaitExist = false;
 		boolean something = false;
 		TakenRides tr = cps.getTakenRides(currentUser);
-		while (tr.hasNext() && something == false) {
+		while (tr.hasNext() /*&& something == false*/) {
 			//System.out.println("tr");
 			something = true;
 			if (!rideExist) {
@@ -410,31 +410,49 @@ String updateUserConf = "";
 							driverID = rl2.getUserID();
 						}
 					}
-					
-					
 					feedExist = true;
-					
 					scoreDone = cps.hasUserAddedScore(tr2.getRideID(), currentUser);
-					
-					feedbackTable += "<td>" + fromF + "</td> ";
-					feedbackTable += "<td>" + toF + "</td> ";
-					feedbackTable += "<td>"
-							+ new SimpleDateFormat("dd/MM/yyyy").format(tr2
-									.getRideDate()) + "</td> ";
-					feedbackTable += "<td>" + tr2.getTime() + "</td> ";
-					feedbackTable += "<FORM action='"+response.encodeURL("myDetails.jsp")+"' method=\"post\">";
-					feedbackTable += "<INPUT type=\"hidden\" name=\"feedbackRide\" value=\"yes"+ "\">";
-					feedbackTable += "<INPUT type=\"hidden\" name=\"DriverUserID\" value=\""+ driverID + "\">";
-					feedbackTable += "<INPUT type=\"hidden\" name=\"FdbckForRide\" value=\""+ tr2.getRideID() + "\">";
-					feedbackTable += "<td><INPUT TYPE=\"text\" NAME=\"rideRate\" SIZE=\"10\"></td> ";
-					feedbackTable += "<td><INPUT type=\"submit\" value=\"Rate Ride\" /></td></tr>";
-					feedbackTable += "</FORM>";
+					if (!scoreDone){
+						feedbackTable += "<td>" + fromF + "</td> ";
+						feedbackTable += "<td>" + toF + "</td> ";
+						feedbackTable += "<td>"
+								+ new SimpleDateFormat("dd/MM/yyyy").format(tr2
+										.getRideDate()) + "</td> ";
+						feedbackTable += "<td>" + tr2.getTime() + "</td> ";
+						feedbackTable += "<FORM action='"+response.encodeURL("myDetails.jsp")+"' method=\"post\">";
+						feedbackTable += "<INPUT type=\"hidden\" name=\"feedbackRide\" value=\"yes"+ "\">";
+						feedbackTable += "<INPUT type=\"hidden\" name=\"DriverUserID\" value=\""+ driverID + "\">";
+						feedbackTable += "<INPUT type=\"hidden\" name=\"FdbckForRide\" value=\""+ tr2.getRideID() + "\">";
+						feedbackTable += "<td><INPUT TYPE=\"text\" NAME=\"rideRate\" SIZE=\"10\">";
+						feedbackTable += "<INPUT type=\"submit\" value=\"Rate Ride\" /></td>";
+						feedbackTable += "</FORM>";
+						String d = new SimpleDateFormat("dd/MM/yyyy").format(tr2
+								.getRideDate())
+								+ " " + tr2.getTime();
+						Date dt = new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(d);
+						if (dt.after(new Date())) {
+							feedbackTable += "<td> <a href='"
+									+ response.encodeURL(request.getContextPath()
+									+ "/rideDetails.jsp?rideselect="
+									+ tr2.getRideID()) + "'>"
+									+ "Link to Ride Page"
+									+ "</a> </td> </tr>";
+						} else {
+							feedbackTable += "<td> <a href='"
+								+ response.encodeURL(request.getContextPath()
+								+ "/oldRideDetails.jsp?rideselect="
+								+ tr2.getRideID()) + "'>"
+								+ "Link to Ride Page"
+								+ "</a> </td> </tr>";
+						}
+					}
 				}
 			
 		}
-			if ((feedExist) && (!scoreDone)) {
-				feedbackTable = "<table class='rideDetailsSearch'> <tr><th>Starting From</th> <th>Going To</th>"
-						+ "<th>Departure Date</th> <th>Departure Time</th><th>Rating (between -10 & 10)</th><th>Submit</th> </tr>"
+			if ((feedExist)&&(!scoreDone)) {
+				feedbackTable = "<p>This rating shall remain anonymous. You are encouraged to click on the Link to Ride page and leave a comment about how you found the ride for the benefit of other users who want to know more about the person who offered the ride.</p>"
+						+"<table class='rideDetailsSearch'> <tr><th>Starting From</th> <th>Going To</th>"
+						+ "<th>Departure Date</th> <th>Departure Time</th><th>Rating (between -10 & 10)</th><th>Link</th> </tr>"
 						+ feedbackTable + "</table>";
 			} else {
 				feedbackTable = "<p>No rides to provide feedback for.</p>";
@@ -532,7 +550,7 @@ String updateUserConf = "";
 			<br /><br />
 			<h3>You are awaiting approval for the following rides:</h3>
 			<%=awaitTable%><br/><br/>
-			<h3>Please provide feedback for the following rides after the ride has taken place</h3>
+			<h3>Please provide a rating for the following rides after they are over. </h3>
 			<%=feedbackTable%>
 		</div>
 		<br /> <br /> <br />
