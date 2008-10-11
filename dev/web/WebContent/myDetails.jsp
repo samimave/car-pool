@@ -415,20 +415,9 @@ String updateUserConf = "";
 					if (!scoreDone){
 						feedbackTable += "<td>" + fromF + "</td> ";
 						feedbackTable += "<td>" + toF + "</td> ";
-						feedbackTable += "<td>"
-								+ new SimpleDateFormat("dd/MM/yyyy").format(tr2
-										.getRideDate()) + "</td> ";
+						feedbackTable += "<td>"+ new SimpleDateFormat("dd/MM/yyyy").format(tr2.getRideDate()) + "</td> ";
 						feedbackTable += "<td>" + tr2.getTime() + "</td> ";
-						feedbackTable += "<FORM action='"+response.encodeURL("myDetails.jsp")+"' method=\"post\">";
-						feedbackTable += "<INPUT type=\"hidden\" name=\"feedbackRide\" value=\"yes"+ "\">";
-						feedbackTable += "<INPUT type=\"hidden\" name=\"DriverUserID\" value=\""+ driverID + "\">";
-						feedbackTable += "<INPUT type=\"hidden\" name=\"FdbckForRide\" value=\""+ tr2.getRideID() + "\">";
-						feedbackTable += "<td><INPUT TYPE=\"text\" NAME=\"rideRate\" SIZE=\"10\">";
-						feedbackTable += "<INPUT type=\"submit\" value=\"Rate Ride\" /></td>";
-						feedbackTable += "</FORM>";
-						String d = new SimpleDateFormat("dd/MM/yyyy").format(tr2
-								.getRideDate())
-								+ " " + tr2.getTime();
+						String d = new SimpleDateFormat("dd/MM/yyyy").format(tr2.getRideDate())+ " " + tr2.getTime();
 						Date dt = new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(d);
 						if (dt.after(new Date())) {
 							feedbackTable += "<td> <a href='"
@@ -436,23 +425,30 @@ String updateUserConf = "";
 									+ "/rideDetails.jsp?rideselect="
 									+ tr2.getRideID()) + "'>"
 									+ "Link to Ride Page"
-									+ "</a> </td> </tr>";
+									+ "</a> </td>";
 						} else {
 							feedbackTable += "<td> <a href='"
 								+ response.encodeURL(request.getContextPath()
 								+ "/oldRideDetails.jsp?rideselect="
 								+ tr2.getRideID()) + "'>"
 								+ "Link to Ride Page"
-								+ "</a> </td> </tr>";
+								+ "</a></td>";
 						}
+						feedbackTable += "<FORM action='"+response.encodeURL("myDetails.jsp")+"' method=\"post\">";
+						feedbackTable += "<INPUT type=\"hidden\" name=\"feedbackRide\" value=\"yes"+ "\">";
+						feedbackTable += "<INPUT type=\"hidden\" name=\"DriverUserID\" value=\""+ driverID + "\">";
+						feedbackTable += "<INPUT type=\"hidden\" name=\"FdbckForRide\" value=\""+ tr2.getRideID() + "\">";
+						feedbackTable += "<td><INPUT TYPE=\"text\" NAME=\"rideRate\" SIZE=\"10\">";
+						feedbackTable += "<INPUT type=\"submit\" value=\"Rate Ride\" /></td>";
+						feedbackTable += "</FORM> </tr>";
 					}
 				}
 			
 		}
 			if ((feedExist)&&(!scoreDone)) {
-				feedbackTable = "<p>This rating shall remain anonymous. You are encouraged to click on the Link to Ride page and leave a comment about how you found the ride for the benefit of other users who want to know more about the person who offered the ride.</p>"
+				feedbackTable = "<p>This rating shall remain anonymous. You are encouraged to click on the Link to Ride page and leave a comment about how your opinion of the ride for the benefit of other users who want to know more about the person who offered the ride.</p>"
 						+"<table class='rideDetailsSearch'> <tr><th>Starting From</th> <th>Going To</th>"
-						+ "<th>Departure Date</th> <th>Departure Time</th><th>Rating (between -10 & 10)</th><th>Link</th> </tr>"
+						+ "<th>Departure Date</th> <th>Departure Time</th><th>Link</th> <th>Rating (between -10 & 10)</th></tr>"
 						+ feedbackTable + "</table>";
 			} else {
 				feedbackTable = "<p>No rides to provide feedback for.</p>";
