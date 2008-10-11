@@ -120,13 +120,16 @@
 				avoidDuplicates.add(u.getRideID());
 
 				mapCoords += u.getGeoLocation() + ":";
-
+				if (user != null) {
 				userTable += "<tr> <td>"
 						+ "<a href='"
 						+ response.encodeURL(request.getContextPath()
 								+ "/profile.jsp?profileId="
 								+ u.getUserID()) + "'>"
 						+ u.getUsername() + "</a></td>";
+				} else {
+					userTable += "<tr> <td>" + u.getUsername() + "</td>";
+				}
 				userTable += "<td>" + from + "</td> ";
 				userTable += "<td>" + to + "</td> ";
 				userTable += "<td>"
@@ -193,12 +196,16 @@
 
 				mapCoords += daTbl.getGeoLocation() + ":";
 
+				if (user != null) {
 				dateTable += "<tr> <td>"
 						+ "<a href='"
 						+ response.encodeURL(request.getContextPath()
 								+ "/profile.jsp?profileId="
 								+ daTbl.getUserID()) + "'>"
 						+ daTbl.getUsername() + "</a></td>";
+				} else {
+					userTable += "<tr> <td>" + daTbl.getUsername() + "</td>";
+				}
 				dateTable += "<td>" + from + "</td> ";
 				dateTable += "<td>" + to + "</td> ";
 				dateTable += "<td>"
@@ -285,12 +292,16 @@
 				}
 				rideNum++;
 				
+				if (user != null) {
 				tempTable += "<tr> <td>"
 						+ "<a href='"
 						+ response.encodeURL(request.getContextPath()
 								+ "/profile.jsp?profileId="
 								+ rides.getUserID()) + "'>"
 						+ rides.getUsername() + "</a></td>";
+				} else {
+					tempTable += "<tr> <td>" + rides.getUsername() + "</td>";
+				}
 				tempTable += "<td>" + from + "</td> ";
 				tempTable += "<td>" + to + "</td> ";
 				tempTable += "<td>"
