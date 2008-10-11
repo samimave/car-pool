@@ -150,7 +150,7 @@
 		<script>
 		function checkTime() {
 		    var msg;
-		    var reg = new RegExp("^[0-9][0-9]:[0-9][0-9]$");
+		    var reg = new RegExp("^[0-2][0-9]:[0-5][0-9]$");
 		    if ( reg.test(document.forms['offerFrm'].depTime.value) ) {
 				msg = null;
 			} else {
