@@ -270,6 +270,39 @@
 		if (request.getParameter("withdrawConfirmedRide") != null) {
 			cps.removeRide(Integer.parseInt(request.getParameter("withdrawUserID")), Integer.parseInt(request.getParameter("withdrawRideID")));
 			updateUserConf = "<p>" + "You have withdraw from the ride you wanted to" + "</p>";
+			try {
+				Integer rideId = Integer.parseInt(request.getParameter("withdrawRideID"));
+				RideListing listing = cps.getRideListing();
+				while(listing.next()) {
+					if(listing.getRideID() == rideId.intValue()) {
+						break;
+					} else {
+						continue;
+					}
+				}
+				User rideUser = new UserManager().getUserByUserId(listing.getUserID());
+				User withdrawUser = new UserManager().getUserByUserId(Integer.parseInt(request.getParameter("withdrawUserID")));
+				String message = String.format("Unfotunately, %s has decided to withdraw from your ride from %s %s to %s %s on %s at %s.", withdrawUser.getUserName(), listing.getStreetStart(), listing.getStartLocation(), listing.getStreetEnd(), listing.getEndLocation(), new SimpleDateFormat("dd/MM/yyyy").format(listing.getRideDate()), listing.getTime());
+				String address = rideUser.getEmail();
+				String subject = "Car Pool: Ride withdraw";
+				Email email = new Email();
+				email.setMessage(message);
+				email.setSubject(subject);
+				email.setToAddress(address);
+				SMTP.send(email);
+			} catch( IOException e ) {
+				//just let it slide here, but print message to stdout
+				System.out.format("SMTP failed to send.  Error is:\n%s", e.getMessage());
+			} catch( SQLException e ) {
+				//just let it slide here, but print message to stdout
+				System.out.format("SMTP failed to send.  Error is:\n%s", e.getMessage());
+			} catch( InvaildUserNamePassword e ) {
+				//just let it slide here, but print message to stdout
+				System.out.format("SMTP failed to send.  Error is:\n%s", e.getMessage());
+			} catch( SMTPException e ) {
+				//just let it slide here, but print message to stdout
+				System.out.format("SMTP failed to send.  Error is:\n%s", e.getMessage());
+			}
 		}
 
 		if (request.getParameter("withdrawNotConfirmedRide") != null) {
