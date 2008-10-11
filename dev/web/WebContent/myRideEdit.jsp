@@ -251,6 +251,9 @@
 		<SCRIPT type="text/javascript" src="CalendarPopup.js"></SCRIPT>
 		<script type="text/javascript" src="javascript/yav.js"></script>
 		<script type="text/javascript" src="javascript/yav-config.js"></script>
+		<script
+			src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAA7rDxBnSa8ztdEea-bXHUqRRKOMZEnoyerBNNN7XbrW5T80f1pxRxpg7l2VcFxiQk2L5RouYsGk3NqQ"
+			type="text/javascript"></script>
 		<SCRIPT type="text/javascript">
 			var cal = new CalendarPopup();
 		</script>
@@ -288,6 +291,41 @@
 		s_rules[0]='numSeats:number of seats|required';
 		s_rules[1]='numSeats:number of seats|numeric';
 		</script>
+
+<SCRIPT type="text/javascript">
+						function codeFrom(response) {
+							document.getElementById("updateStartS").fromCoord.value=response.lat() + "," + response.lng();
+							}
+						function codeTo(response) {
+							document.getElementById("updateEndS").toCoord.value=response.lat() + "," + response.lng();
+							}
+						// a function to get the from and to streets from the combobox and pass them to the 
+						// form call "showMap" which then post to the "displayRouteMap.jsp" to be display on google map
+			      		function getAddress(origin){
+			      			 var geocoder = new GClientGeocoder();
+							if(origin == "from"){
+								startIdx = document.getElementById("updateStartS").startFrom.selectedIndex;
+								startLoc = document.getElementById("updateStartS").startFrom.options[startIdx].text;
+								startNum  = document.getElementById("updateStartS").startFromHN.value;
+				     				
+								var from = startNum + " " + startLoc + " PALMERSTON NORTH NEW ZEALAND";
+								geocoder.getLatLng(from, codeFrom);
+							}
+
+			     		   	if(origin == "to"){
+								endIdx   = document.getElementById("updateEndS").endTo.selectedIndex;
+				     		   	endLoc   = document.getElementById("updateEndS").endTo.options[endIdx].text;
+				     		   	endNum  = document.getElementById("updateEndS").endToHN.value;
+
+								var to = endNum + " " + endLoc + " PALMERSTON NORTH NEW ZEALAND";
+				     		   	geocoder.getLatLng(to, codeTo);
+				     		}
+		     			  					    		   	
+
+
+			   		   	 
+			      		}
+		</script>
 	</HEAD>
 	<BODY ><%//onload="yav.init('updateStartS', sl_rules); yav.init('updateEndS', el_rules); yav.init('updateDate', d_rules); yav.init('updateTime', t_rules); yav.init('updateSeats', s_rules);">%>
 
@@ -307,8 +345,9 @@
 			<INPUT type="hidden" name="reDirURL" value="<%=reDirURL%>"/>
 			<TABLE>
 				<tr> <td> Start Street:  <%=fromHouseNo%> <%=from%></td> <td>&nbsp;</td></tr>
-				<tr><td><INPUT TYPE="text" NAME="startFromHN" SIZE="25" value=<%=fromHouseNo%>></td><td><span id=errorsDiv_startFromHN></span></td></tr>
-				<tr> <td><SELECT name="startFrom"><option selected="selected" value=''>Select a Street</option><%=options%></SELECT></td><td><INPUT type="submit" name="startFrom" value="Update Street" size="25">&nbsp;&nbsp;<span id=errorsDiv_startFrom></span></td></tr>
+				<tr><td><INPUT TYPE="text" NAME="startFromHN" SIZE="25"	onkeypress="getAddress('from')" value=<%=fromHouseNo%>></td><td><span id=errorsDiv_startFromHN></span></td></tr>
+				<tr> <td><SELECT name="startFrom" onChange="getAddress('from')><option selected="selected" value=''>Select a Street</option><%=options%></SELECT></td><td><INPUT type="submit" name="startFrom" value="Update Street" size="25">&nbsp;&nbsp;<span id=errorsDiv_startFrom></span></td></tr>
+				<INPUT TYPE="hidden" NAME="fromCoord" SIZE="25">			
 			</TABLE>
 		</FORM>
 		<br />
@@ -318,8 +357,9 @@
 			<INPUT type="hidden" name="reDirURL" value="<%=reDirURL%>"/>
 			<TABLE>
 				<tr> <td>End Street:  <%=toHouseNo%> <%=to%></td></tr>
- 				<tr><td><INPUT TYPE="text" NAME="endToHN" SIZE="25" value=<%=toHouseNo%>></td><td><span id=errorsDiv_endToHN></span></td></tr>
-				<tr> <td><SELECT name="endTo"><option selected="selected" value=''>Select a Street</option><%=options%></SELECT></td><td><INPUT type="submit" name="endTo" value="Update Street" size="25">&nbsp;&nbsp;<span id=errorsDiv_endTo></span></td></tr>
+ 				<tr><td><INPUT TYPE="text" NAME="endToHN" SIZE="25" onkeypress="getAddress('to')" value=<%=toHouseNo%>></td></tr>
+				<tr> <td><SELECT name="endTo" onChange="getAddress('to')><option selected="selected" value=''>Select a Street</option><%=options%></SELECT></td><td><INPUT type="submit" name="endTo" value="Update Street" size="25">&nbsp;&nbsp;<span id=errorsDiv_endTo></span></td></tr>
+				<INPUT TYPE="hidden" NAME="toCoord" SIZE="25">
 			</TABLE>
 		</FORM>
 
