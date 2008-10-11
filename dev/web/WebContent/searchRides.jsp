@@ -110,6 +110,10 @@
 		<p>Please enter the search criteria in the boxes below and click
 		search. Rides matching any of the entered information will be displayed.</p>
 		<br />
+		<p>
+		Note: If a departure street is entered then a destination street must also be entered. Also a username or date must always be entered.
+		</p>
+		<br />
 		<h3>Search Criteria:</h3>
 		<div class="Box" id="Box">
 		<FORM NAME="searchFrm" id="searchFrm" onsubmit="return yav.performCheck('searchFrm', rules, 'inline');" action="<%=response.encodeURL("result.jsp")%>" method="post" >
