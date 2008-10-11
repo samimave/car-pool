@@ -128,6 +128,15 @@
   	<url-pattern>/setupproxy</url-pattern>
   </servlet-mapping>
   <servlet>
+  	<display-name>DisplayProxies</display-name>
+  	<servlet-name>DisplayProxies</servlet-name>
+  	<servlet-class>car.pool.proxy.servlet.DisplayProxies</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>DisplayProxies</servlet-name>
+  	<url-pattern>/displayproxies</url-pattern>
+  </servlet-mapping>
+  <servlet>
   	<display-name>AdminRegistration</display-name>
   	<servlet-name>AdminRegistration</servlet-name>
   	<servlet-class>car.pool.user.registration.servlet.AdminRegistration</servlet-class>

@@ -145,6 +145,9 @@
 					<tr><td>&nbsp;</td><td><input type="submit"/> </td></tr>
 				</table>
 			</form>
+			<h2>Setup Proxy Configuration</h2>
+			<h3>Current settings</h3>
+			<object data="displayproxies" type="text/html"/>
 			</div>
 			<br /> <br /> 
 			<h2>Users and Rides in the System:</h2>
