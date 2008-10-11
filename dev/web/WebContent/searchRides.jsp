@@ -82,7 +82,8 @@
 		<script>
 		var rules=new Array();
 		rules[0]='searchDate:date|date';
-
+		rules[1]='numFrom:House number|numeric';
+		rules[2]='numTo:House number|numeric';
 		</script>
 
 	</HEAD>
@@ -120,18 +121,16 @@
 		<INPUT TYPE="hidden" NAME="fromCoord"> 
 		<INPUT TYPE="hidden" NAME="toCoord">
 		<TABLE>
-			<tr>
-				<td>Ride Departing From:</td>
-				<%//<td><INPUT type="text" name="numFrom" size="5" onkeypress="getAddress('from')" /></td> %>
-				<td><SELECT name="streetFrom" onChange="getAddress('from')">
+			<tr> <th>Ride Departing From:</th> <td>&nbsp;</td> </tr>
+			<tr> <td>House Number:</td> <td><INPUT type="text" name="numFrom" size="5" onkeypress="getAddress('from')" />&nbsp;&nbsp;<span id=errorsDiv_numFrom></span></td> </tr>
+			<tr> <td>Street:</td> <td><SELECT name="streetFrom" onChange="getAddress('from')">
 					<option selected="selected">Select a Street</option>
 					<%=options%>
 				</SELECT></td>
 			</tr>
-			<tr>
-				<td>Ride Destination:</td>
-				<%//<td><INPUT type="text" name="numTo" size="5" onkeypress="getAddress('to')" /></td>%>
-				<td><SELECT name="streetTo" onChange="getAddress('to')">
+			<tr> <th>Ride Destination:</th> <td>&nbsp;</td> </tr>
+			<tr> <td>House Number:</td><td><INPUT type="text" name="numTo" size="5" onkeypress="getAddress('to')" />&nbsp;&nbsp;<span id=errorsDiv_numTo></span></td> </tr>
+			<tr> <td>Street:</td><td><SELECT name="streetTo" onChange="getAddress('to')">
 					<option selected="selected">Select a Street</option>
 					<%=options%>
 				</SELECT></td>
