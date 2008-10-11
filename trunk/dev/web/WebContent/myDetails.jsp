@@ -541,7 +541,7 @@ String updateUserConf = "";
 		<div class="Box" id="Box">
 		<FORM id="addoid" name="addoid" onsubmit="return yav.performCheck('addoid', ad_rules, 'inline');" action="<%=response.encodeURL("addopenid") %>" method="post">
 			<INPUT type="hidden" name="addopenid"/>
-			<p>Want to know more about OpenId? <a href="http://openid.net/">Click here.</a></p><br /><br />
+			<p>Want to know more about OpenId? <a href="http://openid.net/" target = "_blank">Click here.</a></p><br /><br />
 			<TABLE>
 				<tr><td>OpenId to add:</td> <td><INPUT type="text" name="openid" size="25"/>&nbsp;&nbsp;<span id=errorsDiv_openid></span></td></tr>
 			</TABLE>
