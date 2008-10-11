@@ -10,6 +10,7 @@
 	User driver = null;
 	CarPoolStore cps = null;
 	String userTable = "";
+	int count = 0;
 	if (s.getAttribute("signedin") != null) {
 		user = (User) s.getAttribute("user");
 	
@@ -27,7 +28,7 @@
 				userTable = ""; //first time round get rid of unwanted text
 			}
 			userExist = true;
-
+			count++;
 			//getting the ride info
 			String from = rl.getStartLocation();
 			String to = rl.getEndLocation();
@@ -83,18 +84,18 @@
 		<br /><br />
 		<h2>User Profile:</h2>
 		<div class="Box" id="Box">
-			<% %>
-		<table>
+		<table class='rideDetailsSearch'>
 		<tr><td>Username: </td><td><%=driver.getUserName()%></td></tr>
 		<tr><td>Email: </td><td><%=driver.getEmail() %></td></tr>
 		<tr><td>Social Score: </td><td><%=cps.getScore(driver.getUserId()) %>
 	
 		</table>
-		<br />
+	
 		</div>
 		<br /><br />
 		<h2>Rides User Has Offered:</h2>
 		<div class="Box" id="Box">
+		<h3>Total number of rides offered by user: <%=count%></h3><br/>
 		<%=userTable %>
 		</div>
 		<br /> <br /> <br />
