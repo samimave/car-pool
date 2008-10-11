@@ -55,7 +55,7 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		Date date = new Date(System.currentTimeMillis());
 		
 		try {
-			passwordHash = AeSimpleSHA1.SHA1(passwordHash);
+			passwordHash = AeSimpleSHA1.SHA1(username+passwordHash);
 		} catch (NoSuchAlgorithmException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -132,7 +132,7 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		int id = FAILED;
 
 		try {
-			passwordHash = AeSimpleSHA1.SHA1(passwordHash);
+			passwordHash = AeSimpleSHA1.SHA1(username+passwordHash);
 		} catch (NoSuchAlgorithmException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
