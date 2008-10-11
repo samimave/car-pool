@@ -63,7 +63,7 @@
 		}
 
 		if (userExist) {
-			userTable = "<table class='rideDetailsSearch'> <tr> <th>Starting From</th> <th>Going To</th>"
+			userTable = "<p>Click on the Link to Ride Page to see if past riders have left feedback for the ride offered</p><br/>"+"<table class='rideDetailsSearch'> <tr> <th>Starting From</th> <th>Going To</th>"
 					+ "<th>Departure Date</th> <th>Departure Time</th><th>Link to Ride Page</th> </tr>"
 					+ userTable + "</table>";
 		}
