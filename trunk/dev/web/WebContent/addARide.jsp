@@ -148,6 +148,17 @@
 
 		</SCRIPT>
 		<script>
+		function checkTime() {
+		    var msg;
+		    var reg = new RegExp("^[0-9][0-9]:[0-9][0-9]$");
+		    if ( reg.test(document.forms['offerFrm'].depTime.value) ) {
+				msg = null;
+			} else {
+			    msg = 'Enter 24 hour departure time.';
+			}
+			return msg;
+		}
+		
 		var rules=new Array();
 		rules[0]='houseFrom:origin house number|required';
 		rules[1]='houseFrom:origin house number|numeric';
@@ -158,10 +169,11 @@
 		rules[6]='depDate:date|required';
 		rules[7]='depDate:date|date';
 		rules[8]='depTime:departure time|required';
-		rules[9]='tripLength:ride length|required';
-		rules[10]='tripLength:ride length|numeric';
-		rules[11]='numSeats:number of seats|required';
-		rules[12]='numSeats:number of seats|numeric';
+		rules[9]='depTime|custom|checkTime()';
+		rules[10]='tripLength:ride length|required';
+		rules[12]='tripLength:ride length|numeric';
+		rules[13]='numSeats:number of seats|required';
+		rules[14]='numSeats:number of seats|numeric';
 		</script>
 
 	</HEAD>
