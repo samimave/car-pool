@@ -117,14 +117,21 @@
 				userTable+= "<td>"	+ new SimpleDateFormat("dd/MM/yyyy").format(u.getRideDate()) + "</td> ";
 				userTable+= "<td>" + u.getTime() + "</td> ";
 				userTable+= "<td>" + u.getAvailableSeats() + "</td> ";
-				if (user != null) {
-					userTable+= "<td> <a href='"
-							+ response.encodeURL(request.getContextPath()
-							+ "/rideDetails.jsp?rideselect=" + u.getRideID()
-							+ "&userselect=" + u.getUsername()) + "'>"
+				if ((user != null)&&(user.getUserId() == u.getUserID())){
+					userTable += "<td> <a href='" + response.encodeURL(request.getContextPath()
+							+ "/oldRideDetails.jsp?rideselect="
+							+ u.getRideID() + "&userselect="
+							+ u.getUsername()) + "'>"
+							+ "Link to ride page" + "</a> </td> </tr>";
+				}
+				else if ((user != null)&&!(user.getUserId() == u.getUserID())) {
+					userTable += "<td> <a href='" + response.encodeURL(request.getContextPath()
+							+ "/rideDetails.jsp?rideselect="
+							+ u.getRideID() + "&userselect="
+							+ u.getUsername()) + "'>"
 							+ "Link to ride page" + "</a> </td> </tr>";
 				} else {
-					userTable+= "<td>login to view more</td> </tr>";
+					userTable += "<td>login to view more</td> </tr>";
 				}
 			} else {
 				userTable= "";
@@ -166,9 +173,15 @@
 				dateTable += "<td>"+ new SimpleDateFormat("dd/MM/yyyy").format(daTbl.getRideDate()) + "</td> ";
 				dateTable += "<td>" + daTbl.getTime() + "</td> ";
 				dateTable += "<td>" + daTbl.getAvailableSeats()+ "</td> ";
-				if (user != null) {
-					dateTable += "<td> <a href='"
-							+ response.encodeURL(request.getContextPath()
+				if ((user != null)&&(user.getUserId() == daTbl.getUserID())){
+					dateTable += "<td> <a href='" + response.encodeURL(request.getContextPath()
+							+ "/oldRideDetails.jsp?rideselect="
+							+ daTbl.getRideID() + "&userselect="
+							+ daTbl.getUsername()) + "'>"
+							+ "Link to ride page" + "</a> </td> </tr>";
+				}
+				else if ((user != null)&&!(user.getUserId() == daTbl.getUserID())) {
+					dateTable += "<td> <a href='" + response.encodeURL(request.getContextPath()
 							+ "/rideDetails.jsp?rideselect="
 							+ daTbl.getRideID() + "&userselect="
 							+ daTbl.getUsername()) + "'>"
@@ -232,11 +245,18 @@
 				tempTable += "<td>"	+ new SimpleDateFormat("dd/MM/yyyy").format(rides.getRideDate()) + "</td> ";
 				tempTable += "<td>" + rides.getTime() + "</td> ";
 				tempTable += "<td>" + rides.getAvailableSeats() + "</td> ";
-				if (user != null) {
-					tempTable += "<td> <a href='"
-							+ response.encodeURL(request.getContextPath()
-							+ "/rideDetails.jsp?rideselect=" + rides.getRideID()
-							+ "&userselect=" + rides.getUsername()) + "'>"
+				if ((user != null)&&(user.getUserId() == rides.getUserID())){
+					tempTable += "<td> <a href='" + response.encodeURL(request.getContextPath()
+							+ "/oldRideDetails.jsp?rideselect="
+							+ rides.getRideID() + "&userselect="
+							+ rides.getUsername()) + "'>"
+							+ "Link to ride page" + "</a> </td> </tr>";
+				}
+				else if ((user != null)&&!(user.getUserId() == rides.getUserID())) {
+					tempTable += "<td> <a href='" + response.encodeURL(request.getContextPath()
+							+ "/rideDetails.jsp?rideselect="
+							+ rides.getRideID() + "&userselect="
+							+ rides.getUsername()) + "'>"
 							+ "Link to ride page" + "</a> </td> </tr>";
 				} else {
 					tempTable += "<td>login to view more</td> </tr>";
