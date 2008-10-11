@@ -44,6 +44,7 @@ public class DisplayProxies extends HttpServlet {
 			out.print("        }");
 			out.print("        window.location.reload();\n");
 			out.print("     }\n");
+			out.print("//-->");
 			out.print("</script>\n");
 			out.print("<form action=\"javascript:void(0)\" onsubmit=\"return setupproxy(this)\"><tr><td><input type=\"text\" name=\"ipaddr\" size=\"10\"/></td><td><input type=\"text\" name=\"port\" size=\"10\"/></td><td><input type=\"text\" name=\"ptypes\" size=\"10\"/></td><td><input value=\"Add\" type=\"submit\"/></td></tr>");
 			out.println("</table>");
