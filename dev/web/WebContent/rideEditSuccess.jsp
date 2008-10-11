@@ -100,6 +100,8 @@
 					.getParameter("rideSelect")), Integer
 					.parseInt(request.getParameter("startFromHN")),Integer
 					.parseInt(request.getParameter("startFrom")),dbID);
+			cps.updateGeoLocationStart(Integer.parseInt(request
+					.getParameter("rideSelect")), request.getParameter("fromCoord"));
 			updateStartS = "<p>"
 					+ "You have successfully updated the ride you wanted to"
 					+ "</p>";
@@ -113,6 +115,8 @@
 					.getParameter("rideSelect")), Integer
 					.parseInt(request.getParameter("endToHN")),Integer
 					.parseInt(request.getParameter("endTo")),dbID);
+			cps.updateGeoLocationEnd(Integer.parseInt(request
+					.getParameter("rideSelect")), request.getParameter("toCoord"));
 			updateEndS = "<p>"
 					+ "You have successfully updated the ride you wanted to"
 					+ "</p>";
