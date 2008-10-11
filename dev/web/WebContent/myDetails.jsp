@@ -422,7 +422,7 @@ String updateUserConf = "";
 							+ new SimpleDateFormat("dd/MM/yyyy").format(tr2
 									.getRideDate()) + "</td> ";
 					feedbackTable += "<td>" + tr2.getTime() + "</td> ";
-					feedbackTable += "<FORM action='"+response.encodeURL("myDetails.jsp")+" method=\"post\">";
+					feedbackTable += "<FORM action='"+response.encodeURL("myDetails.jsp")+"' method=\"post\">";
 					feedbackTable += "<INPUT type=\"hidden\" name=\"feedbackRide\" value=\"yes"+ "\">";
 					feedbackTable += "<INPUT type=\"hidden\" name=\"DriverUserID\" value=\""+ driverID + "\">";
 					feedbackTable += "<INPUT type=\"hidden\" name=\"FdbckForRide\" value=\""+ tr2.getRideID() + "\">";
