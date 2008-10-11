@@ -524,6 +524,10 @@ String updateUserConf = "";
 				<tr> <td>Username:</td> <td><%=user != null ? user.getUserName() : ""%></td> </tr> 
 				<tr> <td>Email Address:</td> <td><INPUT TYPE="text" NAME="email" SIZE="25" value="<%=user != null ? user.getEmail() : ""%>">&nbsp;&nbsp;<span id=errorsDiv_email></span></td> </tr> 
 				<tr> <td>Phone Number:</td> <td><INPUT TYPE="text" NAME="phone" SIZE="25" value="<%=user != null ? user.getPhoneNumber() : ""%>">&nbsp;&nbsp;<span id=errorsDiv_phone></span></td> </tr>
+				<tr> <td><%if( OpenIdFilter.getCurrentUser(s) != null) {%>Add a <%}else{ %>Change <%} %>password?:</td><td> <input type="checkbox" name="changePassword"/> </td> </tr>
+				<%if( OpenIdFilter.getCurrentUser(s) == null) {%><tr> <td>Old Password:</td><td> <input type="password" name="oldpassword"/> </td> </tr><%} %>
+				<tr> <td>New password:</td><td> <input type="password" name="newPassword1"/> </td> </tr>
+				<tr> <td>Confirm new password:</td><td> <input type="password" name="newPassword2"/> </td> </tr>
 			</TABLE>
 			<br />
 			<p>Click here to <INPUT TYPE="submit" NAME="confirmUpdate" VALUE="Update Details" SIZE="25"></p>
