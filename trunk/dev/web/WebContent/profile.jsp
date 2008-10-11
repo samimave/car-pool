@@ -53,7 +53,12 @@
 						+ "Link to Ride Page"
 						+ "</a> </td> </tr>";
 			} else {
-				userTable += "<td>Old ride.</td></tr>";
+				userTable += "<td> <a href='"
+					+ response.encodeURL(request.getContextPath()
+					+ "/oldRideDetails.jsp?rideselect="
+					+ rl.getRideID()) + "'>"
+					+ "Link to Ride Page"
+					+ "</a> </td> </tr>";
 			}
 		}
 
