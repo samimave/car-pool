@@ -71,6 +71,13 @@
 	//##############################SEARCH RIDE TABLE##############################
 
 	ArrayList<Integer> avoidDuplicates = new ArrayList<Integer>();
+	ArrayList<String> geoCodes = new ArrayList<String>();
+	ArrayList<String> userTable = new ArrayList<String>();
+	ArrayList<String> dateTable = new ArrayList<String>();
+	ArrayList<String> fromTable = new ArrayList<String>();
+	ArrayList<String> toTable = new ArrayList<String>();
+	
+	int rideNum = 0;
 
 	//---------------SEARCH RIDES BY USER----------------------------------
 	String userTable = "";
@@ -255,6 +262,25 @@
 	}
 
 	//---------------COMBINE RESULTS----------------------------------
+	
+	String[] matches = getMatches(geoCodes, request.getParameter("fromCoord"), request.getParameter("toCoord"));
+	String[] rideIDs = matches[0].split(",");
+	String mapCoords = matches[1];
+
+	for(int i=0;i<rideIDs.length;i++){
+		dateTable += htmlRideTbl.get(Integer.parseInt(rideIDs[i]));
+	}
+	
+		
+	if (!mapCoords.equals("")) {
+		rideTable = "<table class='rideDetailsSearch'> <tr> <th>Ride Offered By</th> <th>Starting From</th> <th>Going To</th>"
+				+ "<th>Departure Date</th> <th>Departure Time</th> <th>Number of Available Seats</th> <th>More Info</th> </tr>"
+				+ dateTable
+				+ "</table>";
+	} else {
+		rideTable = "<p>Sorry, no rides were found that match your criteria.</p>";
+	}
+	
 	boolean ridesExist = false;
 	if ((userExist) || (dateExist) || (fromExist) || (toExist)) {
 		ridesExist = true;
@@ -272,38 +298,205 @@
 	//-------------------------------------------------------------------
 %>
 
+<%! public boolean containsID(int ID, String[] list){
+	
+	String strID = Integer.toString(ID);
+	
+	for(int i=0;i<list.length;i++){
+		if(list[i].equals(strID)){
+			return true;
+		}
+	}
+	return false;
+}
+%>
+<%!	public String[] getMatches(ArrayList<String> rides, String fromCoord, String toCoord){
+
+	String[] result = new String[2];
+	result[0] = "";
+	result[1] = "";
+	
+	String[] searchFrom = fromCoord.split(",");
+	double sFromLat = Double.parseDouble(searchFrom[0]);
+	double sFromLng = Double.parseDouble(searchFrom[1]);
+	
+	String[] searchTo = toCoord.split(",");
+	double sToLat = Double.parseDouble(searchTo[0]);
+	double sToLng = Double.parseDouble(searchTo[1]);
+	
+	ArrayList<Integer> id = new ArrayList<Integer>();
+	double fromLat, fromLng;
+	double toLat, toLng;
+	
+	double[] StartToSearcher, StartToEnd;
+	
+	String[] ride, rideLocs, from, to;
+	
+	for(int i=0;i<rides.size();i++){
+		ride = rides.get(i).split(">");
+		
+		rideLocs = ride[1].split("/");
+	
+		from = rideLocs[0].split(",");
+		fromLat = Double.parseDouble(from[0]);
+		fromLng = Double.parseDouble(from[1]);
+		
+		to = rideLocs[1].split(",");
+		toLat = Double.parseDouble(to[0]);
+		toLng = Double.parseDouble(to[1]);
+
+		//find straight-line distance from the start of the ride to the end
+		StartToEnd = distance(fromLat, fromLng, toLat, toLng);
+		
+		//come up with a sensible radius to search in (3km min)
+		double radius = StartToEnd[0] * 0.1;
+		if(radius < 3){
+			radius = 3;
+		}
+
+		//if end points are within a suitable radius
+		if(distance(sToLat, sToLng, toLat, toLng)[0] < radius){
+			//find straight-line distance from the start of the ride to where the searcher wants to start from
+			StartToSearcher = distance(sFromLat, sFromLng, fromLat, fromLng);
+
+			//if ride distance is less than dist. between start and searcher then keep going
+			if((StartToSearcher[0]<StartToEnd[0])){
+				//if the searcher will not have to travel the opposite way to pick up the searcher (unless the two parties live within a reasonable radius)
+				if((Math.abs(StartToSearcher[1] - StartToEnd[1]) < (Math.PI))|(distance(sFromLat, sFromLng, fromLat, fromLng)[0] < radius)){
+					result[0] += ride[0] + ",";
+					result[1] += ride[1] + ":";
+				}
+			}
+		}
+	}
+	return result;
+}
+%>
+
+<%! public double[] distance(double sLat,double sLng,double rLat,double rLng){
+	
+	double result[] = new double[2];
+	
+	sLat = Math.toRadians(sLat);
+	sLng = Math.toRadians(sLng);
+	rLat = Math.toRadians(rLat);
+	rLng = Math.toRadians(rLng);
+	
+	//formula based on example found here: http://www.movable-type.co.uk/scripts/latlong.html
+	double earthRad = 6371; // km
+	result[0] = Math.acos(Math.sin(sLat)*Math.sin(rLat) + 
+	                  Math.cos(sLat)*Math.cos(rLat) *
+	                  Math.cos(rLng-sLng)) * earthRad;
+	
+	result[0] = Math.abs(result[0]);
+	
+	double y = Math.sin(sLng-rLng) * Math.cos(rLat);
+	double x = Math.cos(sLat)*Math.sin(rLat) -
+	        Math.sin(sLat)*Math.cos(rLat)*Math.cos(sLng-rLng);
+	result[1] = (Math.atan2(y, x) + 2 * Math.PI) % Math.PI;
+	
+	return result;
+}%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
-	<HEAD>
-		<TITLE>Ride Search Results</TITLE>
-		<STYLE type="text/css" media="screen">@import "TwoColumnLayout.css"; </STYLE>
-		<%@include file="include/javascriptincludes.html" %>
-	</HEAD>
-	<BODY>
-	<%@ include file="heading.html" %>
+<HEAD>
+<TITLE>Ride Search Results</TITLE>
+<STYLE type="text/css" media="screen">@import "TwoColumnLayout.css";</STYLE>
+<%@include file="include/javascriptincludes.html"%>
+<script
+	src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAA7rDxBnSa8ztdEea-bXHUqRRKOMZEnoyerBNNN7XbrW5T80f1pxRxpg7l2VcFxiQk2L5RouYsGk3NqQ"
+	type="text/javascript"></script>
+</HEAD>
+<BODY>
+
 	
+	<%@ include file="heading.html" %>
+
 	<DIV class="Content" id="Content">
-		<h2 class="title" id="title">Automatic Search</h2>
-		<br /><br />
-		<h2>Results:</h2>
 		<div class="Box" id="Box">
 		<br />
 		<h3>You Searched For:</h3>
 		<div class="Box" id="Box">
-		<TABLE class="rideSearch">
-			<tr><td>Location from:</td> <td><%=Sfrom%></td></tr>
-			<tr><td>Location to:</td> <td><%=Sto%></td></tr>
-			<tr><td>Date:</td> <td><%=strTmp%></td></tr>
-			<tr><td>User:</td> <td><%=username%></td>
-		</TABLE>
+		<FORM NAME="resultFrm" id="result">	
+			<TABLE class="rideSearch">
+				<tr><td>Location from:</td> <td><%=Sfrom%></td></tr>
+				<tr><td>Location to:</td> <td><%=Sto%></td></tr>
+				<tr><td>Date:</td> <td><%=strTmp%></td></tr>
+				<tr><td>User:</td> <td><%=username%></td>
+			</TABLE>
+		</FORM>
 		</div>
 		<br /><br />
-		<h3>Click 'Link to ride page' To Take A Ride:</h3>
-		<%=rideTable%>					
-		</div>
-		<br /><br /><br />
 		<p>-- <a href="<%=response.encodeURL("searchRides.jsp") %>">Go back to Search page</a> --</p>
 	</DIV>
+	<FORM NAME="resultFrm" id="result">
+	<TABLE border=1>
+		<tr>
+			<td>
+			<div id="map" style="width: 550px; height: 450px"></div>
+			</td>
+	
+		</tr>
+	</TABLE>
+	</FORM>
+	</DIV>
+
+<script type="text/javascript">
+
+    //localhost key - ABQIAAAA7rDxBnSa8ztdEea-bXHUqRRKOMZEnoyerBNNN7XbrW5T80f1pxRxpg7l2VcFxiQk2L5RouYsGk3NqQ
+ 	//massey key - ABQIAAAA7rDxBnSa8ztdEea-bXHUqRRlE5ut_msTCy_drvRxhL-5WV5Z9RRgsjp91RhaFgOcfLwhiUE-yftYsA 
+   
+    //<![CDATA[
+    
+	window.onload = function() {
+    	showLocation(); 
+    
+    }
+	window.unload = GUnload();
+
+   
+	if (GBrowserIsCompatible()) {
+
+		// Display the map, with some controls and set the initial location 
+		var map = new GMap2(document.getElementById("map"));
+		var geocoder = new GClientGeocoder();
+
+		//get all the rides to map
+		var rides = "<%=mapCoords %>".split(":");
+		
+		//route mapping code
+		var directionsPanel = document.getElementById("my_textual_div");
+		var routes = new Array();
+
+		//create array of route objects
+		for(var i=0; i<rides.length;i++){
+			routes[i] = new GDirections(map, directionsPanel);
+		}
+
+		///	  
+		map.addControl(new GLargeMapControl());
+		map.addControl(new GMapTypeControl());
+		map.setCenter(new GLatLng(-40.35814342293522, 175.6267547607422), 13);
+
+		// It geocodes the address in the database associate with the ride
+		// and adds a marker to the map at that location.
+		function showLocation() {
+
+			for(var i=0; i<rides.length;i++){
+				routes[i].loadFromWaypoints(rides[i].split("/"));
+			}
+
+		}
+	}
+
+	// display a warning if the browser was not compatible
+	else {
+		alert("Sorry, displaying route map is not compatible with this browser");
+	}
+
+	//]]>
+</script>
 
 <%
 	if (user != null) { //depending if the user is logged in or not different side menus should be displayed
