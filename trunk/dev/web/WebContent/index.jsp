@@ -19,8 +19,16 @@ if( error) {
 		<TITLE> The Car Pool </TITLE>
 		<STYLE type="text/css" media="screen">@import "TwoColumnLayout.css";</STYLE>
 		<%@include file="include/javascriptincludes.html" %>
+<script>
+var oid_login_rules = new Array();
+oid_login_rules[0] = 'openid_url|required';
+
+var norm_login_rules = new Array();
+norm_login_rules[0] = 'username|required';
+norm_login_rules[1] = 'userpass|required';
+</script>
 	</HEAD>
-	<BODY>
+	<BODY onload="yav.init('openid_identifier', oid_login_rules); yav.init('passwordlogin', norm_login_rules);">
 
 	<%@ include file="heading.html" %>
 
@@ -35,7 +43,7 @@ if( error) {
 		</div>
 	</DIV>
 
-	<%@ include file="leftMenuLogin.jsp" %>
+	<jsp:include page="leftMenuLogin.jsp" flush="false"/>
 
 	</BODY>
 </HTML>
