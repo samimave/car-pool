@@ -10,6 +10,7 @@ import car.pool.persistance.exception.StoreException;
 public class RideDetail {
 	
 	private ResultSet rs;
+	int hasNext = 0;
 	
 	public RideDetail(int idRide, Statement statement){
 		rs = null;
@@ -25,6 +26,13 @@ public class RideDetail {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	@Deprecated
+	public boolean hasNext(){
+		boolean h = hasNext == 0;
+		hasNext++;
+		return h;
 	}
 	
 	public String getUsername() throws SQLException{
