@@ -54,20 +54,20 @@
  
 		<SCRIPT type="text/javascript">
 						function codeFrom(response) {
-							document.getElementById("search").fromCoord.value=response.lat() + "," + response.lng();
+							document.getElementById("searchFrm").fromCoord.value=response.lat() + "," + response.lng();
 							}
 						function codeTo(response) {
-							document.getElementById("search").toCoord.value=response.lat() + "," + response.lng();
+							document.getElementById("searchFrm").toCoord.value=response.lat() + "," + response.lng();
 							}
 						// a function to get the from and to streets from the combobox and pass them to the 
 						// form call "showMap" which then post to the "displayRouteMap.jsp" to be display on google map
 			      		function getAddress(origin){
-			      			  startIdx = document.getElementById("search").streetFrom.selectedIndex;
-			      		   	  startLoc = document.getElementById("search").streetFrom.options[startIdx].text;
-			     			  endIdx   = document.getElementById("search").streetTo.selectedIndex;
-			     		   	  endLoc   = document.getElementById("search").streetTo.options[endIdx].text;
-			     		   	  startNum  = document.getElementById("search").numFrom.value;
-			     		   	  endNum  = document.getElementById("search").numTo.value;
+			      			  startIdx = document.getElementById("searchFrm").streetFrom.selectedIndex;
+			      		   	  startLoc = document.getElementById("searchFrm").streetFrom.options[startIdx].text;
+			     			  endIdx   = document.getElementById("searchFrm").streetTo.selectedIndex;
+			     		   	  endLoc   = document.getElementById("searchFrm").streetTo.options[endIdx].text;
+			     		   	  startNum  = document.getElementById("searchFrm").numFrom.value;
+			     		   	  endNum  = document.getElementById("searchFrm").numTo.value;
 
 			     		   	  var geocoder = new GClientGeocoder();
 			
@@ -79,9 +79,14 @@
 			   		   	 
 			      		}
 		</script>
+		<script>
+		var rules=new Array();
+		rules[0]='searchDate:date|date';
+
+		</script>
 
 	</HEAD>
-	<BODY>
+	<BODY onload="yav.init('searchFrm', rules);">
 
 <%@ include file="heading.html"%>
 
@@ -107,7 +112,7 @@
 		<br />
 		<h3>Search Criteria:</h3>
 		<div class="Box" id="Box">
-		<FORM NAME="searchFrm" id="search" method="post" action="<%=response.encodeURL("result.jsp")%>">
+		<FORM NAME="searchFrm" id="searchFrm" onsubmit="return yav.performCheck('searchFrm', rules, 'inline');" action="<%=response.encodeURL("result.jsp")%>" method="post" >
 		<INPUT TYPE="hidden" NAME="fromCoord"> 
 		<INPUT TYPE="hidden" NAME="toCoord">
 		<TABLE>
@@ -132,6 +137,7 @@
 				<td><INPUT TYPE="text" NAME="searchDate" VALUE="<%=date%>" SIZE="25"> 
 					<A HREF="#" onClick="cal.select(document.forms['searchFrm'].searchDate,'anchor1','dd/MM/yyyy'); return false;" NAME="anchor1" ID="anchor1">
 					<img name="calIcon" border="0" src="calendar_icon.jpg" width="27" height="23"></A> 
+					&nbsp;&nbsp;<span id=errorsDiv_searchDate></span>
 				</td> 
 			</tr>
 			<tr>

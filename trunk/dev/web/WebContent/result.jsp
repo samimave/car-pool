@@ -351,7 +351,7 @@
 				+ "<th>Departure Date</th> <th>Departure Time</th> <th>Number of Available Seats</th> <th>More Info</th> </tr>"
 				+ rideTable + "</table>";
 	} else {
-		rideTable = "<p>Sorry, no rides were found that match your criteria.</p>";
+		rideTable = "<div class='Box' id='Box'><p>Sorry, no rides were found that match your criteria.</p></div>";
 	}
 	//-------------------------------------------------------------------
 %>
@@ -496,6 +496,9 @@
 	<%@ include file="heading.html" %>
 
 	<DIV class="Content" id="Content">
+		<h2 class="title" id="title">Automatic Search</h2>
+		<br /><br />
+		<h2>Results:</h2>
 		<div class="Box" id="Box">
 		<br />
 		<h3>You Searched For:</h3>
@@ -508,16 +511,22 @@
 				<tr><td>User:</td> <td><%=username%></td>
 			</TABLE>
 		</FORM>
-		<%=rideTable %>
 		</div>
+		<br />
+		<h3>Rides Found:</h3>
+		<%=rideTable %>
+	<br />
+	<FORM NAME="resultFrm" id="result"  method="post" action="displayResultsMap.jsp" target = "_blank">
+	<input type="hidden" name="mapCoords" value="<%=mapCoords %>"/>
+	<p>Click here to <input type="submit" value="View Map"/></p>
+	</FORM>
+	</div>
+
 		<br /><br />
 		<p>-- <a href="<%=response.encodeURL("searchRides.jsp")%>">Go back to Search page</a> --</p>
 	</DIV>
-	<FORM NAME="resultFrm" id="result"  method="post" action="displayResultsMap.jsp" target = "_blank">
-	<input type="hidden" name="mapCoords" value="<%=mapCoords %>"/>
-	<input type="submit" value="View Map"/>
-	</FORM>
-	</DIV>
+
+
 
 <%
 	if (user != null) { //depending if the user is logged in or not different side menus should be displayed
