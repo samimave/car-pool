@@ -39,8 +39,8 @@
 					detailsTable = ""; //first time round get rid of unwanted text
 				}
 				ridesExist = true;
-				from = u.getEndLocation();
-				to = u.getStartLocation();
+				from = u.getStartLocation();
+				to = u.getEndLocation();
 				driverID = u.getUserID();
 				detailsTable += "<tr> <td>Ride Offered By:</td>  <td>" + "<a href='"+response.encodeURL(request.getContextPath()+"/profile.jsp?profileId="+ u.getUserID())+"'>"+u.getUsername()+ "</a></td></tr>";
 				//detailsTable += "<tr> <td>Ride Offered By:</td>  <td>"	+ u.getUsername() + "</td></tr> ";
