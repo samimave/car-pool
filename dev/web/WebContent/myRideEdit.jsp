@@ -251,6 +251,7 @@
 		<SCRIPT type="text/javascript" src="CalendarPopup.js"></SCRIPT>
 		<script type="text/javascript" src="javascript/yav.js"></script>
 		<script type="text/javascript" src="javascript/yav-config.js"></script>
+		<script type="text/javascript" src="javascript/date.js"></script>
 		<script
 			src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAA7rDxBnSa8ztdEea-bXHUqRRKOMZEnoyerBNNN7XbrW5T80f1pxRxpg7l2VcFxiQk2L5RouYsGk3NqQ"
 			type="text/javascript"></script>
@@ -268,6 +269,19 @@
 			}
 			return msg;
 		}
+
+		function checkDate() {
+			var msg;
+			var curDate = formatDate(new Date(),"dd/MM/yyyy");
+			var inpDate = document.forms['updateDate'].Rdate.value;
+			var result = compareDates(curDate,"dd/MM/yyyy",inpDate,"dd/MM/yyyy");
+		    if ( result == 0 ) {
+				msg = null;
+			} else {
+			    msg = 'Date has already passed.';
+			}
+			return msg;
+		}
 		
 		var sl_rules=new Array();
 		sl_rules[0]='startFromHN:origin house number|required';
@@ -282,6 +296,7 @@
 		var d_rules=new Array();
 		d_rules[0]='Rdate:date|required';
 		d_rules[1]='Rdate:date|date';
+		d_rules[2]='Rdate|custom|checkDate()';
 		
 		var t_rules=new Array();
 		t_rules[0]='Rtime:departure time|required';

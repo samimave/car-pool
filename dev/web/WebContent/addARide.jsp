@@ -44,6 +44,7 @@
 		<SCRIPT type="text/javascript" src="CalendarPopup.js"></SCRIPT>
 		<script type="text/javascript" src="javascript/yav.js"></script>
 		<script type="text/javascript" src="javascript/yav-config.js"></script>
+		<script type="text/javascript" src="javascript/date.js"></script>
     	<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAA7rDxBnSa8ztdEea-bXHUqRRKOMZEnoyerBNNN7XbrW5T80f1pxRxpg7l2VcFxiQk2L5RouYsGk3NqQ" type="text/javascript"></script>
  
 		<script type="text/javascript">
@@ -158,6 +159,19 @@
 			}
 			return msg;
 		}
+
+		function checkDate() {
+			var msg;
+			var curDate = formatDate(new Date(),"dd/MM/yyyy");
+			var inpDate = document.forms['offerFrm'].depDate.value;
+			var result = compareDates(curDate,"dd/MM/yyyy",inpDate,"dd/MM/yyyy");
+		    if ( result == 0 ) {
+				msg = null;
+			} else {
+			    msg = 'Date has already passed.';
+			}
+			return msg;
+		}
 		
 		var rules=new Array();
 		rules[0]='houseFrom:origin house number|required';
@@ -168,9 +182,10 @@
 		rules[5]='streetTo:destination street|required';
 		rules[6]='depDate:date|required';
 		rules[7]='depDate:date|date';
-		rules[8]='depTime:departure time|required';
-		rules[9]='depTime|custom|checkTime()';
-		rules[10]='tripLength:ride length|required';
+		rules[8]='depDate|custom|checkDate()';
+		rules[9]='depTime:departure time|required';
+		rules[10]='depTime|custom|checkTime()';
+		rules[11]='tripLength:ride length|required';
 		rules[12]='tripLength:ride length|numeric';
 		rules[13]='numSeats:number of seats|required';
 		rules[14]='numSeats:number of seats|numeric';
