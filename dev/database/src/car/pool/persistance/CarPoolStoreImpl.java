@@ -1,17 +1,22 @@
 package car.pool.persistance;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 
+import sun.security.krb5.internal.crypto.Aes256;
+
 import car.pool.persistance.exception.DuplicateUserNameException;
 import car.pool.persistance.exception.InvaildUserNamePassword;
 import car.pool.persistance.exception.RideException;
 import car.pool.persistance.exception.StoreException;
 import car.pool.persistance.exception.UserException;
+import car.pool.security.AeSimpleSHA1;
 
 public class CarPoolStoreImpl implements CarPoolStore {
 
@@ -48,7 +53,17 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		}
 
 		Date date = new Date(System.currentTimeMillis());
-
+		
+		try {
+			passwordHash = AeSimpleSHA1.SHA1(passwordHash);
+		} catch (NoSuchAlgorithmException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		statement = db.getStatement();
 		String sql = "INSERT INTO User "
 				+ "(userName,userPasswordHash,email,mobile_number,signUpDate) "
@@ -116,6 +131,16 @@ public class CarPoolStoreImpl implements CarPoolStore {
 	public int checkUser(String username, String passwordHash) throws InvaildUserNamePassword {
 		int id = FAILED;
 
+		try {
+			passwordHash = AeSimpleSHA1.SHA1(passwordHash);
+		} catch (NoSuchAlgorithmException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		Statement statement = db.getStatement();
 		String sql = "SELECT idUser from User " + "Where userName='" + username
 				+ "' " + "AND userPasswordHash='" + passwordHash + "';";
