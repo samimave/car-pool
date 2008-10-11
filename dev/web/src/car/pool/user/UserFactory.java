@@ -26,7 +26,7 @@ public class UserFactory {
 		private String ocupation = null;
 		private Set<String> openids = Collections.synchronizedSet(new LinkedHashSet<String>());
 		private String phoneNumber = null;
-		private Integer socialScore = new Integer(0);
+		//private Integer socialScore = new Integer(0);
 		private String suburb = null;
 		private Integer userId = null;
 		private Calendar memberSince = null;
@@ -79,7 +79,12 @@ public class UserFactory {
 
 		@Override
 		public Integer getSocialScore() {
-			return socialScore;
+			try {
+				return new CarPoolStoreImpl().getScore(userId);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return new Integer(-1);
 		}
 
 		@Override
@@ -155,7 +160,8 @@ public class UserFactory {
 
 		@Override
 		public void setSocialScore(Integer score) {
-			this.socialScore = score;
+			//the way the score is created doesn't allow for this method
+			//this.socialScore = score;
 		}
 
 		@Override
@@ -194,7 +200,7 @@ public class UserFactory {
 			for(String openid : this.openids) {
 				hash += getHash(openid);
 			}
-			hash += getHash(socialScore);
+			//hash += getHash(socialScore);
 			hash += getHash(suburb);
 			hash += getHash(userId);
 			

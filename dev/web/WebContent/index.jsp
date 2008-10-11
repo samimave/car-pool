@@ -6,6 +6,11 @@
 HttpSession s = request.getSession(true);
 
 int timeout = s.getMaxInactiveInterval();
+String message = null;
+boolean error = request.getParameter("error") != null;
+if( error) {
+	message = request.getParameter("error");
+}
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -20,6 +25,7 @@ int timeout = s.getMaxInactiveInterval();
 	<%@ include file="heading.html" %>
 
 	<DIV id="Content" class="Content">
+		<%if(error) { %><p><strong><%=message %></strong></p><%} %>
 		<h2 class="title" id="title">Please Log In</h2>
 		<br /><br />
 		<h2>Options Available Without Logging In:</h2>

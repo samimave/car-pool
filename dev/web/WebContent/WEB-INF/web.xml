@@ -127,4 +127,13 @@
   	<servlet-name>ProxySetup</servlet-name>
   	<url-pattern>/setupproxy</url-pattern>
   </servlet-mapping>
+  <servlet>
+  	<display-name>AdminRegistration</display-name>
+  	<servlet-name>AdminRegistration</servlet-name>
+  	<servlet-class>car.pool.user.registration.servlet.AdminRegistration</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>AdminRegistration</servlet-name>
+  	<url-pattern>/adminreg</url-pattern>
+  </servlet-mapping>
 </web-app>
