@@ -923,5 +923,62 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		return has;
 	}
 	
+	public String getGeoLocationStart(int ride) throws StoreException{
+		String id = "";
+		Statement statement = db.getStatement();
+		String sql = 	"';";
+		try {
+			statement = db.getStatement();
+			ResultSet rs = statement.executeQuery(sql);
+			while (rs.next()) {
+				id = rs.getString("tripID");
+			}
+			rs.close();
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		if (id == ""){
+			throw new StoreException("invalid idRide and idPassenger");
+		} else {
+			return id;
+		}
+	}
+	public String getGeoLocationEnd(int ride) throws StoreException{
+		String id = "";
+		Statement statement = db.getStatement();
+		String sql = 	"';";
+		try {
+			statement = db.getStatement();
+			ResultSet rs = statement.executeQuery(sql);
+			while (rs.next()) {
+				id = rs.getString("tripID");
+			}
+			rs.close();
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		if (id == ""){
+			throw new StoreException("invalid idRide and idPassenger");
+		} else {
+			return id;
+		}
+	}
+	
+	@Override
+	public void updateGeoLocationEnd(int ride, String end) {
+		
+	}
+
+	@Override
+	public void updateGeoLocationStart(int ride, String start) {
+		
+	}
+	
+	
+	
 	
 }
