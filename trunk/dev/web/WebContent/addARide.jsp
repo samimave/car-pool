@@ -151,15 +151,17 @@
 		var rules=new Array();
 		rules[0]='houseFrom:origin house number|required';
 		rules[1]='houseFrom:origin house number|numeric';
-		rules[2]='houseTo:destination house number|required';
-		rules[3]='houseTo:destination house number|numeric';
-		rules[4]='depDate:date|required';
-		rules[5]='depDate:date|date';
-		rules[6]='depTime:departure time|required';
-		rules[7]='tripLength:ride length|required';
-		rules[8]='tripLength:ride length|numeric';
-		rules[9]='numSeats:number of seats|required';
-		rules[10]='numSeats:number of seats|numeric';
+		rules[2]='streetFrom:origin street|required';
+		rules[3]='houseTo:destination house number|required';
+		rules[4]='houseTo:destination house number|numeric';
+		rules[5]='streetTo:destination street|required';
+		rules[6]='depDate:date|required';
+		rules[7]='depDate:date|date';
+		rules[8]='depTime:departure time|required';
+		rules[9]='tripLength:ride length|required';
+		rules[10]='tripLength:ride length|numeric';
+		rules[11]='numSeats:number of seats|required';
+		rules[12]='numSeats:number of seats|numeric';
 		</script>
 
 	</HEAD>
@@ -200,9 +202,9 @@
 					<td><INPUT TYPE="text" NAME="houseFrom" SIZE="25" onkeypress="getAddress('from')">&nbsp;&nbsp;<span id=errorsDiv_houseFrom></span></td> </tr>
 					<tr> <td>Street*:</td> <td>
 					<SELECT name="streetFrom"  onChange="getAddress('from')">
-           		  		<option selected="selected">Select a Street</option>
+           		  		<option selected="selected" value=''>Select a Street</option>
 	           		 	<%=options%>
-       				</SELECT></td> </tr>
+       				</SELECT>&nbsp;&nbsp;<span id=errorsDiv_streetFrom></span></td> </tr>
         			<tr> <td>Region:</td> <td>Palmerston North</td> </tr>
 					</table>
 					</div>
@@ -215,9 +217,9 @@
 					<td><INPUT TYPE="text" NAME="houseTo" SIZE="25" onkeypress="getAddress('to')">&nbsp;&nbsp;<span id=errorsDiv_houseTo></span></td> </tr>
 					<tr> <td>Street*:</td> <td>
 					<SELECT name="streetTo" onChange="getAddress('to')">
-           		  		<option selected="selected">Select a Street</option>
+           		  		<option selected="selected" value=''>Select a Street</option>
 	           		  	<%=options%>
-       				 </SELECT></td> </tr>
+       				 </SELECT>&nbsp;&nbsp;<span id=errorsDiv_streetTo></span></td> </tr>
 					<tr> <td>Region:</td>  <td>Palmerston North</td> </tr>
 					</table>
 					</div>

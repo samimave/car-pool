@@ -254,10 +254,12 @@
 		var sl_rules=new Array();
 		sl_rules[0]='startFromHN:origin house number|required';
 		sl_rules[1]='startFromHN:origin house number|numeric';
+		sl_rules[2]='startFrom:origin street|required';
 
 		var el_rules=new Array();
 		el_rules[0]='endToHN:destination house number|required';
 		el_rules[1]='endToHN:destination house number|numeric';
+		el_rules[2]='endTo:destination street|required';
 
 		var d_rules=new Array();
 		d_rules[0]='Rdate:date|required';
@@ -290,7 +292,7 @@
 			<TABLE>
 				<tr> <td> Start Street:  <%=fromHouseNo%> <%=from%></td> <td>&nbsp;</td></tr>
 				<tr><td><INPUT TYPE="text" NAME="startFromHN" SIZE="25" value=<%=fromHouseNo%>></td><td><span id=errorsDiv_startFromHN></span></td></tr>
-				<tr> <td><SELECT name="startFrom"><option selected="selected">Select a Street</option><%=options%></SELECT></td><td><INPUT type="submit" name="startFrom" value="Update Street" size="25"></td></tr>
+				<tr> <td><SELECT name="startFrom"><option selected="selected" value=''>Select a Street</option><%=options%></SELECT></td><td><INPUT type="submit" name="startFrom" value="Update Street" size="25">&nbsp;&nbsp;<span id=errorsDiv_startFrom></span></td></tr>
 			</TABLE>
 		</FORM>
 		<br />
@@ -301,7 +303,7 @@
 			<TABLE>
 				<tr> <td>End Street:  <%=toHouseNo%> <%=to%></td></tr>
  				<tr><td><INPUT TYPE="text" NAME="endToHN" SIZE="25" value=<%=toHouseNo%>></td><td><span id=errorsDiv_endToHN></span></td></tr>
-				<tr> <td><SELECT name="endTo"><option selected="selected">Select a Street</option><%=options%></SELECT></td><td><INPUT type="submit" name="endTo" value="Update Street" size="25"></td></tr>
+				<tr> <td><SELECT name="endTo"><option selected="selected" value=''>Select a Street</option><%=options%></SELECT></td><td><INPUT type="submit" name="endTo" value="Update Street" size="25">&nbsp;&nbsp;<span id=errorsDiv_endTo></span></td></tr>
 			</TABLE>
 		</FORM>
 
