@@ -29,7 +29,7 @@ public class AdminRegistration extends HttpServlet {
 		String username = request.getParameter("username");
 		String userpass = request.getParameter("userpass");
 		String password2 = request.getParameter("password2");
-		String password1 = request.getParameter("password1");
+		String password1 = request.getParameter("password");
 		String email = request.getParameter("email");
 		String phone = request.getParameter("phone");
 		

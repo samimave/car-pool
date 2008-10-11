@@ -41,7 +41,7 @@ if(username == null || userpass == null) {
 		
 		var rules=new Array();
 		rules[0]='userName|required';
-		rules[1]='password1|required';
+		rules[1]='password|required';
 		rules[2]='password2:Confirmed password|equal|$password';
 		rules[3]='phone|numeric';
 		rules[4]='email|required';
@@ -71,7 +71,7 @@ if(username == null || userpass == null) {
 				<input type="hidden" name="username" value="<%=username %>"/>
 				<input type="hidden" name="userpass" value="<%=userpass %>"/>
 				<table class="register">
-					<tr><td>Password: </td><td> <input type="password" name="password1"/> </td></tr>
+					<tr><td>Password: </td><td> <input type="password" name="password"/> </td></tr>
 					<tr><td>Repeat Password: </td><td><input type="password" name="password2"/></td></tr>
 					<tr><td>Email: </td><td><input type="text" name="email"/></td></tr>
 					<tr><td>Phone: </td><td><input type="text" name="phone"/></td></tr>
