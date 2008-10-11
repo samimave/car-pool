@@ -183,7 +183,7 @@
 		String evenRow = "<tr bgcolor=\"#EEEEEE\">";
 		String oddRow = "<tr bgcolor=\"white\">";
 		String col1 = "<td width=\"15%\">";
-		String col2 = "</td><td width=\"10%\">";
+		String col2 = "</td><td width=\"20%\">";
 		String col3 = "</td><td width=\"75%\">";
 		String endRow = "</td></tr>";
 
@@ -192,7 +192,7 @@
 		String delButton;
 
 		//create headings
-		table += evenRow + col1 + "Comment #" + col2 + "User" + col3
+		table += evenRow + /*col1 + "Comment #" +*/ col2 + "User" + col3
 				+ "Comment" + endRow;
 
 		//if no comments for ride then say so
@@ -221,7 +221,11 @@
 				} else {
 					delButton = "";
 				}
-				table += col1 + the_comment[0] + col2 + the_comment[1]
+				UserManager manager = null;
+				manager = new UserManager(); 
+				User commenter = manager.getUserByUserId(Integer.parseInt(the_comment[1]));
+				String comName = commenter.getUserName();
+				table += /*col1 + the_comment[0] +*/ col2 + comName
 						+ col3 + the_comment[3] + delButton + endRow;
 			} catch (Exception e) {
 				table += endRow;
@@ -285,7 +289,7 @@
 		<br />
 		<h3>Location:</h3>
 		<div class="Box" id="Box">
-		<FORM name="updateStartS" onsubmit="return yav.performCheck('updateStartS', sl_rules, 'inline');" action="<%=response.encodeURL("rideEditSuccess.jsp") %>" method="post">
+		<FORM name="updateStartS" id="updateStartS" onsubmit="return yav.performCheck('updateStartS', sl_rules, 'inline');" action="<%=response.encodeURL("rideEditSuccess.jsp") %>" method="post">
 			<INPUT type="hidden" name="updateRide" value="yes"/>
 			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect")%>">
 			<INPUT type="hidden" name="reDirURL" value="<%=reDirURL%>"/>
@@ -296,7 +300,7 @@
 			</TABLE>
 		</FORM>
 		<br />
-		<FORM name="updateEndS" onsubmit="return yav.performCheck('updateEndS', el_rules, 'inline');" action="<%=response.encodeURL("rideEditSuccess.jsp") %>" method="post">
+		<FORM name="updateEndS" id="updateEndS" onsubmit="return yav.performCheck('updateEndS', el_rules, 'inline');" action="<%=response.encodeURL("rideEditSuccess.jsp") %>" method="post">
 			<INPUT type="hidden" name="updateRide" value="yes"/>
 			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect")%>">
 			<INPUT type="hidden" name="reDirURL" value="<%=reDirURL%>"/>
