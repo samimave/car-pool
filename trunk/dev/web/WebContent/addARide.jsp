@@ -72,17 +72,17 @@
 			//PLEASE LEAVE THESE THREE FUNCTIONS HERE
 			//for some reason they have to be above getAddress for geocoder to work
 			function codeFrom(response) {
-				document.getElementById("offer").fromCoord.value=response.lat() + "," + response.lng();
+				document.getElementById("offerFrm").fromCoord.value=response.lat() + "," + response.lng();
 				//getLength();
 				}
 			function codeTo(response) {
-				document.getElementById("offer").toCoord.value=response.lat() + "," + response.lng();
+				document.getElementById("offerFrm").toCoord.value=response.lat() + "," + response.lng();
 				//getLength();
 				}
 			function getLength(){
-    			  fromCoord = document.getElementById("offer").fromCoord.value;
+    			  fromCoord = document.getElementById("offerFrm").fromCoord.value;
     			  fromCoord = fromCoord.split(",");
-      		   	  toCoord = document.getElementById("offer").toCoord.value;
+      		   	  toCoord = document.getElementById("offerFrm").toCoord.value;
       		   	  toCoord = toCoord.split(",");
 
       		   	  fromPoint = new GLatLng(parseFloat(fromCoord[0]). parseFloat(fromCoord[1]));
@@ -95,11 +95,11 @@
 			// a function to get the from and to streets from the combobox and pass them to the 
 			// form call "showMap" which then post to the "displayRouteMap.jsp" to be display on google map
       		function getAddress(origin){
-      			  startIdx = document.getElementById("offer").streetFrom.selectedIndex;
-      		   	  startLoc = document.getElementById("offer").streetFrom.options[startIdx].text;
-     			  endIdx   = document.getElementById("offer").streetTo.selectedIndex;
-     		   	  endLoc   = document.getElementById("offer").streetTo.options[endIdx].text;
-     		   	  houseNum  = document.getElementById("offer").houseFrom.value;
+      			  startIdx = document.getElementById("offerFrm").streetFrom.selectedIndex;
+      		   	  startLoc = document.getElementById("offerFrm").streetFrom.options[startIdx].text;
+     			  endIdx   = document.getElementById("offerFrm").streetTo.selectedIndex;
+     		   	  endLoc   = document.getElementById("offerFrm").streetTo.options[endIdx].text;
+     		   	  houseNum  = document.getElementById("offerFrm").houseFrom.value;
      		   	  document.getElementById("map").mapFrom.value=startLoc;
      		   	  document.getElementById("map").mapTo.value=endLoc;
      		   	  document.getElementById("map").mapHouse.value=houseNum;
