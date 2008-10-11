@@ -9,9 +9,11 @@
 	User user = null;
 	int rideID = 0;
 	int dbID = 0;
+	int driverID=0;
 	String from = "";
 	String to = "";
 	String detailsTable = "<p>No info found.</p>";
+	String acceptedTable = "<p>No users confirmed yet.</p>";
 	List<String> viaAddress = new ArrayList<String>();
 	String table = "";
 	String options = "";
@@ -39,8 +41,9 @@
 				ridesExist = true;
 				from = u.getEndLocation();
 				to = u.getStartLocation();
-
-				detailsTable += "<tr> <td>Ride Offered By:</td>  <td>"	+ u.getUsername() + "</td></tr> ";
+				driverID = u.getUserID();
+				detailsTable += "<tr> <td>Ride Offered By:</td>  <td>" + "<a href='"+response.encodeURL(request.getContextPath()+"/profile.jsp?profileId="+ u.getUserID())+"'>"+u.getUsername()+ "</a></td></tr>";
+				//detailsTable += "<tr> <td>Ride Offered By:</td>  <td>"	+ u.getUsername() + "</td></tr> ";
 				detailsTable += "<tr> <td> Start Region: </td> <td>"+ u.getStreetStart()+" "+ from + "</td> </tr>";
 				detailsTable += "<tr> <td> Stop Region: </td> <td>"	+ u.getStreetEnd()+" "+ to + "</td></tr> ";
 				detailsTable += "<tr> <td>Date: </td> <td>"	+ new SimpleDateFormat("dd/MM/yyyy").format(u.getRideDate()) + "</td></tr> ";
@@ -75,6 +78,37 @@
 			options += "<option value='" + locations.getID() + "'>"
 					+ locations.getStreetName() + "</option>";
 		}
+		
+		
+		//shows who has been confirmed for the ride already
+		//and where they shall be picked up from
+		boolean acceptExist = false;
+		RideDetail rd = cps.getRideDetail(rideID);
+		boolean whatever = true;
+		while (rd.hasNext() && whatever == true) {
+			whatever = true;
+			if (!acceptExist) {
+				acceptedTable = "";
+			}
+			if ((rd.getUserID() != driverID) && (rd.getConfirmed() == true)) {
+				acceptExist = true;
+				acceptedTable += "<tr><td>" + "<a href='"+response.encodeURL(request.getContextPath()+"/profile.jsp?profileId="+ rd.getUserID())+"'>"+rd.getUsername()+ "</a></td>";
+				//acceptedTable += "<tr><td>" + rd.getUsername()+ "</td>";
+				acceptedTable += "<td>" + rd.getStreetNumber()
+						+ "&nbsp;" + rd.getLocationName()
+						+ "</td></tr>";
+			}
+		}
+			//if there exists users who have been approved then this is the table heading
+			if (acceptExist) {
+				System.out.println("acc ex");
+				acceptedTable = "<table class='rideDetailsSearch'> <tr> <th>Confirmed User</th> <th>Pick Up Point</th></tr>"
+						+ acceptedTable + "</table>";
+			} else {
+				acceptedTable = "<div class='Box' id='Box'><p>None.</p></div>";
+			}
+
+		
 %>
 
 <%
@@ -161,7 +195,10 @@
 		<br /><br />
 		<h2>Details:</h2>
 		<div class="Box" id="Box">
-		<%=detailsTable%><br>
+		<h3>The details of the ride appear below:</h3>
+		<br><%=detailsTable%><br/><br/>
+		<h3>The following users have been confirmed for this ride:</h3>
+		<br><%=acceptedTable%><br/><br/>
 		<FORM name="showMap" id="map2" method="post" target="_blank" action="displayRouteMap2.jsp">
 			<p>Click here to <INPUT type="submit" value="View Map" ></p> 
 			<INPUT type="hidden" name="mapFrom" value= "<%=from%>">
