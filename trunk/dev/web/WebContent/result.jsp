@@ -66,6 +66,7 @@
 			}
 		}
 	}
+	
 	//----------------------end search parameters------------------------
 
 	//##############################SEARCH RIDE TABLE##############################
@@ -76,9 +77,11 @@
 	String mapCoords = "";
 
 	boolean userNull = username.equals("no username entered");
-	boolean dateNull = strTmp.equals("");
+	boolean dateNull = strTmp.equals("no date was entered");
 
 	boolean anythingElse;
+	
+	boolean done = false;
 
 	int rideNum;
 
@@ -86,13 +89,16 @@
 	String userTable = "";
 
 	boolean userExist = false;
-
-	anythingElse = (strTmp != "") || (Sfrom == "no location entered")
+	
+	anythingElse = !dateNull || (Sfrom != "no location entered")
 			|| (Sto != "no location entered");
 
-	if (!userNull && !anythingElse) {
+	if (!userNull && !anythingElse && !done) {
 		RideListing u = cps.searchRideListing(RideListing.searchUser,
 				username);
+		
+		done = true;
+		System.out.println("user");
 
 		while (u.next()) {
 			if (!userExist) {
@@ -158,10 +164,13 @@
 			|| (Sfrom != "no location entered")
 			|| (Sto != "no location entered");
 
-	if (!dateNull && !anythingElse) {
+	if (!dateNull && !anythingElse && !done) {
 
 		RideListing daTbl = cps.searchRideListing(
 				RideListing.searchDate, strOutDt);
+		System.out.println("date - "+strOutDt);
+		
+		done = true;
 
 		while (daTbl.next()) {
 			if (!dateExist) {
@@ -176,9 +185,11 @@
 					.getRideDate())
 					+ " " + daTbl.getTime();
 			Date dt = new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(d);
+			
+			System.out.println(dt.after(new Date()));
 
-			if (!avoidDuplicates.contains(daTbl.getRideID())
-					&& dt.after(new Date())) {
+			if (!avoidDuplicates.contains(daTbl.getRideID()) && dt.after(new Date())) {
+				
 				dateExist = true;
 				avoidDuplicates.add(daTbl.getRideID());
 
@@ -217,7 +228,7 @@
 			} else {
 				dateTable = "";
 			}
-
+			System.out.println(mapCoords);
 		}
 	}
 
@@ -242,8 +253,10 @@
 	} else {
 		search = false;
 	}
-	System.out.println(search);
-	if (search) {
+
+	if (search && !done) {
+		System.out.println("combo");
+		done = true;
 		while (rides.next()) {
 
 			String from = rides.getStartLocation();
@@ -309,9 +322,11 @@
 		String[] rideIDs = matches[0].split(",");
 		mapCoords = matches[1];
 
-		if (rideIDs.length > 0) {
-			for (int i = 0; i < rideIDs.length - 1; i++) {
-				comboTable += cTable.get(Integer.parseInt(rideIDs[i]));
+		if(!rideIDs[0].equals("")){
+			if (rideIDs.length > 0) {
+				for (int i = 0; i < rideIDs.length; i++) {
+					comboTable += cTable.get(Integer.parseInt(rideIDs[i]));
+				}
 			}
 		}
 	}
@@ -471,6 +486,7 @@
 				<tr><td>User:</td> <td><%=username%></td>
 			</TABLE>
 		</FORM>
+		<%=rideTable %>
 		</div>
 		<br /><br />
 		<p>-- <a href="<%=response.encodeURL("searchRides.jsp")%>">Go back to Search page</a> --</p>
