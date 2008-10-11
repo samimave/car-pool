@@ -55,7 +55,7 @@ if(request.getParameter("error") != null) {
 			<div class="Box" id="Box">
 			<p>Note: * indicates a required field.</p><br />
 			<FORM name="register" id="register" onsubmit="return checkOnSubmit('register', rules);" method="post" action="adduser">
-				<TABLE <%// class="register"%>>
+				<TABLE class="register">
 					<tr> <td>User name*:</td> <td><INPUT type="text" name="userName" size="25"/>&nbsp;&nbsp;<span id=errorsDiv_userName></span></td> </tr>
 					<tr> <td>Password*:</td> <td><INPUT type="password" name="password" size="25"/>&nbsp;&nbsp;<span id=errorsDiv_password></span></td> </tr>
 					<tr> <td>Confirm password*:</td> <td><INPUT type="password" name="password2" size="25"/>&nbsp;&nbsp;<span id=errorsDiv_password2></span></td> </tr>
