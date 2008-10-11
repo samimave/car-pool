@@ -259,13 +259,31 @@
 			var cal = new CalendarPopup();
 		</script>
 		<script>
+		//http://www.mattkruse.com/javascript/date/ for helpful examples
 		function checkTime() {
 		    var msg;
 		    var reg = new RegExp("^[0-2][0-9]:[0-5][0-9]$");
-		    if ( reg.test(document.forms['updateTime'].Rtime.value) ) {
-				msg = null;
+		    var curTime = formatDate(new Date(),"HH:mm");
+		    var inpTime = document.forms['updateTime'].Rtime.value;
+		    if ( reg.test(inpTime) ) {
+				var curDate = formatDate(new Date(),"dd/MM/yyyy");
+				var inpDate = document.forms['updateDate'].Rdate.value;
+				var d_result1 = compareDates(curDate,"dd/MM/yyyy",inpDate,"dd/MM/yyyy");
+				var d_result2 = compareDates(inpDate,"dd/MM/yyyy",curDate,"dd/MM/yyyy");
+			    if ((d_result1 == 0) && (d_result2 == 0)) {
+					var t_result = compareDates(curTime,"HH:mm",inpTime,"HH:mm");
+					if ( t_result == 0 ) {
+						msg = null;
+					} else {
+						msg = "Time must be in the future."
+					}
+			    } else if (d_result1 == 1) {
+					msg = 'Date has already passed.';
+			    } else {
+					msg = null;
+			    }
 			} else {
-			    msg = 'Enter 24 hour departure time.';
+			    msg = 'Incorrect time.';
 			}
 			return msg;
 		}
@@ -274,9 +292,24 @@
 			var msg;
 			var curDate = formatDate(new Date(),"dd/MM/yyyy");
 			var inpDate = document.forms['updateDate'].Rdate.value;
-			var result = compareDates(curDate,"dd/MM/yyyy",inpDate,"dd/MM/yyyy");
-		    if ( result == 0 ) {
-				msg = null;
+			var result1 = compareDates(curDate,"dd/MM/yyyy",inpDate,"dd/MM/yyyy");
+			var result2 = compareDates(inpDate,"dd/MM/yyyy",curDate,"dd/MM/yyyy");
+		    if ((result1 == 0) && (result2 == 0)) {
+		    	var reg = new RegExp("^[0-2][0-9]:[0-5][0-9]$");
+		    	var curTime = formatDate(new Date(),"HH:mm");
+			    var inpTime = document.forms['updateTime'].Rtime.value;
+		    	if ( reg.test(inpTime) ) {
+		    		var t_result = compareDates(curTime,"HH:mm",inpTime,"HH:mm");
+					if ( t_result == 0 ) {
+						msg = null;
+					} else {
+						msg = "Time must be in the future."
+					}
+		    	} else {
+					msg = 'Incorrect time.';
+		    	}
+		    } else if (result1 == 0) {
+			    msg = null;
 			} else {
 			    msg = 'Date has already passed.';
 			}
@@ -400,7 +433,7 @@
 			<INPUT type="hidden" name="updateRide" value="yes"/>
 			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect")%>">
 			<INPUT type="hidden" name="reDirURL" value="<%=reDirURL%>"/>
-				<tr> <td> Time (hh:mm): </td><td><INPUT TYPE="text" NAME="Rtime" SIZE="25" value=<%=timeR%>></td><td><INPUT type="submit" name="updateTime" value="Update Time" size="25">&nbsp;&nbsp;<span id=errorsDiv_Rtime></span></td></tr>
+				<tr> <td> Time 24hr (hh:mm): </td><td><INPUT TYPE="text" NAME="Rtime" SIZE="25" value=<%=timeR%>></td><td><INPUT type="submit" name="updateTime" value="Update Time" size="25">&nbsp;&nbsp;<span id=errorsDiv_Rtime></span></td></tr>
 			</TABLE>
 		</FORM>
 		</div>
