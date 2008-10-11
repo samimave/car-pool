@@ -30,32 +30,29 @@
 	//count the number of rides in the db
 	RideListing rl = cps.getRideListing();
 	while (rl.next()) {
-		String d = new SimpleDateFormat("dd/MM/yyyy").format(rl.getRideDate())+" "+rl.getTime();
+		String d = new SimpleDateFormat("dd/MM/yyyy").format(rl
+				.getRideDate())
+				+ " " + rl.getTime();
 		Date dt = new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(d);
 		if (dt.after(now)) {
 			rideCount++;
-			
+
 		}
 	}
 %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
-<HEAD>
-<TITLE>Search Rides</TITLE>
-<STYLE type="text/css" media="screen">
-@import "TwoColumnLayout.css";
-</STYLE>
-<SCRIPT type="text/javascript" src="CalendarPopup.js"></SCRIPT>
-<SCRIPT type="text/javascript">
+	<HEAD>
+		<TITLE>Ride Search</TITLE>
+		<STYLE type="text/css" media="screen">@import "TwoColumnLayout.css";</STYLE>
+		<SCRIPT type="text/javascript" src="CalendarPopup.js"></SCRIPT>
+		<SCRIPT type="text/javascript">
 			var cal = new CalendarPopup();
 		</script>
-<%@include file="include/javascriptincludes.html"%>
-<script
-	src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAA7rDxBnSa8ztdEea-bXHUqRRKOMZEnoyerBNNN7XbrW5T80f1pxRxpg7l2VcFxiQk2L5RouYsGk3NqQ"
-	type="text/javascript"></script>
-
-<SCRIPT type="text/javascript">
+		<%@include file="include/javascriptincludes.html" %>
+   		<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAA7rDxBnSa8ztdEea-bXHUqRRKOMZEnoyerBNNN7XbrW5T80f1pxRxpg7l2VcFxiQk2L5RouYsGk3NqQ" type="text/javascript"></script>
+ 
+		<SCRIPT type="text/javascript">
 						function codeFrom(response) {
 							document.getElementById("search").fromCoord.value=response.lat() + "," + response.lng();
 							}
@@ -82,105 +79,85 @@
 			   		   	 
 			      		}
 		</script>
-</HEAD>
-<BODY>
+
+	</HEAD>
+	<BODY>
 
 <%@ include file="heading.html"%>
 
 <DIV class="Content" id="Content">
-<h2 class="title" id="title">Find Rides</h2>
-<br />
-<br />
-<h2>Manual Search:</h2>
-<div class="Box" id="Box">
-<p>There are currently <%=rideCount%> rides in the database!</p>
-<br />
-<FORM name="showAll" id="showAll" method="post" action="resultall.jsp">
-<INPUT type="hidden" name="showAll" value="yes" />
-<TABLE class="rideSearch">
-	<tr>
-		<td>Click here to</td>
-		<td><INPUT TYPE="submit" NAME="all" VALUE="Show All Rides"
-			SIZE="25"></td>
-	</tr>
-</TABLE>
-</FORM>
-</div>
-<br />
-<br />
-<h2>Automatic Search:</h2>
-<div class="Box" id="Box">
-<p>Please enter the search criteria in the boxes below and click
-search. Rides matching any of the entered information will be displayed.</p>
-<FORM NAME="searchFrm" id="search" method="post" action="result.jsp">
-<TABLE class="rideSearch">
-
-	<tr>
-		<td>From:</td>
-		<td><INPUT type="text" name="numFrom" size="5"
-			onkeypress="getAddress('from')" /></td>
-		<td><SELECT name="streetFrom" onChange="getAddress('from')">
-			<option selected="selected">Select a Street</option>
-			<%=options %>
-		</SELECT></td>
-	</tr>
-	<tr>
-		<td>To:</td>
-		<td><INPUT type="text" name="numTo" size="5"
-			onkeypress="getAddress('to')" /></td>
-		<td><SELECT name="streetTo" onChange="getAddress('to')">
-			<option selected="selected">Select a Street</option>
-			<%=options %>
-		</SELECT></td>
-	</tr>
-
-	<tr>
-		<td>Date (dd/MM/yyyy):</td>
-		<td colspan="2"><INPUT TYPE="text" NAME="searchDate"
-			VALUE="<%= date %>" SIZE="25"> <A HREF="#"
-			onClick="cal.select(document.forms['searchFrm'].searchDate,'anchor1','dd/MM/yyyy'); return false;"
-			NAME="anchor1" ID="anchor1"><img name="calIcon" border="0"
-			src="calendar_icon.jpg" width="27" height="23"></A> 
-			
-			<INPUT TYPE="hidden" NAME="fromCoord" SIZE="25"> 
-			<INPUT TYPE="hidden" NAME="toCoord" SIZE="25"> 
-	<tr>
-		<td>User:</td>
-		<td><INPUT TYPE="text" NAME="sUser" VALUE="" SIZE="25"></td>
-	</tr>
-</TABLE>
-<br />
-<p>Click here to <INPUT TYPE="submit" NAME="search"
-	VALUE="Search Rides" SIZE="25"></p>
-</FORM>
-</div>
-<br />
-<br />
-<br />
-<%
-	if (user != null) { //depending if the user is logged in or not different link should be displayed
-%> 
-	<p>-- <a href="<%=response.encodeURL("welcome.jsp") %>">Home</a> --</p>	
-<%
-		} else {
-	%>
-	<p>-- <a href="<%=response.encodeURL("index.jsp") %>">Back to Login Page</a> --</p>	
-<%
-		}
-	%>
-		</DIV>
-
+	<h2 class="title" id="title">Find Rides</h2>
+	<br />
+	<br />
+	<h2>Manual Search:</h2>
+	<div class="Box" id="Box">
+		<p>There are currently <%=rideCount%> rides in the database!</p>
+		<br />
+		<FORM name="showAll" id="showAll" method="post" action="resultall.jsp">
+			<INPUT type="hidden" name="showAll" value="yes" />
+			<TABLE class="rideSearch">
+				<tr>
+					<td>Click here to</td>
+					<td><INPUT TYPE="submit" NAME="all" VALUE="Show All Rides"
+						SIZE="25"></td>
+				</tr>
+			</TABLE>
+		</FORM>
+	</div>
+	<br />
+	<br />
+	<h2>Automatic Search:</h2>
+	<div class="Box" id="Box">
+		<p>Please enter the search criteria in the boxes below and click
+		search. Rides matching any of the entered information will be displayed.</p>
+		<FORM NAME="searchFrm" id="search" method="post" action="result.jsp">
+		<TABLE class="rideSearch">
+			<tr>
+				<td>From:</td>
+				<td><INPUT type="text" name="numFrom" size="5"
+					onkeypress="getAddress('from')" /></td>
+				<td><SELECT name="streetFrom" onChange="getAddress('from')">
+					<option selected="selected">Select a Street</option>
+					<%=options%>
+				</SELECT></td>
+			</tr>
+			<tr>
+				<td>To:</td>
+				<td><INPUT type="text" name="numTo" size="5"
+					onkeypress="getAddress('to')" /></td>
+				<td><SELECT name="streetTo" onChange="getAddress('to')">
+					<option selected="selected">Select a Street</option>
+					<%=options%>
+				</SELECT></td>
+			</tr>
+		
+			<tr>
+				<td>Date (dd/MM/yyyy):</td>
+				<td colspan="2"><INPUT TYPE="text" NAME="searchDate" VALUE="<%=date%>" SIZE="25"> 
+					<A HREF="#" onClick="cal.select(document.forms['searchFrm'].searchDate,'anchor1','dd/MM/yyyy'); return false;"
+					NAME="anchor1" ID="anchor1">
+					<img name="calIcon" border="0" src="calendar_icon.jpg" width="27" height="23"></A> 
+					<INPUT TYPE="hidden" NAME="fromCoord" SIZE="25"> 
+					<INPUT TYPE="hidden" NAME="toCoord" SIZE="25">
+			<tr>
+				<td>User:</td>
+				<td><INPUT TYPE="text" NAME="sUser" VALUE="" SIZE="25"></td>
+			</tr>
+		</TABLE>
+		<br />
+		<p>Click here to <INPUT TYPE="submit" NAME="search"
+			VALUE="Search Rides" SIZE="25"></p>
+		</FORM>
+	</div>
+</DIV>
 <%
 	if (user != null) { //depending if the user is logged in or not different side menus should be displayed
-%> 
-	<jsp:include page="leftMenu.jsp" flush="false" />
-<%
-	} else {
-%>
-	<jsp:include page="leftMenuLogin.jsp" flush="false" />
-<%
-	}
-%>
+%> <%@ include file="leftMenu.html"%> <%
+ 	} else {
+ %> <%@ include file="leftMenuLogin.html"%> <%
+ 	}
+ %>
 
 </BODY>
 </HTML>
+
