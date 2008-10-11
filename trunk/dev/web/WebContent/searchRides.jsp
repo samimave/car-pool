@@ -123,14 +123,14 @@
 		<TABLE>
 			<tr> <th>Ride Departing From:</th> <td>&nbsp;</td> </tr>
 			<tr> <td>House Number:</td> <td><INPUT type="text" name="numFrom" size="5" onkeypress="getAddress('from')" />&nbsp;&nbsp;<span id=errorsDiv_numFrom></span></td> </tr>
-			<tr> <td>Street:</td> <td><SELECT name="streetFrom" onChange="getAddress('from')">
+			<tr> <td>Street Name:</td> <td><SELECT name="streetFrom" onChange="getAddress('from')">
 					<option selected="selected">Select a Street</option>
 					<%=options%>
 				</SELECT></td>
 			</tr>
 			<tr> <th>Ride Destination:</th> <td>&nbsp;</td> </tr>
 			<tr> <td>House Number:</td><td><INPUT type="text" name="numTo" size="5" onkeypress="getAddress('to')" />&nbsp;&nbsp;<span id=errorsDiv_numTo></span></td> </tr>
-			<tr> <td>Street:</td><td><SELECT name="streetTo" onChange="getAddress('to')">
+			<tr> <td>Street Name:</td><td><SELECT name="streetTo" onChange="getAddress('to')">
 					<option selected="selected">Select a Street</option>
 					<%=options%>
 				</SELECT></td>

@@ -35,8 +35,11 @@
 			rExist = true;
 			String from = all.getStartLocation();
 			String to = all.getEndLocation();
-
-			allTable += "<tr> <td>" + "<a href='"+response.encodeURL(request.getContextPath()+"/profile.jsp?profileId="+ all.getUserID())+"'>"+all.getUsername()+ "</a></td>";
+			if (user != null) {
+				allTable += "<tr> <td>" + "<a href='"+response.encodeURL(request.getContextPath()+"/profile.jsp?profileId="+ all.getUserID())+"'>"+all.getUsername()+ "</a></td>";
+			} else {
+				allTable += "<tr> <td>" +all.getUsername()+ "</td>";
+			}
 			allTable += "<td>" + from + "</td> ";
 			allTable += "<td>" + to + "</td> ";
 			allTable += "<td>"
