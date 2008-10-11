@@ -184,125 +184,88 @@
 	}
 
 	//---------------SEARCH RIDES COMBO----------------------------------
-	ArrayList<String> comboTable = new ArrayList<String>();
-	String tempTable;
+	ArrayList<String> cTable = new ArrayList<String>();
+	String tempTable = "";
+	String comboTable = "";
 	
-	String fromTable = "";
-	boolean fromExist = false;
+	rideNum = 0;
 
-	if (Sfrom != "no location entered") {
-		RideListing f = cps.searchRideListing(
-				RideListing.searchLocationStart, Sfrom);
+	boolean search = false;
+	boolean addRide = false;
+	
+	RideListing rides = null;
 
-		while (f.next()) {
-			if (!fromExist) {
-				fromTable = ""; //first time round get rid of unwanted text
+	if (!userNull) {
+		rides = cps.searchRideListing(RideListing.searchUser, username);
+		search = true;
+	}else if(!dateNull){
+		rides = cps.searchRideListing(RideListing.searchDate, strOutDt);
+		search = true;
+	}else{
+		search = false;
+	}
+		
+	if(search){
+		while (rides.next()) {
+
+			String from = rides.getStartLocation();
+			String to = rides.getEndLocation();
+			
+			String d = new SimpleDateFormat("dd/MM/yyyy").format(rides.getRideDate())+" "+rides.getTime();
+			Date dt = new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(d);
+			
+			if(!userNull && !dateNull){
+				addRide = strTmp.equals(new SimpleDateFormat("dd/MM/yyyy").format(rides.getRideDate()));
+			}else{
+				addRide = true;
 			}
 
-			String from = f.getStartLocation();
-			String to = f.getEndLocation();
-			
-			String d = new SimpleDateFormat("dd/MM/yyyy").format(f.getRideDate())+" "+f.getTime();
-			Date dt = new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(d);
+			if (!avoidDuplicates.contains(rides.getRideID()) && dt.after(new Date()) && addRide) {
 
-			if (!avoidDuplicates.contains(f.getRideID()) && dt.after(new Date())) {
-				fromExist = true;
-				avoidDuplicates.add(f.getRideID());
+				avoidDuplicates.add(rides.getRideID());
+				geoCodes.add(rideNum + ">" + rides.getGeoLocation());
+				rideNum++;
 
-				fromTable += "<tr> <td>" + "<a href='"+response.encodeURL(request.getContextPath()+"/profile.jsp?profileId="+ f.getUserID())+"'>"+f.getUsername()+ "</a></td>";
-				fromTable += "<td>" + from + "</td> ";
-				fromTable += "<td>" + to + "</td> ";
-				fromTable += "<td>"	+ new SimpleDateFormat("dd/MM/yyyy").format(f.getRideDate()) + "</td> ";
-				fromTable += "<td>" + f.getTime() + "</td> ";
-				fromTable += "<td>" + f.getAvailableSeats() + "</td> ";
+				tempTable += "<tr> <td>" + "<a href='"+response.encodeURL(request.getContextPath()+"/profile.jsp?profileId="+ rides.getUserID())+"'>"+rides.getUsername()+ "</a></td>";
+				tempTable += "<td>" + from + "</td> ";
+				tempTable += "<td>" + to + "</td> ";
+				tempTable += "<td>"	+ new SimpleDateFormat("dd/MM/yyyy").format(rides.getRideDate()) + "</td> ";
+				tempTable += "<td>" + rides.getTime() + "</td> ";
+				tempTable += "<td>" + rides.getAvailableSeats() + "</td> ";
 				if (user != null) {
-					fromTable += "<td> <a href='"
+					tempTable += "<td> <a href='"
 							+ response.encodeURL(request.getContextPath()
-							+ "/rideDetails.jsp?rideselect=" + f.getRideID()
-							+ "&userselect=" + f.getUsername()) + "'>"
+							+ "/rideDetails.jsp?rideselect=" + rides.getRideID()
+							+ "&userselect=" + rides.getUsername()) + "'>"
 							+ "Link to ride page" + "</a> </td> </tr>";
 				} else {
-					fromTable += "<td>login to view more</td> </tr>";
+					tempTable += "<td>login to view more</td> </tr>";
 				}
 			} else {
-				fromTable = "";
+				tempTable = "";
 			}
+			
+			cTable.add(tempTable);
+			tempTable = "";
 
 		}
-	}
+		
+		String[] matches = getMatches(geoCodes, request.getParameter("fromCoord"), request.getParameter("toCoord"));
+		String[] rideIDs = matches[0].split(",");
+		mapCoords = matches[1];
 
-	//---------------SEARCH RIDES BY TO ONLY----------------------------------
-	String toTable = "";
-	boolean toExist = false;
-
-	if (Sto != "no location entered") {
-		RideListing t = cps.searchRideListing(
-				RideListing.searchLocationEnd, Sto);
-
-		while (t.next()) {
-			if (!toExist) {
-				toTable = ""; //first time round get rid of unwanted text
-			}
-
-			String from = t.getStartLocation();
-			String to = t.getEndLocation();
-			
-			String d = new SimpleDateFormat("dd/MM/yyyy").format(t.getRideDate())+" "+t.getTime();
-			Date dt = new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(d);
-			
-			if (!avoidDuplicates.contains(t.getRideID()) && dt.after(new Date())) {
-				toExist = true;
-				avoidDuplicates.add(t.getRideID());
-
-				toTable += "<tr> <td>" + "<a href='"+response.encodeURL(request.getContextPath()+"/profile.jsp?profileId="+ t.getUserID())+"'>"+t.getUsername()+ "</a></td>";
-				toTable += "<td>" + from + "</td> ";
-				toTable += "<td>" + to + "</td> ";
-				toTable += "<td>"+ new SimpleDateFormat("dd/MM/yyyy").format(t.getRideDate()) + "</td> ";
-				toTable += "<td>" + t.getTime() + "</td> ";
-				toTable += "<td>" + t.getAvailableSeats() + "</td> ";
-				if (user != null) {
-					toTable += "<td> <a href='"
-							+ response.encodeURL(request.getContextPath()
-							+ "/rideDetails.jsp?rideselect=" + t.getRideID()
-							+ "&userselect=" + t.getUsername()) + "'>"
-							+ "Link to ride page" + "</a> </td> </tr>";
-				} else {
-					toTable += "<td>login to view more</td> </tr>";
-				}
-			} else {
-				toTable = "";
-			}
-
+		for(int i=0;i<rideIDs.length;i++){
+			comboTable += cTable.get(Integer.parseInt(rideIDs[i]));
 		}
 	}
 
 	//---------------COMBINE RESULTS----------------------------------
 	
-	String[] matches = getMatches(geoCodes, request.getParameter("fromCoord"), request.getParameter("toCoord"));
-	String[] rideIDs = matches[0].split(",");
-	String mapCoords = matches[1];
 
-	for(int i=0;i<rideIDs.length;i++){
-		dateTable += htmlRideTbl.get(Integer.parseInt(rideIDs[i]));
-	}
 	
 		
 	if (!mapCoords.equals("")) {
-		rideTable = "<table class='rideDetailsSearch'> <tr> <th>Ride Offered By</th> <th>Starting From</th> <th>Going To</th>"
-				+ "<th>Departure Date</th> <th>Departure Time</th> <th>Number of Available Seats</th> <th>More Info</th> </tr>"
-				+ dateTable
-				+ "</table>";
-	} else {
-		rideTable = "<p>Sorry, no rides were found that match your criteria.</p>";
-	}
-	
-	boolean ridesExist = false;
-	if ((userExist) || (dateExist) || (fromExist) || (toExist)) {
-		ridesExist = true;
-		rideTable = userTable + dateTable + fromTable + toTable;
-	}
-
-	if (ridesExist) {
+		rideTable = userTable + dateTable + comboTable;
 		rideTable = "<table class='rideDetailsSearch'> <tr> <th>Ride Offered By</th> <th>Starting From</th> <th>Going To</th>"
 				+ "<th>Departure Date</th> <th>Departure Time</th> <th>Number of Available Seats</th> <th>More Info</th> </tr>"
 				+ rideTable
