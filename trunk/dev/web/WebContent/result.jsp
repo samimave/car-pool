@@ -78,6 +78,7 @@
 
 	boolean userNull = username.equals("no username entered");
 	boolean dateNull = strTmp.equals("no date was entered");
+	boolean locsNull = Sto.equals("no location entered") && Sfrom.equals("no location entered");
 
 	boolean anythingElse;
 	
@@ -90,8 +91,7 @@
 
 	boolean userExist = false;
 	
-	anythingElse = !dateNull || (Sfrom != "no location entered")
-			|| (Sto != "no location entered");
+	anythingElse = !dateNull || !locsNull;
 
 	if (!userNull && !anythingElse && !done) {
 		RideListing u = cps.searchRideListing(RideListing.searchUser,
@@ -160,9 +160,7 @@
 	String dateTable = "";
 	boolean dateExist = false;
 
-	anythingElse = (username != "no username entered")
-			|| (Sfrom != "no location entered")
-			|| (Sto != "no location entered");
+	anythingElse = !userNull || !locsNull;
 
 	if (!dateNull && !anythingElse && !done) {
 
@@ -231,6 +229,8 @@
 			System.out.println(mapCoords);
 		}
 	}
+	
+	
 
 	//---------------SEARCH RIDES COMBO----------------------------------
 	ArrayList<String> cTable = new ArrayList<String>();
@@ -278,8 +278,12 @@
 					&& dt.after(new Date()) && addRide) {
 
 				avoidDuplicates.add(rides.getRideID());
-				geoCodes.add(rideNum + ">" + rides.getGeoLocation());
-				rideNum++;
+				if(locsNull){
+					mapCoords += rides.getGeoLocation();
+				}else{
+					geoCodes.add(rideNum + ">" + rides.getGeoLocation());
+					rideNum++;
+				}
 
 				tempTable += "<tr> <td>"
 						+ "<a href='"
@@ -315,20 +319,23 @@
 			tempTable = "";
 
 		}
-
-		String[] matches = getMatches(geoCodes, request
-				.getParameter("fromCoord"), request
-				.getParameter("toCoord"), userNull, dateNull);
-		String[] rideIDs = matches[0].split(",");
-		mapCoords = matches[1];
-
-		if(!rideIDs[0].equals("")){
-			if (rideIDs.length > 0) {
-				for (int i = 0; i < rideIDs.length; i++) {
-					comboTable += cTable.get(Integer.parseInt(rideIDs[i]));
+		if(!locsNull){
+			String[] matches = getMatches(geoCodes, request
+					.getParameter("fromCoord"), request
+					.getParameter("toCoord"), userNull, dateNull);
+			String[] rideIDs = matches[0].split(",");
+			mapCoords = matches[1];
+			
+			if(!rideIDs[0].equals("")){
+				if (rideIDs.length > 0) {
+					for (int i = 0; i < rideIDs.length; i++) {
+						comboTable += cTable.get(Integer.parseInt(rideIDs[i]));
+					}
 				}
 			}
 		}
+
+		
 	}
 
 	//---------------COMBINE RESULTS----------------------------------
@@ -393,21 +400,33 @@
 		
 		rideLocs = ride[1].split("/");
 	
-		from = rideLocs[0].split(",");
-		fromLat = Double.parseDouble(from[0]);
-		fromLng = Double.parseDouble(from[1]);
+
+		try{
+			from = rideLocs[0].split(",");
+			fromLat = Double.parseDouble(from[0]);
+			fromLng = Double.parseDouble(from[1]);
+		}catch(Exception e){
+			fromLat = 0;
+			fromLng = 0;
+		}
 		
-		to = rideLocs[1].split(",");
-		toLat = Double.parseDouble(to[0]);
-		toLng = Double.parseDouble(to[1]);
+
+		try{
+			to = rideLocs[1].split(",");
+			toLat = Double.parseDouble(to[0]);
+			toLng = Double.parseDouble(to[1]);
+		}catch(Exception e){
+			toLat = 0;
+			toLng = 0;
+		}
 
 		//find straight-line distance from the start of the ride to the end
 		StartToEnd = distance(fromLat, fromLng, toLat, toLng);
 		
 		//come up with a sensible radius to search in (3km min)
 		double radius = StartToEnd[0] * 0.1;
-		if(radius < 3){
-			radius = 3;
+		if(radius < 1.5){
+			radius = 1.5;
 		}
 
 		//if end points are within a suitable radius
