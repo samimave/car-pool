@@ -69,6 +69,9 @@
 					+ "<th>Departure Date</th> <th>Departure Time</th><th>Link</th> </tr>"
 					+ userTable + "</table>";
 		}
+		else {
+			userTable= "<div class='Box' id='Box'><p>None.</p></div>";
+		}
 		
 		
 		//RIDES WHERE USER WAS RIDER NOT DRIVER
@@ -124,7 +127,7 @@
 					+ "<th>Departure Date</th> <th>Departure Time</th> <th>Link</th> </tr>"
 					+ acceptedTable + "</table>";
 		} else {
-			acceptedTable = "<p>No users were found.</p>";
+			acceptedTable ="<div class='Box' id='Box'><p>None.</p></div>";
 		}
 
 		
