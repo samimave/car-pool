@@ -8,8 +8,10 @@ import car.pool.persistance.exception.DuplicateUserNameException;
 import car.pool.persistance.exception.InvaildUserNamePassword;
 import car.pool.persistance.exception.StoreException;
 import car.pool.persistance.exception.UserException;
+import car.pool.security.AeSimpleSHA1;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -235,14 +237,21 @@ public class UserManager {
 	 */
  	public User updateUserDetails( User user ) throws InvaildUserNamePassword, IOException, SQLException {
  		User oldUser = getUserByUserId(user.getUserId());
- 		String password = !oldUser.getPassword().equals(user.getPassword()) ? String.format("userPasswordHash = '%s'",user.getPassword() ) : "";
+ 		String password = "";
+		try {
+			password = !oldUser.getPassword().equals(AeSimpleSHA1.SHA1(String.format("%s%s", user.getUserName(), user.getPassword()))) ? String.format("userPasswordHash = '%s'",AeSimpleSHA1.SHA1(String.format("%s%s", user.getUserName(), user.getPassword() ))) : "";
+		} catch (NoSuchAlgorithmException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
  		String email = !oldUser.getEmail().equals(user.getEmail()) && password.length() > 0 ? String.format(", email = '%s'", user.getEmail()) : !oldUser.getEmail().equals(user.getEmail()) ? String.format("email = '%s'", user.getEmail()) : "";
  		String phone = !oldUser.getPhoneNumber().equals(user.getPhoneNumber()) && (password.length() > 0 || email.length() > 0) ? String.format(", mobile_number = '%s'", user.getPhoneNumber()) : !oldUser.getPhoneNumber().equals(user.getPhoneNumber()) ? String.format("mobile_number = '%s'", user.getPhoneNumber()): "";
  		
  		if(password.length() > 0 || email.length() > 0 || phone.length() > 0 ) {
- 			String updateSql = String.format("update User set %s%s%s where idUser = %d;",password, email, phone, user.getUserId());
+ 			String updateSql = String.format("update User set %s%s%s where idUser = %d;", password, email, phone, user.getUserId());
  			Database db = new DatabaseImpl();
  			Statement statement = db.getStatement();
+ 			System.out.println(updateSql);
  			//shouldn't need to check if it affected more than one row as the user should exist and if they don't it shouldn't have got this far
  			statement.executeUpdate(updateSql);
  		}
