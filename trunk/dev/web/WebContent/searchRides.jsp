@@ -93,15 +93,9 @@
 	<div class="Box" id="Box">
 		<p>There are currently <%=rideCount%> rides in the database!</p>
 		<br />
-		<FORM name="showAll" id="showAll" method="post" action="resultall.jsp">
+		<FORM name="showAll" id="showAll" method="post" action="<%=response.encodeURL("resultall.jsp")%>">
 			<INPUT type="hidden" name="showAll" value="yes" />
-			<TABLE class="rideSearch">
-				<tr>
-					<td>Click here to</td>
-					<td><INPUT TYPE="submit" NAME="all" VALUE="Show All Rides"
-						SIZE="25"></td>
-				</tr>
-			</TABLE>
+			<p>Click here to <INPUT TYPE="submit" NAME="all" VALUE="Show All Rides"	SIZE="25"></p>
 		</FORM>
 	</div>
 	<br />
@@ -110,37 +104,38 @@
 	<div class="Box" id="Box">
 		<p>Please enter the search criteria in the boxes below and click
 		search. Rides matching any of the entered information will be displayed.</p>
-		<FORM NAME="searchFrm" id="search" method="post" action="result.jsp">
-		<TABLE class="rideSearch">
+		<br />
+		<h3>Search Criteria:</h3>
+		<div class="Box" id="Box">
+		<FORM NAME="searchFrm" id="search" method="post" action="<%=response.encodeURL("result.jsp")%>">
+		<INPUT TYPE="hidden" NAME="fromCoord"> 
+		<INPUT TYPE="hidden" NAME="toCoord">
+		<TABLE>
 			<tr>
-				<td>From:</td>
-				<td><INPUT type="text" name="numFrom" size="5"
-					onkeypress="getAddress('from')" /></td>
+				<td>Ride Departing From:</td>
+				<%//<td><INPUT type="text" name="numFrom" size="5" onkeypress="getAddress('from')" /></td> %>
 				<td><SELECT name="streetFrom" onChange="getAddress('from')">
 					<option selected="selected">Select a Street</option>
 					<%=options%>
 				</SELECT></td>
 			</tr>
 			<tr>
-				<td>To:</td>
-				<td><INPUT type="text" name="numTo" size="5"
-					onkeypress="getAddress('to')" /></td>
+				<td>Ride Destination:</td>
+				<%//<td><INPUT type="text" name="numTo" size="5" onkeypress="getAddress('to')" /></td>%>
 				<td><SELECT name="streetTo" onChange="getAddress('to')">
 					<option selected="selected">Select a Street</option>
 					<%=options%>
 				</SELECT></td>
 			</tr>
-		
 			<tr>
-				<td>Date (dd/MM/yyyy):</td>
-				<td colspan="2"><INPUT TYPE="text" NAME="searchDate" VALUE="<%=date%>" SIZE="25"> 
-					<A HREF="#" onClick="cal.select(document.forms['searchFrm'].searchDate,'anchor1','dd/MM/yyyy'); return false;"
-					NAME="anchor1" ID="anchor1">
+				<td>Departure Date (dd/MM/yyyy):</td>
+				<td><INPUT TYPE="text" NAME="searchDate" VALUE="<%=date%>" SIZE="25"> 
+					<A HREF="#" onClick="cal.select(document.forms['searchFrm'].searchDate,'anchor1','dd/MM/yyyy'); return false;" NAME="anchor1" ID="anchor1">
 					<img name="calIcon" border="0" src="calendar_icon.jpg" width="27" height="23"></A> 
-					<INPUT TYPE="hidden" NAME="fromCoord" SIZE="25"> 
-					<INPUT TYPE="hidden" NAME="toCoord" SIZE="25">
+				</td> 
+			</tr>
 			<tr>
-				<td>User:</td>
+				<td>Ride Offered By (username):</td>
 				<td><INPUT TYPE="text" NAME="sUser" VALUE="" SIZE="25"></td>
 			</tr>
 		</TABLE>
@@ -148,6 +143,7 @@
 		<p>Click here to <INPUT TYPE="submit" NAME="search"
 			VALUE="Search Rides" SIZE="25"></p>
 		</FORM>
+		</div>
 	</div>
 </DIV>
 <%
