@@ -21,18 +21,15 @@ public class RideDetail {
 						"AND Matches.idLocation = locations.idLocations;";
 		try {
 			rs = statement.executeQuery(sql);
-			rs.next();
+			//rs.next();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
 	}
 	
-	@Deprecated
-	public boolean hasNext(){
-		boolean h = hasNext == 0;
-		hasNext++;
-		return h;
+	public boolean hasNext() throws SQLException{
+		return rs.next();
 	}
 	
 	public String getUsername() throws SQLException{

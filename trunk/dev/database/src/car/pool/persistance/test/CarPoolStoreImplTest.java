@@ -620,25 +620,25 @@ public class CarPoolStoreImplTest extends TestCase {
 			
 			RideDetail rd = cps.getRideDetail(ride1);
 			
-			//while(rd.hasNext()){
+			while(rd.hasNext()){
 				System.out.println("userid: " + rd.getUserID() + ", username: " + rd.getUsername() + ", street number: " + rd.getStreetNumber() + "," + rd.getStreetNumberEnd()+ ", geoLocation: " + rd.getGeoLocation());
-			//}
+			}
 			
 			rd = cps.getRideDetail(ride2);
 			
-			//while(rd.hasNext()){
+			while(rd.hasNext()){
 				System.out.println("userid: " + rd.getUserID() + ", username: " + rd.getUsername() + ", street number: " + rd.getStreetNumber() + "," + rd.getStreetNumberEnd()+ ", geoLocation: " + rd.getGeoLocation());
-			//}
+			}
 			rd = cps.getRideDetail(ride3);
 			
-			//while(rd.hasNext()){
+			while(rd.hasNext()){
 				System.out.println("userid: " + rd.getUserID() + ", username: " + rd.getUsername() + ", street number: " + rd.getStreetNumber() + "," + rd.getStreetNumberEnd()+ ", geoLocation: " + rd.getGeoLocation());
-			//}
+			}
 			rd = cps.getRideDetail(ride4);
 			
-			//while(rd.hasNext()){
+			while(rd.hasNext()){
 				System.out.println("userid: " + rd.getUserID() + ", username: " + rd.getUsername() + ", street number: " + rd.getStreetNumber() + "," + rd.getStreetNumberEnd()+ ", geoLocation: " + rd.getGeoLocation());
-			//}
+			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -797,6 +797,7 @@ public class CarPoolStoreImplTest extends TestCase {
 			assertEquals(cps.takeRide(h, ride1, idLocation,0,1),cps.getTripID(ride1, h));
 			
 			RideDetail rd = cps.getRideDetail(ride5);
+			rd.hasNext();
 			//assertEquals(true, rd.hasNext());
 			assertEquals(rd.getGeoLocation(),"this is as geolocation");
 			
@@ -1071,11 +1072,17 @@ public void testUpdateGeoLocation(){
 			cps.takeRide(k, ride3, idLocation,0,1);
 			cps.takeRide(l, ride4, idLocation,0,1);
 			
-			assertEquals("start0/end0", cps.getRideDetail(ride1).getGeoLocation());
+			RideDetail rd = cps.getRideDetail(ride1);
+			rd.hasNext();
+			assertEquals("start0/end0", rd.getGeoLocation());
 			assertEquals(true, cps.updateGeoLocationStart(ride1, "start1"));
-			assertEquals("start1/end0", cps.getRideDetail(ride1).getGeoLocation());
+			rd = cps.getRideDetail(ride1);
+			rd.hasNext();
+			assertEquals("start1/end0", rd.getGeoLocation());
 			assertEquals(true, cps.updateGeoLocationEnd(ride1, "end1"));
-			assertEquals("start1/end1", cps.getRideDetail(ride1).getGeoLocation());
+			rd = cps.getRideDetail(ride1);
+			rd.hasNext();
+			assertEquals("start1/end1", rd.getGeoLocation());
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
