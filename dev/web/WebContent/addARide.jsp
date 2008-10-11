@@ -149,11 +149,40 @@
 
 		</SCRIPT>
 		<script>
-		function checkTime() {
+		/*function checkTime() {
 		    var msg;
 		    var reg = new RegExp("^[0-2][0-9]:[0-5][0-9]$");
 		    if ( reg.test(document.forms['offerFrm'].depTime.value) ) {
 				msg = null;
+			} else {
+			    msg = 'Enter 24 hour departure time.';
+			}
+			return msg;
+		}*/
+
+		//http://www.mattkruse.com/javascript/date/ for helpful examples		
+		function checkTime() {
+		    var msg;
+		    var reg = new RegExp("^[0-2][0-9]:[0-5][0-9]$");
+		    var curTime = formatDate(new Date(),"HH:mm");
+		    var inpTime = document.forms['offerFrm'].depTime.value;
+		    if ( reg.test(inpTime) ) {
+				var curDate = formatDate(new Date(),"dd/MM/yyyy");
+				var inpDate = document.forms['offerFrm'].depDate.value;
+				var d_result1 = compareDates(curDate,"dd/MM/yyyy",inpDate,"dd/MM/yyyy");
+				var d_result2 = compareDates(inpDate,"dd/MM/yyyy",curDate,"dd/MM/yyyy");
+			    if ((d_result1 == 0) && (d_result2 == 0)) {
+					var t_result = compareDates(curTime,"HH:mm",inpTime,"HH:mm");
+					if ( t_result == 0 ) {
+						msg = null;
+					} else {
+						msg = "Departure time must be in the future."
+					}
+			    } else if (d_result1 == 1) {
+					msg = 'Departure date has already passed.';
+			    } else {
+					msg = null;
+			    }
 			} else {
 			    msg = 'Enter 24 hour departure time.';
 			}
