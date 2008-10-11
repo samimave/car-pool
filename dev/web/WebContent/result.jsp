@@ -282,9 +282,9 @@
 					mapCoords += rides.getGeoLocation();
 				}else{
 					geoCodes.add(rideNum + ">" + rides.getGeoLocation());
-					rideNum++;
 				}
-
+				rideNum++;
+				
 				tempTable += "<tr> <td>"
 						+ "<a href='"
 						+ response.encodeURL(request.getContextPath()
@@ -311,12 +311,16 @@
 				} else {
 					tempTable += "<td>login to view more</td> </tr>";
 				}
+				
+				cTable.add(tempTable);
+				tempTable = "";
 			} else {
 				tempTable = "";
 			}
 
-			cTable.add(tempTable);
-			tempTable = "";
+
+
+
 
 		}
 		if(!locsNull){
@@ -325,11 +329,12 @@
 					.getParameter("toCoord"), userNull, dateNull);
 			String[] rideIDs = matches[0].split(",");
 			mapCoords = matches[1];
-			
+			System.out.println("table" + rideIDs.length);
 			if(!rideIDs[0].equals("")){
 				if (rideIDs.length > 0) {
 					for (int i = 0; i < rideIDs.length; i++) {
 						comboTable += cTable.get(Integer.parseInt(rideIDs[i]));
+						System.out.println(i + " " + rideIDs[i]);
 					}
 				}
 			}
