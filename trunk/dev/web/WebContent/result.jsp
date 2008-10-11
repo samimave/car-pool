@@ -72,24 +72,30 @@
 
 	ArrayList<Integer> avoidDuplicates = new ArrayList<Integer>();
 	ArrayList<String> geoCodes = new ArrayList<String>();
-	ArrayList<String> userTable = new ArrayList<String>();
-	ArrayList<String> dateTable = new ArrayList<String>();
-	ArrayList<String> fromTable = new ArrayList<String>();
-	ArrayList<String> toTable = new ArrayList<String>();
 	
-	int rideNum = 0;
+	String mapCoords = "";
+
+	boolean userNull = username.equals("no username entered");
+	boolean dateNull = strTmp.equals("");
+	
+	boolean anythingElse;
+	
+	int rideNum;
 
 	//---------------SEARCH RIDES BY USER----------------------------------
-	String userTable = "";
-	boolean userExist = false;
+	String userTable= "";
 
-	if (username != "no username entered") {
+	boolean userExist = false;
+	
+	anythingElse = (strTmp != "") || (Sfrom == "no location entered") || (Sto != "no location entered");
+
+	if (!userNull && !anythingElse) {
 		RideListing u = cps.searchRideListing(RideListing.searchUser,
 				username);
 
 		while (u.next()) {
 			if (!userExist) {
-				userTable = ""; //first time round get rid of unwanted text
+				userTable= ""; //first time round get rid of unwanted text
 			}
 
 			String from = u.getStartLocation();
@@ -100,35 +106,39 @@
 
 			if (!avoidDuplicates.contains(u.getRideID()) && dt.after(new Date())) {
 				userExist = true;
+				
 				avoidDuplicates.add(u.getRideID());
+				
+				mapCoords += u.getGeoLocation() + ":";
 
-				userTable += "<tr> <td>" + "<a href='"+response.encodeURL(request.getContextPath()+"/profile.jsp?profileId="+ u.getUserID())+"'>"+u.getUsername()+ "</a></td>";
-				userTable += "<td>" + from + "</td> ";
-				userTable += "<td>" + to + "</td> ";
-				userTable += "<td>"	+ new SimpleDateFormat("dd/MM/yyyy").format(u.getRideDate()) + "</td> ";
-				userTable += "<td>" + u.getTime() + "</td> ";
-				userTable += "<td>" + u.getAvailableSeats() + "</td> ";
+				userTable+= "<tr> <td>" + "<a href='"+response.encodeURL(request.getContextPath()+"/profile.jsp?profileId="+ u.getUserID())+"'>"+u.getUsername()+ "</a></td>";
+				userTable+= "<td>" + from + "</td> ";
+				userTable+= "<td>" + to + "</td> ";
+				userTable+= "<td>"	+ new SimpleDateFormat("dd/MM/yyyy").format(u.getRideDate()) + "</td> ";
+				userTable+= "<td>" + u.getTime() + "</td> ";
+				userTable+= "<td>" + u.getAvailableSeats() + "</td> ";
 				if (user != null) {
-					userTable += "<td> <a href='"
+					userTable+= "<td> <a href='"
 							+ response.encodeURL(request.getContextPath()
 							+ "/rideDetails.jsp?rideselect=" + u.getRideID()
 							+ "&userselect=" + u.getUsername()) + "'>"
 							+ "Link to ride page" + "</a> </td> </tr>";
 				} else {
-					userTable += "<td>login to view more</td> </tr>";
+					userTable+= "<td>login to view more</td> </tr>";
 				}
 			} else {
-				userTable = "";
+				userTable= "";
 			}
-
 		}
 	}
 
 	//---------------SEARCH RIDES BY DATE----------------------------------
 	String dateTable = "";
 	boolean dateExist = false;
+	
+	anythingElse = (username != "no username entered") || (Sfrom != "no location entered") || (Sto != "no location entered");
 
-	if (strTmp != "") {
+	if (!dateNull && !anythingElse) {
 
 		RideListing daTbl = cps.searchRideListing(RideListing.searchDate, strOutDt);
 
@@ -147,6 +157,8 @@
 			if (!avoidDuplicates.contains(daTbl.getRideID()) && dt.after(new Date())) {
 				dateExist = true;
 				avoidDuplicates.add(daTbl.getRideID());
+				
+				mapCoords += daTbl.getGeoLocation() + ":";
 
 				dateTable += "<tr> <td>" + "<a href='"+response.encodeURL(request.getContextPath()+"/profile.jsp?profileId="+ daTbl.getUserID())+"'>"+daTbl.getUsername()+ "</a></td>";
 				dateTable += "<td>" + from + "</td> ";
@@ -171,7 +183,10 @@
 		}
 	}
 
-	//---------------SEARCH RIDES BY FROM ONLY----------------------------------
+	//---------------SEARCH RIDES COMBO----------------------------------
+	ArrayList<String> comboTable = new ArrayList<String>();
+	String tempTable;
+	
 	String fromTable = "";
 	boolean fromExist = false;
 
