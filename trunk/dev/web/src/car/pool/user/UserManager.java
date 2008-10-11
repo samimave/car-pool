@@ -48,9 +48,11 @@ public class UserManager {
 		for(String openids :store.getOpenIdsByUser(user.getUserId())) {
 			user.addOpenId(openids);
 		}
-
+		
 		rs.close();
 		statement.close();
+		
+		user.setSocialScore(new Integer(store.getScore(user.getUserId())));
 		
 		return user;
 	}
@@ -91,6 +93,9 @@ public class UserManager {
 		} else {
 			throw new InvaildUserNamePassword("Invalid username or password");
 		}
+		
+		
+		user.setSocialScore(new Integer(store.getScore(user.getUserId())));
 		
 		return user;
 	}
@@ -213,6 +218,8 @@ public class UserManager {
 		while(rs.next()) {
 			user.addOpenId(rs.getString(1));
 		}
+		
+		user.setSocialScore(new Integer(new CarPoolStoreImpl().getScore(user.getUserId())));
 		
 		return user;
 	}

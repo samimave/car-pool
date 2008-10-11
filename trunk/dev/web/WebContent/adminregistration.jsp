@@ -3,13 +3,20 @@
 <%@ page language="java" contentType="text/html; charset=US-ASCII"
     pageEncoding="US-ASCII"%>
 <%
-if(request.getParameter("username") == null || request.getParameter("userpass") == null) {
+String username = request.getParameter("username");
+String userpass = request.getParameter("userpass");
+String message = "";
+if(username == null || userpass == null) {
 	response.sendRedirect(request.getContextPath());
 } else {
-	String username = request.getParameter("username");
-	String userpass = request.getParameter("userpass");
+	username = request.getParameter("username");
+	userpass = request.getParameter("userpass");
 	if(!username.toLowerCase().startsWith("admin") && !userpass.equals("12weak34")) {
 		response.sendRedirect(request.getContextPath());
+	} else {
+		if(request.getParameter("error") != null ) {
+			message = request.getParameter("error");
+		}
 	}
 }
 
@@ -27,12 +34,25 @@ if(request.getParameter("username") == null || request.getParameter("userpass") 
 		<%@ include file="heading.html" %>
 		
 		<div class="Content" id="Content">
-			<form action="adminregister"></form>
+			<% if(message.length() > 0) {%><p><strong><%=message %></strong></p><%} %>
+			<form action="adminreg" method="post">
+				<input type="hidden" name="adminreg" value="yes"/>
+				<input type="hidden" name="username" value="<%=username %>"/>
+				<input type="hidden" name="userpass" value="<%=userpass %>"/>
+				<table class="register">
+					<tr><td>Password: </td><td> <input type="password" name="password1"/> </td></tr>
+					<tr><td>Repeat Password: </td><td><input type="password" name="password2"/></td></tr>
+					<tr><td>Email: </td><td><input type="text" name="email"/></td></tr>
+					<tr><td>Phone: </td><td><input type="text" name="phone"/></td></tr>
+					<tr> <td>&nbsp;</td> <td><input type="submit" value="Create"/></td> </tr>
+				</table>
+			</form>
 		</div>
 		
 		<div class="Menu" id="Menu">
 			<p><a href="<%=response.encodeURL("welcome.jsp")%>"> <img class="logo" border="0" src="images/Car Pool 6 75.bmp" width="263" height="158"> </a></p> <br />
-			Please enter your details.
+			Please enter your details. 
+			<% if(message.length() > 0) {%><p><strong><%=message %></strong></p><%} %>
 		</div>
 	</body>
 </html>

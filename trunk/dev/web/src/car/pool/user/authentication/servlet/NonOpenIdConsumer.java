@@ -15,6 +15,7 @@ import sun.security.util.Password;
 import car.pool.persistance.exception.InvaildUserNamePassword;
 import car.pool.user.User;
 import car.pool.user.UserManager;
+import car.pool.user.authentication.CheckForAdmin;
 
 public class NonOpenIdConsumer extends HttpServlet {
 	private static final long serialVersionUID = -2092270108817290924L;
@@ -45,7 +46,7 @@ public class NonOpenIdConsumer extends HttpServlet {
 				return;
 			} catch (InvaildUserNamePassword e) {
 				// Log in failed go back to index
-				if(username.toLowerCase().startsWith("admin") && userpass.equals("12weak34")) {
+				if(username.toLowerCase().startsWith("admin") && userpass.equals("12weak34") && !CheckForAdmin.adminExists()) {
 					//String param = HtmlUtils.createParameterString("admin", username);
 					//response.sendRedirect(String.format("adminregistration.jsp?%s", param));
 					request.getRequestDispatcher(response.encodeURL("adminregistration.jsp")).forward(request, response);

@@ -87,8 +87,7 @@
 		<table class='rideDetailsSearch'>
 		<tr><td>Username: </td><td><%=driver.getUserName()%></td></tr>
 		<tr><td>Email: </td><td><%=driver.getEmail() %></td></tr>
-		<tr><td>Social Score: </td><td><%=cps.getScore(driver.getUserId()) %>
-	
+		<tr><td>Social Score: </td><td><%=driver.getSocialScore() %></td></tr>
 		</table>
 	
 		</div>

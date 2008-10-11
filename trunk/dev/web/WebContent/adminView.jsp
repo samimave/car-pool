@@ -12,7 +12,10 @@
 	String rideTable = "";
 	if (s.getAttribute("signedin") != null) {
 		user = (User) s.getAttribute("user");
-
+		if(!user.getUserName().toLowerCase().startsWith("admin")) {
+			response.sendRedirect(response.encodeURL(""));
+			return;
+		}
 		CarPoolStore cps = new CarPoolStoreImpl();
 		if ((request.getParameter("addAllLoc"))!=null){
 			AddLocations.addFromFile();

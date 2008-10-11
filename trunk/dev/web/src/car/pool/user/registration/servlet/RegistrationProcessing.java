@@ -49,7 +49,6 @@ public class RegistrationProcessing extends HttpServlet {
 			return;
 		}else if((password1 != null && password2 != null) && (password1.length() > 0 || password2.length() > 0)) {
 			if(!password1.equals(password2)) {
-				// TODO make sure they get a error message and the form is prefilled with the previous values they entered 
 				response.sendRedirect(response.encodeURL("register.jsp?error=passwords%20must%20match"));
 				return;
 			}
