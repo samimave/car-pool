@@ -43,7 +43,7 @@ if(request.getParameter("error") != null) {
 		//yav.addHelp('verifytext', 'Enter the text shown above');
 		</script>
 	</HEAD>
-	<BODY onload="yav.init('register', rules);"<% //onload="formCookieCheck()"%>>
+	<BODY onload="yav.init('register', rules);">
 
 	<%@ include file="heading.html" %>	
 
