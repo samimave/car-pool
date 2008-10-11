@@ -42,6 +42,8 @@
 		<TITLE>Offer a Ride</TITLE>
 		<STYLE type="text/css" media="screen">@import "TwoColumnLayout.css";</STYLE>
 		<SCRIPT type="text/javascript" src="CalendarPopup.js"></SCRIPT>
+		<script type="text/javascript" src="javascript/yav.js"></script>
+		<script type="text/javascript" src="javascript/yav-config.js"></script>
     	<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAA7rDxBnSa8ztdEea-bXHUqRRKOMZEnoyerBNNN7XbrW5T80f1pxRxpg7l2VcFxiQk2L5RouYsGk3NqQ" type="text/javascript"></script>
  
 		<script type="text/javascript">
@@ -145,8 +147,23 @@
 			}
 
 		</SCRIPT>
+		<script>
+		var rules=new Array();
+		rules[0]='houseFrom:origin house number|required';
+		rules[1]='houseFrom:origin house number|numeric';
+		rules[2]='houseTo:destination house number|required';
+		rules[3]='houseTo:destination house number|numeric';
+		rules[4]='depDate:date|required';
+		rules[5]='depDate:date|date';
+		rules[6]='depTime:departure time|required';
+		rules[7]='tripLength:ride length|required';
+		rules[8]='tripLength:ride length|numeric';
+		rules[9]='numSeats:number of seats|required';
+		rules[10]='numSeats:number of seats|numeric';
+		</script>
+
 	</HEAD>
-	<BODY>
+	<BODY onload="yav.init('offerFrm', rules);">
 
 	<%@ include file="heading.html" %>	
 
@@ -155,8 +172,8 @@
 			<br /><br />
 			<h2>Ride Details:</h2>
 			<div class="Box" id="Box">
-			<p>Please enter the relevant details and click confirm.</p>
-			<FORM NAME="offerFrm" id="offer" method="post" action="<%=response.encodeURL("newRideConfirmation.jsp")%>">
+			<p>Please enter the relevant details and click confirm. * indicates required field.</p>
+			<FORM NAME="offerFrm" id="offerFrm" onsubmit="return yav.performCheck('offerFrm', rules, 'inline');" action="<%=response.encodeURL("newRideConfirmation.jsp")%>" method="post">
 				<INPUT TYPE="hidden" NAME="user" VALUE="<%=OpenIdFilter.getCurrentUser(s)%>" SIZE="25">
 					<%
 						// Information on if ride is an offer or request. 
@@ -179,9 +196,9 @@
 					<h3>Departure:</h3>
 					<div class="Box" id="Box">
 					<TABLE class="rideDetails">
-					<tr> <td>House number:</td> 
-					<td><INPUT TYPE="text" NAME="houseFrom" SIZE="25" onkeypress="getAddress('from')"></td> </tr>
-					<tr> <td>Street:</td> <td>
+					<tr> <td>House number*:</td> 
+					<td><INPUT TYPE="text" NAME="houseFrom" SIZE="25" onkeypress="getAddress('from')">&nbsp;&nbsp;<span id=errorsDiv_houseFrom></span></td> </tr>
+					<tr> <td>Street*:</td> <td>
 					<SELECT name="streetFrom"  onChange="getAddress('from')">
            		  		<option selected="selected">Select a Street</option>
 	           		 	<%=options%>
@@ -194,9 +211,9 @@
 					<h3>Arrival:</h3>
 					<div class="Box" id="Box">
 					<table class="rideDetails">
-					<tr> <td>House number:</td> 
-					<td><INPUT TYPE="text" NAME="houseTo" SIZE="25" onkeypress="getAddress('to')"></td> </tr>
-					<tr> <td>Street:</td> <td>
+					<tr> <td>House number*:</td> 
+					<td><INPUT TYPE="text" NAME="houseTo" SIZE="25" onkeypress="getAddress('to')">&nbsp;&nbsp;<span id=errorsDiv_houseTo></span></td> </tr>
+					<tr> <td>Street*:</td> <td>
 					<SELECT name="streetTo" onChange="getAddress('to')">
            		  		<option selected="selected">Select a Street</option>
 	           		  	<%=options%>
@@ -231,9 +248,9 @@
 						 <option value=7>Sunday</option>
 						 </SELECT></td> </tr>*/
 					%>
-					<tr> <td>Departure Date (dd/MM/yyyy):</td> <td><INPUT TYPE="text" NAME="depDate" VALUE="<%=date%>" SIZE="25"> <A HREF="#" onClick="cal.select(document.forms['offerFrm'].depDate,'anchor1','dd/MM/yyyy'); return false;" NAME="anchor1" ID="anchor1"><img name="calIcon" border="0" src="calendar_icon.jpg" width="27" height="23"></A> </td> </tr>
-					<tr> <td>Departure Time 24hr (hh:mm):</td> <td><INPUT TYPE="text" NAME="depTime" VALUE="<%=time%>" SIZE="25"></td> </tr>
-					<tr> <td>Approx Trip Length (min):</td> <td><INPUT TYPE="text" NAME="tripLength" VALUE="15" SIZE="25"></td> </tr>
+					<tr> <td>Departure Date (dd/MM/yyyy)*:</td> <td><INPUT TYPE="text" NAME="depDate" VALUE="<%=date%>" SIZE="25"> <A HREF="#" onClick="cal.select(document.forms['offerFrm'].depDate,'anchor1','dd/MM/yyyy'); return false;" NAME="anchor1" ID="anchor1"><img name="calIcon" border="0" src="calendar_icon.jpg" width="27" height="23"></A>&nbsp;&nbsp;<span id=errorsDiv_depDate></span> </td> </tr>
+					<tr> <td>Departure Time 24hr (hh:mm)*:</td> <td><INPUT TYPE="text" NAME="depTime" VALUE="<%=time%>" SIZE="25">&nbsp;&nbsp;<span id=errorsDiv_depTime></span></td> </tr>
+					<tr> <td>Approx Trip Length (min)*:</td> <td><INPUT TYPE="text" NAME="tripLength" VALUE="15" SIZE="25">&nbsp;&nbsp;<span id=errorsDiv_tripLength></span></td> </tr>
 					</table>
 					</div>
 					
@@ -241,7 +258,7 @@
 					<h3>Additional Details:</h3>
 					<div class="Box" id="Box">
 					<table class="rideDetails">	
-					<tr> <td>Number of passenger seats:</td> <td><INPUT TYPE="text" NAME="numSeats" SIZE="25"></td> </tr>
+					<tr> <td>Number of passenger seats*:</td> <td><INPUT TYPE="text" NAME="numSeats" SIZE="25">&nbsp;&nbsp;<span id=errorsDiv_numSeats></span></td> </tr>
 
 					<tr> <td>Other Comments:</td> <td><INPUT TYPE="text" NAME="xtraInfo" SIZE="25"></td> </tr>
 					<tr> <td><INPUT TYPE="hidden" NAME="fromCoord" SIZE="25"></td> </tr>

@@ -95,6 +95,7 @@
 				<INPUT type="hidden" name="time" value="<%=request.getParameter("depTime")%>">
 				<INPUT type="hidden" name="length" value="<%=request.getParameter("tripLength")%>">
 				<INPUT type="hidden" name="date" value="<%=strOutDt%>">
+				<br />
 				<p>Click here to <INPUT type="submit" value="Add to your Google Calendar" />
 			</FORM>
 			</div>
