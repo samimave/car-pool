@@ -376,7 +376,7 @@ String updateUserConf = "";
 					+ "<th>Departure Date</th> <th>Departure Time</th><th>Your Pick Up Point</th><th>Add Ride to Google Calendar</th> <th>Withdraw from Ride</th> <th>Link</th> </tr>"
 					+ acceptedTable + "</table>";
 		} else {
-			acceptedTable = "<p>No users were found.</p>";
+			acceptedTable = "<div class='Box' id='Box'><p>No rides found.</p></div>";
 		}
 
 		if (awaitExist) {
@@ -384,7 +384,7 @@ String updateUserConf = "";
 					+ "<th>Departure Date</th> <th>Departure Time</th> <th>Your Pick Up Point</th> <th>Withdraw from Ride</th> <th>Link</th> </tr>"
 					+ awaitTable + "</table>";
 		} else {
-			awaitTable = "<p>No users were found.</p>";
+			awaitTable = "<div class='Box' id='Box'><p>No rides found.</p></div>";
 		}
 
 		//feedback table for rides you have been approved for
@@ -451,7 +451,7 @@ String updateUserConf = "";
 						+ "<th>Departure Date</th> <th>Departure Time</th><th>Link</th> <th>Rating (between -10 & 10)</th></tr>"
 						+ feedbackTable + "</table>";
 			} else {
-				feedbackTable = "<p>No rides to provide feedback for.</p>";
+				feedbackTable = "<div class='Box' id='Box'><p>No rides to provide feedback for.</p></div>";
 			}
 		
 		
@@ -502,6 +502,8 @@ String updateUserConf = "";
 		u_rules[0]='email|required';
 		u_rules[1]='email|email';
 		u_rules[2]='phone|numeric';
+		u_rules[3]='newPassword1:new password|equal|$newPassword2:confirmed password';
+
 		var ad_rules=new Array();
 		ad_rules[0]='openid|required';
 		</script>
@@ -518,16 +520,17 @@ String updateUserConf = "";
 		<h2>Your user details appear below:</h2>
 		<div class="Box" id="Box">
 		<p>Your current social score is: <%=socialScore%></p>
+		<br />
 		<FORM id="updateDtls" name="updateDtls" onsubmit="return yav.performCheck('updateDtls', u_rules, 'inline');" action="<%=response.encodeURL("updateuser") %>" method="post">
 			<INPUT type="hidden" name="updateDetails" value="yes">
 			<TABLE> 
 				<tr> <td>Username:</td> <td><%=user != null ? user.getUserName() : ""%></td> </tr> 
 				<tr> <td>Email Address:</td> <td><INPUT TYPE="text" NAME="email" SIZE="25" value="<%=user != null ? user.getEmail() : ""%>">&nbsp;&nbsp;<span id=errorsDiv_email></span></td> </tr> 
 				<tr> <td>Phone Number:</td> <td><INPUT TYPE="text" NAME="phone" SIZE="25" value="<%=user != null ? user.getPhoneNumber() : ""%>">&nbsp;&nbsp;<span id=errorsDiv_phone></span></td> </tr>
-				<tr> <td><%if( OpenIdFilter.getCurrentUser(s) != null) {%>Add a <%}else{ %>Change <%} %>password?:</td><td> <input type="checkbox" name="changePassword"/> </td> </tr>
-				<%if( OpenIdFilter.getCurrentUser(s) == null) {%><tr> <td>Old Password:</td><td> <input type="password" name="oldpassword"/> </td> </tr><%} %>
-				<tr> <td>New password:</td><td> <input type="password" name="newPassword1"/> </td> </tr>
-				<tr> <td>Confirm new password:</td><td> <input type="password" name="newPassword2"/> </td> </tr>
+				<tr> <td><%if( OpenIdFilter.getCurrentUser(s) != null) {%>Add a <%}else{ %>Change <%} %>password?:</td><td> <input type="checkbox" name="changePassword" value="isChecked"/> </td> </tr>
+				<%if( OpenIdFilter.getCurrentUser(s) == null) {%><tr> <td>Old Password:</td><td> <input type="password" name="oldpassword"/> &nbsp;&nbsp;<span id=errorsDiv_oldpassword></span></td> </tr><%} %>
+				<tr> <td>New password:</td><td> <input type="password" name="newPassword1"/> &nbsp;&nbsp;<span id=errorsDiv_newPassword1></span></td> </tr>
+				<tr> <td>Confirm new password:</td><td> <input type="password" name="newPassword2"/> &nbsp;&nbsp;<span id=errorsDiv_newPassword2></span></td> </tr>
 			</TABLE>
 			<br />
 			<p>Click here to <INPUT TYPE="submit" NAME="confirmUpdate" VALUE="Update Details" SIZE="25"></p>
