@@ -998,14 +998,16 @@ public class CarPoolStoreImpl implements CarPoolStore {
 	public boolean updateGeoLocationEnd(int ride, String end) throws SQLException, StoreException {
 		int[] rows = null;
 		Statement statement = db.getStatement();
+		RideDetail rd = getRideDetail(ride);
+		rd.hasNext();
 		String sql1 = 	"UPDATE ride " +
 						"SET ride.geoLocation ='" +
-						getRideDetail(ride).getGeoLocation().split("/")[1] + "/" + end + "' " +
+						rd.getGeoLocation().split("/")[1] + "/" + end + "' " +
 						"WHERE ride.idRide ='"+ride+"';";
 		
 		String sql2 = 	"UPDATE matches " +
 		"SET matches.geoLocation ='" +
-		getRideDetail(ride).getGeoLocation().split("/")[0] + "/" + end + "' " +
+		rd.getGeoLocation().split("/")[0] + "/" + end + "' " +
 		"WHERE matches.idRide ='"+ride+"';";
 		try {
 			statement = db.getStatement();
@@ -1025,14 +1027,16 @@ public class CarPoolStoreImpl implements CarPoolStore {
 	public boolean updateGeoLocationStart(int ride, String start) throws SQLException, StoreException {
 		int[] rows = null;
 		Statement statement = db.getStatement();
+		RideDetail rd = getRideDetail(ride);
+		rd.hasNext();
 		String sql1 = 	"UPDATE ride " +
 						"SET ride.geoLocation ='" +
-						start + "/" + getRideDetail(ride).getGeoLocation().split("/")[1] + "' " +
+						start + "/" + rd.getGeoLocation().split("/")[1] + "' " +
 						"WHERE ride.idRide ='"+ride+"';";
 		
 		String sql2 = 	"UPDATE matches " +
 		"SET matches.geoLocation ='" +
-		start + "/" + getRideDetail(ride).getGeoLocation().split("/")[1] + "' " +
+		start + "/" + rd.getGeoLocation().split("/")[1] + "' " +
 		"WHERE matches.idRide ='"+ride+"';";
 		try {
 			statement = db.getStatement();
