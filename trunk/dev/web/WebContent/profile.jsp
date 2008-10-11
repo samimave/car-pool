@@ -10,7 +10,9 @@
 	User driver = null;
 	CarPoolStore cps = null;
 	String userTable = "";
+	String acceptedTable = "";
 	int count = 0;
+	int countA = 0;
 	if (s.getAttribute("signedin") != null) {
 		user = (User) s.getAttribute("user");
 	
@@ -20,7 +22,7 @@
 		cps = new CarPoolStoreImpl();
 		
 
-		
+		//OFFERED RIDES
 		RideListing rl = cps.searchRideListing(RideListing.searchUser,driver.getUserName());
 		boolean userExist = false;
 		while (rl.next()) {
@@ -64,9 +66,69 @@
 
 		if (userExist) {
 			userTable = "<p>Click on the Link to Ride Page to see if past riders have left feedback for the ride offered</p><br/>"+"<table class='rideDetailsSearch'> <tr> <th>Starting From</th> <th>Going To</th>"
-					+ "<th>Departure Date</th> <th>Departure Time</th><th>Link to Ride Page</th> </tr>"
+					+ "<th>Departure Date</th> <th>Departure Time</th><th>Link</th> </tr>"
 					+ userTable + "</table>";
 		}
+		
+		
+		//RIDES WHERE USER WAS RIDER NOT DRIVER
+		boolean rideExist = false;
+		boolean something = false;
+		TakenRides tr = cps.getTakenRides(driver.getUserId());
+		while (tr.hasNext() /*&& something == false*/) {
+			//System.out.println("tr");
+			something = true;
+			if (!rideExist) {
+				acceptedTable = ""; //first time round get rid of unwanted text
+			}
+
+			//rideIDs.add(rl.getRideID());
+			String from = tr.getStartLocation();
+			String to = tr.getStopLocation();
+			String fromID = tr.getStartID();
+			String toID = tr.getStopID();
+
+			// This acceptedTable shows the rides that the uesr is in and user can withdraw themself from the ride
+			// also user can add the ride to their google calender.
+			if ((tr.getConfirmed() == true)) {
+				rideExist = true;
+				countA++;
+				acceptedTable += "<tr><td>" + from + "</td> ";
+				acceptedTable += "<td>" + to + "</td> ";
+				acceptedTable += "<td>"
+						+ new SimpleDateFormat("dd/MM/yyyy").format(tr
+								.getRideDate()) + "</td> ";
+				acceptedTable += "<td>" + tr.getTime() + "</td> ";
+				String d = new SimpleDateFormat("dd/MM/yyyy").format(tr.getRideDate())+ " " + tr.getTime();
+				Date dt = new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(d);
+				if (dt.after(new Date())) {
+					acceptedTable += "<td> <a href='"
+							+ response.encodeURL(request.getContextPath()
+							+ "/rideDetails.jsp?rideselect="
+							+ tr.getRideID()) + "'>"
+							+ "Link to Ride Page"
+							+ "</a> </td> </tr>";
+				} else {
+					acceptedTable += "<td> <a href='"
+						+ response.encodeURL(request.getContextPath()
+						+ "/oldRideDetails.jsp?rideselect="
+						+ tr.getRideID()) + "'>"
+						+ "Link to Ride Page"
+						+ "</a> </td> </tr>";
+				}
+
+			}
+		}
+		if (rideExist) {
+			acceptedTable ="<p>Click on the Link to Ride Page to see if user has left feedback for ride they took part in.</p><br/>"+ "<table class='rideDetailsSearch'> <tr><th>Starting From</th> <th>Going To</th>"
+					+ "<th>Departure Date</th> <th>Departure Time</th> <th>Link</th> </tr>"
+					+ acceptedTable + "</table>";
+		} else {
+			acceptedTable = "<p>No users were found.</p>";
+		}
+
+		
+		
 	} else {
 		response.sendRedirect(request.getContextPath());
 	}
@@ -102,7 +164,14 @@
 		<h3>Total number of rides offered by user: <%=count%></h3><br/>
 		<%=userTable %>
 		</div>
-		<br /> <br /> <br />
+		<br /> <br /> 
+
+		<h2>Rides User Has Accepted:</h2>
+		<div class="Box" id="Box">
+		<h3>Total number of rides accepted by user: <%=countA%> </h3><br/>
+		<%=acceptedTable %>
+		</div>
+		<br /> <br /><br />
 		<p>-- <a href="welcome.jsp">Home</a> --</p>	
 	</DIV>
 
