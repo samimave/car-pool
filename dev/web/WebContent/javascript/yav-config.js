@@ -31,7 +31,7 @@ trimenabled : true,
 // change to set your own decimal separator and your date format
 DECIMAL_SEP : '.',
 THOUSAND_SEP : ',',
-DATE_FORMAT : 'MM-dd-yyyy',
+DATE_FORMAT : 'dd/MM/yyyy',
 
 // change to set your own rules based on regular expressions
 alphabetic_regex : "^[A-Za-z]*$",
@@ -57,7 +57,7 @@ ALPHASPACE_MSG : '{1} is not valid. Characters allowed: A-Za-z0-9\-_space',
 MINLENGTH_MSG : '{1} must be at least {2} characters long.',
 MAXLENGTH_MSG : '{1} must be no more than {2} characters long.',
 NUMRANGE_MSG : '{1} must be a number in {2} range.',
-DATE_MSG : '{1} is not a valid date, using the format MM-dd-yyyy.',
+DATE_MSG : 'Correct {1} format is dd/MM/yyyy.',
 NUMERIC_MSG : '{1} must be a number.',
 INTEGER_MSG : '{1} must be an integer',
 DOUBLE_MSG : '{1} must be a decimal number.',
