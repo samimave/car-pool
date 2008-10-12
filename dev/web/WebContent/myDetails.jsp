@@ -21,7 +21,7 @@ String updateUserConf = "";
 	String openIDTableForm = "";
 	//code to get ride details
 	//temp placeholder variables
-	String userTable = "<p>No rides found.</p>";
+	String userTable = "<div class='Box' id='Box'><p>No rides offered. Click here to <a href='"+response.encodeURL("addARide.jsp")+"'>offer a ride.</a></p></div>";
 	String acceptedTable = "<p>No rides found.</p>";
 	String awaitTable = "<p>No rides found.</p>";
 	String feedbackTable = "";
@@ -48,7 +48,7 @@ String updateUserConf = "";
 			boolean yes = cps.removeRide(Integer.parseInt(request
 					.getParameter("rideSelect")));
 			delConf = "<p>"
-					+ "You have successfully deleted the ride you wanted to"
+					+ "You have successfully updated the selected ride."
 					+ yes+"</p>";
 		}
 
@@ -61,7 +61,7 @@ String updateUserConf = "";
 			cps.updateSeats(Integer.parseInt(request
 					.getParameter("rideSelect")), seat);
 			updateSeatConf = "<p>"
-					+ "You have successfully updated the ride you wanted to"
+					+ "You have successfully updated the selected ride."
 					+ "</p>";
 		}
 
@@ -72,7 +72,7 @@ String updateUserConf = "";
 					.getParameter("rideSelect")), request
 					.getParameter("Rtime"));
 			updateTimeConf = "<p>"
-					+ "You have successfully updated the ride you wanted to"
+					+ "You have successfully updated the selected ride."
 					+ "</p>";
 		}
 
@@ -85,7 +85,7 @@ String updateUserConf = "";
 					.parseInt(request.getParameter("startFromHN")),Integer
 					.parseInt(request.getParameter("startFrom")),dbID);
 			updateStartS = "<p>"
-					+ "You have successfully updated the ride you wanted to"
+					+ "You have successfully updated the selected ride."
 					+ "</p>";
 		}
 
@@ -98,7 +98,7 @@ String updateUserConf = "";
 					.parseInt(request.getParameter("endToHN")),Integer
 					.parseInt(request.getParameter("endTo")),dbID);
 			updateEndS = "<p>"
-					+ "You have successfully updated the ride you wanted to"
+					+ "You have successfully updated the selected ride."
 					+ "</p>";
 		}
 
@@ -114,7 +114,7 @@ String updateUserConf = "";
 			cps.updateStartDate(Integer.parseInt(request
 					.getParameter("rideSelect")), strOutDt);
 			updateSeatConf = "<p>"
-					+ "You have successfully updated the ride you wanted to"
+					+ "You have successfully updated the selected ride."
 					+ "</p>";
 		}
 
@@ -128,7 +128,7 @@ String updateUserConf = "";
 			cps.addScore(cps.getTripID(Integer.parseInt(request
 					.getParameter("confirmForRide")), dbID), dbID, 3);
 			updateUserConf = "<p>"
-					+ "You have accepted the user you wanted to"
+					+ "You have successfully accepted the selected user."
 					+ "</p>";
 		}
 		
@@ -137,7 +137,7 @@ String updateUserConf = "";
 					.getParameter("confirmUserID")), Integer
 					.parseInt(request.getParameter("confirmForRide")));
 			updateUserConf = "<p>"
-					+ "You have removed the user you wanted to"
+					+ "You have successfully removed the selected user"
 					+ "</p>";
 		}
 
@@ -148,7 +148,7 @@ String updateUserConf = "";
 					.getParameter("withdrawUserID")), Integer
 					.parseInt(request.getParameter("withdrawRideID")));
 			updateUserConf = "<p>"
-					+ "You have withdraw from the ride you wanted to"
+					+ "You have successfully withdrawn from the selected ride."
 					+ "</p>";
 		}
 
@@ -157,7 +157,7 @@ String updateUserConf = "";
 					.getParameter("withdrawUserID")), Integer
 					.parseInt(request.getParameter("withdrawRideID")));
 			updateUserConf = "<p>"
-					+ "You have withdraw from the ride you wanted to"
+					+ "You have successfully withdrawn from the selected ride."
 					+ "</p>";
 		}
 		
@@ -376,7 +376,7 @@ String updateUserConf = "";
 					+ "<th>Departure Date</th> <th>Departure Time</th><th>Your Pick Up Point</th><th>Add Ride to Google Calendar</th> <th>Withdraw from Ride</th> <th>Link</th> </tr>"
 					+ acceptedTable + "</table>";
 		} else {
-			acceptedTable = "<div class='Box' id='Box'><p>No rides found.</p></div>";
+			acceptedTable = "<div class='Box' id='Box'><p>No rides found. Click here to <a href='"+response.encodeURL("searchRides.jsp")+"'>find a ride.</a></p></div>";
 		}
 
 		if (awaitExist) {
@@ -464,7 +464,9 @@ String updateUserConf = "";
 			entries += "<option value=" + oid + ">" + oid + "</option>";
 			lastid = oid;
 			idcount++;
+			
 		}
+		//System.out.println("idcount: "+idcount);
 		if (idcount > 1) {
 			if (entries != "") {
 				openIDTableRow = "<tr> <td>OpenId to remove:</td> <td><select multiple='multiple' NAME='openid'>"
@@ -474,14 +476,16 @@ String updateUserConf = "";
 				openIDTableForm = "<br /><h3>Current OpenIds associated with your account:</h3><div class='Box' id='Box'><FORM action='"+response.encodeURL("removeopenid")+"'> <INPUT type='hidden' name='removeopenid' /> <TABLE class='updateDetails'>"
 						+ openIDTableRow
 						+ "<tr></TABLE> <br /><p>Click here to <INPUT type='submit' value='Detach OpenId'/></p></div><br /><br />";
-		} else {
-			if (idcount == 1) {
-				openIDTableForm = "<br /><h3>Current OpenId associated with your account:</h3><div class='Box' id='Box'><TABLE class='updateDetails'><tr><td>&nbsp;</td><td>"
+			}
+		} else if (idcount == 1) {
+			//System.out.println("made form");
+				openIDTableForm = "<br /><h3>Current OpenId associated with your account:</h3><div class='Box' id='Box'><TABLE class='updateDetails'><tr><td>OpenId: </td><td>"
 						+ lastid
 						+ "</td></tr></table></div><br /><br />";
-			}
 		}
-		}
+
+	
+
 
 	} else {
 		response.sendRedirect(request.getContextPath());
