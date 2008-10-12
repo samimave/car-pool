@@ -101,6 +101,7 @@
      			  endIdx   = document.getElementById("offerFrm").streetTo.selectedIndex;
      		   	  endLoc   = document.getElementById("offerFrm").streetTo.options[endIdx].text;
      		   	  houseNum  = document.getElementById("offerFrm").houseFrom.value;
+				  destNum = document.getElementById("offerFrm").houseTo.value;
      		   	  document.getElementById("map").mapFrom.value=startLoc;
      		   	  document.getElementById("map").mapTo.value=endLoc;
      		   	  document.getElementById("map").mapHouse.value=houseNum;
@@ -108,7 +109,7 @@
      		   	  var geocoder = new GClientGeocoder();
 
      		   	  var from = houseNum + " " + startLoc + " PALMERSTON NORTH NEW ZEALAND";
-     		   	  var to = endLoc + " PALMERSTON NORTH NEW ZEALAND";
+     		   	  var to = destNum + " " + endLoc + " PALMERSTON NORTH NEW ZEALAND";
     		   	
      		   	  if(origin == "from"){geocoder.getLatLng(from, codeFrom);}
      		   	  if(origin == "to"){geocoder.getLatLng(to, codeTo);}
