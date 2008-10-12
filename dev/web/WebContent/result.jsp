@@ -249,19 +249,9 @@
 	boolean search = false;
 	boolean addRide = false;
 
-	RideListing rides = null;
+	RideListing rides = cps.getRideListing();
 
-	if (!userNull) {
-		rides = cps.searchRideListing(RideListing.searchUser, username);
-		search = true;
-	} else if (!dateNull) {
-		rides = cps.searchRideListing(RideListing.searchDate, strOutDt);
-		search = true;
-	} else {
-		search = false;
-	}
-
-	if (search && !done) {
+	if (!done) {
 		System.out.println("combo");
 		done = true;
 		while (rides.next()) {
@@ -276,7 +266,12 @@
 
 			if (!userNull && !dateNull) {
 				addRide = strTmp.equals(new SimpleDateFormat(
-						"dd/MM/yyyy").format(rides.getRideDate()));
+						"dd/MM/yyyy").format(rides.getRideDate())) && username.equals(rides.getUsername());
+			} else if(userNull && !dateNull){
+				addRide = strTmp.equals(new SimpleDateFormat(
+				"dd/MM/yyyy").format(rides.getRideDate()));
+			} else if(!userNull && dateNull){
+				addRide = username.equals(rides.getUsername());
 			} else {
 				addRide = true;
 			}
@@ -439,10 +434,10 @@
 		//find straight-line distance from the start of the ride to the end
 		StartToEnd = distance(fromLat, fromLng, toLat, toLng);
 		
-		//come up with a sensible radius to search in (3km min)
+		//come up with a sensible radius to search in (1km min)
 		double radius = StartToEnd[0] * 0.1;
-		if(radius < 1.5){
-			radius = 1.5;
+		if(radius < 1){
+			radius = 1;
 		}
 
 		//if end points are within a suitable radius
