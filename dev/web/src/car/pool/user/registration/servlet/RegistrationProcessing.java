@@ -35,7 +35,10 @@ public class RegistrationProcessing extends HttpServlet {
 	}
 	
 	private void register(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		HttpSession sessionVar = request.getSession(true);
+		HttpSession sessionVar = request.getSession(false);
+		if (sessionVar == null) {
+			System.out.println("Session is null");
+		}
 		//String loggedInAs = OpenIdFilter.getCurrentUser(request.getSession());
 		String password1 = "";
 		password1 = request.getParameter("password");
@@ -64,6 +67,8 @@ public class RegistrationProcessing extends HttpServlet {
 			return;
 		}
 		
+		RandomTextGenerator generator = new RandomTextGenerator();
+		String verifierText = generator.get(Integer.parseInt(sessionVar.getAttribute("quote_pos").toString()));
 		String verifyText = request.getParameter("verifytext").toLowerCase();
 		if(verifyText == null || verifyText.length() == 0) {
 			String param = HtmlUtils.createParameterString("error", "Please input the verifiction text displayed in the image");
@@ -71,7 +76,7 @@ public class RegistrationProcessing extends HttpServlet {
 			return;
 		}
 		
-		if(!verifyText.equals((new RandomTextGenerator().get((Integer) sessionVar.getAttribute("quote_pos")).toLowerCase()))) {
+		if(!verifyText.equals(verifierText.toLowerCase())) {
 			String param = HtmlUtils.createParameterString("error", "Please input the correct verifiction text displayed in the image");
 			response.sendRedirect(response.encodeURL(String.format("register.jsp?%s", param)));
 			return;

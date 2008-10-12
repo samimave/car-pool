@@ -52,13 +52,11 @@ public class BlurredImage extends HttpServlet {
 		Font font = new Font("Sans", Font.ITALIC, 20);
 		g2d.setFont(font);
 		RandomTextGenerator generator = new RandomTextGenerator();
-		Random r = new Random();
-		Integer pos = r.nextInt(generator.size());
-		String verifierText = generator.get(pos);
+		//System.out.println("position: "+session.getAttribute("quote_pos"));
+		String verifierText = generator.get(Integer.parseInt(session.getAttribute("quote_pos").toString()));
+		//System.out.println("text: "+verifierText);
 		g2d.scale(1.5, 1.5);
 		g2d.drawString(verifierText, 20, 50);
-		session.setAttribute("quote_pos", pos);
-		
 		try {
 			ImageIO.write(image, "png", out);		
 		} catch(IllegalArgumentException iaEx) {
