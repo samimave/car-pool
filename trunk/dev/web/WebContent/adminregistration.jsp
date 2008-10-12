@@ -66,7 +66,7 @@ if(username == null || userpass == null) {
 			<h2>Please Enter Admin Details:</h2>
 			<div class="Box" id="Box">
 			<p>Note: * indicates a required field.</p><br />
-			<form name="register" id="register" onsubmit="return checkOnSubmit('register', rules);" action="adminreg" method="post">
+			<form name="register" id="register" onsubmit="return checkOnSubmit('register', rules);" action="<%=response.encodeURL("adminreg")%>" method="post">
 				<input type="hidden" name="adminreg" value="yes"/>
 				<input type="hidden" name="username" value="<%=username %>"/>
 				<input type="hidden" name="userpass" value="<%=userpass %>"/>

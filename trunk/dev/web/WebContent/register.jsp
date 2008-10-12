@@ -1,6 +1,6 @@
 <%@page errorPage="errorPage.jsp" %>
 <%@page contentType="text/html; charset=ISO-8859-1"%>
-<%@page import="car.pool.persistance.*"%>
+<%@page import="car.pool.persistance.*, car.pool.user.registration.RandomTextGenerator, java.util.Random"%>
 
 <%
 HttpSession s = request.getSession(true);
@@ -8,6 +8,10 @@ String message = "";
 if(request.getParameter("error") != null) {
 	message = request.getParameter("error");
 }
+RandomTextGenerator generator = new RandomTextGenerator();
+Random r = new Random();
+Integer pos = r.nextInt(generator.size());
+s.setAttribute("quote_pos", pos);
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -54,7 +58,7 @@ if(request.getParameter("error") != null) {
 			<h2>Please Enter Your Details:</h2>
 			<div class="Box" id="Box">
 			<p>Note: * indicates a required field.</p><br />
-			<FORM name="register" id="register" onsubmit="return checkOnSubmit('register', rules);" method="post" action="adduser">
+			<FORM name="register" id="register" onsubmit="return checkOnSubmit('register', rules);" method="post" action="<%=response.encodeURL("adduser")%>">
 				<TABLE class="register">
 					<tr> <td>User name*:</td> <td><INPUT type="text" name="userName" size="25"/>&nbsp;&nbsp;<span id=errorsDiv_userName></span></td> </tr>
 					<tr> <td>Password*:</td> <td><INPUT type="password" name="password" size="25"/>&nbsp;&nbsp;<span id=errorsDiv_password></span></td> </tr>

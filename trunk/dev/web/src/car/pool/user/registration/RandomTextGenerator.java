@@ -2,19 +2,23 @@ package car.pool.user.registration;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 public class RandomTextGenerator {
-	private List<String> list = Collections.synchronizedList(new ArrayList<String>()); 
+	
+	private List<String> list = new LinkedList<String>();//Collections.synchronizedList(new ArrayList<String>()); 
+	
 	public RandomTextGenerator() {
 		String[] quotes = {"BLUE2", "4GREEN2D", "FROG5O", "G2BNICE", "OGLE4U", "FL4W3D", "5HARPT"};
+		
 		for(String quote : quotes) {
-			list.add(quote);
+			this.list.add(quote);
 		}
 	}
 	
 	public String get(Integer pos) {
-		return list.get(pos);
+		return this.list.get(pos);
 	}
 	
 	public void set(List<String> list) {
@@ -22,10 +26,10 @@ public class RandomTextGenerator {
 	}
 	
 	public void add(String quote) {
-		list.add(quote);
+		this.list.add(quote);
 	}
 	
 	public Integer size() {
-		return list.size();
+		return this.list.size();
 	}
 }
