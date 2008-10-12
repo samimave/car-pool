@@ -98,7 +98,7 @@
 				username);
 		
 		done = true;
-		System.out.println("user");
+		//System.out.println("user");
 
 		while (u.next()) {
 			if (!userExist) {
@@ -169,7 +169,7 @@
 
 		RideListing daTbl = cps.searchRideListing(
 				RideListing.searchDate, strOutDt);
-		System.out.println("date - "+strOutDt);
+		//System.out.println("date - "+strOutDt);
 		
 		done = true;
 
@@ -187,7 +187,7 @@
 					+ " " + daTbl.getTime();
 			Date dt = new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(d);
 			
-			System.out.println(dt.after(new Date()));
+			//System.out.println(dt.after(new Date()));
 
 			if (!avoidDuplicates.contains(daTbl.getRideID()) && dt.after(new Date())) {
 				
@@ -233,7 +233,7 @@
 			} else {
 				dateTable = "";
 			}
-			System.out.println(mapCoords);
+			//System.out.println(mapCoords);
 		}
 	}
 	
