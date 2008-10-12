@@ -448,7 +448,7 @@ String updateUserConf = "";
 			if ((feedExist)&&(!scoreDone)) {
 				feedbackTable = "<p>This rating shall remain anonymous. You are encouraged to click on the Link to Ride Page and state your opinion of the ride for the benefit of other users who want to know more about the person who offered the ride.</p>"
 						+"<table class='rideDetailsSearch'> <tr><th>Starting From</th> <th>Going To</th>"
-						+ "<th>Departure Date</th> <th>Departure Time</th><th>Link</th> <th>Rating (between -10 & 10)</th></tr>"
+						+ "<th>Departure Date</th> <th>Departure Time</th><th>Link</th> <th>Rating (between 1 & 10)</th></tr>"
 						+ feedbackTable + "</table>";
 			} else {
 				feedbackTable = "<div class='Box' id='Box'><p>No rides to provide feedback for.</p></div>";
