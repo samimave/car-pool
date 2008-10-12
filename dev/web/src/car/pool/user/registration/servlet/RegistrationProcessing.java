@@ -96,7 +96,7 @@ public class RegistrationProcessing extends HttpServlet {
 			Email mail = new Email();
 			mail.setToAddress(user.getEmail());
 			mail.setSubject("Registration for the Car Pool Service");
-			String message = String.format("Hello %s, thank you for registering with The Car Pool. We hope you find our site useful. To find out about the various things you can	do with our site have a look at the FAQ page (link here). And then log in and car pool away!", user.getUserName());
+			String message = String.format("Hello %s, thank you for registering with The Car Pool. We hope you find our site useful. To find out about the various things you can	do with our site have a look at the FAQ page http://%s:%d%s/faq.jsp. And then log in and car pool away!", user.getUserName(), request.getLocalName(), request.getLocalPort(), request.getContextPath());
 			mail.setMessage(message);
 			try {
 				SMTP.send(mail);

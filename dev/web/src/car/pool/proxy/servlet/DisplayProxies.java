@@ -25,8 +25,10 @@ public class DisplayProxies extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Database db = new DatabaseImpl();
 		PrintWriter out = response.getWriter();
+		out.print("<html><body><head>\n");
+		out.format("<script type=\"text/javascript\">\n<!--\n%s\n-->\n</script>", createAjax());
+		out.print("</head><body>\n");
 		try {
-			out.format("<script type=\"text/javascript\">\n<!--\n%s\n-->\n</script>", createAjax());
 			ResultSet results = db.getStatement().executeQuery("select * from proxyaddress;");
 			out.print("<table class=\"proxy\" id=\"proxy\">");
 			out.print("<tr><th>IP Address</th><th>Port</th><th>Proxy Types</th></tr>");
@@ -53,7 +55,7 @@ public class DisplayProxies extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		out.print("</body></html>\n");
 	}
 
 
