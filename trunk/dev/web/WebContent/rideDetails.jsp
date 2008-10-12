@@ -223,7 +223,7 @@
        				</SELECT></td> </tr>
 			</TABLE>
 			<br />
-			<p>Click here to <INPUT type="submit" name="joinRide" value="Take Ride" size="25"></p>
+			<p>Click here to <INPUT type="submit" name="joinRide" value="Register Interest in Ride" size="25"></p>
 		</FORM>
 		</div>
 		<br /><br />
