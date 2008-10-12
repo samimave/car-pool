@@ -44,8 +44,8 @@
 				driverID = u.getUserID();
 				detailsTable += "<tr> <td>Ride Offered By:</td>  <td>" + "<a href='"+response.encodeURL(request.getContextPath()+"/profile.jsp?profileId="+ u.getUserID())+"'>"+u.getUsername()+ "</a></td></tr>";
 				//detailsTable += "<tr> <td>Ride Offered By:</td>  <td>"	+ u.getUsername() + "</td></tr> ";
-				detailsTable += "<tr> <td> Start Region: </td> <td>"+ u.getStreetStart()+" "+ from + "</td> </tr>";
-				detailsTable += "<tr> <td> Stop Region: </td> <td>"	+ u.getStreetEnd()+" "+ to + "</td></tr> ";
+				detailsTable += "<tr> <td> Starting From: </td> <td>"+ u.getStreetStart()+" "+ from + "</td> </tr>";
+				detailsTable += "<tr> <td> Going to: </td> <td>"	+ u.getStreetEnd()+" "+ to + "</td></tr> ";
 				detailsTable += "<tr> <td>Date: </td> <td>"	+ new SimpleDateFormat("dd/MM/yyyy").format(u.getRideDate()) + "</td></tr> ";
 				detailsTable += "<tr> <td> Time: </td> <td>"+ u.getTime() + "</td> </tr>";
 				detailsTable += "<tr> <td> Seats: </td> <td>"+ u.getAvailableSeats() + "</td> </tr>";
@@ -222,6 +222,8 @@
 	                	<%=options%>
        				</SELECT></td> </tr>
 			</TABLE>
+			<p>Note: if you can meet the driver at their starting point then specify that same starting point
+			 as the pick-me-up.</p> 
 			<br />
 			<p>Click here to <INPUT type="submit" name="joinRide" value="Register Interest in Ride" size="25"></p>
 		</FORM>
