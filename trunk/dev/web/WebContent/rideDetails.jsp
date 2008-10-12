@@ -209,6 +209,7 @@
 			<INPUT type="hidden" name="mapVia"  value= "<%=viaAddress%>" >
 		</FORM>
 		</div>
+		<% if (driverID != dbID) { %>
 		<br /><br />
 		<h2>Take Ride:</h2>
 		<div class="Box" id="Box">
@@ -228,6 +229,10 @@
 			<p>Click here to <INPUT type="submit" name="joinRide" value="Register Interest in Ride" size="25"></p>
 		</FORM>
 		</div>
+		<% } 
+		//System.out.println("driver: "+driverID);
+		//System.out.println("user: "+dbID);
+		%>
 		<br /><br />
 		<h2>Ride Comments:</h2>
 		<div class="Box" id="Box">

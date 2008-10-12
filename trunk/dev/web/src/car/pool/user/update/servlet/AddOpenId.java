@@ -19,7 +19,7 @@ public class AddOpenId extends HttpServlet {
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		if(request.getParameter("addopenid") != null && session.getAttribute("signedin") != null) {
 			String openid = request.getParameter("openid");
 			User user = (User) session.getAttribute("user");
