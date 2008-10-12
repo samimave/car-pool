@@ -26,7 +26,7 @@ public class DisplayProxies extends HttpServlet {
 		Database db = new DatabaseImpl();
 		PrintWriter out = response.getWriter();
 		out.print("<html><body><head>\n");
-		out.format("<script type=\"text/javascript\">\n<!--\n%s\n-->\n</script>", createAjax());
+		out.format("<script type=\"text/javascript\">\n<!--\n%s\n//-->\n</script>", createAjax());
 		out.print("</head><body>\n");
 		try {
 			ResultSet results = db.getStatement().executeQuery("select * from proxyaddress;");
