@@ -39,7 +39,6 @@ if(s.getAttribute("signedin") != null ) {
 <li><a href="#noStreet">I can't find the street I want...</a></li>
 <li><a href="#social">How does the Social Scoring system work?</a></li>
 <li><a href="#map">Why won't the Google Map display correctly for me?</a></li>
-<li><a href="#site">Why won't the site let me log in?</a></li>
 <li><a href="#browser">What browsers is this site compatible with?</a></li>
 </ul>
 -----------------------------------------------------------------------------------------------------------------------
@@ -80,11 +79,11 @@ and if you trust them you can confirm or reject a user. If you confirm a user th
 of users approved for that ride.<br/><br/>
 <h2><a name="findRide">How can I find rides?</a></h2>
 You can click on the --Find a Ride-- link in the menu on the left. Clicking on --Show All Rides-- will show you all the current rides on offer. 
----other info to be added here after Ben's search nearby rides is done---
+You can also search using criteria such as date, username and locations.
 <br/><br/>
 <h2><a name="acceptRide">How do I accept a ride?</a></h2>
 After you have searched for rides. Click on the link that leads to more details of a ride that you are interested in.
-There you can accept a ride by clicking on Take Ride after you have added details about where you would like to be picked up from.
+There you can accept a ride by clicking on Register Interest for Ride after you have added details about where you would like to be picked up from.
 It is then up to the person who offered you the ride to decide if they can indeed pick you up from that location. It is best to discuss
 details on the ride page through comments before taking a ride. You will receive an email when you are accepted by the driver of the ride or
 rejected.<br/><br/>
@@ -94,17 +93,14 @@ then we will consider expanding it first to all regions in Manawatu and then per
 <br/><br/>
 <h2><a name="noStreet">I can't find the street I want...</a></h2>
 We aim to ensure that our information about the streets is up to date. However if you know a street exists that we
-do not have in our database please email us at --what email?-- and we will add it to the database as soon as we can.
+do not have in our database please email us at carpoolproject@gmail.com and we will add it to the database as soon as we can.
 <br/><br/>
 <h2><a name="social">How does the Social Scoring system work?</a></h2>
 Your social score enables other members in the community to find out how reliable you are.
-It depends on how many rides you have offered and how many people have taken your rides.
+It depends on how many rides you have offered, how many people you have confirmed for your ride and the rating those riders give you.
 <br/><br/>
 <h2><a name="map">Why won't the Google Map display correctly for me?</a></h2>
 This could be because your browser does not support Google Maps. Currently Google Maps should display fine on Firefox 3.0.1, Opera 9.52 and Internet Explorer 8.
-<br/><br/>
-<h2><a name="site">Why won't the site let me log in?</a></h2>
-Are you sure you have cookies enabled? This site requires cookies to be enabled.
 <br/><br/>
 <h2><a name="browser">What browsers is this site compatible with?</a></h2>
 This site should work well on Firefox 3.0.1, Opera 9.52 and Internet Explorer 8. You can also use this site through other browsers
