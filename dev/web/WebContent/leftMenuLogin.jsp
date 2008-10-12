@@ -9,7 +9,7 @@
 		   		<tr><td>&nbsp;</td><td><INPUT type="submit" value="Login"/></td></tr>
 			</table>
 	</FORM>
-	<p>Want to know more about OpenId? <a href="http://openid.net/">Click here.</a></p><br /><br />
+	<p>Want to know more about OpenId? <a href="http://openid.net/" target="_blank">Click here.</a></p><br /><br />
  
 	<p>Or Log in via your username and password:</p>
 	<form class="login" id="passwordlogin" name="passwordlogin" onsubmit="return yav.performCheck(passwordlogin, norm_login_rules, 'classic');" action="<%=response.encodeURL("login")%>" method="post">
