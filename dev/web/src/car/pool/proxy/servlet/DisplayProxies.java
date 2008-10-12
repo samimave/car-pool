@@ -10,9 +10,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import car.pool.persistance.Database;
 import car.pool.persistance.DatabaseImpl;
+import car.pool.user.User;
 
 public class DisplayProxies extends HttpServlet {
 	private static final long serialVersionUID = -3663186030520570646L;
@@ -23,39 +25,54 @@ public class DisplayProxies extends HttpServlet {
 	
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Database db = new DatabaseImpl();
-		PrintWriter out = response.getWriter();
-		out.print("<html><body><head>\n");
-		out.format("<script type=\"text/javascript\">\n<!--\n%s\n//-->\n</script>", createAjax());
-		out.print("</head><body>\n");
-		try {
-			ResultSet results = db.getStatement().executeQuery("select * from proxyaddress;");
-			out.print("<table class=\"proxy\" id=\"proxy\">");
-			out.print("<tr><th>IP Address</th><th>Port</th><th>Proxy Types</th></tr>");
-			while(results.next()) {
-				displayRow(out, results);
+		HttpSession session = request.getSession(false);
+		if(session.getAttribute("signedin") != null) {
+			User user = (User)session.getAttribute("user");
+			if(user.getUserName().toLowerCase().startsWith("admin")) {
+				Database db = new DatabaseImpl();
+				PrintWriter out = response.getWriter();
+				//out.println("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
+				//out.println("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">");
+				out.println("<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\">");
+				out.println("<head>\n<title>Proxy List</title>");
+				out.format("<script type=\"text/javascript\">\n<!--//\n%s\n", createAjax());
+				out.format("%s\n", createDeleteFunction());
+				out.print("    function setupproxy(form) {\n");
+				out.print("        var url = \"setupproxy?proxysetup=yes&ipaddress=\"+form.ipaddr.value+\"&port=\"+form.port.value+\"&ptypes=\"+form.ptypes.value;\n");
+				out.print("        request.open(\"GET\", url, false);\n");
+				out.print("        request.send( null );\n");
+				out.print("        var response = request.responseText;\n");
+				out.print("        if(response == \"false\") {\n");
+				out.println("            alert(\"Failed to add proxy to list\");");
+				out.println("        }");
+				out.print("        window.location.reload();\n");
+				out.print(         "return false;\n");
+				out.print("     }\n");
+				out.println("//-->");
+				out.print("</script>\n");
+				out.print("</head><body>\n");
+				try {
+					ResultSet results = db.getStatement().executeQuery("select * from proxyaddress;");
+					out.print("<table class=\"proxy\" id=\"proxy\">");
+					out.print("<tr><th>IP Address</th><th>Port</th><th>Proxy Types</th></tr>");
+					while(results.next()) {
+						displayRow(out, results);
+					}
+					//out.println("</table>");
+					out.println("<div><form action=\"javascript:void(0)\" onsubmit=\"return setupproxy(this)\"><tr><td><input type=\"text\" name=\"ipaddr\" size=\"10\"/></td><td><input type=\"text\" name=\"port\" size=\"10\"/></td><td><input type=\"text\" name=\"ptypes\" size=\"10\"/></td><td><input value=\"Add\" type=\"submit\"/></td></tr></table></form></div>");
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				out.print("</body></html>\n");
+			} else {
+				response.sendRedirect(response.encodeURL("welcome.jsp"));
+				return;
 			}
-			out.print("<script type=\"text/javascript\">\n<!--\n");
-			out.print("    function setupproxy(form) {\n");
-			out.print("        var url = \"setupproxy?proxysetup=yes&ipaddress=\"+form.ipaddr.value+\"&port=\"+form.port.value+\"&ptypes=\"+form.ptypes.value;\n");
-			out.print("        request.open(\"GET\", url, false);\n");
-			out.print("        request.send( null );\n");
-			out.print("        var response = request.responseText;\n");
-			out.print("        if(response == \"false\") {\n");
-			out.print("            alert(\"Failed to add proxy to list\");");
-			out.print("        }");
-			out.print("        window.location.reload();\n");
-			out.print(         "return false;\n");
-			out.print("     }\n");
-			out.print("//-->");
-			out.print("</script>\n");
-			out.print("<form action=\"javascript:void(0)\" onsubmit=\"return setupproxy(this)\"><tr><td><input type=\"text\" name=\"ipaddr\" size=\"10\"/></td><td><input type=\"text\" name=\"port\" size=\"10\"/></td><td><input type=\"text\" name=\"ptypes\" size=\"10\"/></td><td><input value=\"Add\" type=\"submit\"/></td></tr>");
-			out.println("</table>");
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} else {
+			response.sendRedirect(response.encodeURL(""));
+			return;
 		}
-		out.print("</body></html>\n");
 	}
 
 
@@ -83,18 +100,17 @@ public class DisplayProxies extends HttpServlet {
 
 	private void displayRow(PrintWriter out, ResultSet results) {
 		try {
-			out.format("<script type=\"text/javascript\">\n<!--\n%s\n//--></script>", createDeleteFunction(results.getString(1),results.getString(2), results.getString(3)));
-			out.format("<tr><td>%s</td><td>%s</td><td>%s</td><td><button value=\"Delete\" type=\button\" onclick=\"del%s%s()\">Delete</button></td></tr>", results.getString(1),results.getString(2),results.getString(3),results.getString(1),results.getString(2));
+			out.format("<tr><td>%s</td><td>%s</td><td>%s</td><td><button value=\"Delete\" type=\"button\" onclick=\"delproxy('%s','%s','%s')\">Delete</button></td></tr>", results.getString(1),results.getString(2),results.getString(3),results.getString(1),results.getString(2), results.getString(3));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
 
-	private String createDeleteFunction(String ip, String port, String types) {
+	private String createDeleteFunction() {
 		Formatter builder = new Formatter();
-		builder.format("function del%s%s() {\n", ip,port);
-		builder.format("var url = \"setupproxy?proxydelete=yes&ipaddress=%s&port=%s&ptypes=%s\";\n", ip, port, types);
+		builder.format("function delproxy(ip, port, ptypes) {\n");
+		builder.format("var url = \"setupproxy?proxydelete=yes&ipaddress=\"+ip+\"&port=\"+port+\"&ptypes=\"+ptypes;\n");
 		builder.format("request.open(\"GET\", url, false);\n");
 		builder.format("request.send( null );\n");
 		builder.format("var response = request.responseText;\n");
