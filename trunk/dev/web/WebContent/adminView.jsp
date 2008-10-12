@@ -147,7 +147,7 @@
 			</form>
 			<h2>Setup Proxy Configuration</h2>
 			<h3>Current settings</h3>
-			<object data="displayproxies" type="text/html" width="1000">If you are IE then it is no wonder you are seeing this. </object>
+			<object data="displayproxies" type="text/html" width="500" height="300">Sorry your browser don't spport this tag</object>
 			</div>
 			<br /> <br /> 
 			<h2>Users and Rides in the System:</h2>
