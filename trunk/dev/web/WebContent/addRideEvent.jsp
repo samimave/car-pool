@@ -144,8 +144,8 @@
 	<%@ include file="heading.html" %>
 
     <div class="Content" id="Content">
-		Please wait while we transfer you to the Google Calendar site..
-		<img src="google.jpg">
+		<p>Please wait while we transfer you to the <img src="images/googleCalendar.gif" width="50" height="20" /> Calendar site..</p>
+		
 	</div>
 
 	<%@ include file="leftMenu.jsp" %>
