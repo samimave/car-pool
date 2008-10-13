@@ -1,4 +1,4 @@
-<%//@page errorPage="errorPage.jsp"%>
+<%@page errorPage="errorPage.jsp"%>
 <%@page contentType="text/html; charset=ISO-8859-1" %>
 <%@page import="org.verisign.joid.consumer.OpenIdFilter,car.pool.persistance.*,car.pool.user.*,java.util.*,java.text.*" %>
 <%
@@ -213,7 +213,7 @@
 		<br /><br />
 		<h2>Take Ride:</h2>
 		<div class="Box" id="Box">
-		<FORM name="ride" action="<%=response.encodeURL("myDetails.jsp") %>" method="post">
+		<FORM name="ride" action="<%=response.encodeURL("myRideDetails.jsp") %>" method="post">
 			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect")%>">
 			<h3>Please Pick Me Up From:</h3>
 			<TABLE class='rideD'>
