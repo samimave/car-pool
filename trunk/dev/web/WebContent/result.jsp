@@ -10,7 +10,7 @@
 	User user = null;
 	String Sto = "";
 	String Sfrom = "";
-	String strTmp = "";
+	String dateString = "";
 	String username = "";
 	String rideTable = "";
 	CarPoolStore cps = new CarPoolStoreImpl();
@@ -30,19 +30,20 @@
 	//date formatting for use by db 
 	//dd/MM/yyyy -> yyyy-MM-dd
 	String strOutDt = "no date entered";
-	strTmp = request.getParameter("searchDate");
-	if (!strTmp.isEmpty()) {
-		Date dtTmp = new SimpleDateFormat("dd/MM/yyyy").parse(strTmp);
+	dateString = request.getParameter("searchDate");
+	if (!dateString.isEmpty()) {
+		Date dtTmp = new SimpleDateFormat("dd/MM/yyyy").parse(dateString);
 		strOutDt = new SimpleDateFormat("yyyy-MM-dd").format(dtTmp);
 	} else {
-		strTmp = "no date was entered";
+		dateString = "no date was entered";
 	}
 
 	//FROM AND TO
 
 	String fromIdx = request.getParameter("streetFrom");
 	String toIdx = request.getParameter("streetTo");
-
+	System.out.println("f: "+fromIdx+"; t: "+toIdx);
+	
 	if (fromIdx.contains("Select a Street")) {
 		Sfrom = "no location entered";
 	} else {
@@ -77,7 +78,7 @@
 	String mapCoords = "";
 
 	boolean userNull = username.equals("no username entered");
-	boolean dateNull = strTmp.equals("no date was entered");
+	boolean dateNull = dateString.equals("no date was entered");
 	boolean locsNull = Sto.equals("no location entered") && Sfrom.equals("no location entered");
 
 	boolean anythingElse;
@@ -252,32 +253,27 @@
 	RideListing rides = cps.getRideListing();
 
 	if (!done) {
-		System.out.println("combo");
+		//System.out.println("combo");
 		done = true;
 		while (rides.next()) {
 
 			String from = rides.getStartLocation();
 			String to = rides.getEndLocation();
 
-			String d = new SimpleDateFormat("dd/MM/yyyy").format(rides
-					.getRideDate())
-					+ " " + rides.getTime();
+			String d = new SimpleDateFormat("dd/MM/yyyy").format(rides.getRideDate())+ " " + rides.getTime();
 			Date dt = new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(d);
 
 			if (!userNull && !dateNull) {
-				addRide = strTmp.equals(new SimpleDateFormat(
-						"dd/MM/yyyy").format(rides.getRideDate())) && username.equals(rides.getUsername());
+				addRide = dateString.equals(new SimpleDateFormat("dd/MM/yyyy").format(rides.getRideDate())) && username.equals(rides.getUsername());
 			} else if(userNull && !dateNull){
-				addRide = strTmp.equals(new SimpleDateFormat(
-				"dd/MM/yyyy").format(rides.getRideDate()));
+				addRide = dateString.equals(new SimpleDateFormat("dd/MM/yyyy").format(rides.getRideDate()));
 			} else if(!userNull && dateNull){
 				addRide = username.equals(rides.getUsername());
 			} else {
 				addRide = true;
 			}
 
-			if (!avoidDuplicates.contains(rides.getRideID())
-					&& dt.after(new Date()) && addRide) {
+			if (!avoidDuplicates.contains(rides.getRideID())&& dt.after(new Date()) && addRide) {
 
 				avoidDuplicates.add(rides.getRideID());
 				if(locsNull){
@@ -286,34 +282,20 @@
 					geoCodes.add(rideNum + ">" + rides.getGeoLocation());
 				}
 				rideNum++;
+				System.out.println("mapCoords: |"+mapCoords+"|");
 				
 				if (user != null) {
-				tempTable += "<tr> <td>"
-						+ "<a href='"
-						+ response.encodeURL(request.getContextPath()
-								+ "/profile.jsp?profileId="
-								+ rides.getUserID()) + "'>"
-						+ rides.getUsername() + "</a></td>";
+				tempTable += "<tr> <td>"+ "<a href='"+ response.encodeURL(request.getContextPath()+ "/profile.jsp?profileId="+ rides.getUserID()) + "'>"+ rides.getUsername() + "</a></td>";
 				} else {
 					tempTable += "<tr> <td>" + rides.getUsername() + "</td>";
 				}
 				tempTable += "<td>" + from + "</td> ";
 				tempTable += "<td>" + to + "</td> ";
-				tempTable += "<td>"
-						+ new SimpleDateFormat("dd/MM/yyyy")
-								.format(rides.getRideDate()) + "</td> ";
+				tempTable += "<td>"+ new SimpleDateFormat("dd/MM/yyyy").format(rides.getRideDate()) + "</td> ";
 				tempTable += "<td>" + rides.getTime() + "</td> ";
-				tempTable += "<td>" + rides.getAvailableSeats()
-						+ "</td> ";
+				tempTable += "<td>" + rides.getAvailableSeats()	+ "</td> ";
 				if (user != null) {
-					tempTable += "<td> <a href='"
-							+ response.encodeURL(request
-									.getContextPath()
-									+ "/rideDetails.jsp?rideselect="
-									+ rides.getRideID()
-									+ "&userselect="
-									+ rides.getUsername()) + "'>"
-							+ "Link to ride page" + "</a> </td> </tr>";
+					tempTable += "<td> <a href='"+ response.encodeURL(request.getContextPath()+ "/rideDetails.jsp?rideselect="+ rides.getRideID()+ "&userselect="+ rides.getUsername()) + "'>"+ "Link to ride page" + "</a> </td> </tr>";
 				} else {
 					tempTable += "<td>login to view more</td> </tr>";
 				}
@@ -330,22 +312,20 @@
 
 		}
 		if(!locsNull){
-			String[] matches = getMatches(geoCodes, request
-					.getParameter("fromCoord"), request
-					.getParameter("toCoord"), userNull, dateNull);
+			String[] matches = getMatches(geoCodes, request.getParameter("fromCoord"), request.getParameter("toCoord"), userNull, dateNull);
 			String[] rideIDs = matches[0].split(",");
 			mapCoords = matches[1];
-			System.out.println("table" + rideIDs.length);
+			//System.out.println("table" + rideIDs.length);
 			if(!rideIDs[0].equals("")){
 				if (rideIDs.length > 0) {
 					for (int i = 0; i < rideIDs.length; i++) {
 						comboTable += cTable.get(Integer.parseInt(rideIDs[i]));
-						System.out.println(i + " " + rideIDs[i]);
+						//System.out.println(i + " " + rideIDs[i]);
 					}
 				}
 			}
 		}
-
+		System.out.println("mapCoords: |"+mapCoords+"|");
 		
 	}
 
@@ -513,7 +493,7 @@
 			<TABLE class="rideSearch">
 				<tr><td>Location from:</td> <td><%=Sfrom%></td></tr>
 				<tr><td>Location to:</td> <td><%=Sto%></td></tr>
-				<tr><td>Date:</td> <td><%=strTmp%></td></tr>
+				<tr><td>Date:</td> <td><%=dateString%></td></tr>
 				<tr><td>User:</td> <td><%=username%></td>
 			</TABLE>
 		</FORM>

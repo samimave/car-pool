@@ -44,7 +44,7 @@ public class BlurredImage extends HttpServlet {
 		g2d.fillRoundRect(0, 0, 200, 100, 10, 10);
 		g2d.setStroke(new BasicStroke(3, BasicStroke.CAP_ROUND, BasicStroke.JOIN_MITER));
 		g2d.setColor(Color.blue);
-		int[] arr = {5,25,35,45,55,65,75,85};
+		int[] arr = {5,25,45,65,85,105};
 		for(int i: arr) {
 			g2d.drawOval(i, 5, 100, 100);
 		}

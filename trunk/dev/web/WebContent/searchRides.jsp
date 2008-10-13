@@ -112,7 +112,7 @@
 		search. Rides matching any of the entered information will be displayed.</p>
 		<br />
 		<p>
-		Note: If a departure street is entered then a destination street must also be entered. Also a username or date must always be entered.
+		Note: If a departure street is entered then a destination street must also be entered.
 		</p>
 		<br />
 		<h3>Search Criteria:</h3>

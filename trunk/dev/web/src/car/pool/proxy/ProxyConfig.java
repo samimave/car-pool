@@ -30,7 +30,7 @@ public class ProxyConfig extends ProxySelector {
 	public ProxyConfig(ProxySelector def) throws IOException, SQLException {
 		defsel = def;
 		setProxies();
-		System.out.format("ProxyConfig with proxies: %s\n", proxies.toString());
+		//System.out.format("ProxyConfig with proxies: %s\n", proxies.toString());
 	}
 	
 	/**
@@ -124,7 +124,7 @@ public class ProxyConfig extends ProxySelector {
 			throw new IllegalArgumentException("URI can't be null.");
 		}
 		
-		System.out.format("ProxyConfig.select: uri = %s\n", uri.toString());
+		//System.out.format("ProxyConfig.select: uri = %s\n", uri.toString());
 		
 		String protocol = uri.getScheme();
 		if (("http".equalsIgnoreCase(protocol) ||
