@@ -333,7 +333,7 @@
 		<%=updateDateConf%>
 		<%=updateUserConf%>
 		<% response.sendRedirect(request.getParameter("reDirURL"));%>
-	<p>-- <a href="<%=response.encodeURL("myDetails.jsp") %>">Back to Account page</a> --</p>	
+	<p>-- <a href="<%=response.encodeURL("myRideDetails.jsp") %>">Back to Account page</a> --</p>	
 	</DIV>
 
 	<%@ include file="leftMenu.jsp" %>

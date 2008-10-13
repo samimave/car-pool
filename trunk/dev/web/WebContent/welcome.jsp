@@ -77,7 +77,10 @@
 			<p>Your current social score is <%=cps.getScore((user.getUserId()))%></p>
 			<p>Your have offered <%=rideCount%> rides in total so far!</p>
 			<p>Your have <%=requestCount%> users awaiting approval for rides you have offered!</p>
-			<p>Click  <a href="<%=response.encodeURL("myDetails.jsp") %>">here</a> to access your account page and approve them or edit your details.</p>
+			<%if (requestCount > 0) { %>
+			<p>Click <a href="<%=response.encodeURL("myRideDetails.jsp") %>">here</a> to view their requests.</p>
+			<%} %>
+			<p>Click <a href="<%=response.encodeURL("myDetails.jsp") %>">here</a> to access your account page.</p>
 		</div>
 		<br /> <br /> <br />
 		<p>-- <a href="<%=response.encodeURL("logout.jsp") %>">Logout</a> --</p>

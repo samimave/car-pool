@@ -97,11 +97,15 @@
 	<br />
 	<h2>Manual Search:</h2>
 	<div class="Box" id="Box">
+		<p>You have the option of perusing the list of all available rides in the database to get a feel
+		for what's out there or just for fun. Searching rides with the click of one button has never been 
+		easier!</p>
+		<br />
 		<p>There are currently <%=rideCount%> rides in the database!</p>
 		<br />
-		<FORM name="showAll" id="showAll" method="post" action="<%=response.encodeURL("resultall.jsp")%>">
+		<FORM name="showAll" id="showAll" action="<%=response.encodeURL("resultall.jsp")%>" method="post">
 			<INPUT type="hidden" name="showAll" value="yes" />
-			<p>Click here to <INPUT TYPE="submit" NAME="all" VALUE="Show All Rides"	SIZE="25"></p>
+			<p>Click here to <INPUT TYPE="submit" NAME="all" VALUE="Show All Rides"	SIZE="25" /></p>
 		</FORM>
 	</div>
 	<br />
@@ -118,7 +122,6 @@
 		<br />
 		<h3>Search Criteria:</h3>
 		<div class="Box" id="Box">
-		<p>Please enter the search criteria in the boxes below and click search rides.</p> 
 		<FORM NAME="searchFrm" id="searchFrm" onsubmit="return yav.performCheck('searchFrm', rules, 'inline');" action="<%=response.encodeURL("result.jsp")%>" method="post" >
 		<INPUT TYPE="hidden" NAME="fromCoord"> 
 		<INPUT TYPE="hidden" NAME="toCoord">
