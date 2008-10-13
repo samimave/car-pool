@@ -42,7 +42,7 @@ String updateUserConf = "";
 
 		
 		
-		//if you have been redirected here from deleting a ride print useful info
+		//if you have been redirected here from deleting a ride remove the ride
 		if (request.getParameter("rideSelect") != null
 				&& request.getParameter("remRide") != null) {
 			boolean yes = cps.removeRide(Integer.parseInt(request
@@ -52,7 +52,7 @@ String updateUserConf = "";
 					+ yes+"</p>";
 		}
 
-		//if you have been redirected here from editing a ride print useful info
+		//if you have been redirected here from editing the seats of a ride edit it
 		if (request.getParameter("rideSelect") != null
 				&& request.getParameter("numSeats") != null) {
 			int seat = Integer.parseInt(request
@@ -65,7 +65,7 @@ String updateUserConf = "";
 					+ "</p>";
 		}
 
-		//if you have been redirected here from editing a ride print useful info
+		//if you have been redirected here from editing a ride time edit it
 		if (request.getParameter("rideSelect") != null
 				&& request.getParameter("Rtime") != null) {
 			cps.updateStartTime(Integer.parseInt(request
@@ -76,7 +76,7 @@ String updateUserConf = "";
 					+ "</p>";
 		}
 
-		//if you have been redirected here from editing a ride print useful info && request.getParameter("Rseats") != null
+		//if you have been redirected here from editing a ride's start loc edit it
 		if (request.getParameter("rideSelect") != null
 				&& request.getParameter("startFromHN") != null
 				&& request.getParameter("startFrom") != null) {
@@ -89,7 +89,7 @@ String updateUserConf = "";
 					+ "</p>";
 		}
 
-		//if you have been redirected here from editing a ride print useful info && request.getParameter("Rseats") != null
+		//if you have been redirected here from editing a ride's end loc edit it
 		if (request.getParameter("rideSelect") != null
 				&& request.getParameter("endToHN") != null
 				&& request.getParameter("endTo") != null) {
@@ -102,7 +102,7 @@ String updateUserConf = "";
 					+ "</p>";
 		}
 
-		//if you have been redirected here from editing a ride print useful info && request.getParameter("Rseats") != null
+		//if you have been redirected here from editing a ride date edit it
 		if (request.getParameter("rideSelect") != null
 				&& request.getParameter("Rdate") != null) {
 			String strTmp = request.getParameter("Rdate");
@@ -118,7 +118,6 @@ String updateUserConf = "";
 					+ "</p>";
 		}
 
-		//if you have been redirected here from accepting a user print useful info
 		//IF YOU ACCEPTED OR REJECTED A USER UPDATE DATABASE
 		if (request.getParameter("confirmUser") != null) {
 			cps.acceptUser(Integer.parseInt(request
@@ -141,7 +140,6 @@ String updateUserConf = "";
 					+ "</p>";
 		}
 
-		//if you have been redirected here from withdraw the user from ride print useful info
 		//IF YOU WITHDRAW YOURSELF FROM THE RIDE YOU HAVE TAKEN OR THE RIDE YOU HAVE REQUESTED UPDATE DATABASE
 		if (request.getParameter("withdrawConfirmedRide") != null) {
 			cps.removeRide(Integer.parseInt(request
@@ -162,7 +160,7 @@ String updateUserConf = "";
 		}
 		
 		
-		//USER JUST TOOK A RIDE
+		//user just Registered interest in a ride
 		if (request.getParameter("rideSelect") != null
 				&& request.getParameter("streetTo") != null
 				&& request.getParameter("houseNo") != null) {
@@ -170,7 +168,7 @@ String updateUserConf = "";
 					.getParameter("rideSelect")), Integer
 					.parseInt(request.getParameter("streetTo")),
 					Integer.parseInt(request.getParameter("houseNo")),
-					Integer.parseInt(request.getParameter("houseNo"))); //TODO: house end number?
+					Integer.parseInt(request.getParameter("houseNo"))); 
 			LocationList locations = cps.getLocations();
 			String target = "";
 			while (locations.next()) {
@@ -198,6 +196,7 @@ String updateUserConf = "";
 					+ "You have requested to be picked up from "
 					+ request.getParameter("houseNo") + " " + target
 					+ " at " + tm + " on " + dt + "</p>";
+			//emails sent to driver and user
 			try {
 				Integer id = new Integer(rl2.getUserID());
 				UserManager manager = new UserManager();
@@ -223,15 +222,45 @@ String updateUserConf = "";
 			}
 		}
 		
-		
-		//PROVIDING FEEDBACK TO SOME DRIVER
+		//Changing social score of driver based on rating user gave them
+		//1  2  3  4  5  6  7  8  9  10   <<<<< what user posts
+		//-4 -3 -2 -1 0  0  1  2  3  4    <<<<< how the score changes based on that
 		if ((request.getParameter("feedbackRide")!=null) && (request.getParameter("rideRate")!=null)){
-			cps.addScore(cps.getTripID(Integer.parseInt(request.getParameter("FdbckForRide")), currentUser), Integer.parseInt(request.getParameter("DriverUserID")), Integer.parseInt(request.getParameter("rideRate")));
+			if (Integer.parseInt(request.getParameter("rideRate"))== 1){
+				cps.addScore(cps.getTripID(Integer.parseInt(request.getParameter("FdbckForRide")), currentUser), Integer.parseInt(request.getParameter("DriverUserID")), -4 );//Integer.parseInt(request.getParameter("rideRate"))
+			}
+			if (Integer.parseInt(request.getParameter("rideRate"))== 2){
+				cps.addScore(cps.getTripID(Integer.parseInt(request.getParameter("FdbckForRide")), currentUser), Integer.parseInt(request.getParameter("DriverUserID")), -3 );
+			}
+			if (Integer.parseInt(request.getParameter("rideRate"))== 3){
+				cps.addScore(cps.getTripID(Integer.parseInt(request.getParameter("FdbckForRide")), currentUser), Integer.parseInt(request.getParameter("DriverUserID")), -2 );
+			}
+			if (Integer.parseInt(request.getParameter("rideRate"))== 4){
+				cps.addScore(cps.getTripID(Integer.parseInt(request.getParameter("FdbckForRide")), currentUser), Integer.parseInt(request.getParameter("DriverUserID")), -1 );
+			}
+			if (Integer.parseInt(request.getParameter("rideRate"))== 5){
+				cps.addScore(cps.getTripID(Integer.parseInt(request.getParameter("FdbckForRide")), currentUser), Integer.parseInt(request.getParameter("DriverUserID")), 0 );
+			}
+			if (Integer.parseInt(request.getParameter("rideRate"))== 6){
+				cps.addScore(cps.getTripID(Integer.parseInt(request.getParameter("FdbckForRide")), currentUser), Integer.parseInt(request.getParameter("DriverUserID")), 0 );
+			}
+			if (Integer.parseInt(request.getParameter("rideRate"))== 7){
+				cps.addScore(cps.getTripID(Integer.parseInt(request.getParameter("FdbckForRide")), currentUser), Integer.parseInt(request.getParameter("DriverUserID")), 1 );
+			}
+			if (Integer.parseInt(request.getParameter("rideRate"))== 8){
+				cps.addScore(cps.getTripID(Integer.parseInt(request.getParameter("FdbckForRide")), currentUser), Integer.parseInt(request.getParameter("DriverUserID")), 2 );
+			}
+			if (Integer.parseInt(request.getParameter("rideRate"))== 9){
+				cps.addScore(cps.getTripID(Integer.parseInt(request.getParameter("FdbckForRide")), currentUser), Integer.parseInt(request.getParameter("DriverUserID")), 3 );
+			}
+			if (Integer.parseInt(request.getParameter("rideRate"))== 10){
+				cps.addScore(cps.getTripID(Integer.parseInt(request.getParameter("FdbckForRide")), currentUser), Integer.parseInt(request.getParameter("DriverUserID")), 4 );
+			}
 		}
 		
+		//-------- Find the rides a user has offered and if there are users awaiting approval for those rides ----------//
 		
 		RideListing rl = cps.searchRideListing(RideListing.searchUser,nameOfUser);
-	
 		while (rl.next()) {
 			if (!userExist) {
 				userTable = ""; //first time round get rid of unwanted text
@@ -251,7 +280,7 @@ String updateUserConf = "";
 			//getting the ride info
 			String from = rl.getStartLocation();
 			String to = rl.getEndLocation();
-			//userTable += "<tr> <td>" + rl.getUsername() + "</td> ";
+			
 			userTable += "<tr><td>" + rl.getStreetStart() + " " + from
 					+ "</td> ";
 			userTable += "<td>" + rl.getStreetEnd() + " " + to
@@ -285,6 +314,7 @@ String updateUserConf = "";
 					+ userTable + "</table>";
 		}
 
+		//-------- Find the rides a user has been accepted into and is awaiting acceptance into ----------//
 		boolean rideExist = false;
 		boolean awaitExist = false;
 		boolean something = false;
@@ -457,7 +487,7 @@ String updateUserConf = "";
 			
 		}
 			if ((feedExist)&&(!scoreDone)) {
-				feedbackTable = "<p>This rating shall remain anonymous. You are encouraged to click on the Link to Ride Page and state your opinion of the ride for the benefit of other users who want to know more about the person who offered the ride.</p>"
+				feedbackTable = "<p>Please leave a rating between 1 (bad) to 10 (good) for the ride. This rating shall remain anonymous. You are encouraged to click on the Link to Ride Page and state your opinion of the ride for the benefit of other users who want to know more about the person who offered the ride.</p>"
 						+"<table class='rideDetailsSearch'> <tr><th>Starting From</th> <th>Going To</th>"
 						+ "<th>Departure Date</th> <th>Departure Time</th><th>Link</th> <th>Rating (between 1 & 10)</th></tr>"
 						+ feedbackTable + "</table>";
