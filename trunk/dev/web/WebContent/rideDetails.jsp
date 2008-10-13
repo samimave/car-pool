@@ -18,6 +18,7 @@
 	String table = "";
 	String options = "";
 	String reDirURL = "";
+	Date dt = new Date();
 	if (s.getAttribute("signedin") != null) {
 		user = (User) s.getAttribute("user");
 
@@ -50,9 +51,13 @@
 				detailsTable += "<tr> <td> Time: </td> <td>"+ u.getTime() + "</td> </tr>";
 				detailsTable += "<tr> <td> Seats: </td> <td>"+ u.getAvailableSeats() + "</td> </tr>";
 				detailsTable += "<tr> <td> Additional Info: </td> <td>"+ u.getComment()+"</td> </tr>";
+				break;
 			}
 		}
 
+		String d = new SimpleDateFormat("dd/MM/yyyy").format(u.getRideDate()) + " " + u.getTime();
+		dt = new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(d);
+		
 		//pass the "via address"
 		String sNumber = "";
 		String sName = "";
@@ -209,7 +214,7 @@
 			<INPUT type="hidden" name="mapVia"  value= "<%=viaAddress%>" >
 		</FORM>
 		</div>
-		<% if (driverID != dbID) { %>
+		<% if (driverID != dbID || dt.after(new Date())) { %>
 		<br /><br />
 		<h2>Take Ride:</h2>
 		<div class="Box" id="Box">

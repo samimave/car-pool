@@ -109,9 +109,7 @@
 			String from = u.getStartLocation();
 			String to = u.getEndLocation();
 
-			String d = new SimpleDateFormat("dd/MM/yyyy").format(u
-					.getRideDate())
-					+ " " + u.getTime();
+			String d = new SimpleDateFormat("dd/MM/yyyy").format(u.getRideDate()) + " " + u.getTime();
 			Date dt = new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(d);
 
 			if (!avoidDuplicates.contains(u.getRideID())
@@ -176,9 +174,7 @@
 			String from = daTbl.getStartLocation();
 			String to = daTbl.getEndLocation();
 
-			String d = new SimpleDateFormat("dd/MM/yyyy").format(daTbl
-					.getRideDate())
-					+ " " + daTbl.getTime();
+			String d = new SimpleDateFormat("dd/MM/yyyy").format(daTbl.getRideDate()) + " " + daTbl.getTime();
 			Date dt = new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(d);
 			
 			//System.out.println(dt.after(new Date()));

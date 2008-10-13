@@ -43,25 +43,12 @@
 					+ new SimpleDateFormat("dd/MM/yyyy").format(rl
 							.getRideDate()) + "</td> ";
 			userTable += "<td>" + rl.getTime() + "</td> ";
-			String d = new SimpleDateFormat("dd/MM/yyyy").format(rl
-					.getRideDate())
-					+ " " + rl.getTime();
-			Date dt = new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(d);
-			if (dt.after(new Date())) {
-				userTable += "<td> <a href='"
+			userTable += "<td> <a href='"
 						+ response.encodeURL(request.getContextPath()
 						+ "/rideDetails.jsp?rideselect="
 						+ rl.getRideID()) + "'>"
 						+ "Link to Ride Page"
 						+ "</a> </td> </tr>";
-			} else {
-				userTable += "<td> <a href='"
-					+ response.encodeURL(request.getContextPath()
-					+ "/oldRideDetails.jsp?rideselect="
-					+ rl.getRideID()) + "'>"
-					+ "Link to Ride Page"
-					+ "</a> </td> </tr>";
-			}
 		}
 
 		if (userExist) {
