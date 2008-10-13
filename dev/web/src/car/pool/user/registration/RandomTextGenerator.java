@@ -10,7 +10,7 @@ public class RandomTextGenerator {
 	private List<String> list = new LinkedList<String>();//Collections.synchronizedList(new ArrayList<String>()); 
 	
 	public RandomTextGenerator() {
-		String[] quotes = {"BLUE2", "4GREEN2D", "FROG51", "G2BNICE", "OGLE4U", "FL4W3D", "5HARPT"};
+		String[] quotes = {"BLUE2", "4GREEN2D", "FROG51", "G2BNICE", "OGLE4U", "FL4W3D", "5HARPT", "IH3ART", "UST4RT", "M3ETME", "U4PWND", "B4SEAT","SOR3EY","BR3AKD","FR4AKD"};
 		
 		for(String quote : quotes) {
 			this.list.add(quote);
