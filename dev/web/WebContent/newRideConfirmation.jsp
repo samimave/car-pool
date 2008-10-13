@@ -34,7 +34,7 @@
 				.parseInt(request.getParameter("streetFrom")), Integer
 				.parseInt(request.getParameter("streetTo")), Integer
 				.parseInt(request.getParameter("houseFrom")), Integer.parseInt(request.getParameter("houseTo")), 0,
-				request.getParameter("depTime"), request.getParameter("xtraInfo"), coords);
+				request.getParameter("depTime"), EscapeSpecialChars.forHTML(request.getParameter("xtraInfo")), coords);
 		//add social score
 		cps.addScore(cps.getTripID(rideID, dbID), dbID, 5);
 
@@ -73,7 +73,8 @@
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<HTML>
+
+<%@page import="car.pool.escapeSpecialChars.EscapeSpecialChars"%><HTML>
 	<HEAD>
 		<TITLE> Ride Successfully Offered! </TITLE>
 		<STYLE type="text/css" media="screen">@import "TwoColumnLayout.css";</STYLE>

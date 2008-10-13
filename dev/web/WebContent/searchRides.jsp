@@ -45,7 +45,7 @@
 	<HEAD>
 		<TITLE>Ride Search</TITLE>
 		<STYLE type="text/css" media="screen">@import "TwoColumnLayout.css";</STYLE>
-		<SCRIPT type="text/javascript" src="CalendarPopup.js"></SCRIPT>
+		<SCRIPT type="text/javascript" src="javascript/CalendarPopup.js"></SCRIPT>
 		<SCRIPT type="text/javascript">
 			var cal = new CalendarPopup();
 		</script>
@@ -135,11 +135,12 @@
 					<%=options%>
 				</SELECT></td>
 			</tr>
+			<tr><td>&nbsp;</td></tr>
 			<tr>
 				<td>Departure Date (dd/MM/yyyy):</td>
 				<td><INPUT TYPE="text" NAME="searchDate" VALUE="<%=date%>" SIZE="25"> 
 					<A HREF="#" onClick="cal.select(document.forms['searchFrm'].searchDate,'anchor1','dd/MM/yyyy'); return false;" NAME="anchor1" ID="anchor1">
-					<img name="calIcon" border="0" src="calendar_icon.jpg" width="27" height="23"></A> 
+					<img name="calIcon" border="0" src="images/calendar_icon.jpg" width="27" height="23"></A> 
 					&nbsp;&nbsp;<span id=errorsDiv_searchDate></span>
 				</td> 
 			</tr>

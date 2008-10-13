@@ -248,7 +248,7 @@
 
 		<TITLE>Ride Details</TITLE>
 		<STYLE type="text/css" media="screen">@import "TwoColumnLayout.css";</STYLE>
-		<SCRIPT type="text/javascript" src="CalendarPopup.js"></SCRIPT>
+		<SCRIPT type="text/javascript" src="javascript/CalendarPopup.js"></SCRIPT>
 		<script type="text/javascript" src="javascript/yav.js"></script>
 		<script type="text/javascript" src="javascript/yav-config.js"></script>
 		<script type="text/javascript" src="javascript/date.js"></script>
@@ -391,11 +391,11 @@
 			<INPUT type="hidden" name="updateRide" value="yes"/>
 			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect")%>">
 			<INPUT type="hidden" name="reDirURL" value="<%=reDirURL%>"/>
+			<INPUT TYPE="hidden" NAME="fromCoord" SIZE="25"/>	
 			<TABLE>
 				<tr> <td> Start Street:  <%=fromHouseNo%> <%=from%></td> <td>&nbsp;</td></tr>
 				<tr><td><INPUT TYPE="text" NAME="startFromHN" SIZE="25"	onkeypress="getAddress('from')" value=<%=fromHouseNo%>></td><td><span id=errorsDiv_startFromHN></span></td></tr>
-				<tr> <td><SELECT name="startFrom" onChange="getAddress('from')><option selected="selected" value=''>Select a Street</option><%=options%></SELECT></td><td><INPUT type="submit" name="startFrom" value="Update Street" size="25">&nbsp;&nbsp;<span id=errorsDiv_startFrom></span></td></tr>
-				<INPUT TYPE="hidden" NAME="fromCoord" SIZE="25">			
+				<tr> <td><SELECT name="startFrom" onChange="getAddress('from')"><option selected="selected" value=''>Select a Street</option><%=options%></SELECT></td><td><INPUT type="submit" name="startFrom" value="Update Street" size="25">&nbsp;&nbsp;<span id=errorsDiv_startFrom></span></td></tr>
 			</TABLE>
 		</FORM>
 		<br />
@@ -403,11 +403,11 @@
 			<INPUT type="hidden" name="updateRide" value="yes"/>
 			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect")%>">
 			<INPUT type="hidden" name="reDirURL" value="<%=reDirURL%>"/>
+			<INPUT TYPE="hidden" NAME="toCoord" SIZE="25"/>
 			<TABLE>
 				<tr> <td>End Street:  <%=toHouseNo%> <%=to%></td></tr>
  				<tr><td><INPUT TYPE="text" NAME="endToHN" SIZE="25" onkeypress="getAddress('to')" value=<%=toHouseNo%>></td></tr>
-				<tr> <td><SELECT name="endTo" onChange="getAddress('to')><option selected="selected" value=''>Select a Street</option><%=options%></SELECT></td><td><INPUT type="submit" name="endTo" value="Update Street" size="25">&nbsp;&nbsp;<span id=errorsDiv_endTo></span></td></tr>
-				<INPUT TYPE="hidden" NAME="toCoord" SIZE="25">
+				<tr> <td><SELECT name="endTo" onChange="getAddress('to')"><option selected="selected" value=''>Select a Street</option><%=options%></SELECT></td><td><INPUT type="submit" name="endTo" value="Update Street" size="25">&nbsp;&nbsp;<span id=errorsDiv_endTo></span></td></tr>
 			</TABLE>
 		</FORM>
 
@@ -426,14 +426,15 @@
 			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect")%>">
 			<INPUT type="hidden" name="reDirURL" value="<%=reDirURL%>"/>
 			<TABLE>
-				<tr> <td>Date (dd/MM/yyyy): </td> <td><INPUT TYPE="text" NAME="Rdate" SIZE="25" value=<%=dateR%>><A HREF="#" onClick="cal.select(document.forms['updateDate'].Rdate,'anchor1','dd/MM/yyyy'); return false;" NAME="anchor1" ID="anchor1"><img name="calIcon" border="0" src="calendar_icon.jpg" width="27" height="23"></A></td><td><INPUT type="submit" name="updateDate" value="Update Date" size="25">&nbsp;&nbsp;<span id=errorsDiv_Rdate></span></td></tr>
-			
+				<tr> <td>Date (dd/MM/yyyy): </td> <td><INPUT TYPE="text" NAME="Rdate" SIZE="25" value=<%=dateR%>><A HREF="#" onClick="cal.select(document.forms['updateDate'].Rdate,'anchor1','dd/MM/yyyy'); return false;" NAME="anchor1" ID="anchor1"><img name="calIcon" border="0" src="images/calendar_icon.jpg" width="27" height="23"></A></td><td><INPUT type="submit" name="updateDate" value="Update Date" size="25">&nbsp;&nbsp;<span id=errorsDiv_Rdate></span></td></tr>
+			</TABLE>
 		</FORM>
 		<FORM name="updateTime" id="updateTime" onsubmit="return yav.performCheck('updateTime', t_rules, 'inline');" action="<%=response.encodeURL("rideEditSuccess.jsp") %>" method="post">
 			<INPUT type="hidden" name="updateRide" value="yes"/>
 			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect")%>">
 			<INPUT type="hidden" name="reDirURL" value="<%=reDirURL%>"/>
-				<tr> <td> Time 24hr (hh:mm): </td><td><INPUT TYPE="text" NAME="Rtime" SIZE="25" value=<%=timeR%>></td><td><INPUT type="submit" name="updateTime" value="Update Time" size="25">&nbsp;&nbsp;<span id=errorsDiv_Rtime></span></td></tr>
+			<TABLE>
+				<tr> <td>Time 24hr (hh:mm): </td><td><INPUT TYPE="text" NAME="Rtime" SIZE="25" value=<%=timeR%>></td><td><INPUT type="submit" name="updateTime" value="Update Time" size="25">&nbsp;&nbsp;<span id=errorsDiv_Rtime></span></td></tr>
 			</TABLE>
 		</FORM>
 		</div>
@@ -472,7 +473,7 @@
 		<h2>Ride Comments:</h2>
 		<div class="Box" id="Box">
 		<%=table%>
-		<FORM name = "addComment" action="<%=response.encodeURL("addAComment.jsp") %>" method="post">
+		<FORM name="addComment" action="<%=response.encodeURL("addAComment.jsp") %>" method="post">
 			<TABLE width="100%">
 				<tr><td >
 					<INPUT type="hidden" name="idRide" value="<%=rideID%>">

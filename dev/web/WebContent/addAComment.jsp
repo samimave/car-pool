@@ -1,6 +1,6 @@
-<%@ page errorPage="errorPage.jsp" %>
+<%@page errorPage="errorPage.jsp" %>
 <%@page contentType="text/html; charset=ISO-8859-1" %>
-<%@page import="java.util.*,java.text.*,car.pool.persistance.*,org.verisign.joid.consumer.OpenIdFilter,car.pool.user.*"%>
+<%@page import="java.util.*,java.text.*,car.pool.persistance.*,org.verisign.joid.consumer.OpenIdFilter,car.pool.user.*,car.pool.escapeSpecialChars.*"%>
 <%
 	HttpSession s = request.getSession(false);
 
@@ -14,7 +14,7 @@
 		CarPoolStore cps = new CarPoolStoreImpl();
 		int idRide = Integer.parseInt(request.getParameter("idRide"));
 		int idUser = Integer.parseInt(request.getParameter("idUser"));
-		String comment = request.getParameter("comment");
+		String comment = EscapeSpecialChars.forHTML(request.getParameter("comment"));
 
 		if (comment != "") {
 			cps.addComment(idUser, idRide, comment);
@@ -27,7 +27,8 @@
 	}
 %>
 
-<html>
+
+<%@page import="car.pool.escapeSpecialChars.EscapeSpecialChars"%><html>
 <head>
 <title>Adding Comment</title>
 </head>

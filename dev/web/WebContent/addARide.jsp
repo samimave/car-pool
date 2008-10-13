@@ -41,7 +41,7 @@
 	<HEAD>
 		<TITLE>Offer a Ride</TITLE>
 		<STYLE type="text/css" media="screen">@import "TwoColumnLayout.css";</STYLE>
-		<SCRIPT type="text/javascript" src="CalendarPopup.js"></SCRIPT>
+		<SCRIPT type="text/javascript" src="javascript/CalendarPopup.js"></SCRIPT>
 		<script type="text/javascript" src="javascript/yav.js"></script>
 		<script type="text/javascript" src="javascript/yav-config.js"></script>
 		<script type="text/javascript" src="javascript/date.js"></script>
@@ -233,7 +233,9 @@
 			<div class="Box" id="Box">
 			<p>Please enter the relevant details and click confirm. * indicates required field.</p>
 			<FORM NAME="offerFrm" id="offerFrm" onsubmit="return yav.performCheck('offerFrm', rules, 'inline');" action="<%=response.encodeURL("newRideConfirmation.jsp")%>" method="post">
-				<INPUT TYPE="hidden" NAME="user" VALUE="<%=OpenIdFilter.getCurrentUser(s)%>" SIZE="25">
+				<INPUT TYPE="hidden" NAME="user" VALUE="<%=OpenIdFilter.getCurrentUser(s)%>">
+				<INPUT TYPE="hidden" NAME="fromCoord" SIZE="25">
+				<INPUT TYPE="hidden" NAME="toCoord" SIZE="25">
 					<%
 						// Information on if ride is an offer or request. 
 						//If Ride is a request then numSeats label should be no. of seats requested
@@ -307,7 +309,7 @@
 						 <option value=7>Sunday</option>
 						 </SELECT></td> </tr>*/
 					%>
-					<tr> <td>Departure Date (dd/MM/yyyy)*:</td> <td><INPUT TYPE="text" NAME="depDate" VALUE="<%=date%>" SIZE="25"> <A HREF="#" onClick="cal.select(document.forms['offerFrm'].depDate,'anchor1','dd/MM/yyyy'); return false;" NAME="anchor1" ID="anchor1"><img name="calIcon" border="0" src="calendar_icon.jpg" width="27" height="23"></A>&nbsp;&nbsp;<span id=errorsDiv_depDate></span> </td> </tr>
+					<tr> <td>Departure Date (dd/MM/yyyy)*:</td> <td><INPUT TYPE="text" NAME="depDate" VALUE="<%=date%>" SIZE="25"> <A HREF="#" onClick="cal.select(document.forms['offerFrm'].depDate,'anchor1','dd/MM/yyyy'); return false;" NAME="anchor1" ID="anchor1"><img name="calIcon" border="0" src="images/calendar_icon.jpg" width="27" height="23"></A>&nbsp;&nbsp;<span id=errorsDiv_depDate></span> </td> </tr>
 					<tr> <td>Departure Time 24hr (hh:mm)*:</td> <td><INPUT TYPE="text" NAME="depTime" VALUE="<%=time%>" SIZE="25">&nbsp;&nbsp;<span id=errorsDiv_depTime></span></td> </tr>
 					<tr> <td>Approx Trip Length (min)*:</td> <td><INPUT TYPE="text" NAME="tripLength" VALUE="15" SIZE="25">&nbsp;&nbsp;<span id=errorsDiv_tripLength></span></td> </tr>
 					</table>
@@ -320,8 +322,6 @@
 					<tr> <td>Number of passenger seats*:</td> <td><INPUT TYPE="text" NAME="numSeats" SIZE="25">&nbsp;&nbsp;<span id=errorsDiv_numSeats></span></td> </tr>
 
 					<tr> <td>Other Comments:</td> <td><INPUT TYPE="text" NAME="xtraInfo" SIZE="25"></td> </tr>
-					<tr> <td><INPUT TYPE="hidden" NAME="fromCoord" SIZE="25"></td> </tr>
-					<tr> <td><INPUT TYPE="hidden" NAME="toCoord" SIZE="25"></td> </tr>
 					</table>					
 					</div>
 					<br />
