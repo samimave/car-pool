@@ -138,14 +138,7 @@
 								.getRideDate()) + "</td> ";
 				userTable += "<td>" + u.getTime() + "</td> ";
 				userTable += "<td>" + u.getAvailableSeats() + "</td> ";
-				if ((user != null)&&(user.getUserId() == u.getUserID())){
-					userTable += "<td> <a href='" + response.encodeURL(request.getContextPath()
-							+ "/oldRideDetails.jsp?rideselect="
-							+ u.getRideID() + "&userselect="
-							+ u.getUsername()) + "'>"
-							+ "Link to ride page" + "</a> </td> </tr>";
-				}
-				else if ((user != null)&&!(user.getUserId() == u.getUserID())) {
+				if ((user != null)&&!(user.getUserId() == u.getUserID())) {
 					userTable += "<td> <a href='" + response.encodeURL(request.getContextPath()
 							+ "/rideDetails.jsp?rideselect="
 							+ u.getRideID() + "&userselect="
@@ -215,14 +208,7 @@
 				dateTable += "<td>" + daTbl.getTime() + "</td> ";
 				dateTable += "<td>" + daTbl.getAvailableSeats()
 						+ "</td> ";
-				if ((user != null)&&(user.getUserId() == daTbl.getUserID())){
-					dateTable += "<td> <a href='" + response.encodeURL(request.getContextPath()
-							+ "/oldRideDetails.jsp?rideselect="
-							+ daTbl.getRideID() + "&userselect="
-							+ daTbl.getUsername()) + "'>"
-							+ "Link to ride page" + "</a> </td> </tr>";
-				}
-				else if ((user != null)&&!(user.getUserId() == daTbl.getUserID())) {
+				if ((user != null)&&!(user.getUserId() == daTbl.getUserID())) {
 					dateTable += "<td> <a href='" + response.encodeURL(request.getContextPath()
 							+ "/rideDetails.jsp?rideselect="
 							+ daTbl.getRideID() + "&userselect="

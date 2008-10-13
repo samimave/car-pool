@@ -47,14 +47,7 @@
 							.getRideDate()) + "</td> ";
 			allTable += "<td>" + all.getTime() + "</td> ";
 			allTable += "<td>" + all.getAvailableSeats() + "</td> ";
-			if ((user != null)&&(user.getUserId() == all.getUserID())){
-				allTable += "<td> <a href='" + response.encodeURL(request.getContextPath()
-						+ "/oldRideDetails.jsp?rideselect="
-						+ all.getRideID() + "&userselect="
-						+ all.getUsername()) + "'>"
-						+ "Link to ride page" + "</a> </td> </tr>";
-			}
-			else if ((user != null)&&!(user.getUserId() == all.getUserID())) {
+			if ((user != null)&&!(user.getUserId() == all.getUserID())) {
 				allTable += "<td> <a href='" + response.encodeURL(request.getContextPath()
 						+ "/rideDetails.jsp?rideselect="
 						+ all.getRideID() + "&userselect="
