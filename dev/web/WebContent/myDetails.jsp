@@ -198,10 +198,20 @@ String updateUserConf = "";
 					+ request.getParameter("houseNo") + " " + target
 					+ " at " + tm + " on " + dt + "</p>";
 			try {
-				String message = "Thank you for registering your interest in this ride. Depending on if the driver can pick you up from the location you requested they will confirm you for the ride or reject you. Please make sure you both discuss information like the sharing of petrol costs beforehand in order to avoid confusion on the day.";
+				Integer id = new Integer(rl2.getUserID());
+				UserManager manager = new UserManager();
+				User rideUser = manager.getUserByUserId(id);
+				String message = String.format("Dear %s\nThank you for registering your interest in this ride. Depending on if the driver can pick you up from the location you requested they will confirm you for the ride or reject you. Please make sure you both discuss information like the sharing of petrol costs beforehand in order to avoid confusion on the day. You can contact them using %s.\n Getting you new rides when you need them.",user.getUserName(), rideUser.getEmail());
 				String address = user.getEmail();
 				String subject = "Car Pool Ride request";
 				Email email = new Email();
+				email.setMessage(message);
+				email.setSubject(subject);
+				email.setToAddress(address);
+				SMTP.send(email);
+				message = String.format("Dear %s\n%s registered interest in your ride from %s %s to %s %s on %s at %s. You confirm or reject this user from your account page.  Please make sure you both discuss information like the sharing of petrol costs beforehand in order to avoid confusion on the day. You can contact them using %s.\n Getting you new rides when you need them.",rideUser.getUserName(),user.getUserName(), rl2.getStreetStart(), rl2.getStartLocation(), rl2.getStreetEnd(), rl2.getEndLocation(), rl2.getRideDate(), rl2.getTime(), user.getEmail());
+				address = rideUser.getEmail();
+				subject = "Car Pool Ride request";
 				email.setMessage(message);
 				email.setSubject(subject);
 				email.setToAddress(address);

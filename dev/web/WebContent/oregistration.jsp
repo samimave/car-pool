@@ -1,12 +1,16 @@
 <%@ page errorPage="errorPage.jsp" %>
 <%@ page contentType="text/html; charset=ISO-8859-1"%>
-<%@ page import="org.verisign.joid.consumer.OpenIdFilter, car.pool.user.authentication.servlet.HtmlUtils"%>
+<%@ page import="org.verisign.joid.consumer.OpenIdFilter, car.pool.user.authentication.servlet.HtmlUtils, java.util.*,car.pool.user.registration.RandomTextGenerator"%>
 <%
 HttpSession s = request.getSession(true);
 String message = "";
 if(request.getParameter("error") != null) {
 	message = request.getParameter("error");
 }
+RandomTextGenerator generator = new RandomTextGenerator();
+Random r = new Random();
+Integer pos = r.nextInt(generator.size());
+s.setAttribute("quote_pos", pos);
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -55,7 +59,7 @@ if(request.getParameter("error") != null) {
 					<TABLE class="register"> 
 						<tr> <td>UserName*:</td> <td><INPUT type="text" name="userName"/>&nbsp;&nbsp;<span id=errorsDiv_userName></span></td> </tr>
 						<tr> <td>Email*:</td> <td><INPUT type="text" name="email"/>&nbsp;&nbsp;<span id=errorsDiv_email></span></td> </tr>
-						<tr> <td>Phone*:</td> <td><INPUT type="text" name="phone"/>&nbsp;&nbsp;<span id=errorsDiv_phone></span></td> </tr>
+						<tr> <td>Phone:</td> <td><INPUT type="text" name="phone"/>&nbsp;&nbsp;<span id=errorsDiv_phone></span></td> </tr>
 						<tr> <td colspan="2"><img src="blurredimage" width="200" height="100"/></td> </tr>
 					<tr> <td>Enter the characters shown above:</td><td><input type="text" name="verifytext"/>&nbsp;&nbsp;<span id=errorsDiv_verifytext></span></td> </tr>
 				</TABLE>
