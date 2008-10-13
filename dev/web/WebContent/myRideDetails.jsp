@@ -301,7 +301,7 @@ String updateUserConf = "";
 						+ "Manage ride & riders."
 						+ "</a> </td> </tr>";
 			} else {
-				userTable += "<td>Old ride.</td></tr>";
+				userTable += "<td> <a href='"+ response.encodeURL(request.getContextPath()+ "/rideDetails.jsp?rideselect="+ rl.getRideID() + "&userselect="+ rl.getUsername()) + "'>" + "Link to ride page"+ "</a> </td></tr>";
 			}
 		}
 
@@ -399,12 +399,7 @@ String updateUserConf = "";
 				awaitTable += "<td>" + tr.getStreetNumber() + " "
 						+ tr.getPickUp() + "</td>";
 				awaitTable += "<td><INPUT type=\"submit\" value=\"Withdraw\" /></td>";
-				awaitTable += "<td> <a href='"
-						+ response.encodeURL(request.getContextPath()
-						+ "/rideDetails.jsp?rideselect="
-						+ tr.getRideID() + "&userselect="
-						+ tr.getUsername()) + "'>" + "Link to ride page"
-						+ "</a> </td>";
+				awaitTable += "<td> <a href='"+ response.encodeURL(request.getContextPath()+ "/rideDetails.jsp?rideselect="+ tr.getRideID() + "&userselect="+ tr.getUsername()) + "'>" + "Link to ride page"+ "</a> </td>";
 				awaitTable += "</FORM></tr>";
 			}
 		}
