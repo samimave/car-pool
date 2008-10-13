@@ -487,7 +487,7 @@ String updateUserConf = "";
 			
 		}
 			if ((feedExist)&&(!scoreDone)) {
-				feedbackTable = "<p>Please leave a rating between 1 (bad) to 10 (good) for the ride. This rating shall remain anonymous. You are encouraged to click on the Link to Ride Page and state your opinion of the ride for the benefit of other users who want to know more about the person who offered the ride.</p>"
+				feedbackTable = "<p>Please leave a rating between 1 (bad) to 10 (good) for the ride. This rating shall remain anonymous. You are encouraged to click on the Link to Ride Page and state your opinion of the ride for the benefit of other users who want to know more about the person who offered the ride.</p><br />"
 						+"<table class='rideDetailsSearch'> <tr><th>Starting From</th> <th>Going To</th>"
 						+ "<th>Departure Date</th> <th>Departure Time</th><th>Link</th> <th>Rating (between 1 & 10)</th></tr>"
 						+ feedbackTable + "</table>";
