@@ -324,8 +324,13 @@
 					}
 				}
 			}
+		}else{
+			for (int i = 0; i < cTable.size(); i++) {
+				comboTable += cTable.get(i);
+				//System.out.println(i);
+			}
 		}
-		System.out.println("mapCoords: |"+mapCoords+"|");
+		//System.out.println("mapCoords: |"+mapCoords+"|");
 		
 	}
 
