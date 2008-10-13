@@ -108,8 +108,9 @@
 	<br />
 	<h2>Automatic Search:</h2>
 	<div class="Box" id="Box">
-		<p>Please enter the search criteria in the boxes below and click
-		search. Rides matching any of the entered information will be displayed.</p>
+		<p>Our site uses a cunning and intricately complicated ride path projection system to 
+		figure out the routes taken by drivers and to display the rides to you if they will pass by 
+		your origin and/or destination. Searching rides by approximate location has never been easier!</p>
 		<br />
 		<p>
 		Note: If a departure street is entered then a destination street must also be entered.
@@ -117,6 +118,7 @@
 		<br />
 		<h3>Search Criteria:</h3>
 		<div class="Box" id="Box">
+		<p>Please enter the search criteria in the boxes below and click search rides.</p> 
 		<FORM NAME="searchFrm" id="searchFrm" onsubmit="return yav.performCheck('searchFrm', rules, 'inline');" action="<%=response.encodeURL("result.jsp")%>" method="post" >
 		<INPUT TYPE="hidden" NAME="fromCoord"> 
 		<INPUT TYPE="hidden" NAME="toCoord">
