@@ -47,7 +47,7 @@
 							.getRideDate()) + "</td> ";
 			allTable += "<td>" + all.getTime() + "</td> ";
 			allTable += "<td>" + all.getAvailableSeats() + "</td> ";
-			if ((user != null)&&!(user.getUserId() == all.getUserID())) {
+			if ((user != null)) {
 				allTable += "<td> <a href='" + response.encodeURL(request.getContextPath()
 						+ "/rideDetails.jsp?rideselect="
 						+ all.getRideID() + "&userselect="
