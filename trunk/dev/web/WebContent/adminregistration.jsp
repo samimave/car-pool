@@ -6,6 +6,8 @@
 String username = request.getParameter("username");
 String userpass = request.getParameter("userpass");
 String message = "";
+
+//if the user has entered valid admin details continue, else redirect to login page
 if(username == null || userpass == null) {
 	response.sendRedirect(request.getContextPath());
 } else {
@@ -30,6 +32,7 @@ if(username == null || userpass == null) {
 		<STYLE type="text/css" media="screen">@import "TwoColumnLayout.css";</STYLE>
 		<%@include file="include/javascriptincludes.html" %>
 		<script>
+		//combines check username with yav form validation
 		function checkOnSubmit(formName, r) {
 			if (isUserNameAvailable()) {
 				if (yav.performCheck(formName, r, 'inline')) {
@@ -39,6 +42,7 @@ if(username == null || userpass == null) {
 			return false;
 		}
 		
+		//form validation rules
 		var rules=new Array();
 		rules[0]='userName|required';
 		rules[1]='password|required';
@@ -48,6 +52,7 @@ if(username == null || userpass == null) {
 		rules[5]='email|email';
 		rules[6]='verifytext:image text|required';
 		
+		//could provide helpful text if needed
 		//yav.addHelp('userName', 'Provide your username');
 		//yav.addHelp('password', 'Provide your password');
 		//yav.addHelp('password2', 'Confirm your password');
