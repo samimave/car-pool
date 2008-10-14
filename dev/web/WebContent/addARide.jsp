@@ -7,32 +7,32 @@
 
 	//force the user to login to view the page
 	//user a container for the users information
-	User user = null;
-	Date now = null;
-	String time = "";
-	String date = "";
-	CarPoolStore cps = null;
-	String options = "";
-	if (s.getAttribute("signedin") != null) {
+	User user = null;								//current user
+	Date now = null;								//current time
+	String time = "";								//holds current time
+	String date = "";								//holds current day 
+	CarPoolStore cps = null;						//contains important information
+	String options = "";							//holds the streets, used to populate the drop down boxes
+	if (s.getAttribute("signedin") != null) {											//if the user is logged in
 		user = (User) s.getAttribute("user");
 
 		//simple date processing for display on page
 		now = new Date();
-		time = new SimpleDateFormat("HH:mm").format(now);
-		date = new SimpleDateFormat("dd/MM/yyyy").format(now);
+		time = new SimpleDateFormat("HH:mm").format(now);								//format time string
+		date = new SimpleDateFormat("dd/MM/yyyy").format(now);							//format date string
 		cps = new CarPoolStoreImpl();
 
 		//make the options for the street select box
-		LocationList locations = cps.getLocations();
+		LocationList locations = cps.getLocations();									//get street information
 		options = "";
 		//if (locations != null) {
 		while (locations.next()) {
-			options += "<option value='" + locations.getID() + "'>"
+			options += "<option value='" + locations.getID() + "'>"						//populate the dropdown box with streets information from db
 					+ locations.getStreetName() + "</option>";
 		}
 		//}
 	} else {
-		response.sendRedirect(response.encodeURL(request.getContextPath()));
+		response.sendRedirect(response.encodeURL(request.getContextPath()));			//if the user is not logged in redirect them to the login page
 	}
 %>
 
@@ -150,18 +150,9 @@
 
 		</SCRIPT>
 		<script>
-		/*function checkTime() {
-		    var msg;
-		    var reg = new RegExp("^[0-2][0-9]:[0-5][0-9]$");
-		    if ( reg.test(document.forms['offerFrm'].depTime.value) ) {
-				msg = null;
-			} else {
-			    msg = 'Enter 24 hour departure time.';
-			}
-			return msg;
-		}*/
 
-		//http://www.mattkruse.com/javascript/date/ for helpful examples		
+		//http://www.mattkruse.com/javascript/date/ for helpful examples
+		//validates the time entered on the page with respect to the date		
 		function checkTime() {
 		    var msg;
 		    var reg = new RegExp("^[0-2][0-9]:[0-5][0-9]$");
@@ -190,6 +181,7 @@
 			return msg;
 		}
 
+		//validates the date entered with respect to the time
 		function checkDate() {
 			var msg;
 			var curDate = formatDate(new Date(),"dd/MM/yyyy");
@@ -203,6 +195,7 @@
 			return msg;
 		}
 		
+		//the input validation rules for the page
 		var rules=new Array();
 		rules[0]='houseFrom:origin house number|required';
 		rules[1]='houseFrom:origin house number|numeric';
