@@ -1,6 +1,7 @@
 <%@page errorPage="errorPage.jsp" %>
 <%@page contentType="text/html; charset=ISO-8859-1" %>
 <%@page import="java.util.*,java.text.*,car.pool.persistance.*,org.verisign.joid.consumer.OpenIdFilter,car.pool.user.*,car.pool.escapeSpecialChars.*"%>
+<%@page import="car.pool.escapeSpecialChars.EscapeSpecialChars"%>
 <%
 	HttpSession s = request.getSession(false);
 
@@ -27,8 +28,7 @@
 	}
 %>
 
-
-<%@page import="car.pool.escapeSpecialChars.EscapeSpecialChars"%><html>
+<html>
 <head>
 <title>Adding Comment</title>
 </head>

@@ -33,7 +33,7 @@ if (user != null) {
 <body>
 	<%@ include file="heading.html" %>
 
-	<DIV class="Content" id="Content">
+	<div class="Content" id="Content">
 		<h2 class="title" id="title">About The Car Pool</h2>
 		<br /><br />
 		<h2>What We Provide:</h2>
@@ -58,7 +58,7 @@ if (user != null) { 		//depending if the user is logged in or not different link
 <%
 } 
 %>
-		</DIV>
+		</div>
 
 <%
 if (user != null) { 		//depending if the user is logged in or not different side menus should be displayed
