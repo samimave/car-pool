@@ -29,7 +29,7 @@ if(username == null || userpass == null) {
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII" />
 		<title>Administrator Registration</title>
-		<STYLE type="text/css" media="screen">@import "TwoColumnLayout.css";</STYLE>
+		<style type="text/css" media="screen">@import "TwoColumnLayout.css";</style>
 		<%@include file="include/javascriptincludes.html" %>
 		<script>
 		//combines check username with yav form validation

@@ -84,47 +84,47 @@
 %>
 		
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<HTML>
-	<HEAD>
-		<TITLE> Administration Tasks</TITLE>
-		<STYLE type="text/css" media="screen">@import "TwoColumnLayout.css";</STYLE>
+<html>
+	<head>
+		<title> Administration Tasks</title>
+		<style type="text/css" media="screen">@import "TwoColumnLayout.css";</style>
 		<%@include file="include/javascriptincludes.html" %>
-		</HEAD>
-	<BODY>
+		</head>
+	<body>
 
 		<%@ include file="heading.html" %>
 
-		<DIV class="Content" id="Content">
+		<div class="Content" id="Content">
 			<h2 class="title" id="title">Administrative Options</h2>
 			<br /><br />
 			<h2>Database:</h2>
 			<div class="Box" id="Box">
-			<FORM NAME="admin" action="<%=response.encodeURL("#")%>" method="post" >				
+			<form name="admin" action="<%=response.encodeURL("#")%>" method="post" >				
 				<table>
 					<tr><td>Enter a comma and space separated list of streets below</td></tr>
-						<tr><td><TEXTAREA cols="50" rows="4" name="locations"></TEXTAREA></td>
-						<td>&nbsp;</td> <td><INPUT type="submit" value="Add Locations" size="25" onClick="<%//AddLocations.addFromFile();%>" ></td>
+						<tr><td><textarea cols="50" rows="4" name="locations"></textarea></td>
+						<td>&nbsp;</td> <td><input type="submit" value="Add Locations" size="25" onClick="<%//AddLocations.addFromFile();%>" ></td>
 					</tr>
 				</table>
-			</FORM>
-			<FORM NAME="adminFile" action="<%=response.encodeURL("adminView.jsp") %>" method="post" >	
-			<INPUT type="hidden" name="addAllLoc" value="yes">			
+			</form>
+			<form name="adminFile" action="<%=response.encodeURL("adminView.jsp") %>" method="post" >	
+			<input type="hidden" name="addAllLoc" value="yes">			
 				<table>
 					<tr><td>Click to add locations specified in the text file</td>
-					<td><INPUT type="submit" value="Add Locations" size="25"></td>
+					<td><input type="submit" value="Add Locations" size="25"></td>
 					</tr>
 				</table>
-			</FORM>
+			</form>
 
-			<FORM NAME="delComment" action="<%=response.encodeURL("delAComment.jsp")%>" method="post" >
-				<INPUT type="hidden" name="reDirURL" value="adminView.jsp">
+			<form name="delComment" action="<%=response.encodeURL("delAComment.jsp")%>" method="post" >
+				<input type="hidden" name="reDirURL" value="adminView.jsp">
 				<table>
 					<tr><td>Delete a comment</td>
-						<td><INPUT type="text" name="idComment" value="Enter comment number here..." size="30"></td>
-						<td>&nbsp;</td> <td><INPUT type="submit" value="Delete Comment" size="25"></td>
+						<td><input type="text" name="idComment" value="Enter comment number here..." size="30"></td>
+						<td>&nbsp;</td> <td><input type="submit" value="Delete Comment" size="25"></td>
 					</tr>
 				</table>
-			</FORM>
+			</form>
 			</div>
 			<br /><br />
 			<h2>Setup Email Functionality:</h2>
@@ -150,20 +150,20 @@
 			<h2>Users and Rides in the System:</h2>
 			<div class="Box" id="Box">
 			<h3>Users:</h3>	
-			<TABLE>
+			<table>
 				<tr><td><%=userTable%></td></tr>
-			</TABLE>
+			</table>
 			<br />
 			<h3>Rides:</h3>					
-			<TABLE>
+			<table>
 				<%=rideTable%>					
-			</TABLE>
+			</table>
 			</div>
 			<br /><br /><br />
 			<p>-- <a href="<%=response.encodeURL("welcome.jsp")%>">Home</a> --</p>
-		</DIV>
+		</div>
 
 	<%@ include file="leftMenu.jsp" %>
 
-	</BODY>
-</HTML>
+	</body>
+</html>

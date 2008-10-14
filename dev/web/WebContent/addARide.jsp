@@ -36,12 +36,12 @@
 	}
 %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<HTML>
-	<HEAD>
-		<TITLE>Offer a Ride</TITLE>
+<!DOCTYPE html PUBLIC "-//W3C//DTD html 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<title>Offer a Ride</title>
 		<STYLE type="text/css" media="screen">@import "TwoColumnLayout.css";</STYLE>
-		<SCRIPT type="text/javascript" src="javascript/CalendarPopup.js"></SCRIPT>
+		<script type="text/javascript" src="javascript/CalendarPopup.js"></script>
 		<script type="text/javascript" src="javascript/yav.js"></script>
 		<script type="text/javascript" src="javascript/yav-config.js"></script>
 		<script type="text/javascript" src="javascript/date.js"></script>
@@ -67,7 +67,7 @@
                          
          }
 		</script>
-		<SCRIPT type="text/javascript">
+		<script type="text/javascript">
 			var cal = new CalendarPopup();
 
 			//PLEASE LEAVE THESE THREE FUNCTIONS HERE
@@ -148,7 +148,7 @@
 			
 			}
 
-		</SCRIPT>
+		</script>
 		<script>
 
 		//http://www.mattkruse.com/javascript/date/ for helpful examples
@@ -214,29 +214,29 @@
 		rules[14]='numSeats:number of seats|numeric';
 		</script>
 
-	</HEAD>
-	<BODY onload="yav.init('offerFrm', rules);">
+	</head>
+	<body onload="yav.init('offerFrm', rules);">
 
 	<%@ include file="heading.html" %>	
 
-		<DIV class="Content" id="Content" >
+		<div class="Content" id="Content" >
 			<h2 class="title" id="title">Offer A Ride</h2>
 			<br /><br />
 			<h2>Ride Details:</h2>
 			<div class="Box" id="Box">
 			<p>Please enter the relevant details and click confirm. * indicates required field.</p>
-			<FORM NAME="offerFrm" id="offerFrm" onsubmit="return yav.performCheck('offerFrm', rules, 'inline');" action="<%=response.encodeURL("newRideConfirmation.jsp")%>" method="post">
-				<INPUT TYPE="hidden" NAME="user" VALUE="<%=OpenIdFilter.getCurrentUser(s)%>">
-				<INPUT TYPE="hidden" NAME="fromCoord" SIZE="25">
-				<INPUT TYPE="hidden" NAME="toCoord" SIZE="25">
+			<form name="offerFrm" id="offerFrm" onsubmit="return yav.performCheck('offerFrm', rules, 'inline');" action="<%=response.encodeURL("newRideConfirmation.jsp")%>" method="post">
+				<input type="hidden" name="user" value="<%=OpenIdFilter.getCurrentUser(s)%>">
+				<input type="hidden" name="fromCoord" size="25">
+				<input type="hidden" name="toCoord" size="25">
 					<%
 						// Information on if ride is an offer or request. 
 						//If Ride is a request then numSeats label should be no. of seats requested
 						//else it should be no. of seats available.
 						//<tr> <td>Ride Type:</td> <td>	
-						//<SELECT name="rideType">
+						//<select name="rideType">
 						//	<option value="Ride Offer">Ride Offer</option>
-						//</SELECT></td> </tr>	
+						//</select></td> </tr>	
 						//<tr><th>&nbsp;</th></tr>
 					%>
 
@@ -249,14 +249,14 @@
 					<br />
 					<h3>Departure:</h3>
 					<div class="Box" id="Box">
-					<TABLE class="rideDetails">
+					<table class="rideDetails">
 					<tr> <td>House number*:</td> 
-					<td><INPUT TYPE="text" NAME="houseFrom" SIZE="25" onkeypress="getAddress('from')">&nbsp;&nbsp;<span id=errorsDiv_houseFrom></span></td> </tr>
+					<td><input type="text" name="houseFrom" size="25" onkeypress="getAddress('from')">&nbsp;&nbsp;<span id=errorsDiv_houseFrom></span></td> </tr>
 					<tr> <td>Street*:</td> <td>
-					<SELECT name="streetFrom"  onChange="getAddress('from')">
+					<select name="streetFrom"  onChange="getAddress('from')">
            		  		<option selected="selected" value=''>Select a Street</option>
 	           		 	<%=options%>
-       				</SELECT>&nbsp;&nbsp;<span id=errorsDiv_streetFrom></span></td> </tr>
+       				</select>&nbsp;&nbsp;<span id=errorsDiv_streetFrom></span></td> </tr>
         			<tr> <td>Region:</td> <td>Palmerston North</td> </tr>
 					</table>
 					</div>
@@ -266,12 +266,12 @@
 					<div class="Box" id="Box">
 					<table class="rideDetails">
 					<tr> <td>House number*:</td> 
-					<td><INPUT TYPE="text" NAME="houseTo" SIZE="25" onkeypress="getAddress('to')">&nbsp;&nbsp;<span id=errorsDiv_houseTo></span></td> </tr>
+					<td><input type="text" name="houseTo" size="25" onkeypress="getAddress('to')">&nbsp;&nbsp;<span id=errorsDiv_houseTo></span></td> </tr>
 					<tr> <td>Street*:</td> <td>
-					<SELECT name="streetTo" onChange="getAddress('to')">
+					<select name="streetTo" onChange="getAddress('to')">
            		  		<option selected="selected" value=''>Select a Street</option>
 	           		  	<%=options%>
-       				 </SELECT>&nbsp;&nbsp;<span id=errorsDiv_streetTo></span></td> </tr>
+       				 </select>&nbsp;&nbsp;<span id=errorsDiv_streetTo></span></td> </tr>
 					<tr> <td>Region:</td>  <td>Palmerston North</td> </tr>
 					</table>
 					</div>
@@ -286,13 +286,13 @@
 					<table class="rideDetails">
 					<%
 						/*<tr> <td>Recurrence:</td> <td>
-						 <SELECT name="recurrence"  onchange="process_choice(this,document.offerFrm.depDate, document.offerFrm.depDays, document.offerFrm.calIcon, document.offerFrm.calIcon)">
+						 <select name="recurrence"  onchange="process_choice(this,document.offerFrm.depDate, document.offerFrm.depDays, document.offerFrm.calIcon, document.offerFrm.calIcon)">
 						 <option value="sel">Choose One</option>
 						 <option value="0">One-Off</option>
 						 <option value="1">Regular</option>
-						 </SELECT></td> </tr>
-						 <tr><td>&nbsp;</td> <td><INPUT TYPE="text" NAME="depDate" style="display: none" VALUE="(dd/MM/yyyy)" SIZE="25"> <A HREF="#" onClick="cal.select(document.forms['offerFrm'].depDate,'anchor1','dd/MM/yyyy'); return false;" NAME="anchor1" ID="anchor1"><img name="calIcon" style="display: none" border="0" src="calendar_icon.jpg" width="27" height="23"></A> </td> </tr> 
-						 <tr> <td>&nbsp;</td><td><SELECT name="depDays" multiple="multiple" style="display: none">
+						 </select></td> </tr>
+						 <tr><td>&nbsp;</td> <td><input type="text" name="depDate" style="display: none" value="(dd/MM/yyyy)" size="25"> <A href="#" onClick="cal.select(document.forms['offerFrm'].depDate,'anchor1','dd/MM/yyyy'); return false;" name="anchor1" ID="anchor1"><img name="calIcon" style="display: none" border="0" src="calendar_icon.jpg" width="27" height="23"></A> </td> </tr> 
+						 <tr> <td>&nbsp;</td><td><select name="depDays" multiple="multiple" style="display: none">
 						 <option value=1>Monday</option>
 						 <option value =2>Tuesday</option>
 						 <option value =3>Wednesday</option>
@@ -300,11 +300,11 @@
 						 <option value=5>Friday</option>
 						 <option value=6>Saturday</option>
 						 <option value=7>Sunday</option>
-						 </SELECT></td> </tr>*/
+						 </select></td> </tr>*/
 					%>
-					<tr> <td>Departure Date (dd/MM/yyyy)*:</td> <td><INPUT TYPE="text" NAME="depDate" VALUE="<%=date%>" SIZE="25"> <A HREF="#" onClick="cal.select(document.forms['offerFrm'].depDate,'anchor1','dd/MM/yyyy'); return false;" NAME="anchor1" ID="anchor1"><img name="calIcon" border="0" src="images/calendar_icon.jpg" width="27" height="23"></A>&nbsp;&nbsp;<span id=errorsDiv_depDate></span> </td> </tr>
-					<tr> <td>Departure Time 24hr (hh:mm)*:</td> <td><INPUT TYPE="text" NAME="depTime" VALUE="<%=time%>" SIZE="25">&nbsp;&nbsp;<span id=errorsDiv_depTime></span></td> </tr>
-					<tr> <td>Approx Trip Length (min)*:</td> <td><INPUT TYPE="text" NAME="tripLength" VALUE="15" SIZE="25">&nbsp;&nbsp;<span id=errorsDiv_tripLength></span></td> </tr>
+					<tr> <td>Departure Date (dd/MM/yyyy)*:</td> <td><input type="text" name="depDate" value="<%=date%>" size="25"> <A href="#" onClick="cal.select(document.forms['offerFrm'].depDate,'anchor1','dd/MM/yyyy'); return false;" name="anchor1" ID="anchor1"><img name="calIcon" border="0" src="images/calendar_icon.jpg" width="27" height="23"></A>&nbsp;&nbsp;<span id=errorsDiv_depDate></span> </td> </tr>
+					<tr> <td>Departure Time 24hr (hh:mm)*:</td> <td><input type="text" name="depTime" value="<%=time%>" size="25">&nbsp;&nbsp;<span id=errorsDiv_depTime></span></td> </tr>
+					<tr> <td>Approx Trip Length (min)*:</td> <td><input type="text" name="tripLength" value="15" size="25">&nbsp;&nbsp;<span id=errorsDiv_tripLength></span></td> </tr>
 					</table>
 					</div>
 					
@@ -312,31 +312,31 @@
 					<h3>Additional Details:</h3>
 					<div class="Box" id="Box">
 					<table class="rideDetails">	
-					<tr> <td>Number of passenger seats*:</td> <td><INPUT TYPE="text" NAME="numSeats" SIZE="25">&nbsp;&nbsp;<span id=errorsDiv_numSeats></span></td> </tr>
+					<tr> <td>Number of passenger seats*:</td> <td><input type="text" name="numSeats" size="25">&nbsp;&nbsp;<span id=errorsDiv_numSeats></span></td> </tr>
 
-					<tr> <td>Other Comments:</td> <td><INPUT TYPE="text" NAME="xtraInfo" SIZE="25"></td> </tr>
+					<tr> <td>Other Comments:</td> <td><input type="text" name="xtraInfo" size="25"></td> </tr>
 					</table>					
 					</div>
 					<br />
-					<p>Click here to <INPUT TYPE="submit" NAME="submit" VALUE="Confirm Ride Offer" SIZE="25"></p>
-			</FORM>
+					<p>Click here to <input type="submit" name="submit" value="Confirm Ride Offer" size="25"></p>
+			</form>
 			</div>
 
 			<br /><br />
 			<h2>Google Map:</h2>
 			<div class="Box" id="Box">
-			<FORM name="showMap" id="map" method="post" target="_blank" action="displayRouteMap.jsp">
-					<p>Click here to <INPUT type="submit" value="View Map" onClick="getAddress()"/> </p>
-					<INPUT type="hidden" name="mapFrom" >
-				    <INPUT type="hidden" name="mapTo"   >
-					<INPUT type="hidden" name="mapHouse" >
-			</FORM>
+			<form name="showMap" id="map" method="post" target="_blank" action="displayRouteMap.jsp">
+					<p>Click here to <input type="submit" value="View Map" onClick="getAddress()"/> </p>
+					<input type="hidden" name="mapFrom" >
+				    <input type="hidden" name="mapTo"   >
+					<input type="hidden" name="mapHouse" >
+			</form>
 			</div>
 			<br /> <br /> <br />
 			<p>-- <a href="<%=response.encodeURL("welcome.jsp")%>">Home</a> --</p>
-		</DIV>
+		</div>
 		
 	<%@ include file="leftMenu.jsp" %>
 
-	</BODY>
-</HTML>
+	</body>
+</html>
