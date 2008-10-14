@@ -1,6 +1,6 @@
 <%@page import="car.pool.user.*"%>
 <%
-HttpSession session2 = request.getSession(true);
+HttpSession session2 = request.getSession(true);				//get session and user info
 User user2 = (User)session2.getAttribute("user");
 String username = user2 != null ? user2.getUserName() : "";
 %>

@@ -9,7 +9,7 @@ int timeout = s.getMaxInactiveInterval();
 String message = null;
 boolean error = request.getParameter("error") != null;
 if( error) {
-	message = request.getParameter("error");
+	message = request.getParameter("error");			//if we are passed an error message display it on the page
 }
 %>
 
@@ -20,6 +20,8 @@ if( error) {
 		<STYLE type="text/css" media="screen">@import "TwoColumnLayout.css";</STYLE>
 		<%@include file="include/javascriptincludes.html" %>
 <script>
+//validation rules 
+//NOTE: I dont think this actually works because we are importing the forms to the page
 var oid_login_rules = new Array();
 oid_login_rules[0] = 'openid_url|required';
 

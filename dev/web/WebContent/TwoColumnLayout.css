@@ -1,3 +1,4 @@
+/* Current awesome css */
 BODY
 {
 	margin: 0px;
@@ -49,6 +50,7 @@ TABLE
 	font: 11px verdana, arial, helvetica, sans-serif;
 	width: 650;
 }
+/*for tables with borders around everything*/
 TABLE.rideDetailsSearch
 {
 	border: 1px solid #666666;
@@ -62,6 +64,7 @@ TABLE.rideDetailsSearch TH
 {
 	border: 1px solid #666666;
 }
+/*the login forms must fit on the side of the page*/
 TABLE.login
 {
 	width: 260;	
@@ -86,10 +89,12 @@ A:hover
 {
 	background-color: #EEE;
 }
+/*only used for error messages*/
 SPAN 
 {
 	color: red;
 }
+/*top of the page*/
 #Header
 {
 	margin: 20px 0px 10px;
@@ -104,11 +109,13 @@ BODY #Header
 {
 	height: auto;
 }
+/* main content of the page*/
 #Content
 {
 	padding: 10px;
 	margin-left: 320px;
 }
+/*menu on the left of each page*/
 #Menu
 {
 /*position: absolute;*/
@@ -127,12 +134,14 @@ BODY #Header
 {
 	padding: 0px;
 }
+/*used to seperate relevant info on a page*/
 #Box
 {
 	border: 1px solid #999;
 	padding: 10px;
 	width: 650px;
 }
+/*dont nest beyond depth two*/
 #Box #Box
 {
 	width: 630px;	
