@@ -8,40 +8,37 @@
 	//force the user to login to view the page
 	//a container for the users information
 	User user = null;
-	String userTable = "";
-	String rideTable = "";
-	if (s.getAttribute("signedin") != null) {
+	String userTable = "";							//contains a table displaying all users details in the db
+	String rideTable = "";							//contains a table displaying all rides in the db
+	if (s.getAttribute("signedin") != null) {										//if the user is logged in
 		user = (User) s.getAttribute("user");
-		if(!user.getUserName().toLowerCase().startsWith("admin")) {
+		if(!user.getUserName().toLowerCase().startsWith("admin")) {					//if the user is not an admin (dont think this can happen anyway)
 			response.sendRedirect(response.encodeURL(""));
 			return;
 		}
-		CarPoolStore cps = new CarPoolStoreImpl();
-		if ((request.getParameter("addAllLoc"))!=null){
-			AddLocations.addFromFile();
+		CarPoolStore cps = new CarPoolStoreImpl();									//contains important information
+		if ((request.getParameter("addAllLoc"))!=null){								//if we were redirected here with a request to add locations
+			AddLocations.addFromFile();												//add the locations
 		}
-		if (request.getParameter("locations") != null) {
+		if (request.getParameter("locations") != null) {							//if we were passed a comma seperated string of locations to enter in the db
 			
-			String[] locList = request.getParameter("locations").split(", ");
+			String[] locList = request.getParameter("locations").split(", ");		//split them up 
 			//System.out.println(locList);
 			for (int i=0; i<locList.length; i++){			
 			int region = -1;
 			region = cps.addRegion("Palmerston North");
-			cps.addLocation(region, locList[i]);
+			cps.addLocation(region, locList[i]);									//add each to the db
 			//System.out.println("street: " + locList[i]);
 			}
 		}
 
-		String uName;
+		String uName;																			//holds the users information
 		String uEmail;
 		String uPhone;
 		String uSignUpDate;
-		UserList nList = cps.getUserName();
-		UserList eList = cps.getUserEmail();
-		UserList pList = cps.getUserPhone();
-		UserList sList = cps.getUserSignUpDate();
+		UserList nList = cps.getUserName();														//all users in the db
 
-		String Table = "";
+		String Table = "";																		//the rows with the users information
 		while (nList.next()) {
 			uName = nList.getUserName();
 			uEmail = nList.getUserEmail();
@@ -52,12 +49,12 @@
 			Table += "<td>" + uPhone + "</td> ";
 			Table += "<td>" + uSignUpDate + "</td> </tr>";
 		}
-		userTable = "<table class='rideDetailsSearch'> <tr> <th>User Name</th> <th>Email</th> <th>Phone</th>"
+		userTable = "<table class='rideDetailsSearch'> <tr> <th>User Name</th> <th>Email</th> <th>Phone</th>"			//finish the table
 				+ "<th>Sign Up Date</th> </tr>" + Table + "</table>";
 
-		boolean rExist = false;
+		boolean rExist = false;																	//true if there is at least one ride
 		RideListing all = cps.getRideListing();
-		while (all.next()) {
+		while (all.next()) {																	//for each ride in the db add a row to the table
 			rExist = true;
 			String from = all.getStartLocation();
 			String to = all.getEndLocation();
@@ -76,13 +73,13 @@
 					+ "Link to ride page" + "</a> </td> </tr>";
 
 		}
-		if (rExist) {
+		if (rExist) {																			//if there are rides in the db finish off the table
 			rideTable = "<table class='rideDetailsSearch'> <tr> <th>Ride Offered By</th> <th>Starting From</th> <th>Going To</th>"
 					+ "<th>Departure Date</th> <th>Departure Time</th> <th>Number of Available Seats</th> <th>More Info</th> </tr>"
 					+ rideTable + "</table>";
 		}
 	} else {
-		response.sendRedirect(request.getContextPath());
+		response.sendRedirect(request.getContextPath());										//else redirect the user to the login page
 	}
 %>
 		
