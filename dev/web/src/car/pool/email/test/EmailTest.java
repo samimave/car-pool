@@ -3,13 +3,20 @@ package car.pool.email.test;
 import static org.junit.Assert.*;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import car.pool.email.Email;
 
+import car.pool.persistance.Database;
+import car.pool.persistance.DatabaseImpl;
+
+import java.sql.ResultSet;
+
 public class EmailTest {
 	Email email = null;
+	String address = "terrasea@gmail.com";
 	
 	@Before
 	public void setUp() throws Exception {
@@ -22,43 +29,41 @@ public class EmailTest {
 	}
 
 	@Test
-	public void testEmail() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetToAddress() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetToAddress() {
-		fail("Not yet implemented");
+	public void testGetSetToAddress() {
+		email.setToAddress(address);
+		Assert.assertEquals(address, email.getToAddress());
 	}
 
 	@Test
 	public void testGetFromAddress() {
-		fail("Not yet implemented");
+		String address = null;
+		try {
+			Database db = new DatabaseImpl();
+			String sql = "select * from Email";
+			ResultSet results = db.getStatement().executeQuery(sql);
+			if(results != null && results.next()) {
+				address = results.getString(2);
+			}else{
+				address = "anonymous@localhost";
+			}
+		} catch (Exception e) {
+			fail(e.toString());
+		}
+		Assert.assertEquals(address, email.getFromAddress());
 	}
 
 	@Test
-	public void testSetSubject() {
-		fail("Not yet implemented");
+	public void testSetGetSubject() {
+		String subject = "hello there";
+		email.setSubject(subject);
+		Assert.assertEquals(subject, email.getSubject());
 	}
 
 	@Test
-	public void testGetSubject() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetMessage() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetMessage() {
-		fail("Not yet implemented");
+	public void testSetGetMessage() {
+		String message = "This is a test";
+		email.setMessage(message);
+		Assert.assertEquals(message, email.getMessage());
 	}
 
 }

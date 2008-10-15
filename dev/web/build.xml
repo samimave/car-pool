@@ -24,7 +24,7 @@
 	<target name="all" depends="clean,prepare,compile,archive,jdepend,runtests"/>
 
 	<target name="clean">
-		<delete dir="${build.classes}/car/pool/user"/>
+		<delete dir="${build.classes}/car/pool"/>
 		<delete dir="${jar.dir}"/>
 	</target>
 
@@ -37,7 +37,7 @@
 	</target>
 
 	<target name="compile">
-		<javac source="5" target="5" classpathref="build.classpath" destdir="${build.classes}" srcdir="${src.dir}"/>
+		<javac source="1.6" target="1.6" classpathref="build.classpath" destdir="${build.classes}" srcdir="${src.dir}"/>
 	</target>
 
 	<target name="archive">
@@ -68,6 +68,7 @@
 			<classpath>
 				<pathelement location="${build.classes}"/>
 				<pathelement location="${lib.dir}/jdbc-mysql.jar"/>
+				<pathelement location="${lib.dir}/mail-1.4.1.jar"/>
 				<pathelement path="${build.classpath}"/>
 				<!--<pathelement path="${java.class.path}"/>
 				<pathelement path="build.classpath"/>-->
