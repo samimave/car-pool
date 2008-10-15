@@ -21,9 +21,11 @@ public class SetupEmail extends HttpServlet {
 	
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("text/plain");
+		response.setContentType("text/plain"); // this is called by ajax and is only looking for true and false as the output.
 		PrintWriter out = response.getWriter();
+		// make sure the right parameters in form are used, This makes sure they at least think about it before they create a form for using this servlet
 		if(request.getParameter("emailconfig") != null) {
+			// now the values from the parameters are extracted and stored 
 			boolean authenticate = request.getParameter("authenticate") != null && request.getParameter("authenticate").equals("on");
 			String username = "";
 			String password = "";
@@ -37,21 +39,24 @@ public class SetupEmail extends HttpServlet {
 			boolean useTLS = request.getParameter("useTLS") != null && request.getParameter("useTLS").equals("on");
 			Database db = new DatabaseImpl();
 			try {
+				// only one line in each of the table used is used so delete any previous dats
 				String sql = "delete from SMTP;";
 				db.getStatement().executeUpdate(sql);
 				sql = "delete from Email;";
 				db.getStatement().executeUpdate(sql);
+				// now for the obvious insert of data into the tables
 				sql = String.format("insert into Email values('%s','%s','%s')", username, replyTo, password);
 				db.getStatement().executeUpdate(sql);
 				sql = String.format("insert into SMTP values('%s', %d, %d)", smtp, port, useTLS ? 1 : 0);
 				db.getStatement().executeUpdate(sql);
-				out.print("true");
+				out.print("true"); // nothing went wrong so output true
 			} catch (SQLException e) {
-				out.print("false");
+				out.print("false"); // it failed for some SQL reason so output false
 				e.printStackTrace();
 			}
 		} else {
-			out.print("false");
+			// TODO maybe should print something else but for the moment this will do
+			out.print("false"); // wrong table used so output false
 		}
 		
 		out.close();
