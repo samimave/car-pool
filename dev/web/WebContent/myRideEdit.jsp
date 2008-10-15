@@ -6,25 +6,25 @@
 
 	//force the user to login to view the page
 	// a container for the users information
-	User user = null;
-	String date = "";
-	String options = "";
-	String from = "";
-	int fromHouseNo = 0;
-	String to = "";
-	int toHouseNo = 0;
-	String uname = "";
-	int seats = 0;
+	User user = null;																		//holds information about the user
+	String date = "";																		//the current date
+	String options = "";																	//
+	String from = "";																		//origin street 
+	int fromHouseNo = 0;																	//origin house number
+	String to = "";																			//destination street
+	int toHouseNo = 0;																		//destination house number
+	String uname = "";																		
+	int seats = 0;																			//number of seats in the ride
 	String dateR = null;
 	String timeR = "";
 	List<String> viaAddress = new ArrayList<String>();
-	String requestTable = "no users found";
-	String acceptedTable = "no users found";
+	String requestTable = "no users found";													//shows users awaiting confirmation into the ride
+	String acceptedTable = "no users found";												//shows users confirmed into the ride
 	String table = "";
-	int dbID = 0;
-	int rideID = 0;
-	String reDirURL = "";
-	if (s.getAttribute("signedin") != null) {
+	int dbID = 0;																			//current users id
+	int rideID = 0;																			//current ride id
+	String reDirURL = "";																	//to redirect back to this page if needed
+	if (s.getAttribute("signedin") != null) {												//if the user is logged in
 		user = (User) s.getAttribute("user");
 
 		//simple date processing for display on page
@@ -37,23 +37,22 @@
 		LocationList locations = cps.getLocations();
 		while (locations.next()) {
 			options += "<option value='" + locations.getID() + "'>"
-					+ locations.getStreetName() + "</option>";
+					+ locations.getStreetName() + "</option>";								//populate the streets dropdown box
 		}
 
-		dbID = user.getUserId();
-		rideID = Integer.parseInt(request.getParameter("rideselect"));
-		RideListing u = cps.getRideListing();
+		dbID = user.getUserId();															//current user id	
+		rideID = Integer.parseInt(request.getParameter("rideselect"));						//
+		RideListing u = cps.getRideListing();												//list of rides in db
 		
-		reDirURL = response.encodeURL("myRideEdit.jsp?rideselect=" + rideID
-		+ "&userselect=" + request.getParameter("userselect"));
+		reDirURL = response.encodeURL("myRideEdit.jsp?rideselect=" + rideID + "&userselect=" + request.getParameter("userselect")); //used to return the user to this page 
 		
 		String detailsTable = "<p>No info found.</p>";
 		boolean ridesExist = false;
 
 		//System.out.println("got here!");
-		while (u.next()) {
-			if (u.getRideID() == rideID) {
-				if (!ridesExist) {
+		while (u.next()) {																	//for each ride
+			if (u.getRideID() == rideID) {													//if this is the ride we are interested in
+				if (!ridesExist) {															//get all the information about the ride
 					detailsTable = ""; //first time round get rid of unwanted text
 				}
 				ridesExist = true;
@@ -111,29 +110,29 @@
 				requestTable += "<td>" + rd.getStreetNumber() + " "
 						+ rd.getLocationName() + "</td>";
 				//this is the confirm user button
-				requestTable += "<FORM action="+response.encodeURL("rideEditSuccess.jsp")+" method=\"post\">";
-				requestTable += "<INPUT type=\"hidden\" name=\"confirmUser\" value=\"yes"
+				requestTable += "<form action="+response.encodeURL("rideEditSuccess.jsp")+" method=\"post\">";
+				requestTable += "<input type=\"hidden\" name=\"confirmUser\" value=\"yes"
 						+ "\">";
-				requestTable += "<INPUT type=\"hidden\" name=\"confirmUserID\" value=\""
+				requestTable += "<input type=\"hidden\" name=\"confirmUserID\" value=\""
 						+ rd.getUserID() + "\">";
-				requestTable += "<INPUT type=\"hidden\" name=\"confirmForRide\" value=\""
+				requestTable += "<input type=\"hidden\" name=\"confirmForRide\" value=\""
 						+ rideID + "\">";
-				requestTable += "<td><INPUT type=\"submit\" value=\"Confirm User\" /></td>";
-				requestTable += "<INPUT type=\"hidden\" name=\"reDirURL\" value=\""
+				requestTable += "<td><input type=\"submit\" value=\"Confirm User\" /></td>";
+				requestTable += "<input type=\"hidden\" name=\"reDirURL\" value=\""
 					+ reDirURL + "\">";
-				requestTable += "</FORM>";
+				requestTable += "</form>";
 				//this is the reject user button
-				requestTable += "<FORM action=\"rideEditSuccess.jsp\" method=\"post\">";
-				requestTable += "<INPUT type=\"hidden\" name=\"rejectUser\" value=\"yes"
+				requestTable += "<form action=\"rideEditSuccess.jsp\" method=\"post\">";
+				requestTable += "<input type=\"hidden\" name=\"rejectUser\" value=\"yes"
 						+ "\">";
-				requestTable += "<INPUT type=\"hidden\" name=\"confirmUserID\" value=\""
+				requestTable += "<input type=\"hidden\" name=\"confirmUserID\" value=\""
 						+ rd.getUserID() + "\">";
-				requestTable += "<INPUT type=\"hidden\" name=\"confirmForRide\" value=\""
+				requestTable += "<input type=\"hidden\" name=\"confirmForRide\" value=\""
 						+ rideID + "\">";
-				requestTable += "<INPUT type=\"hidden\" name=\"reDirURL\" value=\""
+				requestTable += "<input type=\"hidden\" name=\"reDirURL\" value=\""
 						+ reDirURL + "\">";
-				requestTable += "<td><INPUT type=\"submit\" value=\"Reject User\" /></td></tr>";
-				requestTable += "</FORM>";
+				requestTable += "<td><input type=\"submit\" value=\"Reject User\" /></td></tr>";
+				requestTable += "</form>";
 
 				//otherwise if in the Matches table the user is not the driver and the driver has
 				//been confirmed for a ride
@@ -211,13 +210,13 @@
 			}
 			try {
 				if (Integer.parseInt(the_comment[1]) == dbID) {
-					delButton = "<FORM action="+response.encodeURL("delAComment.jsp")+" method=\"post\">";
-					delButton += "<INPUT type=\"hidden\" name=\"idComment\" value=\""
+					delButton = "<form action="+response.encodeURL("delAComment.jsp")+" method=\"post\">";
+					delButton += "<input type=\"hidden\" name=\"idComment\" value=\""
 							+ the_comment[0] + "\">";
-					delButton += "<INPUT type=\"hidden\" name=\"reDirURL\" value=\""
+					delButton += "<input type=\"hidden\" name=\"reDirURL\" value=\""
 							+ reDirURL + "\">";
-					delButton += "<INPUT type=\"submit\" value=\"Delete Comment\" />";
-					delButton += "</FORM>";
+					delButton += "<input type=\"submit\" value=\"Delete Comment\" />";
+					delButton += "</form>";
 				} else {
 					delButton = "";
 				}
@@ -242,20 +241,20 @@
 	///////////////////////////
 %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<HTML>
-	<HEAD>
+<!DOCTYPE html PUBLIC "-//W3C//DTD html 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
 
-		<TITLE>Ride Details</TITLE>
+		<title>Ride Details</title>
 		<STYLE type="text/css" media="screen">@import "TwoColumnLayout.css";</STYLE>
-		<SCRIPT type="text/javascript" src="javascript/CalendarPopup.js"></SCRIPT>
+		<script type="text/javascript" src="javascript/CalendarPopup.js"></script>
 		<script type="text/javascript" src="javascript/yav.js"></script>
 		<script type="text/javascript" src="javascript/yav-config.js"></script>
 		<script type="text/javascript" src="javascript/date.js"></script>
 		<script
 			src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAwEEggV_Hd8onlfSgA_kgZBTz-RVM6WN_1Yrxj3B45o6dXx3SPxRBd9zQMOS18U6DzRdS0kg6JbFdlA"
 			type="text/javascript"></script>
-		<SCRIPT type="text/javascript">
+		<script type="text/javascript">
 			var cal = new CalendarPopup();
 		</script>
 		<script>
@@ -340,7 +339,7 @@
 		s_rules[1]='numSeats:number of seats|numeric';
 		</script>
 
-<SCRIPT type="text/javascript">
+	<script type="text/javascript">
 						function codeFrom(response) {
 							document.getElementById("updateStartS").fromCoord.value=response.lat() + "," + response.lng();
 							}
@@ -368,14 +367,10 @@
 								var to = endNum + " " + endLoc + " PALMERSTON NORTH NEW ZEALAND";
 				     		   	geocoder.getLatLng(to, codeTo);
 				     		}
-		     			  					    		   	
-
-
-			   		   	 
 			      		}
 		</script>
-	</HEAD>
-	<BODY ><%//onload="yav.init('updateStartS', sl_rules); yav.init('updateEndS', el_rules); yav.init('updateDate', d_rules); yav.init('updateTime', t_rules); yav.init('updateSeats', s_rules);">%>
+	</head>
+	<body ><%//onload="yav.init('updateStartS', sl_rules); yav.init('updateEndS', el_rules); yav.init('updateDate', d_rules); yav.init('updateTime', t_rules); yav.init('updateSeats', s_rules);">%>
 
 	<%@ include file="heading.html" %>	
 
@@ -387,77 +382,77 @@
 		<br />
 		<h3>Location:</h3>
 		<div class="Box" id="Box">
-		<FORM name="updateStartS" id="updateStartS" onsubmit="return yav.performCheck('updateStartS', sl_rules, 'inline');" action="<%=response.encodeURL("rideEditSuccess.jsp") %>" method="post">
-			<INPUT type="hidden" name="updateRide" value="yes"/>
-			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect")%>">
-			<INPUT type="hidden" name="reDirURL" value="<%=reDirURL%>"/>
-			<INPUT TYPE="hidden" NAME="fromCoord" SIZE="25"/>	
-			<TABLE>
+		<form name="updateStartS" id="updateStartS" onsubmit="return yav.performCheck('updateStartS', sl_rules, 'inline');" action="<%=response.encodeURL("rideEditSuccess.jsp") %>" method="post">
+			<input type="hidden" name="updateRide" value="yes"/>
+			<input type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect")%>">
+			<input type="hidden" name="reDirURL" value="<%=reDirURL%>"/>
+			<input type="hidden" name="fromCoord" size="25"/>	
+			<table>
 				<tr> <td> Start Street:  <%=fromHouseNo%> <%=from%></td> <td>&nbsp;</td></tr>
-				<tr><td><INPUT TYPE="text" NAME="startFromHN" SIZE="25"	onkeypress="getAddress('from')" value=<%=fromHouseNo%>></td><td><span id=errorsDiv_startFromHN></span></td></tr>
-				<tr> <td><SELECT name="startFrom" onChange="getAddress('from')"><option selected="selected" value=''>Select a Street</option><%=options%></SELECT></td><td><INPUT type="submit" name="startFrom" value="Update Street" size="25">&nbsp;&nbsp;<span id=errorsDiv_startFrom></span></td></tr>
-			</TABLE>
-		</FORM>
+				<tr><td><input type="text" name="startFromHN" size="25"	onkeypress="getAddress('from')" value=<%=fromHouseNo%>></td><td><span id=errorsDiv_startFromHN></span></td></tr>
+				<tr> <td><select name="startFrom" onChange="getAddress('from')"><option selected="selected" value=''>Select a Street</option><%=options%></select></td><td><input type="submit" name="startFrom" value="Update Street" size="25">&nbsp;&nbsp;<span id=errorsDiv_startFrom></span></td></tr>
+			</table>
+		</form>
 		<br />
-		<FORM name="updateEndS" id="updateEndS" onsubmit="return yav.performCheck('updateEndS', el_rules, 'inline');" action="<%=response.encodeURL("rideEditSuccess.jsp") %>" method="post">
-			<INPUT type="hidden" name="updateRide" value="yes"/>
-			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect")%>">
-			<INPUT type="hidden" name="reDirURL" value="<%=reDirURL%>"/>
-			<INPUT TYPE="hidden" NAME="toCoord" SIZE="25"/>
-			<TABLE>
+		<form name="updateEndS" id="updateEndS" onsubmit="return yav.performCheck('updateEndS', el_rules, 'inline');" action="<%=response.encodeURL("rideEditSuccess.jsp") %>" method="post">
+			<input type="hidden" name="updateRide" value="yes"/>
+			<input type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect")%>">
+			<input type="hidden" name="reDirURL" value="<%=reDirURL%>"/>
+			<input type="hidden" name="toCoord" size="25"/>
+			<table>
 				<tr> <td>End Street:  <%=toHouseNo%> <%=to%></td></tr>
- 				<tr><td><INPUT TYPE="text" NAME="endToHN" SIZE="25" onkeypress="getAddress('to')" value=<%=toHouseNo%>></td></tr>
-				<tr> <td><SELECT name="endTo" onChange="getAddress('to')"><option selected="selected" value=''>Select a Street</option><%=options%></SELECT></td><td><INPUT type="submit" name="endTo" value="Update Street" size="25">&nbsp;&nbsp;<span id=errorsDiv_endTo></span></td></tr>
-			</TABLE>
-		</FORM>
+ 				<tr><td><input type="text" name="endToHN" size="25" onkeypress="getAddress('to')" value=<%=toHouseNo%>></td></tr>
+				<tr> <td><select name="endTo" onChange="getAddress('to')"><option selected="selected" value=''>Select a Street</option><%=options%></select></td><td><input type="submit" name="endTo" value="Update Street" size="25">&nbsp;&nbsp;<span id=errorsDiv_endTo></span></td></tr>
+			</table>
+		</form>
 
-		<FORM name="showMap" id="map3" method="post" target="_blank" action="displayRouteMap2.jsp">
-			<p>Click here to <INPUT type="submit" value="View Map" ></p>
-			<INPUT type="hidden" name="mapFrom" value="<%=from%>">
-			<INPUT type="hidden" name="mapTo"  value="<%=to%>" >
-			<INPUT type="hidden" name="mapVia"  value="<%=viaAddress%>" >
-		</FORM>
+		<form name="showMap" id="map3" method="post" target="_blank" action="displayRouteMap2.jsp">
+			<p>Click here to <input type="submit" value="View Map" ></p>
+			<input type="hidden" name="mapFrom" value="<%=from%>">
+			<input type="hidden" name="mapTo"  value="<%=to%>" >
+			<input type="hidden" name="mapVia"  value="<%=viaAddress%>" >
+		</form>
 		</div>
 		<br /><br />
 		<h3>Timing:</h3>
 		<div class="Box" id="Box">
-		<FORM name="updateDate" id="updateDate" onsubmit="return yav.performCheck('updateDate', d_rules, 'inline');" action="<%=response.encodeURL("rideEditSuccess.jsp") %>" method="post">
-			<INPUT type="hidden" name="updateRide" value="yes">
-			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect")%>">
-			<INPUT type="hidden" name="reDirURL" value="<%=reDirURL%>"/>
-			<TABLE>
-				<tr> <td>Date (dd/MM/yyyy): </td> <td><INPUT TYPE="text" NAME="Rdate" SIZE="25" value=<%=dateR%>><A HREF="#" onClick="cal.select(document.forms['updateDate'].Rdate,'anchor1','dd/MM/yyyy'); return false;" NAME="anchor1" ID="anchor1"><img name="calIcon" border="0" src="images/calendar_icon.jpg" width="27" height="23"></A></td><td><INPUT type="submit" name="updateDate" value="Update Date" size="25">&nbsp;&nbsp;<span id=errorsDiv_Rdate></span></td></tr>
-			</TABLE>
-		</FORM>
-		<FORM name="updateTime" id="updateTime" onsubmit="return yav.performCheck('updateTime', t_rules, 'inline');" action="<%=response.encodeURL("rideEditSuccess.jsp") %>" method="post">
-			<INPUT type="hidden" name="updateRide" value="yes"/>
-			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect")%>">
-			<INPUT type="hidden" name="reDirURL" value="<%=reDirURL%>"/>
-			<TABLE>
-				<tr> <td>Time 24hr (hh:mm): </td><td><INPUT TYPE="text" NAME="Rtime" SIZE="25" value=<%=timeR%>></td><td><INPUT type="submit" name="updateTime" value="Update Time" size="25">&nbsp;&nbsp;<span id=errorsDiv_Rtime></span></td></tr>
-			</TABLE>
-		</FORM>
+		<form name="updateDate" id="updateDate" onsubmit="return yav.performCheck('updateDate', d_rules, 'inline');" action="<%=response.encodeURL("rideEditSuccess.jsp") %>" method="post">
+			<input type="hidden" name="updateRide" value="yes">
+			<input type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect")%>">
+			<input type="hidden" name="reDirURL" value="<%=reDirURL%>"/>
+			<table>
+				<tr> <td>Date (dd/MM/yyyy): </td> <td><input type="text" name="Rdate" size="25" value=<%=dateR%>><A href="#" onClick="cal.select(document.forms['updateDate'].Rdate,'anchor1','dd/MM/yyyy'); return false;" name="anchor1" ID="anchor1"><img name="calIcon" border="0" src="images/calendar_icon.jpg" width="27" height="23"></A></td><td><input type="submit" name="updateDate" value="Update Date" size="25">&nbsp;&nbsp;<span id=errorsDiv_Rdate></span></td></tr>
+			</table>
+		</form>
+		<form name="updateTime" id="updateTime" onsubmit="return yav.performCheck('updateTime', t_rules, 'inline');" action="<%=response.encodeURL("rideEditSuccess.jsp") %>" method="post">
+			<input type="hidden" name="updateRide" value="yes"/>
+			<input type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect")%>">
+			<input type="hidden" name="reDirURL" value="<%=reDirURL%>"/>
+			<table>
+				<tr> <td>Time 24hr (hh:mm): </td><td><input type="text" name="Rtime" size="25" value=<%=timeR%>></td><td><input type="submit" name="updateTime" value="Update Time" size="25">&nbsp;&nbsp;<span id=errorsDiv_Rtime></span></td></tr>
+			</table>
+		</form>
 		</div>
 		<br /><br />
 		<h3>Additional Information:</h3>
 		<div class="Box" id="Box">
-		<FORM name="updateSeats" onsubmit="return yav.performCheck('updateSeats', s_rules, 'inline');" action="<%=response.encodeURL("rideEditSuccess.jsp") %>" method="post">
-			<INPUT type="hidden" name="updateRide" value="yes"/>
-			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect")%>">
-			<INPUT type="hidden" name="reDirURL" value="<%=reDirURL%>"/>
-			<TABLE>
-				<tr><td>Seats: </td><td><INPUT TYPE="text" NAME="numSeats" value=<%=seats%> SIZE="25"></td><td><INPUT type="submit" name="updateSeats" value="Update Seats" size="25">&nbsp;&nbsp;<span id=errorsDiv_numSeats></span></td></tr>
-			</TABLE>
-		</FORM>
+		<form name="updateSeats" onsubmit="return yav.performCheck('updateSeats', s_rules, 'inline');" action="<%=response.encodeURL("rideEditSuccess.jsp") %>" method="post">
+			<input type="hidden" name="updateRide" value="yes"/>
+			<input type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect")%>">
+			<input type="hidden" name="reDirURL" value="<%=reDirURL%>"/>
+			<table>
+				<tr><td>Seats: </td><td><input type="text" name="numSeats" value=<%=seats%> size="25"></td><td><input type="submit" name="updateSeats" value="Update Seats" size="25">&nbsp;&nbsp;<span id=errorsDiv_numSeats></span></td></tr>
+			</table>
+		</form>
 		</div>
-		<FORM name="withdraw" action="<%=response.encodeURL("rideEditSuccess.jsp") %>" method="post">
+		<form name="withdraw" action="<%=response.encodeURL("rideEditSuccess.jsp") %>" method="post">
 			<input type="hidden" name="remRide"/>
-			<INPUT type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect")%>">
-			<INPUT type="hidden" name="reDirURL" value="<%=response.encodeURL("myRideDetails.jsp")%>"/>
+			<input type="hidden" name="rideSelect" value="<%=request.getParameter("rideselect")%>">
+			<input type="hidden" name="reDirURL" value="<%=response.encodeURL("myRideDetails.jsp")%>"/>
 			<br />
-			<p>Click here to <INPUT type="submit" name="removeRide" value="Withdraw Ride" size="25"></p>
+			<p>Click here to <input type="submit" name="removeRide" value="Withdraw Ride" size="25"></p>
 			<p>Warning: social score penalty.</p>
-		</FORM>
+		</form>
 		</div>
 		<br /><br />
 		<h2>Other Users:</h2>
@@ -473,19 +468,19 @@
 		<h2>Ride Comments:</h2>
 		<div class="Box" id="Box">
 		<%=table%>
-		<FORM name="addComment" action="<%=response.encodeURL("addAComment.jsp") %>" method="post">
-			<TABLE width="100%">
+		<form name="addComment" action="<%=response.encodeURL("addAComment.jsp") %>" method="post">
+			<table width="100%">
 				<tr><td >
-					<INPUT type="hidden" name="idRide" value="<%=rideID%>">
-					<INPUT type="hidden" name="idUser" value="<%=dbID%>">
-					<INPUT type="hidden" name="reDirURL" value="<%=reDirURL%>"/>
-					<TEXTAREA cols="50" rows="4" name="comment"></TEXTAREA>
+					<input type="hidden" name="idRide" value="<%=rideID%>">
+					<input type="hidden" name="idUser" value="<%=dbID%>">
+					<input type="hidden" name="reDirURL" value="<%=reDirURL%>"/>
+					<textarea cols="50" rows="4" name="comment"></textarea>
 				</td></tr>
 				<tr><td>
-					<INPUT type="submit" value="Add Comment" />
+					<input type="submit" value="Add Comment" />
 				</td></tr>
-			</TABLE>
-		</FORM>
+			</table>
+		</form>
 		</div>
 		<br /> <br /> <br />
 		<p>-- <a href="<%=response.encodeURL("welcome.jsp") %>">Home</a> --</p>	
@@ -493,5 +488,5 @@
 
 	<%@ include file="leftMenu.jsp" %>
 
-	</BODY>
-</HTML>
+	</body>
+</html>
