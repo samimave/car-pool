@@ -612,7 +612,7 @@ public class CarPoolStoreImpl implements CarPoolStore {
 			statement.executeUpdate("DELETE FROM social;");
 			statement.executeUpdate("DELETE FROM Matches;");
 			statement.executeUpdate("DELETE FROM Ride;");
-			statement.executeUpdate("DELETE FROM Ridecomment;");
+			statement.executeUpdate("DELETE FROM RideComment;");
 			statement.executeUpdate("DELETE FROM Comments;");
 			statement.executeUpdate("DELETE FROM User;");
 			statement.close();
