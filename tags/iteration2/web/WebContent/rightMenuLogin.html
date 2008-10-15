@@ -1,0 +1,22 @@
+	<DIV id="navBeta" class="navBeta">
+		Sign up or log in via OpenId:
+		<FORM class="login" name="openid_identifier" action="openidlogin" method="post">
+			<INPUT type="hidden" name="openid_signin" value="true"/>
+				<table class="login" border="0">
+			   		<tr><td>OpenId:</td><td><INPUT type="text" name="openid_url" id="openid_url" size="18"/></td></tr>
+			   		<tr><td>&nbsp;</td><td><INPUT type="submit" value="Login"/></td></tr>
+				</table>
+		</FORM>
+		Want to know more about OpenID? <a href="http://openid.net/">Click here.</a><br /><br /><br />
+ 
+		Or Log in via your username and password:
+		<form class="login" name="passwordlogin" action="login" method="post">
+			<input type="hidden" name="normal_signin" value="true">
+			<table class="login">
+				<tr><td>Username:</td><td><input type="text" name="username" size="18"/></td></tr>
+				<tr><td>Password:</td><td><input type="password"name="userpass" size="18"/></td></tr>
+				<tr><td>&nbsp;</td><td><input type="submit" value="Login"/></td></tr>
+			</table>
+		</form>
+		Not registered and don't want to use OpenId, then <a href="register.jsp">register here</a>.
+	</DIV>	
