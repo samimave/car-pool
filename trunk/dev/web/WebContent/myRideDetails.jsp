@@ -337,8 +337,8 @@ String updateUserConf = "";
 			if ((tr.getConfirmed() == true)) {
 				rideExist = true;
 
-				acceptedTable += "<tr><FORM action='"+response.encodeURL("addRideEvent.jsp")+"' method=\"post\" target=\"_blank\" >";
-				acceptedTable += "<INPUT type=\"hidden\" name=\"withdrawConfirmedRide\" value=\"yes"
+				acceptedTable += "<tr><form action='"+response.encodeURL("addRideEvent.jsp")+"' method=\"post\" target=\"_blank\" >";
+				acceptedTable += "<input type=\"hidden\" name=\"withdrawConfirmedRide\" value=\"yes"
 						+ "\">";
 				acceptedTable += "<td>" + from + "</td> ";
 				acceptedTable += "<td>" + to + "</td> ";
@@ -348,47 +348,47 @@ String updateUserConf = "";
 				acceptedTable += "<td>" + tr.getTime() + "</td> ";
 				acceptedTable += "<td>" + tr.getStreetNumber() + " "
 						+ tr.getPickUp() + "</td>";
-				acceptedTable += "<INPUT type=\"hidden\" name=\"from\" value=\""
+				acceptedTable += "<input type=\"hidden\" name=\"from\" value=\""
 						+ fromID + "\">";
-				acceptedTable += "<INPUT type=\"hidden\" name=\"to\" value=\""
+				acceptedTable += "<input type=\"hidden\" name=\"to\" value=\""
 						+ toID + "\">";
-				acceptedTable += "<INPUT type=\"hidden\" name=\"date\" value=\""
+				acceptedTable += "<input type=\"hidden\" name=\"date\" value=\""
 						+ new SimpleDateFormat("yyyy-MM-dd").format(tr
 								.getRideDate()) + "\">";
-				acceptedTable += "<INPUT type=\"hidden\" name=\"time\" value=\""
+				acceptedTable += "<input type=\"hidden\" name=\"time\" value=\""
 						+ tr.getTime() + "\">";
-				acceptedTable += "<INPUT type=\"hidden\" name=\"length\" value=\""
+				acceptedTable += "<input type=\"hidden\" name=\"length\" value=\""
 						+ tr.getTime() + "\">";
-				acceptedTable += "<td><INPUT type=\"submit\" value=\"Add\" /></td>";
-				acceptedTable += "</FORM>";
+				acceptedTable += "<td><input type=\"submit\" value=\"Add\" /></td>";
+				acceptedTable += "</form>";
 
-				acceptedTable += "<FORM action='"+response.encodeURL("myRideDetails.jsp")+"' method=\"post\">";
-				acceptedTable += "<INPUT type=\"hidden\" name=\"withdrawConfirmedRide\" value=\"yes"
+				acceptedTable += "<form action='"+response.encodeURL("myRideDetails.jsp")+"' method=\"post\">";
+				acceptedTable += "<input type=\"hidden\" name=\"withdrawConfirmedRide\" value=\"yes"
 						+ "\">";
-				acceptedTable += "<INPUT type=\"hidden\" name=\"withdrawUserID\" value=\""+ currentUser + "\">";
-				acceptedTable += "<INPUT type=\"hidden\" name=\"withdrawRideID\" value=\""
+				acceptedTable += "<input type=\"hidden\" name=\"withdrawUserID\" value=\""+ currentUser + "\">";
+				acceptedTable += "<input type=\"hidden\" name=\"withdrawRideID\" value=\""
 						+ tr.getRideID() + "\">";
 				//acceptedTable += "<td>"+ tr.getUsername() +"</td> ";	
-				acceptedTable += "<td><INPUT type=\"submit\" value=\"Withdraw\" /></td>";
+				acceptedTable += "<td><input type=\"submit\" value=\"Withdraw\" /></td>";
 				acceptedTable += "<td> <a href='"
 						+ response.encodeURL(request.getContextPath()
 						+ "/rideDetails.jsp?rideselect="
 						+ tr.getRideID() + "&userselect="
 						+ tr.getUsername()) + "'>" + "Link to ride page"
 						+ "</a> </td>";
-				acceptedTable += "</FORM></tr>";
+				acceptedTable += "</form></tr>";
 
 			}
 			// This awaitTable shows the rides that the uesr is requested and user can withdraw the request
 			else if (tr.getConfirmed() != true) {
 				awaitExist = true;
 
-				awaitTable += "<tr><FORM action='"+response.encodeURL("myRideDetails.jsp")+"' method=\"post\">";
-				awaitTable += "<INPUT type=\"hidden\" name=\"withdrawNotConfirmedRide\" value=\"yes"
+				awaitTable += "<tr><form action='"+response.encodeURL("myRideDetails.jsp")+"' method=\"post\">";
+				awaitTable += "<input type=\"hidden\" name=\"withdrawNotConfirmedRide\" value=\"yes"
 						+ "\">";
-				awaitTable += "<INPUT type=\"hidden\" name=\"withdrawUserID\" value=\""
+				awaitTable += "<input type=\"hidden\" name=\"withdrawUserID\" value=\""
 						+ currentUser + "\">";
-				awaitTable += "<INPUT type=\"hidden\" name=\"withdrawRideID\" value=\""
+				awaitTable += "<input type=\"hidden\" name=\"withdrawRideID\" value=\""
 						+ tr.getRideID() + "\">";
 				awaitTable += "<td>" + from + "</td>";
 				awaitTable += "<td>" + to + "</td>";
@@ -398,9 +398,9 @@ String updateUserConf = "";
 				awaitTable += "<td>" + tr.getTime() + "</td> ";
 				awaitTable += "<td>" + tr.getStreetNumber() + " "
 						+ tr.getPickUp() + "</td>";
-				awaitTable += "<td><INPUT type=\"submit\" value=\"Withdraw\" /></td>";
+				awaitTable += "<td><input type=\"submit\" value=\"Withdraw\" /></td>";
 				awaitTable += "<td> <a href='"+ response.encodeURL(request.getContextPath()+ "/rideDetails.jsp?rideselect="+ tr.getRideID() + "&userselect="+ tr.getUsername()) + "'>" + "Link to ride page"+ "</a> </td>";
-				awaitTable += "</FORM></tr>";
+				awaitTable += "</form></tr>";
 			}
 		}
 
@@ -467,13 +467,13 @@ String updateUserConf = "";
 								+ "Link to Ride Page"
 								+ "</a></td>";
 						}
-						feedbackTable += "<FORM action='"+response.encodeURL("myRideDetails.jsp")+"' method=\"post\">";
-						feedbackTable += "<INPUT type=\"hidden\" name=\"feedbackRide\" value=\"yes"+ "\">";
-						feedbackTable += "<INPUT type=\"hidden\" name=\"DriverUserID\" value=\""+ driverID + "\">";
-						feedbackTable += "<INPUT type=\"hidden\" name=\"FdbckForRide\" value=\""+ tr2.getRideID() + "\">";
-						feedbackTable += "<td><INPUT TYPE=\"text\" NAME=\"rideRate\" SIZE=\"10\">";
-						feedbackTable += "<INPUT type=\"submit\" value=\"Rate Ride\" /></td>";
-						feedbackTable += "</FORM> </tr>";
+						feedbackTable += "<form action='"+response.encodeURL("myRideDetails.jsp")+"' method=\"post\">";
+						feedbackTable += "<input type=\"hidden\" name=\"feedbackRide\" value=\"yes"+ "\">";
+						feedbackTable += "<input type=\"hidden\" name=\"DriverUserID\" value=\""+ driverID + "\">";
+						feedbackTable += "<input type=\"hidden\" name=\"FdbckForRide\" value=\""+ tr2.getRideID() + "\">";
+						feedbackTable += "<td><input type=\"text\" name=\"rideRate\" SIZE=\"10\">";
+						feedbackTable += "<input type=\"submit\" value=\"Rate Ride\" /></td>";
+						feedbackTable += "</form> </tr>";
 					}
 				}
 			
@@ -493,17 +493,17 @@ String updateUserConf = "";
 
 %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<HTML>
-	<HEAD>
-		<TITLE>Your Rides</TITLE>
-		<STYLE type="text/css" media="screen">@import "TwoColumnLayout.css";</STYLE>
-	</HEAD>
-	<BODY>
+<!DOCTYPE html PUBLIC "-//W3C//DTD html 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<title>Your Rides</title>
+		<style type="text/css" media="screen">@import "TwoColumnLayout.css";</style>
+	</head>
+	<body>
 
 	<%@ include file="heading.html" %>
 
-	<DIV class="Content" id="Content">
+	<div class="Content" id="Content">
 		<h2 class="title" id="title">Your Rides</h2>
 		<br />
 		<%=takeConf%>
@@ -523,9 +523,9 @@ String updateUserConf = "";
 		</div>
 		<br /> <br /> <br />
 		<p>-- <a href="<%=response.encodeURL("welcome.jsp") %>">Home</a> --</p>
-	</DIV>
+	</div>
 
 	<%@ include file="leftMenu.jsp" %>
 
-	</BODY>
-</HTML>
+	</body>
+</html>
