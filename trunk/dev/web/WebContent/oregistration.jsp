@@ -10,7 +10,7 @@ if(request.getParameter("error") != null) {
 RandomTextGenerator generator = new RandomTextGenerator();
 Random r = new Random();
 Integer pos = r.nextInt(generator.size());
-s.setAttribute("quote_pos", pos);
+s.setAttribute("quote_pos", pos);								//set the number of the displayed quote text as a session attribute
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">

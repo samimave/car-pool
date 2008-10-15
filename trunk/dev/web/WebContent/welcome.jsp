@@ -14,7 +14,7 @@
 	if (s.getAttribute("signedin") != null) {
 		user = (User) s.getAttribute("user");
 
-		//code to add user to the db
+		//code to add user to the db if they have just registered
 		if (request.getParameter("newUser") != null) {
 			cps.addUser((String) request.getParameter("openid_url"),
 					(String) request.getParameter("userName"),
@@ -22,9 +22,9 @@
 					(String) request.getParameter("phone"));
 		}
 
+		//code to find the number of requests a user has to join a ride
 		ArrayList<Integer> rideIDs = new ArrayList<Integer>();
-		RideListing rl = cps.searchRideListing(RideListing.searchUser,
-				user.getUserName());
+		RideListing rl = cps.searchRideListing(RideListing.searchUser,user.getUserName());
 		while (rl.next()) {
 			rideIDs.add(rl.getRideID());
 			rideCount++;
@@ -33,8 +33,7 @@
 		for (int i = 0; i < rideIDs.size(); i++) {
 			RideDetail rd = cps.getRideDetail(rideIDs.get(i));
 			while (rd.hasNext()) {
-				if ((rd.getUserID() != user.getUserId())
-						&& (rd.getConfirmed() == false)) {
+				if ((rd.getUserID() != user.getUserId()) && (rd.getConfirmed() == false)) {
 					requestCount++;
 				}
 			}

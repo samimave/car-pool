@@ -13,10 +13,10 @@
 	String acceptedTable = "";
 	int count = 0;
 	int countA = 0;
-	if (s.getAttribute("signedin") != null) {
+	if (s.getAttribute("signedin") != null) {													//if the user is logged in
 		user = (User) s.getAttribute("user");
 	
-		UserManager manager = null;
+		UserManager manager = null;																//get information about the user
 		manager = new UserManager(); 
 		driver = manager.getUserByUserId(Integer.parseInt(request.getParameter("profileId")));
 		cps = new CarPoolStoreImpl();
@@ -35,20 +35,13 @@
 			String from = rl.getStartLocation();
 			String to = rl.getEndLocation();
 			//userTable += "<tr> <td>" + rl.getUsername() + "</td> ";
-			userTable += "<tr><td>" + rl.getStreetStart() + " " + from
-					+ "</td> ";
-			userTable += "<td>" + rl.getStreetEnd() + " " + to
-					+ "</td> ";
-			userTable += "<td>"
-					+ new SimpleDateFormat("dd/MM/yyyy").format(rl
-							.getRideDate()) + "</td> ";
+			userTable += "<tr><td>" + rl.getStreetStart() + " " + from + "</td> ";
+			userTable += "<td>" + rl.getStreetEnd() + " " + to + "</td> ";
+			userTable += "<td>"	+ new SimpleDateFormat("dd/MM/yyyy").format(rl.getRideDate()) + "</td> ";
 			userTable += "<td>" + rl.getTime() + "</td> ";
-			userTable += "<td> <a href='"
-						+ response.encodeURL(request.getContextPath()
-						+ "/rideDetails.jsp?rideselect="
-						+ rl.getRideID()) + "'>"
-						+ "Link to Ride Page"
-						+ "</a> </td> </tr>";
+			userTable += "<td> <a href='" + response.encodeURL(request.getContextPath()
+						+ "/rideDetails.jsp?rideselect=" + rl.getRideID()) + "'>"
+						+ "Link to Ride Page" + "</a> </td> </tr>";
 		}
 
 		if (userExist) {
@@ -85,9 +78,7 @@
 				countA++;
 				acceptedTable += "<tr><td>" + from + "</td> ";
 				acceptedTable += "<td>" + to + "</td> ";
-				acceptedTable += "<td>"
-						+ new SimpleDateFormat("dd/MM/yyyy").format(tr
-								.getRideDate()) + "</td> ";
+				acceptedTable += "<td>"	+ new SimpleDateFormat("dd/MM/yyyy").format(tr.getRideDate()) + "</td> ";
 				acceptedTable += "<td>" + tr.getTime() + "</td> ";
 				String d = new SimpleDateFormat("dd/MM/yyyy").format(tr.getRideDate())+ " " + tr.getTime();
 				Date dt = new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(d);
@@ -117,8 +108,6 @@
 			acceptedTable ="<div class='Box' id='Box'><p>None.</p></div>";
 		}
 
-		
-		
 	} else {
 		response.sendRedirect(request.getContextPath());
 	}

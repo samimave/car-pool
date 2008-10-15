@@ -1,4 +1,4 @@
-
+<%@page errorPage="errorPage.jsp"%>
 <%@page contentType="text/html; charset=ISO-8859-1" %>
 <%@page import="java.sql.*, car.pool.persistance.exception.*, java.io.*,org.verisign.joid.consumer.OpenIdFilter,car.pool.persistance.*,car.pool.user.*,java.util.*,java.text.SimpleDateFormat, car.pool.email.*" %>
 
