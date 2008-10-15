@@ -2,6 +2,110 @@
 <JDepend>
     <Packages>
 
+        <Package name="car.pool.email">
+            <Stats>
+                <TotalClasses>3</TotalClasses>
+                <ConcreteClasses>3</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>2</Ca>
+                <Ce>2</Ce>
+                <A>0</A>
+                <I>0.5</I>
+                <D>0.5</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="Email.java">
+                    car.pool.email.Email
+                </Class>
+                <Class sourceFile="SMTP.java">
+                    car.pool.email.SMTP
+                </Class>
+                <Class sourceFile="SMTPException.java">
+                    car.pool.email.SMTPException
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>car.pool.persistance</Package>
+                <Package>com.sun.mail.smtp</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>car.pool.email.test</Package>
+                <Package>car.pool.user.registration.servlet</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="car.pool.email.servlet">
+            <Stats>
+                <TotalClasses>1</TotalClasses>
+                <ConcreteClasses>1</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>0</Ca>
+                <Ce>1</Ce>
+                <A>0</A>
+                <I>1</I>
+                <D>0</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="SetupEmail.java">
+                    car.pool.email.servlet.SetupEmail
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>car.pool.persistance</Package>
+            </DependsUpon>
+
+            <UsedBy>
+            </UsedBy>
+        </Package>
+
+        <Package name="car.pool.email.test">
+            <Stats>
+                <TotalClasses>2</TotalClasses>
+                <ConcreteClasses>2</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>0</Ca>
+                <Ce>3</Ce>
+                <A>0</A>
+                <I>1</I>
+                <D>0</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="EmailTest.java">
+                    car.pool.email.test.EmailTest
+                </Class>
+                <Class sourceFile="SMTPTest.java">
+                    car.pool.email.test.SMTPTest
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>car.pool.email</Package>
+                <Package>car.pool.persistance</Package>
+                <Package>org.junit</Package>
+            </DependsUpon>
+
+            <UsedBy>
+            </UsedBy>
+        </Package>
+
         <Package name="car.pool.locations">
             <Stats>
                 <TotalClasses>1</TotalClasses>
@@ -34,14 +138,14 @@
 
         <Package name="car.pool.persistance">
             <Stats>
-                <TotalClasses>9</TotalClasses>
-                <ConcreteClasses>6</ConcreteClasses>
+                <TotalClasses>12</TotalClasses>
+                <ConcreteClasses>9</ConcreteClasses>
                 <AbstractClasses>3</AbstractClasses>
-                <Ca>3</Ca>
-                <Ce>1</Ce>
-                <A>0.33</A>
-                <I>0.25</I>
-                <D>0.42</D>
+                <Ca>11</Ca>
+                <Ce>2</Ce>
+                <A>0.25</A>
+                <I>0.15</I>
+                <D>0.6</D>
                 <V>1</V>
             </Stats>
 
@@ -70,22 +174,40 @@
                 <Class sourceFile="LocationList.java">
                     car.pool.persistance.LocationList$1
                 </Class>
+                <Class sourceFile="RideDetail.java">
+                    car.pool.persistance.RideDetail
+                </Class>
                 <Class sourceFile="RideListingFactory.java">
                     car.pool.persistance.RideListingFactory
                 </Class>
                 <Class sourceFile="RideListingImpl.java">
                     car.pool.persistance.RideListingImpl
                 </Class>
+                <Class sourceFile="TakenRides.java">
+                    car.pool.persistance.TakenRides
+                </Class>
+                <Class sourceFile="UserList.java">
+                    car.pool.persistance.UserList
+                </Class>
             </ConcreteClasses>
 
             <DependsUpon>
                 <Package>car.pool.persistance.exception</Package>
+                <Package>car.pool.security</Package>
             </DependsUpon>
 
             <UsedBy>
+                <Package>car.pool.email</Package>
+                <Package>car.pool.email.servlet</Package>
+                <Package>car.pool.email.test</Package>
                 <Package>car.pool.persistance.test</Package>
+                <Package>car.pool.proxy</Package>
+                <Package>car.pool.proxy.servlet</Package>
                 <Package>car.pool.user</Package>
+                <Package>car.pool.user.authentication</Package>
+                <Package>car.pool.user.registration.servlet</Package>
                 <Package>car.pool.user.test</Package>
+                <Package>car.pool.user.update.servlet</Package>
             </UsedBy>
         </Package>
 
@@ -94,7 +216,7 @@
                 <TotalClasses>7</TotalClasses>
                 <ConcreteClasses>7</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
-                <Ca>5</Ca>
+                <Ca>6</Ca>
                 <Ce>0</Ce>
                 <A>0</A>
                 <I>0</I>
@@ -138,13 +260,14 @@
                 <Package>car.pool.user</Package>
                 <Package>car.pool.user.authentication.servlet</Package>
                 <Package>car.pool.user.registration.servlet</Package>
+                <Package>car.pool.user.update.servlet</Package>
             </UsedBy>
         </Package>
 
         <Package name="car.pool.persistance.test">
             <Stats>
-                <TotalClasses>4</TotalClasses>
-                <ConcreteClasses>4</ConcreteClasses>
+                <TotalClasses>6</TotalClasses>
+                <ConcreteClasses>6</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>0</Ca>
                 <Ce>4</Ce>
@@ -164,11 +287,17 @@
                 <Class sourceFile="CarPoolStoreImplTest.java">
                     car.pool.persistance.test.CarPoolStoreImplTest
                 </Class>
+                <Class sourceFile="StressTest.java">
+                    car.pool.persistance.test.StressTest
+                </Class>
                 <Class sourceFile="TestConnection.java">
                     car.pool.persistance.test.TestConnection
                 </Class>
                 <Class sourceFile="TestSetup.java">
                     car.pool.persistance.test.TestSetup
+                </Class>
+                <Class sourceFile="removeAll.java">
+                    car.pool.persistance.test.removeAll
                 </Class>
             </ConcreteClasses>
 
@@ -213,16 +342,115 @@
             </UsedBy>
         </Package>
 
+        <Package name="car.pool.proxy">
+            <Stats>
+                <TotalClasses>2</TotalClasses>
+                <ConcreteClasses>2</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>1</Ca>
+                <Ce>1</Ce>
+                <A>0</A>
+                <I>0.5</I>
+                <D>0.5</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="ProxyConfig.java">
+                    car.pool.proxy.ProxyConfig
+                </Class>
+                <Class sourceFile="ProxyData.java">
+                    car.pool.proxy.ProxyData
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>car.pool.persistance</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>car.pool.user.authentication.servlet</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="car.pool.proxy.servlet">
+            <Stats>
+                <TotalClasses>2</TotalClasses>
+                <ConcreteClasses>2</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>0</Ca>
+                <Ce>2</Ce>
+                <A>0</A>
+                <I>1</I>
+                <D>0</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="DisplayProxies.java">
+                    car.pool.proxy.servlet.DisplayProxies
+                </Class>
+                <Class sourceFile="ProxySetup.java">
+                    car.pool.proxy.servlet.ProxySetup
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>car.pool.persistance</Package>
+                <Package>car.pool.user</Package>
+            </DependsUpon>
+
+            <UsedBy>
+            </UsedBy>
+        </Package>
+
+        <Package name="car.pool.security">
+            <Stats>
+                <TotalClasses>1</TotalClasses>
+                <ConcreteClasses>1</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>2</Ca>
+                <Ce>0</Ce>
+                <A>0</A>
+                <I>0</I>
+                <D>1</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="AeSimpleSHA1.java">
+                    car.pool.security.AeSimpleSHA1
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>car.pool.persistance</Package>
+                <Package>car.pool.user</Package>
+            </UsedBy>
+        </Package>
+
         <Package name="car.pool.user">
             <Stats>
-                <TotalClasses>4</TotalClasses>
-                <ConcreteClasses>3</ConcreteClasses>
+                <TotalClasses>5</TotalClasses>
+                <ConcreteClasses>4</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
-                <Ca>3</Ca>
-                <Ce>2</Ce>
-                <A>0.25</A>
-                <I>0.4</I>
-                <D>0.35</D>
+                <Ca>5</Ca>
+                <Ce>3</Ce>
+                <A>0.2</A>
+                <I>0.38</I>
+                <D>0.43</D>
                 <V>1</V>
             </Stats>
 
@@ -233,6 +461,9 @@
             </AbstractClasses>
 
             <ConcreteClasses>
+                <Class sourceFile="RideUserStack.java">
+                    car.pool.user.RideUserStack
+                </Class>
                 <Class sourceFile="UserFactory.java">
                     car.pool.user.UserFactory
                 </Class>
@@ -247,25 +478,90 @@
             <DependsUpon>
                 <Package>car.pool.persistance</Package>
                 <Package>car.pool.persistance.exception</Package>
+                <Package>car.pool.security</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>car.pool.proxy.servlet</Package>
+                <Package>car.pool.user.authentication.servlet</Package>
+                <Package>car.pool.user.registration.servlet</Package>
+                <Package>car.pool.user.test</Package>
+                <Package>car.pool.user.update.servlet</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="car.pool.user.authentication">
+            <Stats>
+                <TotalClasses>1</TotalClasses>
+                <ConcreteClasses>1</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>1</Ca>
+                <Ce>1</Ce>
+                <A>0</A>
+                <I>0.5</I>
+                <D>0.5</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="CheckForAdmin.java">
+                    car.pool.user.authentication.CheckForAdmin
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>car.pool.persistance</Package>
             </DependsUpon>
 
             <UsedBy>
                 <Package>car.pool.user.authentication.servlet</Package>
-                <Package>car.pool.user.registration.servlet</Package>
-                <Package>car.pool.user.test</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="car.pool.user.authentication.filter">
+            <Stats>
+                <TotalClasses>1</TotalClasses>
+                <ConcreteClasses>1</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>0</Ca>
+                <Ce>2</Ce>
+                <A>0</A>
+                <I>1</I>
+                <D>0</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="OpenIdFilter.java">
+                    car.pool.user.authentication.filter.OpenIdFilter
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>org.verisign.joid</Package>
+                <Package>org.verisign.joid.consumer</Package>
+            </DependsUpon>
+
+            <UsedBy>
             </UsedBy>
         </Package>
 
         <Package name="car.pool.user.authentication.servlet">
             <Stats>
-                <TotalClasses>3</TotalClasses>
-                <ConcreteClasses>3</ConcreteClasses>
+                <TotalClasses>4</TotalClasses>
+                <ConcreteClasses>4</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
-                <Ca>0</Ca>
-                <Ce>5</Ce>
+                <Ca>1</Ca>
+                <Ce>7</Ce>
                 <A>0</A>
-                <I>1</I>
-                <D>0</D>
+                <I>0.88</I>
+                <D>0.12</D>
                 <V>1</V>
             </Stats>
 
@@ -282,27 +578,63 @@
                 <Class sourceFile="OpenIdConsumer.java">
                     car.pool.user.authentication.servlet.OpenIdConsumer
                 </Class>
+                <Class sourceFile="URLParser.java">
+                    car.pool.user.authentication.servlet.URLParser
+                </Class>
             </ConcreteClasses>
 
             <DependsUpon>
                 <Package>car.pool.persistance.exception</Package>
+                <Package>car.pool.proxy</Package>
                 <Package>car.pool.user</Package>
+                <Package>car.pool.user.authentication</Package>
                 <Package>org.verisign.joid</Package>
                 <Package>org.verisign.joid.consumer</Package>
                 <Package>org.verisign.joid.util</Package>
             </DependsUpon>
 
             <UsedBy>
+                <Package>car.pool.user.registration.servlet</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="car.pool.user.registration">
+            <Stats>
+                <TotalClasses>1</TotalClasses>
+                <ConcreteClasses>1</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>1</Ca>
+                <Ce>0</Ce>
+                <A>0</A>
+                <I>0</I>
+                <D>1</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="RandomTextGenerator.java">
+                    car.pool.user.registration.RandomTextGenerator
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>car.pool.user.registration.servlet</Package>
             </UsedBy>
         </Package>
 
         <Package name="car.pool.user.registration.servlet">
             <Stats>
-                <TotalClasses>2</TotalClasses>
-                <ConcreteClasses>2</ConcreteClasses>
+                <TotalClasses>5</TotalClasses>
+                <ConcreteClasses>5</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>0</Ca>
-                <Ce>3</Ce>
+                <Ce>7</Ce>
                 <A>0</A>
                 <I>1</I>
                 <D>0</D>
@@ -313,6 +645,15 @@
             </AbstractClasses>
 
             <ConcreteClasses>
+                <Class sourceFile="AdminRegistration.java">
+                    car.pool.user.registration.servlet.AdminRegistration
+                </Class>
+                <Class sourceFile="BlurredImage.java">
+                    car.pool.user.registration.servlet.BlurredImage
+                </Class>
+                <Class sourceFile="CheckUserNameAvailable.java">
+                    car.pool.user.registration.servlet.CheckUserNameAvailable
+                </Class>
                 <Class sourceFile="OpenIdRegistrationProcessor.java">
                     car.pool.user.registration.servlet.OpenIdRegistrationProcessor
                 </Class>
@@ -322,8 +663,12 @@
             </ConcreteClasses>
 
             <DependsUpon>
+                <Package>car.pool.email</Package>
+                <Package>car.pool.persistance</Package>
                 <Package>car.pool.persistance.exception</Package>
                 <Package>car.pool.user</Package>
+                <Package>car.pool.user.authentication.servlet</Package>
+                <Package>car.pool.user.registration</Package>
                 <Package>org.verisign.joid.consumer</Package>
             </DependsUpon>
 
@@ -367,6 +712,49 @@
 
             <UsedBy>
             </UsedBy>
+        </Package>
+
+        <Package name="car.pool.user.update.servlet">
+            <Stats>
+                <TotalClasses>3</TotalClasses>
+                <ConcreteClasses>3</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>0</Ca>
+                <Ce>4</Ce>
+                <A>0</A>
+                <I>1</I>
+                <D>0</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="AddOpenId.java">
+                    car.pool.user.update.servlet.AddOpenId
+                </Class>
+                <Class sourceFile="RemoveOpenId.java">
+                    car.pool.user.update.servlet.RemoveOpenId
+                </Class>
+                <Class sourceFile="UpdateUserDetails.java">
+                    car.pool.user.update.servlet.UpdateUserDetails
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>car.pool.persistance</Package>
+                <Package>car.pool.persistance.exception</Package>
+                <Package>car.pool.user</Package>
+                <Package>org.verisign.joid.consumer</Package>
+            </DependsUpon>
+
+            <UsedBy>
+            </UsedBy>
+        </Package>
+
+        <Package name="com.sun.mail.smtp">
+            <error>No stats available: package referenced, but not analyzed.</error>
         </Package>
 
         <Package name="org.junit">
