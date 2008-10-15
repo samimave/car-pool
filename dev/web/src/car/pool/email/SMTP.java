@@ -20,32 +20,34 @@ import com.sun.mail.smtp.SMTPMessage;
 import com.sun.mail.smtp.SMTPTransport;
 
 public class SMTP {
+	/**
+	 * The Transport object used to send emails with.
+	 */
 	protected static SMTPTransport transport = null;
-	protected static Properties properties = null;
+	/**
+	 * Does the SMTP server need to use TLS encryption
+	 */
 	protected static boolean usettls = false;
 	
+	/**
+	 * All the methods used here are static so the SMTP constructor should not be used by anyone but itself.
+	 * This also allows future coders to inherit from this class.
+	 */
 	protected SMTP() {
 		
 	}
 	
+	/**
+	 * All the initial setup of the SMTPTransport is done here.
+	 * What gets used depends on what is in the database.
+	 * @throws SMTPException - if anything goes wrong.
+	 */
 	protected static void setup() throws SMTPException {
-		String def =  "javamail.providers and javamail.default.providers";
-		InputStream inStream = Class.class.getResourceAsStream(def);
-		properties = new Properties();
-		if(inStream != null) {
-			try {
-				properties.load(inStream);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				throw new SMTPException(e.toString());
-			}
-		}
+		Properties properties = new Properties();
 		URLName urlname = null;
 		try {
 			String url = "localhost";
 			Integer port = new Integer(25);  // default smtp port
-			//boolean ttls = false;
 			String username = "";
 			String password = "";
 			Database db = new DatabaseImpl();
@@ -76,7 +78,13 @@ public class SMTP {
 		transport = new SMTPTransport(Session.getDefaultInstance(properties), urlname);
 	}
 	
+	/**
+	 * Where the email is sent to the receiver. setup() is called from here.
+	 * @param email - the email to send
+	 * @throws SMTPException - if the data in the email is not complete or some error with the sending takes place
+	 */
 	public static void send(Email email) throws SMTPException {
+		Properties properties = new Properties();
 		setup();
 		SMTPMessage message = new SMTPMessage(Session.getDefaultInstance(properties));
 		try {
@@ -86,7 +94,6 @@ public class SMTP {
 				message.setSubject(email.getSubject());
 				message.setText(email.getMessage());
 				message.setReplyTo(InternetAddress.parse(email.getFromAddress()));
-				//SMTPTransport.send(message);
 				if(usettls) {
 					transport.setStartTLS(usettls);
 				}
@@ -97,10 +104,8 @@ public class SMTP {
 				throw new SMTPException("No From Address found");
 			}
 		} catch (AddressException e) {
-			//e.printStackTrace();
 			throw new SMTPException(e.getMessage());
 		} catch (MessagingException e) {
-			//e.printStackTrace();
 			throw new SMTPException(e.getMessage());
 		}
 	}
