@@ -10,7 +10,7 @@ if(request.getParameter("error") != null) {
 }
 RandomTextGenerator generator = new RandomTextGenerator();
 Random r = new Random();
-Integer pos = r.nextInt(generator.size());
+Integer pos = r.nextInt(generator.size());					//set the number of the displayed quote text as a session attribute
 s.setAttribute("quote_pos", pos);
 %>
 

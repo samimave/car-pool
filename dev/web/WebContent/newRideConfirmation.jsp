@@ -11,25 +11,23 @@
 	String from = "";
 	String to = "";
 	String strOutDt = "";
-	if (s.getAttribute("signedin") != null) {
-		user = (User) s.getAttribute("user");
+	if (s.getAttribute("signedin") != null) {													//if the user is logged in
+		user = (User) s.getAttribute("user");													//get the info about the user
 
 		//add ride information to database
 		CarPoolStore cps = new CarPoolStoreImpl();
-		user = (User) s.getAttribute("user");
-		int dbID = user.getUserId();//cps.getUserIdByURL(request.getParameter("user"));
+		int dbID = user.getUserId();//cps.getUserIdByURL(request.getParameter("user"));			//the users id
 
 		//date formatting for use by db 
 		//dd/MM/yyyy -> yyyy-MM-dd
 		String strTmp = request.getParameter("depDate");
-		Date dtTmp = new SimpleDateFormat("dd/MM/yyyy").parse(strTmp);
-		strOutDt = new SimpleDateFormat("yyyy-MM-dd")
-				.format(dtTmp);
+		Date dtTmp = new SimpleDateFormat("dd/MM/yyyy").parse(strTmp);					
+		strOutDt = new SimpleDateFormat("yyyy-MM-dd").format(dtTmp);
 		
 		String coords = request.getParameter("fromCoord") + "/" + request.getParameter("toCoord");
 
 		//Integer.parseInt(request.getParameter("streetTo"))
-		int rideID = cps.addRide(dbID, Integer.parseInt(request
+		int rideID = cps.addRide(dbID, Integer.parseInt(request									//add the specified ride to the database
 				.getParameter("numSeats")), strOutDt, Integer
 				.parseInt(request.getParameter("streetFrom")), Integer
 				.parseInt(request.getParameter("streetTo")), Integer
@@ -38,22 +36,19 @@
 		//add social score
 		cps.addScore(cps.getTripID(rideID, dbID), dbID, 5);
 
+		//find the name of the origin and destination streets to show the user
 		LocationList allLocs = cps.getLocations();
-
 		while (allLocs.next()) {
-			if (allLocs.getID() == Integer.parseInt(request
-					.getParameter("streetFrom")))
+			if (allLocs.getID() == Integer.parseInt(request.getParameter("streetFrom")))
 				from = allLocs.getStreetName();
 		}
-
 		LocationList allLocs2 = cps.getLocations();
-
 		while (allLocs2.next()) {
-			if (allLocs2.getID() == Integer.parseInt(request
-					.getParameter("streetTo")))
+			if (allLocs2.getID() == Integer.parseInt(request.getParameter("streetTo")))
 				to = allLocs2.getStreetName();
 		}
 
+		//send the user an email confirming their ride offer
 		try {
 			String message = "Thank you for adding a ride offer to our website. You can update any details of your ride by logging into our site and clicking Edit Details. There you shall find a list of the rides you have offered, the details of which you can edit at any point. This is also where you can withdraw your offer though please be aware that a social score penalty will be involved. When users register interest in your ride they will show up in the \"Riders awaiting approval\" table of your ride page. Depending on if you can pick them up from the location they requested and if you feel like you can trust them you can either confirm the rider for that ride or reject them. Please make sure you both discuss information like the sharing of petrol costs beforehand in order to avoid confusion on the day.";
 			String address = user.getEmail();
