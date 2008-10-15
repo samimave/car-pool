@@ -7,6 +7,8 @@
 	//force the user to login to view the page
 	//a container for the users information
 	User user = null;
+	
+	
 	int rideID = 0;
 	int dbID = 0;
 	int driverID=0;
@@ -24,25 +26,35 @@
 
 		CarPoolStore cps = new CarPoolStoreImpl();
 
-		// RideListing rl = cps.getRideListing();
+		//the variable dbID is the id of the current user
 		dbID = user.getUserId();
+		//rideID is the ID of the ride
 		rideID = Integer.parseInt(request.getParameter("rideselect"));
 
+		//get all the information of a ride 
 		RideListing r = cps.getRideListing();
 		RideListing u = r.getAll();
 
 		boolean ridesExist = false;
-		//System.out.println("got here!");
+		
+		//while there are rides to go through
 		while (u.next()) {
-			//System.out.println("rl.getRideID(): "+rl.getRideID());
+			//if the id of the ride is the ride id we want
 			if (u.getRideID() == rideID) {
+				
 				if (!ridesExist) {
 					detailsTable = ""; //first time round get rid of unwanted text
 				}
+				
+				//set the boolean to true
 				ridesExist = true;
+				
+				//get all the iformation regarding that ride
 				from = u.getStartLocation();
 				to = u.getEndLocation();
 				driverID = u.getUserID();
+				
+				//make the table
 				detailsTable += "<tr> <td>Ride Offered By:</td>  <td>" + "<a href='"+response.encodeURL(request.getContextPath()+"/profile.jsp?profileId="+ u.getUserID())+"'>"+u.getUsername()+ "</a></td></tr>";
 				//detailsTable += "<tr> <td>Ride Offered By:</td>  <td>"	+ u.getUsername() + "</td></tr> ";
 				detailsTable += "<tr> <td> Starting From: </td> <td>"+ u.getStreetStart()+" "+ from + "</td> </tr>";
@@ -58,7 +70,7 @@
 		String d = new SimpleDateFormat("dd/MM/yyyy").format(u.getRideDate()) + " " + u.getTime();
 		dt = new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(d);
 		
-		//pass the "via address"
+		//pass the "via address" - what other locations does the ride have to go past?
 		String sNumber = "";
 		String sName = "";
 		String viaLoc = "";
@@ -95,10 +107,10 @@
 			if (!acceptExist) {
 				acceptedTable = "";
 			}
+			//if the rider is not the driver and the rider is confirmed for the ride
 			if ((rd.getUserID() != driverID) && (rd.getConfirmed() == true)) {
 				acceptExist = true;
 				acceptedTable += "<tr><td>" + "<a href='"+response.encodeURL(request.getContextPath()+"/profile.jsp?profileId="+ rd.getUserID())+"'>"+rd.getUsername()+ "</a></td>";
-				//acceptedTable += "<tr><td>" + rd.getUsername()+ "</td>";
 				acceptedTable += "<td>" + rd.getStreetNumber()
 						+ "&nbsp;" + rd.getLocationName()
 						+ "</td></tr>";
@@ -117,9 +129,11 @@
 %>
 
 <%
-	///////////////////////////
+		///////////////////////////
 		//view ride comments code//
 		///////////////////////////
+		
+		//Given the ride id get the comments relating to that ride
 		Vector<String> comments = cps.getRideComment(rideID);
 		String[] the_comment;
 		reDirURL = response.encodeURL("rideDetails.jsp?rideselect=" + rideID
@@ -132,9 +146,7 @@
 		String col2 = "</td><td width=\"20%\">";
 		String col3 = "</td><td width=\"75%\">";
 		String endRow = "</td></tr>";
-
 		table = "<table width=\"100%\">";
-
 		String delButton;
 
 		//create headings
