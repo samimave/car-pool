@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>Proxy List</title>
+<script type="text/javascript">
+<!--//
+var request = false;
+try {
+        request = new XMLHttpRequest();
+} catch (trymicrosoft) {
+        try {
+        request = new ActiveXObject("Msxml2.XMLHTTP");
+        } catch (othermicrosoft) {
+            try {
+                request = new ActiveXObject("Microsoft.XMLHTTP");
+            } catch (failed) {
+                request = false;
+            }
+        }
+}
+if(!request)
+		alert("Error initializing XMLHttpRequest!");
+
+function delproxy(ip, port, ptypes) {
+var url = "setupproxy?proxydelete=yes&ipaddress="+ip+"&port="+port+"&ptypes="+ptypes;
+request.open("GET", url, false);
+request.send( null );
+var response = request.responseText;
+window.location.reload();
+}
+
+    function setupproxy(form) {
+        var url = "setupproxy?proxysetup=yes&ipaddress="+form.ipaddr.value+"&port="+form.port.value+"&ptypes="+form.ptypes.value;
+        request.open("GET", url, false);
+        request.send( null );
+        var response = request.responseText;
+        if(response == "false") {
+            alert("Failed to add proxy to list");
+        }
+        window.location.reload();
+return false;
+     }
+//-->
+</script>
+</head><body>
+<table class="proxy" id="proxy"><tr><th>IP Address</th><th>Port</th><th>Proxy Types</th></tr></table>
+<div><form action="javascript:void(0)" onsubmit="return setupproxy(this)"><table><tr><td><input type="text" name="ipaddr" size="10"/></td><td><input type="text" name="port" size="10"/></td><td><input type="text" name="ptypes" size="10"/></td><td><input value="Add" type="submit"/></td></tr></table></form></div>
+</body></html>
+

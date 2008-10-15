@@ -1,0 +1,43 @@
+www.google.com
+6, 438, b, 2, 2008-10-15, Blair St, Blair St, no latecomers please
+7, 439, c, 1, 2008-10-15, Blair St, Blair St, I might be a few minutes late
+8, 440, d, 3, 2008-10-15, Blair St, Blair St, be on time
+search jordan
+13, 461, jordan, 3, 2008-10-15, noon, Blair St, Massey Street geoLocation:noLocation comment:this is a comment
+searchDate
+10, 450, b, 2, 2008-10-15, 6:22 AM, Blair St, Blair St geoLocation:noLocation comment:no latecomers please
+11, 451, c, 1, 2008-10-15, 3:22 PM, Blair St, Blair St geoLocation:noLocation comment:I might be a few minutes late
+12, 452, d, 3, 2008-10-15, 9:22 PM, Blair St, Blair St geoLocation:noLocation comment:be on time
+13, 461, jordan, 3, 2008-10-15, noon, Blair St, Massey Street geoLocation:noLocation comment:this is a comment
+search Blair St both
+10, 450, b, 2, 2008-10-15, 6:22 AM, Blair St, Blair St geoLocation:noLocation comment:no latecomers please
+11, 451, c, 1, 2008-10-15, 3:22 PM, Blair St, Blair St geoLocation:noLocation comment:I might be a few minutes late
+12, 452, d, 3, 2008-10-15, 9:22 PM, Blair St, Blair St geoLocation:noLocation comment:be on time
+13, 461, jordan, 3, 2008-10-15, noon, Blair St, Massey Street geoLocation:noLocation comment:this is a comment
+search Blair St start
+10, 450, b, 2, 2008-10-15, 6:22 AM, Blair St, Blair St geoLocation:noLocation comment:no latecomers please
+11, 451, c, 1, 2008-10-15, 3:22 PM, Blair St, Blair St geoLocation:noLocation comment:I might be a few minutes late
+12, 452, d, 3, 2008-10-15, 9:22 PM, Blair St, Blair St geoLocation:noLocation comment:be on time
+13, 461, jordan, 3, 2008-10-15, noon, Blair St, Massey Street geoLocation:noLocation comment:this is a comment
+search Massey end
+13, 461, jordan, 3, 2008-10-15, noon, Blair St, Massey Street geoLocation:noLocation comment:this is a comment
+getall
+10, 450, b, 2, 2008-10-15, 6:22 AM, Blair St, Blair St geoLocation:noLocation comment:no latecomers please
+11, 451, c, 1, 2008-10-15, 3:22 PM, Blair St, Blair St geoLocation:noLocation comment:I might be a few minutes late
+12, 452, d, 3, 2008-10-15, 9:22 PM, Blair St, Blair St geoLocation:noLocation comment:be on time
+13, 461, jordan, 3, 2008-10-15, noon, Blair St, Massey Street geoLocation:noLocation comment:this is a comment
+userid: 465, username: a, street number: 0,1, geoLocation: noLocation
+userid: 469, username: e, street number: 0,1, geoLocation: noLocation
+userid: 470, username: f, street number: 0,1, geoLocation: noLocation
+userid: 471, username: g, street number: 0,1, geoLocation: noLocation
+userid: 472, username: h, street number: 0,1, geoLocation: noLocation
+userid: 466, username: b, street number: 1,1, geoLocation: noLocation
+userid: 473, username: i, street number: 0,1, geoLocation: noLocation
+userid: 474, username: j, street number: 0,1, geoLocation: noLocation
+userid: 467, username: c, street number: 2,1, geoLocation: noLocation
+userid: 471, username: g, street number: 0,1, geoLocation: noLocation
+userid: 472, username: h, street number: 0,1, geoLocation: noLocation
+userid: 475, username: k, street number: 0,1, geoLocation: noLocation
+userid: 468, username: d, street number: 3,1, geoLocation: noLocation
+userid: 476, username: l, street number: 0,1, geoLocation: noLocation
+
