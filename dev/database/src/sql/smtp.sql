@@ -1,6 +1,0 @@
-CREATE TABLE SMTP (
-	url VARCHAR(40) NOT NULL,
-	port INT,
-	useTTLS INT,
-	PRIMARY KEY (url)
-);
