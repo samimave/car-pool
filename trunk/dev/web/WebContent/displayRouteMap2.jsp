@@ -94,7 +94,7 @@
       // It geocodes the address in the database associate with the ride
       // and adds a marker to the map at that location.
       function showLocation() {
-        		for (var j=0; j< viaArray.length; j++){
+        		for (var j=1; j< viaArray.length; j++){
         		geocoder.getLocations(viaArray[j], addAddressToMap); 
         		}
         		drawRoute();
