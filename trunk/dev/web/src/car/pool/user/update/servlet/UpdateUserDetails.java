@@ -59,7 +59,6 @@ public class UpdateUserDetails extends HttpServlet {
 					}
 				}
 			}
-			String oldpass = request.getParameter("oldPassword");
 			UserManager manager = new UserManager();
 			try {
 				user = manager.updateUserDetails(user);
