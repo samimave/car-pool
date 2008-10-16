@@ -1,56 +1,40 @@
 package car.pool.user;
 
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import java.io.IOException;
-
-import car.pool.persistance.CarPoolStore;
 import car.pool.persistance.CarPoolStoreImpl;
-import car.pool.persistance.Database;
-import car.pool.persistance.DatabaseImpl;
-import car.pool.persistance.exception.InvaildUserNamePassword;
 
+/**
+ * A factory used to create instances of User.
+ * In future I think I might remove the inner class of UserImpl and put it in a separate class.  I'm not sure if the current implementation is the best one, but I had to make a decision and this was it.
+ * @author James Hurford <terrasea@gmail.com>
+ *
+ */
 public class UserFactory {
+	/**
+	 * The inner class definition of the User interface.  Hidden from the rest of the world, and only able to get out through the factory newInstace method.
+	 * @author James Hurford <terrasea@gmail.com>
+	 *
+	 */
 	protected class UserImpl implements User {
 
 		private String userName = null;
 		private String email = null;
 		private String name = null;
-		private String ocupation = null;
 		private Set<String> openids = Collections.synchronizedSet(new LinkedHashSet<String>());
 		private String phoneNumber = null;
 		//private Integer socialScore = new Integer(0);
-		private String suburb = null;
 		private Integer userId = null;
 		private Calendar memberSince = null;
 		private String password = "n/a";
 		
 		protected UserImpl() {}
 		
-		@Override
-		public Integer calcSocialScore() {
-			return new Integer(0);
-		}
-
-		@Override
-		public boolean checkPassword() {
-			// TODO Auto-generated method stub
-			return false;
-		}
-
-		@Override
-		public void editDetail() {
-			// TODO Auto-generated method stub
-			
-		}
-
 		@Override
 		public String getEmail() {
 			// TODO Auto-generated method stub
@@ -62,10 +46,6 @@ public class UserFactory {
 			return name;
 		}
 
-		@Override
-		public String getOcupation() {
-			return ocupation;
-		}
 
 		@Override
 		public Set<String> getOpenIds() {
@@ -88,11 +68,6 @@ public class UserFactory {
 		}
 
 		@Override
-		public String getSuburb() {
-			return suburb;
-		}
-
-		@Override
 		public Integer getUserId() {
 			return userId;
 		}
@@ -100,12 +75,6 @@ public class UserFactory {
 		@Override
 		public String getUserName() {
 			return userName;
-		}
-
-		@Override
-		public boolean loginFailed() {
-			// TODO Auto-generated method stub
-			return false;
 		}
 
 		@Override
@@ -144,11 +113,6 @@ public class UserFactory {
 		}
 
 		@Override
-		public void setOcupation(String ocupation) {
-			this.ocupation = ocupation;
-		}
-
-		@Override
 		public void setPassword(String password) {
 			this.password = password;
 		}
@@ -164,10 +128,6 @@ public class UserFactory {
 			//this.socialScore = score;
 		}
 
-		@Override
-		public void setSuburb(String suburb) {
-			this.suburb = suburb;
-		}
 
 		@Override
 		public void setUserId(Integer id) {
@@ -177,38 +137,10 @@ public class UserFactory {
 		@Override
 		public void setUserName(String name) {
 			this.userName = name;
-		}
-		
-		@Override
-		public boolean equals(Object obj) {
-			return hashCode() == obj.hashCode();
-		}
-		
-		
-		private int getHash(Object obj) {
-			if(obj != null) {
-				return obj.hashCode();
-			}
-			
-			return 0;
-		}
-		
-		@Override
-		public int hashCode() {
-			int hash = 0 + getHash(email) + getHash(name) + getHash(ocupation) + getHash(phoneNumber) + getHash(suburb) + getHash(userName);
-			hash += getHash(memberSince);
-			for(String openid : this.openids) {
-				hash += getHash(openid);
-			}
-			//hash += getHash(socialScore);
-			hash += getHash(suburb);
-			hash += getHash(userId);
-			
-			return hash;
-		}
+		}		
 	}
 	
-	
+/* not needed anymore	
 	User create(String openid) throws InvaildUserNamePassword, IOException, SQLException {
 		UserImpl user = new UserImpl();
 		CarPoolStore store = new CarPoolStoreImpl();
@@ -242,11 +174,19 @@ public class UserFactory {
 
 		return user;
 	}
+	*/
 	
+	/**
+	 * @return a new instance of a User object
+	 */
 	private User create() {
 		return new UserImpl();
 	}
 	
+	/**
+	 * A static method used to create a new instance of User
+	 * @return a new instance of User
+	 */
 	public static User newInstance() {
 		return new UserFactory().create();
 	}
