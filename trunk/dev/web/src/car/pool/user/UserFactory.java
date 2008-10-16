@@ -117,15 +117,7 @@ public class UserFactory {
 
 		@Override
 		public void setPassword(String password) {
-			try {
-				this.password = AeSimpleSHA1.SHA1(getUserName()+password);
-			} catch (NoSuchAlgorithmException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			this.password = password;
 		}
 
 		@Override
