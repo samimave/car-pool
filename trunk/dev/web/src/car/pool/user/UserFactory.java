@@ -2,12 +2,15 @@ package car.pool.user;
 
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 import car.pool.persistance.CarPoolStoreImpl;
+import car.pool.security.AeSimpleSHA1;
 
 /**
  * A factory used to create instances of User.
@@ -114,7 +117,15 @@ public class UserFactory {
 
 		@Override
 		public void setPassword(String password) {
-			this.password = password;
+			try {
+				this.password = AeSimpleSHA1.SHA1(getUserName()+password);
+			} catch (NoSuchAlgorithmException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 		@Override
