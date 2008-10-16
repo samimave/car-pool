@@ -27,10 +27,15 @@ public class ProxyConfig extends ProxySelector {
 	 */
 	Map<SocketAddress,ProxyData> proxies = Collections.synchronizedMap(new Hashtable<SocketAddress, ProxyData>());
 	
+	/**
+	 * Constructor
+	 * @param def - the current ProxySelector
+	 * @throws IOException
+	 * @throws SQLException
+	 */
 	public ProxyConfig(ProxySelector def) throws IOException, SQLException {
 		defsel = def;
 		setProxies();
-		//System.out.format("ProxyConfig with proxies: %s\n", proxies.toString());
 	}
 	
 	/**
@@ -61,12 +66,6 @@ public class ProxyConfig extends ProxySelector {
 			}
 			//Proxy.Type.DIRECT; Proxy.Type.HTTP; Proxy.Type.SOCKS;
 		}
-		//SocketAddress addr = new InetSocketAddress("tur-cache1.massey.ac.nz", 8080);
-		//ProxyData data = new ProxyData(addr);
-		//proxies.put(addr, data);
-		//addr = new InetSocketAddress("tur-cache2.massey.ac.nz", 8080);
-		//data = new ProxyData(addr);
-		//proxies.put(addr, data);
 	}
 	
 	/**
@@ -78,7 +77,7 @@ public class ProxyConfig extends ProxySelector {
 		proxies.put(addr, p);
 	}
 
-	/*
+	/**
 	 * Method called by the handlers when it failed to connect
 	 * to one of the proxies returned by select().
 	 */
@@ -114,9 +113,9 @@ public class ProxyConfig extends ProxySelector {
 		}
 	}
 
-	/*
+	/**
 	 * This is the method that the handlers will call.
-	 * Returns a List of proxy.
+	 * @return a List of Proxy.
 	 */
 	@Override
 	public List<Proxy> select(URI uri) {
