@@ -11,7 +11,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import car.pool.persistance.Database;
 import car.pool.persistance.DatabaseImpl;
-
+/**
+ * designed to be used by ajax.  It's kept as simple as possible in terms of only outputing true or false to indicate if the operation was a success or not.
+ * Needed to insert or delete proxy sever addresses as well as what type of proxy they are, thus making it possible to have many types of proxy server used in the site.
+ * Currently only http or https is supported but in future more types of proxies maybe used.
+ * @author terrasea
+ *
+ */
 public class ProxySetup extends HttpServlet {
 	private static final long serialVersionUID = 658412377370706669L;
 
@@ -52,6 +58,7 @@ public class ProxySetup extends HttpServlet {
 				}
 			} else {
 				System.out.println("wrong param names used");
+				out.print("false");
 			}			
 		} else {
 			// didn't identify itself properly.  This way ensures that the callers think about the data they send this servlet

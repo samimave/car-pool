@@ -11,7 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import car.pool.persistance.Database;
 import car.pool.persistance.DatabaseImpl;
-
+/**
+ * designed to be used by ajax.  It's kept as simple as possible in terms of only outputing true or false to indicate if the operation was a success or not.
+ * Used to update the database with the values needed to use email within this site.
+ * @author James Hurford <terrasea@gmail.com>
+ *
+ */
 public class SetupEmail extends HttpServlet {
 	private static final long serialVersionUID = 5193075482923805039L;
 
