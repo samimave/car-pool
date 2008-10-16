@@ -73,16 +73,25 @@
 	//##############################SEARCH RIDE TABLE##############################
 
 	ArrayList<Integer> avoidDuplicates = new ArrayList<Integer>();
+	
+	//used to hold the list of co-ordinates that will later be filtered by calculations
 	ArrayList<String> geoCodes = new ArrayList<String>();
 
+	//used to hold a '/' and ':" delimted string of co-ordinates to be mapped
 	String mapCoords = "";
 
+	//boolean variables to make it easy to find out later what sort of data has been 
+	//entered by the searcher
 	boolean userNull = username.equals("no username entered");
 	boolean dateNull = dateString.equals("no date was entered");
 	boolean locsNull = Sto.equals("no location entered") && Sfrom.equals("no location entered");
 
+	//variable used to simplify if statements that find out if a certain search mode
+	//should be used
 	boolean anythingElse;
 	
+	//this is set to 'true' once a search method has been used to prevent other
+	//search methods from being used as well
 	boolean done = false;
 
 	int rideNum;
@@ -95,6 +104,7 @@
 	anythingElse = !dateNull || !locsNull;
 
 	if (!userNull && !anythingElse && !done) {
+		//get list of rides matching search criteria
 		RideListing u = cps.searchRideListing(RideListing.searchUser,
 				username);
 		
@@ -118,7 +128,10 @@
 
 				avoidDuplicates.add(u.getRideID());
 
+				//build list of co-ordinates to map
 				mapCoords += u.getGeoLocation() + ":";
+				
+				//build table of rides
 				if (user != null) {
 				userTable += "<tr> <td>"
 						+ "<a href='"
@@ -159,6 +172,7 @@
 
 	if (!dateNull && !anythingElse && !done) {
 
+		//get list of rides matching search criteria
 		RideListing daTbl = cps.searchRideListing(
 				RideListing.searchDate, strOutDt);
 		//System.out.println("date - "+strOutDt);
@@ -184,8 +198,10 @@
 				dateExist = true;
 				avoidDuplicates.add(daTbl.getRideID());
 
+				//build list of co-ordinates to map
 				mapCoords += daTbl.getGeoLocation() + ":";
-
+				
+				//build table of rides
 				if (user != null) {
 				dateTable += "<tr> <td>"
 						+ "<a href='"
@@ -227,11 +243,13 @@
 	String tempTable = "";
 	String comboTable = "";
 
+	//used to keep track of rides through the selection process
 	rideNum = 0;
 
-	boolean search = false;
+	//used to simplify if statement later as part of first filter
 	boolean addRide = false;
-
+	
+	//get all ride from databse
 	RideListing rides = cps.getRideListing();
 
 	if (!done) {
@@ -245,6 +263,8 @@
 			String d = new SimpleDateFormat("dd/MM/yyyy").format(rides.getRideDate())+ " " + rides.getTime();
 			Date dt = new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(d);
 
+			//depending on combinations of date and user inputs, decide if this ride should
+			//go to the next stage of filters
 			if (!userNull && !dateNull) {
 				addRide = dateString.equals(new SimpleDateFormat("dd/MM/yyyy").format(rides.getRideDate())) && username.equals(rides.getUsername());
 			} else if(userNull && !dateNull){
@@ -258,14 +278,19 @@
 			if (!avoidDuplicates.contains(rides.getRideID())&& dt.after(new Date()) && addRide) {
 
 				avoidDuplicates.add(rides.getRideID());
+				
+				//IF no locations have been entered then simply add the ride co-ordinates
+				//to the list to be mapped
+				//ELSE then add the co-ordinates to geoCodes for further procesing
 				if(locsNull){
 					mapCoords += rides.getGeoLocation();
 				}else{
 					geoCodes.add(rideNum + ">" + rides.getGeoLocation());
 				}
 				rideNum++;
-				System.out.println("mapCoords: |"+mapCoords+"|");
+				//System.out.println("mapCoords: |"+mapCoords+"|");
 				
+				//build table
 				if (user != null) {
 				tempTable += "<tr> <td>"+ "<a href='"+ response.encodeURL(request.getContextPath()+ "/profile.jsp?profileId="+ rides.getUserID()) + "'>"+ rides.getUsername() + "</a></td>";
 				} else {
@@ -293,11 +318,17 @@
 
 
 		}
+		
+		//if locations have been entered
 		if(!locsNull){
+			//perform a detailed search of rides based on co-ordinates
+			//get a list of rides with co-ordinates to be displayed
 			String[] matches = getMatches(geoCodes, request.getParameter("fromCoord"), request.getParameter("toCoord"), userNull, dateNull);
 			String[] rideIDs = matches[0].split(",");
 			mapCoords = matches[1];
 			//System.out.println("table" + rideIDs.length);
+			
+			//build table of rides
 			if(!rideIDs[0].equals("")){
 				if (rideIDs.length > 0) {
 					for (int i = 0; i < rideIDs.length; i++) {
@@ -307,6 +338,7 @@
 				}
 			}
 		}else{
+			//build table of rides
 			for (int i = 0; i < cTable.size(); i++) {
 				comboTable += cTable.get(i);
 				//System.out.println(i);
@@ -319,6 +351,7 @@
 	//---------------COMBINE RESULTS----------------------------------
 
 	if (!mapCoords.equals("")) {
+		//build final table of rides
 		rideTable = userTable + dateTable + comboTable;
 		rideTable = "<table class='rideDetailsSearch'> <tr> <th>Ride Offered By</th> <th>Starting From</th> <th>Going To</th>"
 				+ "<th>Departure Date</th> <th>Departure Time</th> <th>Number of Available Seats</th> <th>More Info</th> </tr>"
@@ -329,19 +362,11 @@
 	//-------------------------------------------------------------------
 %>
 
-<%!public boolean containsID(int ID, String[] list) {
-
-		String strID = Integer.toString(ID);
-
-		for (int i = 0; i < list.length; i++) {
-			if (list[i].equals(strID)) {
-				return true;
-			}
-		}
-		return false;
-	}%>
 <%!public String[] getMatches(ArrayList<String> rides, String fromCoord, String toCoord, boolean user, boolean date){
 
+	//**********
+	//get co-ordinates from strings and put them into 'double' form
+	//also, set up variable that will later be populated for each ride
 	boolean noFrom = fromCoord.equals("");
 	boolean noTo = toCoord.equals("");
 	String[] result = new String[2];
@@ -372,13 +397,16 @@
 	double[] StartToSearcher, StartToEnd;
 	
 	String[] ride, rideLocs, from, to;
+	//**********
+	//**********
 	
 	for(int i=0;i<rides.size();i++){
 		ride = rides.get(i).split(">");
 		
 		rideLocs = ride[1].split("/");
 	
-
+		//**********
+		//get 'double' lat/long co-ords for this ride
 		try{
 			from = rideLocs[0].split(",");
 			fromLat = Double.parseDouble(from[0]);
@@ -397,7 +425,9 @@
 			toLat = 0;
 			toLng = 0;
 		}
-
+		//**********
+		//**********
+			
 		//find straight-line distance from the start of the ride to the end
 		StartToEnd = distance(fromLat, fromLng, toLat, toLng);
 		
@@ -445,11 +475,13 @@
 				* Math.cos(rLat) * Math.cos(rLng - sLng))
 				* earthRad;
 
+		//ditance between points
 		result[0] = Math.abs(result[0]);
 
 		double y = Math.sin(sLng - rLng) * Math.cos(rLat);
 		double x = Math.cos(sLat) * Math.sin(rLat) - Math.sin(sLat)
 				* Math.cos(rLat) * Math.cos(sLng - rLng);
+		//bearing (in radians) of vector between the two points
 		result[1] = (Math.atan2(y, x) + 2 * Math.PI) % Math.PI;
 
 		return result;

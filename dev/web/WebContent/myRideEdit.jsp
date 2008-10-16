@@ -348,9 +348,11 @@
 						function codeTo(response) {
 							document.getElementById("updateEndS").toCoord.value=response.lat() + "," + response.lng();
 							}
-						// a function to get the from and to streets from the combobox and pass them to the 
-						// form call "showMap" which then post to the "displayRouteMap.jsp" to be display on google map
-			      		function getAddress(origin){
+						//a function that generates lat/long co-ordinates for streets entered by the user
+						//NOTE: two functions above are callback functions used for out-putting these co-ordinates to 
+						//appropriate html FORM text boxes (hidden)
+						//these co-ordinates are used in the searchRides calculations
+						function getAddress(origin){
 			      			 var geocoder = new GClientGeocoder();
 							if(origin == "from"){
 								startIdx = document.getElementById("updateStartS").startFrom.selectedIndex;

@@ -11,19 +11,18 @@
 	if (s.getAttribute("signedin") != null) {
 		user = (User) s.getAttribute("user");
 
+		//get actual street names from index numbers by cycling through a list of all streets
 		CarPoolStore cps = new CarPoolStoreImpl();
 		LocationList allLocs = cps.getLocations();
 		while (allLocs.next()) {
-			if (allLocs.getID() == Integer.parseInt(request
-					.getParameter("from")))
+			if (allLocs.getID() == Integer.parseInt(request.getParameter("from"))){
 				from = allLocs.getStreetName();
+			}
+			if (allLocs.getID() == Integer.parseInt(request.getParameter("to"))){
+				to = allLocs.getStreetName();
+			}
 		}
-		LocationList allLocs2 = cps.getLocations();
-		while (allLocs2.next()) {
-			if (allLocs2.getID() == Integer.parseInt(request
-					.getParameter("to")))
-				to = allLocs2.getStreetName();
-		}
+
 	} else {
 		response.sendRedirect(request.getContextPath());
 	}

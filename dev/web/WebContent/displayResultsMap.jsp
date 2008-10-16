@@ -38,10 +38,10 @@
 		var map = new GMap2(document.getElementById("map"));
 		var geocoder = new GClientGeocoder();
 
-		//get all the rides to map
+		//get all the rides to map and split them into an array
 		var rides = "<%=request.getParameter("mapCoords")%>".split(":");
 		
-		//route mapping code
+		//set up route mapping objects
 		var directionsPanel = document.getElementById("my_textual_div");
 		var routes = new Array();
 
@@ -50,15 +50,14 @@
 			routes[i] = new GDirections(map, directionsPanel);
 		}
 
-		///	  
+		//add map user controls	  
 		map.addControl(new GLargeMapControl());
 		map.addControl(new GMapTypeControl());
 		map.setCenter(new GLatLng(-40.35814342293522, 175.6267547607422), 13);
 
-		// It geocodes the address in the database associate with the ride
-		// and adds a marker to the map at that location.
 		function showLocation() {
 
+			//display all the routes
 			for(var i=0; i<rides.length;i++){
 				routes[i].loadFromWaypoints(rides[i].split("/"));
 			}

@@ -71,32 +71,23 @@
 		<script type="text/javascript">
 			var cal = new CalendarPopup();
 
-			//PLEASE LEAVE THESE THREE FUNCTIONS HERE
-			//for some reason they have to be above getAddress for geocoder to work
+			//PLEASE LEAVE THESE TWO FUNCTIONS HERE
+			//for some reason they have to be ABOVE getAddress for geocoder to work
 			function codeFrom(response) {
 				document.getElementById("offerFrm").fromCoord.value=response.lat() + "," + response.lng();
-				//getLength();
 				}
 			function codeTo(response) {
 				document.getElementById("offerFrm").toCoord.value=response.lat() + "," + response.lng();
-				//getLength();
 				}
-			function getLength(){
-    			  fromCoord = document.getElementById("offerFrm").fromCoord.value;
-    			  fromCoord = fromCoord.split(",");
-      		   	  toCoord = document.getElementById("offerFrm").toCoord.value;
-      		   	  toCoord = toCoord.split(",");
-
-      		   	  fromPoint = new GLatLng(parseFloat(fromCoord[0]). parseFloat(fromCoord[1]));
-      		   	  toPoint = new GLatLng(parseFloat(toCoord[0]). parseFloat(toCoord[1]));
-
-      		   	  length = fromPoint.getDistance(toPoint);
-      		   	  alert(length);
-				
-			}
 			// a function to get the from and to streets from the combobox and pass them to the 
 			// form call "showMap" which then post to the "displayRouteMap.jsp" to be display on google map
-      		function getAddress(origin){
+
+
+			//NOTE: two functions above are callback functions used for out-putting these co-ordinates to 
+			//appropriate html FORM text boxes (hidden)
+			//these co-ordinates are used in the searchRides calculations
+			function getAddress(origin){
+          		//get values of html FORM fields
       			  startIdx = document.getElementById("offerFrm").streetFrom.selectedIndex;
       		   	  startLoc = document.getElementById("offerFrm").streetFrom.options[startIdx].text;
      			  endIdx   = document.getElementById("offerFrm").streetTo.selectedIndex;
@@ -109,9 +100,12 @@
 
      		   	  var geocoder = new GClientGeocoder();
 
+     		   	  //build address strings
      		   	  var from = houseNum + " " + startLoc + " PALMERSTON NORTH NEW ZEALAND";
      		   	  var to = destNum + " " + endLoc + " PALMERSTON NORTH NEW ZEALAND";
-    		   	
+
+				//depending on whether the event was sent from the 'from' or 'to' locations
+				//set callback function codeFrom or codeTo to be used when getLatLong (google function) is successful
      		   	  if(origin == "from"){geocoder.getLatLng(from, codeFrom);}
      		   	  if(origin == "to"){geocoder.getLatLng(to, codeTo);}
    		   	 
