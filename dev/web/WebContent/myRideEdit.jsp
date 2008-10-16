@@ -41,19 +41,17 @@
 		}
 
 		dbID = user.getUserId();															//current user id	
-		rideID = Integer.parseInt(request.getParameter("rideselect"));						//
+		rideID = Integer.parseInt(request.getParameter("rideselect"));						
 		RideListing u = cps.getRideListing();												//list of rides in db
 		
 		reDirURL = response.encodeURL("myRideEdit.jsp?rideselect=" + rideID + "&userselect=" + request.getParameter("userselect")); //used to return the user to this page 
 		
 		String detailsTable = "<p>No info found.</p>";
 		boolean ridesExist = false;
-
-		//System.out.println("got here!");
-		while (u.next()) {																	//for each ride
-			if (u.getRideID() == rideID) {													//if this is the ride we are interested in
-				if (!ridesExist) {															//get all the information about the ride
-					detailsTable = ""; //first time round get rid of unwanted text
+		while (u.next()) {												//for each ride
+			if (u.getRideID() == rideID) {								//if this is the ride we are interested in
+				if (!ridesExist) {										//get all the information about the ride
+					detailsTable = ""; 									//first time round get rid of unwanted text
 				}
 				ridesExist = true;
 				fromHouseNo = u.getStreetStart();
@@ -69,7 +67,7 @@
 			}
 		}
 
-		// pass the "via address"
+		// pass the "via address" to be use for google map
 		String sNumber = "";
 		String sName = "";
 		String viaLoc = "";

@@ -81,8 +81,8 @@
 					+ "</p>";
 		}
 
-		//if you have been redirected here from editing a ride print useful info
-		if (request.getParameter("rideSelect") != null
+		
+		if (request.getParameter("rideSelect") != null		//if you have been redirected here from editing a ride print useful info
 				&& request.getParameter("Rtime") != null) {
 			cps.updateStartTime(Integer.parseInt(request
 					.getParameter("rideSelect")), request
@@ -224,6 +224,9 @@
 				System.out.format("SMTP failed to send.  Error is:\n%s", e.getMessage());
 			}
 		}
+		
+		//if you have been redirected here from accepting a user print useful info
+		//IF YOU ACCEPTED OR REJECTED A USER UPDATE DATABASE
 		if (request.getParameter("rejectUser") != null) {
 			cps.removeRide(Integer.parseInt(request
 					.getParameter("confirmUserID")), Integer

@@ -51,10 +51,11 @@
 		}
 		userTable = "<table class='rideDetailsSearch'> <tr> <th>User Name</th> <th>Email</th> <th>Phone</th>"			//finish the table
 				+ "<th>Sign Up Date</th> </tr>" + Table + "</table>";
-
-		boolean rExist = false;																	//true if there is at least one ride
+		//true if there is at least one ride
+		boolean rExist = false;																	
 		RideListing all = cps.getRideListing();
-		while (all.next()) {																	//for each ride in the db add a row to the table
+		//for each ride in the db add a row to the table
+		while (all.next()) {																	
 			rExist = true;
 			String from = all.getStartLocation();
 			String to = all.getEndLocation();
@@ -144,7 +145,7 @@
 			</form>
 			<h2>Setup Proxy Configuration</h2>
 			<h3>Current settings</h3>
-			<object data="displayproxies" type="text/html" width="500" height="300">Sorry your browser don't spport this tag</object>
+			<object data="displayproxies" type="text/html" width="500" height="300">Sorry your browser don't support this tag</object>
 			</div>
 			<br /> <br /> 
 			<h2>Users and Rides in the System:</h2>
