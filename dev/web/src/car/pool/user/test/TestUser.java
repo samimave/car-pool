@@ -38,20 +38,6 @@ public class TestUser {
 		user = null;
 	}
 
-	@Test
-	public void testCalcSocialScore() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testCheckPassword() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testEditDetail() {
-		fail("Not yet implemented");
-	}
 
 	@Test
 	public void testGetEmail() {
@@ -63,11 +49,6 @@ public class TestUser {
 	@Test
 	public void testGetName() {
 		Assert.assertEquals(user.getName(), "James" );
-	}
-
-	@Test
-	public void testGetOcupation() {
-		fail("Not yet implemented");
 	}
 
 	@Test
@@ -86,10 +67,6 @@ public class TestUser {
 		fail("Not yet implemented");
 	}
 
-	@Test
-	public void testGetSuburb() {
-		fail("Not yet implemented");
-	}
 
 	@Test
 	public void testGetUserId() {
@@ -138,11 +115,6 @@ public class TestUser {
 	}
 
 	@Test
-	public void testSetOcupation() {
-		fail("Not yet implemented");
-	}
-
-	@Test
 	public void testSetPassword() {
 		fail("Not yet implemented");
 	}
@@ -168,16 +140,6 @@ public class TestUser {
 	}
 
 	@Test
-	public void testSetSuburb() {
-		String oldsub = user.getSuburb();
-		user.setSuburb("suburb");
-		String nsub = user.getSuburb();
-		user.setSuburb(oldsub);
-		Assert.assertNotSame(oldsub,nsub);
-		Assert.assertEquals(oldsub, user.getSuburb());
-	}
-
-	@Test
 	public void testSetUserId() {
 		Integer oldid = user.getUserId();
 		user.setUserId(oldid.intValue() + 1);
@@ -192,30 +154,5 @@ public class TestUser {
 		String oldName = user.getUserName();
 		user.setUserName("john");
 		Assert.assertNotSame(oldName, user.getUserName());
-	}
-
-	@Test
-	public void testEquals() {
-		UserManager manager = new UserManager();
-		try {
-			User nuser = manager.getUserByOpenId("http://sea.pip.verisignlabs.com");
-			boolean result = user.equals(nuser);
-			Assert.assertTrue(result);
-		} catch (Exception e) {
-			fail("testEquals: " + e);
-		}
-	}
-	
-	@Test
-	public void testHasCode() {
-		UserManager manager = new UserManager();
-		try {
-			User nuser = manager.getUserByOpenId("http://sea.pip.verisignlabs.com");
-			int hash1 = nuser.hashCode();
-			int hash2 = user.hashCode();
-			Assert.assertEquals(hash1, hash2);
-		} catch (Exception e) {
-			fail("testEquals: " + e);
-		}
 	}
 }

@@ -20,6 +20,12 @@ import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+/**
+ * The Manager class used to manage to create instances of User and populate them with data from the database
+ * 
+ * @author James Hurford <terrasea@gmail.com>
+ *
+ */
 public class UserManager {
 
 	/**
