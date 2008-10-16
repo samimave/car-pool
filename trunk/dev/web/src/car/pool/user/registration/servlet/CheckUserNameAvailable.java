@@ -11,6 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 import car.pool.persistance.CarPoolStore;
 import car.pool.persistance.CarPoolStoreImpl;
 
+/**
+ * Designed to be used by javascript using ajax, outputting true if a user exists in the database, false if not and another message if the right parameter is not passed to this servlet.
+ * 
+ * @author James Hurford <terrasea@gmail.com>
+ *
+ */
 public class CheckUserNameAvailable extends HttpServlet {
 	private static final long serialVersionUID = 7481030857181249177L;
 

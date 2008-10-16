@@ -1,10 +1,14 @@
 package car.pool.user.registration;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Contains a list of strings that are used in the BlurredImage class as a means of safeguarding user registration
+ * 
+ * @author James Hurford <terrasea@gmail.com>
+ *
+ */
 public class RandomTextGenerator {
 	
 	private List<String> list = new LinkedList<String>();//Collections.synchronizedList(new ArrayList<String>()); 

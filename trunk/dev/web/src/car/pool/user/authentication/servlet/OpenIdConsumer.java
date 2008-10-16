@@ -21,6 +21,9 @@ import car.pool.user.UserManager;
 
 /**
  * Servlet implementation class for Servlet: OpenIdConsumer
+ * Processes any authentication requests by those using OpenID as a means of authentication.
+ * 
+ * @author James Hurford <terrasea@gmail.com>
  *
  */
  public class OpenIdConsumer extends HttpServlet {

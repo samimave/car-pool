@@ -21,6 +21,12 @@ import car.pool.user.UserManager;
 import car.pool.user.authentication.servlet.HtmlUtils;
 import car.pool.user.registration.RandomTextGenerator;
 
+/**
+ * Handles the registration of users using username and password and puts the data into the database and loggs them in redirecting them to the welcome page
+ * 
+ * @author James Hurford <terrasea@gmail.com>
+ *
+ */
 
 public class RegistrationProcessing extends HttpServlet {
 	private static final long serialVersionUID = -4410555702177133894L;

@@ -6,8 +6,17 @@ import java.sql.SQLException;
 
 import car.pool.persistance.DatabaseImpl;
 
+/**
+ * A class with a static method designed to check to see if a admin user exists in the database or not.
+ * @author James Hurford <terrasea@gmail.com>
+ *
+ */
 public class CheckForAdmin {
 
+	/**
+	 * Checks to see if a admin is already in the database
+	 * @return true if admin already there, false if not
+	 */
 	public static boolean adminExists() {
 		String sql = "select userName from User where userName like '%admin%'";
 		try {
@@ -17,10 +26,8 @@ public class CheckForAdmin {
 				return true;
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

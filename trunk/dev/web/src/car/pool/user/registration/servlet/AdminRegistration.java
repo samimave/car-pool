@@ -16,6 +16,12 @@ import car.pool.user.UserFactory;
 import car.pool.user.UserManager;
 import car.pool.user.authentication.servlet.HtmlUtils;
 
+/**
+ * Processes registration of the administrator
+ * 
+ * @author James Hurford <terrasea@gmail.com>
+ *
+ */
 public class AdminRegistration extends HttpServlet {
 	private static final long serialVersionUID = 8740358060048284751L;
 

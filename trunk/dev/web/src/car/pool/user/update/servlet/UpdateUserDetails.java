@@ -16,6 +16,12 @@ import car.pool.persistance.exception.InvaildUserNamePassword;
 import car.pool.user.User;
 import car.pool.user.UserManager;
 
+/**
+ * Updates the currently logged in users info in the database using info gathered from the parameters passed to it.
+ * 
+ * @author James Hurford <terrasea@gmail.com>
+ *
+ */
 public class UpdateUserDetails extends HttpServlet {
 	private static final long serialVersionUID = 8039935676680953454L;
 	

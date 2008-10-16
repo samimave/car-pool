@@ -22,11 +22,13 @@ import car.pool.user.UserManager;
 import car.pool.user.authentication.servlet.HtmlUtils;
 import car.pool.user.registration.RandomTextGenerator;
 
+/**
+ * Handles the registration of users using OpenID and puts the data into the database and loggs them in redirecting them to the welcome page
+ * 
+ * @author James Hurford <terrasea@gmail.com>
+ *
+ */
 public class OpenIdRegistrationProcessor extends HttpServlet {
-
-	/*
-	 * 
-	 */
 	private static final long serialVersionUID = -8682803597729939605L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
