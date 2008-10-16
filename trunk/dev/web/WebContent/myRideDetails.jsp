@@ -179,7 +179,6 @@ String updateUserConf = "";
 			String dt = "";
 			String tm = "";
 			while (rl2.next()) {
-				//System.out.println(rl2.getRideID()+", "+request.getParameter("rideSelect"));
 				if (rl2.getRideID() == Integer.parseInt(request
 						.getParameter("rideSelect"))) {
 					el = rl2.getEndLocation();

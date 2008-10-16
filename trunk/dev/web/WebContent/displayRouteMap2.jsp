@@ -38,9 +38,11 @@
       var geocoder = new GClientGeocoder();
       //route mapping code
 	  var directionsPanel = document.getElementById("my_textual_div");
-	  var directions = new GDirections(map, directionsPanel);	  
+	  var directions = new GDirections(map, directionsPanel);	
+	  // add map control  
       map.addControl(new GLargeMapControl());
       map.addControl(new GMapTypeControl());
+      // set the map center to be palmerston north new zealand
 	  map.setCenter(new GLatLng(-40.35814342293522, 175.6267547607422),13);
 
 	  // get the street from and street to from the combobox	

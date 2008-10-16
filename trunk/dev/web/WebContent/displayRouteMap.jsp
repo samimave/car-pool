@@ -33,18 +33,19 @@
 
     if (GBrowserIsCompatible()) { 
 
-      // Display the map, with some controls and set the initial location 
+      
       var map = new GMap2(document.getElementById("map"));
       var geocoder = new GClientGeocoder();
       //route mapping code
 	  var directionsPanel = document.getElementById("my_textual_div");
 	  var directions = new GDirections(map, directionsPanel);
-	  ///	  
+	  // Display the map, with some controls and set the initial location   
       map.addControl(new GLargeMapControl());
       map.addControl(new GMapTypeControl());
+      // set the map center to palmerston north new zealand
 	  map.setCenter(new GLatLng(-40.35814342293522, 175.6267547607422),13);
 
-	  // get the street from and street to from the combobox	
+	  // get the street from and street to from the combobox from the offer a ride page	
 	  var tempFrom  = "<%=request.getParameter("mapFrom") %>";
 	  var tempTo    = "<%=request.getParameter("mapTo") %>";
 	  var tempHouse = "<%=request.getParameter("mapHouse") %>";
@@ -53,18 +54,18 @@
 	  //one is the "offer ride" page which can provide house number, so tempHouse value is either null or not null
 	  //the other one is the "temp2" page which doesn't provide the house number, so the value is "null" as a string.
 	  if (tempHouse == null){	   
-		  // assign the right format to the variables
+		  // if tempHouse (house number) is null ignore it 
 		     var addressNoHouse =tempFrom.toString() + "  PALMERSTON NORTH NEW ZEALAND";
 		   		 toAddress   =tempTo.toString() + "  PALMERSTON NORTH NEW ZEALAND";
 		         fromAddress = addressNoHouse;
 		  }
-
+	  // if tempHouse (house number) is not null added to the address to be display on  the map	
 	  if (tempHouse != null){
 		  var addressHouse =tempHouse.toString() + " " + tempFrom.toString() + "  PALMERSTON NORTH NEW ZEALAND";				   
 		   	  toAddress   =tempTo.toString() + "  PALMERSTON NORTH NEW ZEALAND";
 		      fromAddress = addressHouse;
 	  }
-
+	// if tempHouse (house number) is null ignore it 
 	  if (tempHouse == "null"){
 		  var detailAddress =tempFrom.toString() + "  PALMERSTON NORTH NEW ZEALAND";				   
 		   	  toAddress   =tempTo.toString() + "  PALMERSTON NORTH NEW ZEALAND";
