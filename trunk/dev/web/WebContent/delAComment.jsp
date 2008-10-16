@@ -13,7 +13,11 @@
 		CarPoolStore cps = new CarPoolStoreImpl();
 		int idRide = Integer
 				.parseInt(request.getParameter("idComment"));
+		
+		//delete the comment
 		cps.delComment(idRide);
+		
+		//redirect page back to original one specfied by POST data
 		response.sendRedirect(response.encodeURL(request.getParameter("reDirURL")));
 	} else {
 		response.sendRedirect(request.getContextPath());

@@ -5,22 +5,28 @@
 <%
 	HttpSession s = request.getSession(false);
 
-	//force the user to login to view the page
 	//a container for the users information
 	User user = null;
 	String html = "";
 	if (s.getAttribute("signedin") != null) {
+		
 		user = (User) s.getAttribute("user");
 
 		CarPoolStore cps = new CarPoolStoreImpl();
+		
 		int idRide = Integer.parseInt(request.getParameter("idRide"));
 		int idUser = Integer.parseInt(request.getParameter("idUser"));
+		
 		String comment = EscapeSpecialChars.forHTML(request.getParameter("comment"));
 
+		//if the comment wasn't blank, then add it to the database
 		if (comment != "") {
 			cps.addComment(idUser, idRide, comment);
 		}
+		
 		html = "Comment added!";
+		
+		//re-direct the browser to the original page as specified by POST data
 		response.sendRedirect(response.encodeURL(request.getParameter("reDirURL")));
 
 	} else {
