@@ -9,8 +9,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 
-import sun.security.krb5.internal.crypto.Aes256;
-
 import car.pool.persistance.exception.DuplicateUserNameException;
 import car.pool.persistance.exception.InvaildUserNamePassword;
 import car.pool.persistance.exception.RideException;
@@ -20,10 +18,18 @@ import car.pool.security.AeSimpleSHA1;
 
 public class CarPoolStoreImpl implements CarPoolStore {
 
+	/**
+	 * a connection generator for the database
+	 */
 	Database db = null;
+	
 	StringBuffer errors = new StringBuffer();
 	
 	@SuppressWarnings("unused")
+	
+	/**
+	 * Singleton
+	 */
 	private static CarPoolStore cps;
 
 	public CarPoolStoreImpl() throws IOException {
@@ -31,6 +37,10 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		db = new DatabaseImpl();
 	}
 
+	/**
+	 * add a user using openid, userName, email, phone number
+	 * returns unique userid
+	 */
 	public int addUser(String openID,String userName,String  email,String  phone) throws DuplicateUserNameException, UserException{
 		int i = addUserWithPassword(userName, email, phone, "n/a");
 		
@@ -41,10 +51,25 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		return i;
 	}
 	
+	
+	/**
+	 * add a user without openid, only password and username
+	 * returns unique userid
+	 */
 	public int addUser(String username, String passwordHash) throws DuplicateUserNameException, UserException{
 		return addUserWithPassword(username,"n/a", "n/a", passwordHash);
 	}
 	
+	/**
+	 * add user with a password, username, email, phone number
+	 * @param username
+	 * @param email
+	 * @param mobile
+	 * @param passwordHash
+	 * @return unique userid
+	 * @throws DuplicateUserNameException
+	 * @throws UserException
+	 */
 	public int addUserWithPassword(String username, String email, String mobile, String passwordHash) throws DuplicateUserNameException, UserException {
 		int id = FAILED;
 		Statement statement;
@@ -100,7 +125,7 @@ public class CarPoolStoreImpl implements CarPoolStore {
 	}
 
 	/**
-	 * Check username exists
+	 * Check username exists in database
 	 * @param username
 	 * @return
 	 * @throws InvaildUserNamePassword 
@@ -128,6 +153,9 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		}
 	}
 	
+	/**
+	 * check username exists and password correct
+	 */
 	public int checkUser(String username, String passwordHash) throws InvaildUserNamePassword {
 		int id = FAILED;
 
@@ -163,10 +191,19 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		}
 	}
 
+	/**
+	 * Check a username exists without a password (openid user)
+	 */
 	public int checkUser(String username) throws InvaildUserNamePassword {
 		return checkUser(username, "n/a");
 	}
 	
+	/**
+	 * get max number of seats for a ride
+	 * @param ride
+	 * @return
+	 * @throws RideException
+	 */
 	public int getMaxSeats(int ride) throws RideException{
 		int seats = FAILED;
 
@@ -193,6 +230,12 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		}
 	}
 	
+	/**
+	 * get available seats for a ride
+	 * @param ride
+	 * @return
+	 * @throws RideException
+	 */
 	public int getAvailableSeats(int ride) throws RideException{
 		int seats = FAILED;
 
@@ -225,7 +268,9 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		}
 	}
 	
-	
+	/**
+	 * add a user to a ride
+	 */
 	public int takeRide(int user, int ride, int idLocation, int streetNumber, int streetNumberEnd, String geoLocation) throws RideException{
 		boolean success = false;
 		int maxSeat = getMaxSeats(ride);
@@ -247,10 +292,25 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		}
 	}
 	
+	/**
+	 * add a user to a ride
+	 */
 	public int takeRide(int user, int ride, int idLocation, int streetNumber, int streetNumberEnd) throws RideException{
 		return takeRide(user, ride, idLocation, streetNumber, streetNumberEnd, "noLocation");
 	}
 	
+	/**
+	 * add a user to a ride
+	 * @param user
+	 * @param ride
+	 * @param seatNum
+	 * @param idLocation
+	 * @param streetNumber
+	 * @param streetNumberEnd
+	 * @param geoLocation
+	 * @return
+	 * @throws RideException
+	 */
 	public int takeRide(int user, int ride, int seatNum, int idLocation, int streetNumber, int streetNumberEnd, String geoLocation) throws RideException {
 		Statement statement = db.getStatement();
 		int id = FAILED;
@@ -286,11 +346,16 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		}
 	}
 
+	/**
+	 * add a ride into the database
+	 */
 	public int addRide(int user, int availableSeats, String startDate, int startLocation, int endLocation, int streetNumber,int streetNumberEnd, int reoccur, String time, String comment) throws RideException {
 		return addRide(user, availableSeats, startDate, startLocation, endLocation, streetNumber, streetNumberEnd, reoccur, time, comment, "noLocation");
 	}
 	
-	
+	/**
+	 * add a ride into the database
+	 */
 	public int addRide(int user, int availableSeats, String startDate, int startLocation, int endLocation, int streetNumber, int streetNumberEnd, int reoccur, String time, String comment, String geoLocation) throws RideException {
 		
 		Statement statement = db.getStatement();
@@ -341,7 +406,12 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		}
 	}
 	
-	
+	/**
+	 * remove a user from the database
+	 * 
+	 * this method would probably fail
+	 */
+	@Deprecated
 	public boolean removeUser(String username, String passwordHash){
 		Statement statement = null;
 		int count = 0;
@@ -359,7 +429,9 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		return count > 0;
 	}
 
-	
+	/**
+	 * update the number of seats available in a ride
+	 */
 	public boolean updateSeats(int ride, int availableSeats) throws RideException{
 		Statement statement = null;
 		int countr = 0;
@@ -375,6 +447,10 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		return countr > 0;
 	}
 
+	
+	/**
+	 * update the start date of a ride
+	 */
 	public boolean updateStartDate(int ride, String startDate) throws RideException{
 		Statement statement = null;
 		int countr = 0;
@@ -390,6 +466,9 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		return countr > 0;
 	}
 	
+	/**
+	 * update the starting location of a ride
+	 */
 	public boolean updateStartLoc(int ride, int houseNo, int startLoc, int idUser) throws RideException{
 		Statement statement = null;
 		int countr = 0;
@@ -406,6 +485,10 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		return countr > 0 && countm > 0;
 	}
 	
+	
+	/**
+	 * update the end location of a ride
+	 */
 	public boolean updateEndLoc(int ride, int houseNoEnd, int endLoc, int idUser) throws RideException{
 		Statement statement = null;
 		int countr = 0;
@@ -422,6 +505,9 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		return countr > 0 && countm > 0;
 	}
 
+	/**
+	 * update the start time of a ride
+	 */
 	public boolean updateStartTime(int ride, String startTime) throws RideException{
 		Statement statement = null;
 		int countr = 0;
@@ -437,6 +523,9 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		return countr > 0;
 	}
 	
+	/**
+	 * the owner of a ride accepting a user into that ride
+	 */
 	public boolean acceptUser(int user, int ride, int conf) throws StoreException{
 		Statement statement = null;
 		int countr = 0;
@@ -451,6 +540,10 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		
 		return true;
 	}
+	
+	/**
+	 * remove a ride from the database
+	 */
 	@Override
 	public boolean removeRide(int user, int ride) throws StoreException {
 		Statement statement = null;
@@ -471,6 +564,9 @@ public class CarPoolStoreImpl implements CarPoolStore {
 	}
 
 
+	/**
+	 * remove a ride from the database
+	 */
 	@Override
 	public boolean removeRide(int ride) throws StoreException {
 		Statement statement = null;
@@ -491,6 +587,9 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		return countr > 0 && countm > 0;
 	}
 	
+	/**
+	 * return userID by openid
+	 */
 	public int getUserIdByURL(String openidurl) throws InvaildUserNamePassword{
 		//select user_id from user_openids where openid_url = openid_url
 		int id = FAILED;
@@ -517,6 +616,9 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		}
 	}
 	
+	/**
+	 * get all openids from a userID
+	 */
 	public Vector<String> getOpenIdsByUser(int idUser) throws InvaildUserNamePassword{
 		//select openid_url from user_openids where user_id = user_id
 		Vector<String> openID = new Vector<String>();
@@ -542,6 +644,9 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		}
 	}
 	
+	/**
+	 * add another openid to a userID
+	 */
 	public boolean attachOpenID(String openid_url,int idUser) throws SQLException {
 	    //insert into user_openids values (openid_url, user_id)
 		Statement statement = null;
@@ -561,6 +666,9 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		return true;
 	}
 
+	/**
+	 * remove an openid from a user
+	 */
 	public boolean detachOpenID(String openid_url,int idUser){
 		//delete from user_openids where openid_url = openid_url and
 		//user_id = user_id
@@ -581,6 +689,9 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		return count > 0;
 	}
 	
+	/**
+	 * remove all openids
+	 */
 	public boolean detachOpenIDsByUser(int idUser){
 		// delete from user_openids where user_id = user_id
 		Statement statement = null;
@@ -599,6 +710,11 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		return count > 0;
 	}
 	
+	/**
+	 * THIS DELETES ALL DATABASE CONTENTS!
+	 * USED FOR DEBUGGING AND TESTING ONLY!
+	 * @param password
+	 */
 	public void removeAll(String password){
 		if(password != "donotusethis"){
 			return;
@@ -622,10 +738,17 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		
 	}
 	
+	/**
+	 * Produce a listing of all rides
+	 */
 	public RideListing getRideListing(){		
 		return RideListingFactory.getRideListing(db.getStatement());
 	}
 
+	/**
+	 * add a regions to the database of streets
+	 * returns unique region id
+	 */
 	@Override
 	public int addRegion(String name) throws SQLException {
 		Statement statement = null;
@@ -653,6 +776,9 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		return id;
 	}
 
+	/**
+	 * adds a street to the database, requires unique regionid from database
+	 */
 	@Override
 	public int addLocation(int region, String street) throws SQLException {
 		Statement statement = null;
@@ -681,18 +807,27 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		return id;
 	}
 
+	/**
+	 * returns a list of streets matching name given
+	 */
 	@Override
 	public LocationList findLocation(String name) {
 		LocationList locList = new LocationList(name, db.getStatement(), false);
 		return locList;
 	}
 	
+	/**
+	 * returns a listing of all streets
+	 */
 	@Override
 	public LocationList getLocations() {
 		LocationList locList = new LocationList("", db.getStatement(), true);
 		return locList;
 	}
 	
+	/**
+	 * fetches a regionid by name
+	 */
 	public int getRegionIDbyName(String name) throws StoreException{
 		int id = FAILED;
 		Statement statement = db.getStatement();
@@ -726,6 +861,9 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		return RideListingFactory.searchRideListing(db.getStatement(), searchType, searchField);
 	}
 	
+	/**
+	 * adds a comment to a ride from a user
+	 */
 	public int addComment(int user, int ride, String comment) throws SQLException{
 		//add a comment
 		Statement statement = null;
@@ -799,6 +937,10 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		return comment;
 
 	}
+	
+	/**
+	 * returns all ride comments for a trip (a ride associated to one passenger)
+	 */
 	public Vector<String> getRideComment(int idTrip) throws SQLException{
 		//return a single comment
 		Vector<String> comment = new Vector<String>();
@@ -827,12 +969,18 @@ public class CarPoolStoreImpl implements CarPoolStore {
 
 	}
 
+	/**
+	 * return list of users
+	 */
 	@Override
 	public UserList getUserName() {
 		UserList UList = new UserList(db.getStatement(),true);		
 		return UList;
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public UserList getUserEmail() {
 		UserList UList = new UserList(db.getStatement(),true);		
@@ -851,11 +999,17 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		return UList;
 	}
 
+	/**
+	 * returns all details to one ride
+	 */
 	@Override
 	public RideDetail getRideDetail(int rideId) {
 		return new RideDetail(rideId, db.getStatement());
 	}
 	
+	/**
+	 * adds social score to a ride
+	 */
 	@SuppressWarnings("unused")
 	public void addScore(int idTrip, int idUser, int score) throws SQLException{
 		//add a comment
@@ -871,6 +1025,9 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		statement.close();
 	}
 	
+	/**
+	 * returns the social score of a user
+	 */
 	public int getScore(int idUser){
 		int score = 0;
 		Statement statement = db.getStatement();
@@ -895,6 +1052,9 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		
 	}
 	
+	/**
+	 * returns unique tripID (one passenger in a ride = tripID)
+	 */
 	public int getTripID(int idRide, int idPassenger) throws StoreException{
 		int id = FAILED;
 		Statement statement = db.getStatement();
@@ -921,15 +1081,24 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		}
 	}
 
+	/**
+	 * return list of rides taken by userid
+	 */
 	@Override
 	public TakenRides getTakenRides(int idUser) {	 
 		return new TakenRides(idUser,db.getStatement());
 	}
 	
+	/**
+	 * returns true if a user has left a social score for this ride
+	 */
 	public boolean hasUserAddedScore(int rideID, int userID) throws StoreException{
 		return hasUserAddedScore(getTripID(rideID, userID));
 	}
 
+	/**
+	 * returns true if a user has left a social score for this ride
+	 */
 	public boolean hasUserAddedScore(int tripID) {
 		boolean has = false;
 		Statement statement = db.getStatement();
@@ -949,51 +1118,9 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		return has;
 	}
 	
-	public String getGeoLocationStart(int ride) throws StoreException{
-		String id = "";
-		Statement statement = db.getStatement();
-		String sql = 	"';";
-		try {
-			statement = db.getStatement();
-			ResultSet rs = statement.executeQuery(sql);
-			while (rs.next()) {
-				id = rs.getString("tripID");
-			}
-			rs.close();
-			statement.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		if (id == ""){
-			throw new StoreException("invalid idRide and idPassenger");
-		} else {
-			return id;
-		}
-	}
-	public String getGeoLocationEnd(int ride) throws StoreException{
-		String id = "";
-		Statement statement = db.getStatement();
-		String sql = 	"';";
-		try {
-			statement = db.getStatement();
-			ResultSet rs = statement.executeQuery(sql);
-			while (rs.next()) {
-				id = rs.getString("tripID");
-			}
-			rs.close();
-			statement.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		if (id == ""){
-			throw new StoreException("invalid idRide and idPassenger");
-		} else {
-			return id;
-		}
-	}
-	
+	/**
+	 * update the geoLocation end for a ride
+	 */
 	@Override
 	public boolean updateGeoLocationEnd(int ride, String end) throws SQLException, StoreException {
 		int[] rows = null;
@@ -1023,6 +1150,9 @@ public class CarPoolStoreImpl implements CarPoolStore {
 		return rows[0]>0 && rows[1]>0;
 	}
 
+	/**
+	 * update the geoLocation start
+	 */
 	@Override
 	public boolean updateGeoLocationStart(int ride, String start) throws SQLException, StoreException {
 		int[] rows = null;
