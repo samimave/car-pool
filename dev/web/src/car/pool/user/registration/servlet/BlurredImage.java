@@ -6,7 +6,6 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
@@ -18,6 +17,12 @@ import javax.servlet.http.HttpSession;
 
 import car.pool.user.registration.RandomTextGenerator;
 
+/**
+ * Produces a image with some randomly chosen text and circles to make it harder to use a character recognition programme on it
+ * 
+ * @author James Hurford <terrasea@gmail.com>
+ *
+ */
 public class BlurredImage extends HttpServlet {
 	private static final long serialVersionUID = -3122614952838918947L;
 
@@ -51,12 +56,14 @@ public class BlurredImage extends HttpServlet {
 		g2d.setColor(Color.black);
 		Font font = new Font("Sans", Font.ITALIC, 20);
 		g2d.setFont(font);
+		// now get the test to display
 		RandomTextGenerator generator = new RandomTextGenerator();
-		//System.out.println("position: "+session.getAttribute("quote_pos"));
 		String verifierText = generator.get(Integer.parseInt(session.getAttribute("quote_pos").toString()));
-		//System.out.println("text: "+verifierText);
+		
 		g2d.scale(1.5, 1.5);
+		// draw it
 		g2d.drawString(verifierText, 20, 50);
+		//output the image to the PrintWriter
 		try {
 			ImageIO.write(image, "png", out);		
 		} catch(IllegalArgumentException iaEx) {

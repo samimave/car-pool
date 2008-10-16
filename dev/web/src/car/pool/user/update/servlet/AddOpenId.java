@@ -11,6 +11,12 @@ import javax.servlet.http.HttpSession;
 import car.pool.user.User;
 import car.pool.user.UserManager;
 
+/**
+ * Attaches a OpenID to the currently logged in user putting this into the database
+ * 
+ * @author James Hurford <terrasea@gmail.com>
+ *
+ */
 public class AddOpenId extends HttpServlet {
 	private static final long serialVersionUID = -3927010781518629004L;
 

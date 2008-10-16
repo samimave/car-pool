@@ -17,6 +17,11 @@ import car.pool.user.User;
 import car.pool.user.UserManager;
 import car.pool.user.authentication.CheckForAdmin;
 
+/**
+ * Processes any login attempts that use username and password to authenticate themselves
+ * @author James Hurford <terrasea@gmail.com>
+ *
+ */
 public class NonOpenIdConsumer extends HttpServlet {
 	private static final long serialVersionUID = -2092270108817290924L;
 	
@@ -60,10 +65,7 @@ public class NonOpenIdConsumer extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		} /*else if(session.isNew()) {
-			request.setAttribute("error", "cookies must be enabled for authentication to work");
-			request.getRequestDispatcher("/loginfailed.jsp?error=cookies%20must%20be%20enabled%20for%20authentication%20to%20work").forward(request, response);
-		} */else {
+		} else {
 			request.setAttribute("error", "form must have a input of \"normal_signin\"");
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/loginfailed.jsp");
 			dispatcher.forward(request, response);

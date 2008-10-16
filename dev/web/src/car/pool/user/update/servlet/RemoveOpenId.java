@@ -11,6 +11,12 @@ import javax.servlet.http.HttpSession;
 import car.pool.user.User;
 import car.pool.user.UserManager;
 
+/**
+ * Detaches a OpenID to the currently logged in user removing it from the database
+ * 
+ * @author James Hurford <terrasea@gmail.com>
+ *
+ */
 public class RemoveOpenId extends HttpServlet {
 	private static final long serialVersionUID = -5249343738435970805L;
 
