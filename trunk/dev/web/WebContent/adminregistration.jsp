@@ -32,25 +32,13 @@ if(username == null || userpass == null) {
 		<style type="text/css" media="screen">@import "TwoColumnLayout.css";</style>
 		<%@include file="include/javascriptincludes.html" %>
 		<script>
-		//combines check username with yav form validation
-		function checkOnSubmit(formName, r) {
-			if (isUserNameAvailable()) {
-				if (yav.performCheck(formName, r, 'inline')) {
-					return true;
-				}
-			}
-			return false;
-		}
-		
 		//form validation rules
 		var rules=new Array();
-		rules[0]='userName|required';
-		rules[1]='password|required';
-		rules[2]='password2:Confirmed password|equal|$password';
-		rules[3]='phone|numeric';
-		rules[4]='email|required';
-		rules[5]='email|email';
-		rules[6]='verifytext:image text|required';
+		rules[0]='password|required';
+		rules[1]='password2:Confirmed password|equal|$password';
+		rules[2]='phone|numeric';
+		rules[3]='email|required';
+		rules[4]='email|email';
 		
 		//could provide helpful text if needed
 		//yav.addHelp('userName', 'Provide your username');
@@ -76,10 +64,10 @@ if(username == null || userpass == null) {
 				<input type="hidden" name="username" value="<%=username %>"/>
 				<input type="hidden" name="userpass" value="<%=userpass %>"/>
 				<table class="register">
-					<tr><td>Password: </td><td> <input type="password" name="password"/> </td></tr>
-					<tr><td>Repeat Password: </td><td><input type="password" name="password2"/></td></tr>
-					<tr><td>Email: </td><td><input type="text" name="email"/></td></tr>
-					<tr><td>Phone: </td><td><input type="text" name="phone"/></td></tr>
+					<tr><td>Password*: </td><td><input type="password" name="password" size="25"/>&nbsp;&nbsp;<span id=errorsDiv_password></span></td></tr>
+					<tr><td>Confirm Password*: </td><td><input type="password" name="password2" size="25"/>&nbsp;&nbsp;<span id=errorsDiv_password2></span></td></tr>
+					<tr><td>Email*: </td><td><input type="text" name="email" size="25"/>&nbsp;&nbsp;<span id=errorsDiv_email></span></td></tr>
+					<tr><td>Phone: </td><td><input type="text" name="phone" size="25"/>&nbsp;&nbsp;<span id=errorsDiv_phone></span></td></tr>
 					</table>
 			<br />
 			<p>Click here to <input type="submit" value="Register"/></p>
