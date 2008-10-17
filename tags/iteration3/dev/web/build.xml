@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<project name="car-pool-web-v2" default="all" basedir=".">
+	<property name="src.dir" value="src"/>
+	<property name="build.classes" value="build/classes"/>
+	<property name="lib.dir" value="lib"/>
+	<property name="jar.dir" value="jar"/>
+	<property name="doc.dir" value="doc"/>
+	<property name="result.tests" value="test_results/results"/>
+	<property name="jdepend.docs" value="${doc.dir}/jdepend"/>
+	<property name="config.dir" value="config"/>
+	<property name="static.lib.dir" value="antlib"/>
+
+	<path id="build.classpath">
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar"/>
+		</fileset>
+		<fileset dir="${static.lib.dir}">
+			<include name="**/*.jar"/>
+		</fileset>
+	</path>
+
+	<target name="all" depends="clean,prepare,compile,archive,jdepend,runtests"/>
+
+	<target name="clean">
+		<delete dir="${build.classes}/car/pool"/>
+		<delete dir="${jar.dir}"/>
+	</target>
+
+	<target name="prepare">
+		<!--<mkdir dir="${build.classes}"/>-->
+		<mkdir dir="${jar.dir}"/>
+		<mkdir dir="${doc.dir}"/>
+		<mkdir dir="${result.tests}"/>
+		<mkdir dir="${jdepend.docs}"/>
+	</target>
+
+	<target name="compile">
+		<javac source="1.6" target="1.6" classpathref="build.classpath" destdir="${build.classes}" srcdir="${src.dir}"/>
+	</target>
+
+	<target name="archive">
+		<jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${build.classes}" excludes="**/test/*.class"/>
+	</target>
+
+	<target name="jdepend">
+		<jdepend classpathref="build.classpath" outputfile="${jdepend.docs}/jdepend-report.xml" fork="no" format="xml">
+			<classespath>
+				<pathelement location="${build.classes}"/>
+			</classespath>
+			<classpath>
+				<pathelement location="${static.lib.dir}/jdepend.jar"/>
+			</classpath>
+			<exclude name="**.test.*"/>
+			<exclude name="java.*"/>
+			<exclude name="javax.*"/>
+			<exclude name="junit.*"/>
+			<exclude name="org.junit.*"/>
+			<exclude name="test.*"/>
+		</jdepend>
+		<xslt basedir="${jdepend.docs}" destdir="${jdepend.docs}" includes="jdepend-report.xml" style="${config.dir}/jdepend.xsl" />
+	</target>
+
+	<target name="runtests">
+		<junit>
+			<sysproperty key="basedir" value="${build.classes}"/>
+			<classpath>
+				<pathelement location="${build.classes}"/>
+				<pathelement location="${lib.dir}/jdbc-mysql.jar"/>
+				<pathelement location="${lib.dir}/mail-1.4.1.jar"/>
+				<pathelement path="${build.classpath}"/>
+				<!--<pathelement path="${java.class.path}"/>
+				<pathelement path="build.classpath"/>-->
+				<pathelement location="${static.lib.dir}/hamcrest-core.jar"/>
+				<pathelement location="${static.lib.dir}/junit-4.jar"/>
+				<pathelement location="../car-pool-integration/jar/car-pool-classes.jar"/>
+			</classpath>
+			<!--<classpath>
+				<pathelement location="${static.lib.dir}/hamcrest-core.jar"/>
+				<pathelement location="${static.lib.dir}/junit-4.jar"/>
+			</classpath>-->
+			<!--<classpath refid="build.classpath"/>-->
+			<batchtest fork="no" todir="${result.tests}">
+				<formatter type="xml"/>
+				<fileset dir="${src.dir}">
+					<include name="**/test/*.java"/>
+					<exclude name="**/AllTests.java"/>
+				</fileset>
+			</batchtest>
+		</junit>
+		<junitreport todir="${result.tests}">
+			<fileset dir="${result.tests}">
+				<include name="TEST-*.xml"/>
+			</fileset>
+			<report format="frames" todir="${result.tests}/html"/>
+		</junitreport>
+	</target>
+</project>

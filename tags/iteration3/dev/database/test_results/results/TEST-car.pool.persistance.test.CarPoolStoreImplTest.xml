@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="0" failures="0" hostname="tmnowr" name="car.pool.persistance.test.CarPoolStoreImplTest" tests="24" time="5.408" timestamp="2008-10-15T03:44:55">
+  <properties>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment" />
+    <property name="result.tests" value="test_results/results" />
+    <property name="sun.boot.library.path" value="/opt/sun-jdk-1.6.0.07/jre/lib/amd64" />
+    <property name="java.vm.version" value="10.0-b23" />
+    <property name="ant.library.dir" value="/usr/share/ant-core/lib" />
+    <property name="ant.version" value="Apache Ant version 1.7.0 compiled on August 14 2008" />
+    <property name="ant.java.version" value="1.6" />
+    <property name="java.vm.vendor" value="Sun Microsystems Inc." />
+    <property name="java.vendor.url" value="http://java.sun.com/" />
+    <property name="path.separator" value=":" />
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM" />
+    <property name="file.encoding.pkg" value="sun.io" />
+    <property name="user.country" value="US" />
+    <property name="sun.java.launcher" value="SUN_STANDARD" />
+    <property name="sun.os.patch.level" value="unknown" />
+    <property name="static.lib.dir" value="lib" />
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification" />
+    <property name="user.dir" value="/home/terrasea/Projects/Eclipse/Massey/SoftwareC/database" />
+    <property name="java.runtime.version" value="1.6.0_07-b06" />
+    <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment" />
+    <property name="basedir" value="/home/terrasea/Projects/Eclipse/Massey/SoftwareC/database" />
+    <property name="java.endorsed.dirs" value="/opt/sun-jdk-1.6.0.07/jre/lib/endorsed" />
+    <property name="os.arch" value="amd64" />
+    <property name="doc.dir" value="doc" />
+    <property name="java.io.tmpdir" value="/tmp" />
+    <property name="ant.core.lib" value="/usr/share/ant-core/lib/ant.jar" />
+    <property name="line.separator" value="
+" />
+    <property name="java.vm.specification.vendor" value="Sun Microsystems Inc." />
+    <property name="ant.file.car-pool-database-v2" value="/home/terrasea/Projects/Eclipse/Massey/SoftwareC/database/build.xml" />
+    <property name="os.name" value="Linux" />
+    <property name="jdepend.docs" value="doc/jdepend" />
+    <property name="ant.home" value="/usr/share/ant-core" />
+    <property name="build.classes" value="build/classes" />
+    <property name="ant.project.name" value="car-pool-database-v2" />
+    <property name="sun.jnu.encoding" value="ANSI_X3.4-1968" />
+    <property name="java.library.path" value="" />
+    <property name="java.class.version" value="50.0" />
+    <property name="java.specification.name" value="Java Platform API Specification" />
+    <property name="lib.dir" value="lib" />
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Server Compiler" />
+    <property name="os.version" value="2.6.22-gentoo-r9" />
+    <property name="ant.file" value="/home/terrasea/Projects/Eclipse/Massey/SoftwareC/database/build.xml" />
+    <property name="config.dir" value="config" />
+    <property name="user.home" value="/home/terrasea" />
+    <property name="user.timezone" value="" />
+    <property name="java.awt.printerjob" value="sun.print.PSPrinterJob" />
+    <property name="java.specification.version" value="1.6" />
+    <property name="file.encoding" value="ANSI_X3.4-1968" />
+    <property name="java.class.path" value="/usr/share/ant-core/lib/ant-launcher.jar:/opt/sun-jdk-1.6.0.07/lib/tools.jar:/home/terrasea/Projects/Eclipse/Massey/SoftwareC/database/.:/usr/share/commons-logging/lib/commons-logging.jar:/usr/share/bsf-2.3/lib/bsf.jar:/usr/share/xerces-2/lib/xercesImpl.jar:/usr/share/xml-commons-resolver/lib/xml-commons-resolver.jar:/usr/share/ant-core/lib/ant.jar:/usr/share/ant-junit/lib/ant-junit.jar:/usr/share/jdepend/lib/jdepend.jar:/usr/share/jarjar-1/lib/jarjar.jar:/usr/share/jzlib/lib/jzlib.jar:/usr/share/ant-jsch/lib/ant-jsch.jar:/usr/share/gnu-regexp-1/lib/gnu-regexp.jar:/usr/share/ant-antlr/lib/ant-antlr.jar:/usr/share/ant-trax/lib/ant-trax.jar:/usr/share/ant-nodeps/lib/ant-nodeps.jar:/usr/share/asm-2/lib/asm.jar:/usr/share/xalan/lib/xalan.jar:/usr/share/ant-commons-logging/lib/ant-commons-logging.jar:/usr/share/servletapi-2.3/lib/servlet.jar:/usr/share/asm-2/lib/asm-tree.jar:/usr/share/ant-contrib/lib/ant-contrib.jar:/usr/share/xml-commons-external-1.3/lib/xml-apis.jar:/usr/share/junit/lib/junit.jar:/usr/share/ant-apache-regexp/lib/ant-apache-regexp.jar:/usr/share/ant-jmf/lib/ant-jmf.jar:/usr/share/xalan/lib/serializer.jar:/usr/share/asm-2/lib/asm-xml.jar:/usr/share/ant-apache-resolver/lib/ant-apache-resolver.jar:/usr/share/antlr/lib/antlr.jar:/usr/share/jakarta-regexp-1.3/lib/jakarta-regexp.jar:/usr/share/ant-apache-log4j/lib/ant-apache-log4j.jar:/usr/share/ant-core/lib/ant-launcher.jar:/usr/share/bcel/lib/bcel.jar:/usr/share/asm-2/lib/asm-util.jar:/usr/share/ant-jdepend/lib/ant-jdepend.jar:/usr/share/javacup/lib/javacup.jar:/usr/share/ant-commons-net/lib/ant-commons-net.jar:/usr/share/jakarta-oro-2.0/lib/jakarta-oro.jar:/usr/share/jakarta-regexp-1.4/lib/jakarta-regexp.jar:/usr/share/asm-2/lib/asm-attrs.jar:/usr/share/commons-logging/lib/commons-logging-api.jar:/usr/share/asm-2/lib/asm-analysis.jar:/usr/share/ant-swing/lib/ant-swing.jar:/usr/share/ant-apache-oro/lib/ant-apache-oro.jar:/usr/share/jsch/lib/jsch.jar:/usr/share/java-getopt-1/lib/gnu.getopt.jar:/usr/share/log4j/lib/log4j.jar:/usr/share/commons-logging/lib/commons-logging-adapters.jar:/usr/share/commons-net/lib/commons-net.jar:/usr/share/asm-2/lib/asm-commons.jar:/usr/share/ant-core/lib/ant-bootstrap.jar:/usr/share/ant-apache-bcel/lib/ant-apache-bcel.jar:/usr/share/qdox-1.6/lib/qdox.jar:/usr/share/ant-apache-bsf/lib/ant-apache-bsf.jar:/home/terrasea/.ant/lib/jdepend.jar:/home/terrasea/.ant/lib/ant-junit.jar:/home/terrasea/.ant/lib/ant-jdepend.jar:/home/terrasea/.ant/lib/ant-trax.jar:/usr/share/ant-core/lib/ant.jar:/usr/share/ant-core/lib/ant-bootstrap.jar:/usr/share/ant-core/lib/ant-launcher.jar" />
+    <property name="user.name" value="terrasea" />
+    <property name="java.vm.specification.version" value="1.0" />
+    <property name="java.home" value="/opt/sun-jdk-1.6.0.07/jre" />
+    <property name="sun.arch.data.model" value="64" />
+    <property name="user.language" value="en" />
+    <property name="java.specification.vendor" value="Sun Microsystems Inc." />
+    <property name="java.vm.info" value="mixed mode" />
+    <property name="java.version" value="1.6.0_07" />
+    <property name="java.ext.dirs" value="/opt/sun-jdk-1.6.0.07/jre/lib/ext:/usr/java/packages/lib/ext" />
+    <property name="sun.boot.class.path" value="/opt/sun-jdk-1.6.0.07/jre/lib/resources.jar:/opt/sun-jdk-1.6.0.07/jre/lib/rt.jar:/opt/sun-jdk-1.6.0.07/jre/lib/sunrsasign.jar:/opt/sun-jdk-1.6.0.07/jre/lib/jsse.jar:/opt/sun-jdk-1.6.0.07/jre/lib/jce.jar:/opt/sun-jdk-1.6.0.07/jre/lib/charsets.jar:/opt/sun-jdk-1.6.0.07/jre/classes" />
+    <property name="java.vendor" value="Sun Microsystems Inc." />
+    <property name="file.separator" value="/" />
+    <property name="src.dir" value="src" />
+    <property name="java.vendor.url.bug" value="http://java.sun.com/cgi-bin/bugreport.cgi" />
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle" />
+    <property name="sun.cpu.endian" value="little" />
+    <property name="sun.desktop" value="gnome" />
+    <property name="jar.dir" value="jar" />
+    <property name="sun.cpu.isalist" value="" />
+  </properties>
+  <testcase classname="car.pool.persistance.test.CarPoolStoreImplTest" name="testAddUser" time="0.995" />
+  <testcase classname="car.pool.persistance.test.CarPoolStoreImplTest" name="testCheckUserExists" time="0.022" />
+  <testcase classname="car.pool.persistance.test.CarPoolStoreImplTest" name="testCheckUser" time="0.646" />
+  <testcase classname="car.pool.persistance.test.CarPoolStoreImplTest" name="testAddRide" time="0.485" />
+  <testcase classname="car.pool.persistance.test.CarPoolStoreImplTest" name="testTakeRide" time="0.019" />
+  <testcase classname="car.pool.persistance.test.CarPoolStoreImplTest" name="testRemoveUser" time="0.019" />
+  <testcase classname="car.pool.persistance.test.CarPoolStoreImplTest" name="testAttachOpenID" time="0.242" />
+  <testcase classname="car.pool.persistance.test.CarPoolStoreImplTest" name="testDetachOpenID" time="0.183" />
+  <testcase classname="car.pool.persistance.test.CarPoolStoreImplTest" name="testDetachOpenIDbyUser" time="0.18" />
+  <testcase classname="car.pool.persistance.test.CarPoolStoreImplTest" name="testGetOpenIDbyUser" time="0.39" />
+  <testcase classname="car.pool.persistance.test.CarPoolStoreImplTest" name="testGetOpenIDbyURL" time="0.192" />
+  <testcase classname="car.pool.persistance.test.CarPoolStoreImplTest" name="testAll" time="0.072" />
+  <testcase classname="car.pool.persistance.test.CarPoolStoreImplTest" name="testRideListing" time="0.478" />
+  <testcase classname="car.pool.persistance.test.CarPoolStoreImplTest" name="testSearchRideListing" time="0.21" />
+  <testcase classname="car.pool.persistance.test.CarPoolStoreImplTest" name="testGetMax" time="0.076" />
+  <testcase classname="car.pool.persistance.test.CarPoolStoreImplTest" name="testAddGetDeleteComment" time="0.083" />
+  <testcase classname="car.pool.persistance.test.CarPoolStoreImplTest" name="testGetRegionName" time="0.045" />
+  <testcase classname="car.pool.persistance.test.CarPoolStoreImplTest" name="testGetRideDetail" time="0.138" />
+  <testcase classname="car.pool.persistance.test.CarPoolStoreImplTest" name="testScoring" time="0.199" />
+  <testcase classname="car.pool.persistance.test.CarPoolStoreImplTest" name="testGetTripID" time="0.122" />
+  <testcase classname="car.pool.persistance.test.CarPoolStoreImplTest" name="testGetGeoLocation" time="0.122" />
+  <testcase classname="car.pool.persistance.test.CarPoolStoreImplTest" name="testRemoveRide" time="0.13" />
+  <testcase classname="car.pool.persistance.test.CarPoolStoreImplTest" name="testHasUserAddedScore" time="0.135" />
+  <testcase classname="car.pool.persistance.test.CarPoolStoreImplTest" name="testUpdateGeoLocation" time="0.201" />
+  <system-out><![CDATA[www.google.com
+6, 438, b, 2, 2008-10-15, Blair St, Blair St, no latecomers please
+7, 439, c, 1, 2008-10-15, Blair St, Blair St, I might be a few minutes late
+8, 440, d, 3, 2008-10-15, Blair St, Blair St, be on time
+search jordan
+13, 461, jordan, 3, 2008-10-15, noon, Blair St, Massey Street geoLocation:noLocation comment:this is a comment
+searchDate
+10, 450, b, 2, 2008-10-15, 6:22 AM, Blair St, Blair St geoLocation:noLocation comment:no latecomers please
+11, 451, c, 1, 2008-10-15, 3:22 PM, Blair St, Blair St geoLocation:noLocation comment:I might be a few minutes late
+12, 452, d, 3, 2008-10-15, 9:22 PM, Blair St, Blair St geoLocation:noLocation comment:be on time
+13, 461, jordan, 3, 2008-10-15, noon, Blair St, Massey Street geoLocation:noLocation comment:this is a comment
+search Blair St both
+10, 450, b, 2, 2008-10-15, 6:22 AM, Blair St, Blair St geoLocation:noLocation comment:no latecomers please
+11, 451, c, 1, 2008-10-15, 3:22 PM, Blair St, Blair St geoLocation:noLocation comment:I might be a few minutes late
+12, 452, d, 3, 2008-10-15, 9:22 PM, Blair St, Blair St geoLocation:noLocation comment:be on time
+13, 461, jordan, 3, 2008-10-15, noon, Blair St, Massey Street geoLocation:noLocation comment:this is a comment
+search Blair St start
+10, 450, b, 2, 2008-10-15, 6:22 AM, Blair St, Blair St geoLocation:noLocation comment:no latecomers please
+11, 451, c, 1, 2008-10-15, 3:22 PM, Blair St, Blair St geoLocation:noLocation comment:I might be a few minutes late
+12, 452, d, 3, 2008-10-15, 9:22 PM, Blair St, Blair St geoLocation:noLocation comment:be on time
+13, 461, jordan, 3, 2008-10-15, noon, Blair St, Massey Street geoLocation:noLocation comment:this is a comment
+search Massey end
+13, 461, jordan, 3, 2008-10-15, noon, Blair St, Massey Street geoLocation:noLocation comment:this is a comment
+getall
+10, 450, b, 2, 2008-10-15, 6:22 AM, Blair St, Blair St geoLocation:noLocation comment:no latecomers please
+11, 451, c, 1, 2008-10-15, 3:22 PM, Blair St, Blair St geoLocation:noLocation comment:I might be a few minutes late
+12, 452, d, 3, 2008-10-15, 9:22 PM, Blair St, Blair St geoLocation:noLocation comment:be on time
+13, 461, jordan, 3, 2008-10-15, noon, Blair St, Massey Street geoLocation:noLocation comment:this is a comment
+userid: 465, username: a, street number: 0,1, geoLocation: noLocation
+userid: 469, username: e, street number: 0,1, geoLocation: noLocation
+userid: 470, username: f, street number: 0,1, geoLocation: noLocation
+userid: 471, username: g, street number: 0,1, geoLocation: noLocation
+userid: 472, username: h, street number: 0,1, geoLocation: noLocation
+userid: 466, username: b, street number: 1,1, geoLocation: noLocation
+userid: 473, username: i, street number: 0,1, geoLocation: noLocation
+userid: 474, username: j, street number: 0,1, geoLocation: noLocation
+userid: 467, username: c, street number: 2,1, geoLocation: noLocation
+userid: 471, username: g, street number: 0,1, geoLocation: noLocation
+userid: 472, username: h, street number: 0,1, geoLocation: noLocation
+userid: 475, username: k, street number: 0,1, geoLocation: noLocation
+userid: 468, username: d, street number: 3,1, geoLocation: noLocation
+userid: 476, username: l, street number: 0,1, geoLocation: noLocation
+]]></system-out>
+  <system-err><![CDATA[java.sql.BatchUpdateException: Table 'carpool.matches' doesn't exist
+	at com.mysql.jdbc.StatementImpl.executeBatch(StatementImpl.java:1007)
+	at car.pool.persistance.CarPoolStoreImpl.updateGeoLocationStart(Unknown Source)
+	at car.pool.persistance.test.CarPoolStoreImplTest.testUpdateGeoLocation(Unknown Source)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at junit.framework.TestCase.runTest(TestCase.java:164)
+	at junit.framework.TestCase.runBare(TestCase.java:130)
+	at junit.framework.TestResult$1.protect(TestResult.java:106)
+	at junit.framework.TestResult.runProtected(TestResult.java:124)
+	at junit.framework.TestResult.run(TestResult.java:109)
+	at junit.framework.TestCase.run(TestCase.java:120)
+	at junit.framework.TestSuite.runTest(TestSuite.java:230)
+	at junit.framework.TestSuite.run(TestSuite.java:225)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:421)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.executeInVM(JUnitTask.java:1245)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.execute(JUnitTask.java:814)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.executeOrQueue(JUnitTask.java:1657)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.execute(JUnitTask.java:764)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:288)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:105)
+	at org.apache.tools.ant.Task.perform(Task.java:348)
+	at org.apache.tools.ant.Target.execute(Target.java:357)
+	at org.apache.tools.ant.Target.performTasks(Target.java:385)
+	at org.apache.tools.ant.Project.executeSortedTargets(Project.java:1329)
+	at org.apache.tools.ant.Project.executeTarget(Project.java:1298)
+	at org.apache.tools.ant.helper.DefaultExecutor.executeTargets(DefaultExecutor.java:41)
+	at org.apache.tools.ant.Project.executeTargets(Project.java:1181)
+	at org.apache.tools.ant.Main.runBuild(Main.java:698)
+	at org.apache.tools.ant.Main.startAnt(Main.java:199)
+	at org.apache.tools.ant.launch.Launcher.run(Launcher.java:257)
+	at org.apache.tools.ant.launch.Launcher.main(Launcher.java:104)
+java.lang.NullPointerException
+	at car.pool.persistance.CarPoolStoreImpl.updateGeoLocationStart(Unknown Source)
+	at car.pool.persistance.test.CarPoolStoreImplTest.testUpdateGeoLocation(Unknown Source)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at junit.framework.TestCase.runTest(TestCase.java:164)
+	at junit.framework.TestCase.runBare(TestCase.java:130)
+	at junit.framework.TestResult$1.protect(TestResult.java:106)
+	at junit.framework.TestResult.runProtected(TestResult.java:124)
+	at junit.framework.TestResult.run(TestResult.java:109)
+	at junit.framework.TestCase.run(TestCase.java:120)
+	at junit.framework.TestSuite.runTest(TestSuite.java:230)
+	at junit.framework.TestSuite.run(TestSuite.java:225)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:421)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.executeInVM(JUnitTask.java:1245)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.execute(JUnitTask.java:814)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.executeOrQueue(JUnitTask.java:1657)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.execute(JUnitTask.java:764)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:288)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:105)
+	at org.apache.tools.ant.Task.perform(Task.java:348)
+	at org.apache.tools.ant.Target.execute(Target.java:357)
+	at org.apache.tools.ant.Target.performTasks(Target.java:385)
+	at org.apache.tools.ant.Project.executeSortedTargets(Project.java:1329)
+	at org.apache.tools.ant.Project.executeTarget(Project.java:1298)
+	at org.apache.tools.ant.helper.DefaultExecutor.executeTargets(DefaultExecutor.java:41)
+	at org.apache.tools.ant.Project.executeTargets(Project.java:1181)
+	at org.apache.tools.ant.Main.runBuild(Main.java:698)
+	at org.apache.tools.ant.Main.startAnt(Main.java:199)
+	at org.apache.tools.ant.launch.Launcher.run(Launcher.java:257)
+	at org.apache.tools.ant.launch.Launcher.main(Launcher.java:104)
+]]></system-err>
+</testsuite>
